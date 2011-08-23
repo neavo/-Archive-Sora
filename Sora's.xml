@@ -1,0 +1,10 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<!-- 核心！勿动！-->
+	<Include file="!Core\Load_Core.xml"/>
+	
+	<Include file="Buff\Load_Buff.xml"/>
+
+</Ui>
+
+<!--	<Script file="Load.lua"/>  -->
