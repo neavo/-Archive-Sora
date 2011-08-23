@@ -150,12 +150,12 @@ hooksecurefunc("DebuffButton_UpdateAnchors", MakeDebuffFrame)
 local function FlashOnEnd(self, elapsed)
 	if self.timeLeft > 20 then
 		self.duration:SetTextColor(1,1,1)
-		self:SetAlpha(1.0)
+		self:SetAlpha(1)
 	elseif self.timeLeft < 20 then
 		self.duration:SetTextColor(1,0,0)
 		self:SetAlpha(BuffFrame.BuffAlphaValue)
 	else
-		self:SetAlpha(1.0)
+		self:SetAlpha(1)
 	end
 end
 hooksecurefunc("AuraButton_OnUpdate", FlashOnEnd)
