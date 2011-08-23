@@ -119,9 +119,9 @@ local function MakeBuffFrame()
 		elseif i + BuffFrame.numEnchants == 1 then
 			Buff:SetPoint(unpack(cfg.BUFFpos))
 		elseif i == IconsPerRow + 1 then
-			Buff:SetPoint("TOP", BuffButton1, "BOTTOM", 0, -10)
+			Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -10)
 		elseif i == IconsPerRow*2 + 1 then
-			Buff:SetPoint("TOP", _G["BuffButton"..(IconsPerRow + 1)], "BOTTOM", 0, -10)		
+			Buff:SetPoint("TOP", BuffSort[IconsPerRow + 1], "BOTTOM", 0, -10)		
 		elseif i < IconsPerRow*3 + 1 then
 			Buff:SetPoint("RIGHT", BuffSort[i-1], "LEFT", -cfg.Spacing, 0)
 		end
@@ -137,7 +137,7 @@ local function MakeDebuffFrame(buttonName,i)
 	Debuff:ClearAllPoints()
 	Border:Hide()
 	if i == 1 then
-		Debuff:SetPoint("TOP", BuffButton1, "BOTTOM", 0, -90)
+		Debuff:SetPoint(unpack(cfg.DEUFFpos))
 	elseif i == IconsPerRow + 1 then
 		Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -10)
 	elseif i < IconsPerRow*2 + 1 then
