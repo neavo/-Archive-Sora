@@ -12,6 +12,7 @@
 	
 	<Include file="Bags\Load_Bags.xml"/>
 	<Include file="Buff\Load_Buff.xml"/>
+	<Include file="Chat\Load_Chat.xml"/>
 
 </Ui>
 

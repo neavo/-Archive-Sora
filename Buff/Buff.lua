@@ -3,7 +3,7 @@
 ----------------
 
 local _, SR = ...
-local cfg = SR.ChatConfig
+local cfg = SR.BuffConfig
 
 --------------------------
 --  一些公用变量和函数  --
