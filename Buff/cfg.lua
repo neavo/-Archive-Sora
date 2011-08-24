@@ -22,3 +22,4 @@ cfg.DEUFFpos = {"TOPRIGHT", UIParent, "TOPRIGHT", -5, -130}	-- DEBUFFŒª÷√
 
 local _, SR = ...
 SR.BuffConfig = cfg
+
