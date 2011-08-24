@@ -1,0 +1,15 @@
+﻿<!-- -->
+
+
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Include file="JPack\JPack.xml"/>
+	
+	<Include file="cargBags\embed.xml"/>
+	
+	<Script file="cfg.lua"/>
+	<Script file="Bags.lua"/>
+
+</Ui>
