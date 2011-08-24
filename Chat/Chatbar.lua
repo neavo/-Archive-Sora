@@ -43,7 +43,7 @@ for i=1,7 do
 		bgFile = cfg.Statusbar,
 		insets = { left = 3, right = 3, top = 3, bottom = 3 },
 		edgeFile = cfg.edgeFile, edgeSize = 4, 
-	});
+	}) 
 	frame:SetBackdropColor(unpack(Color[i]))
 	frame:SetBackdropBorderColor(0,0,0,1)	
 	frame:RegisterForClicks("AnyUp")

@@ -10,8 +10,6 @@ local AutoSellJunk = true
 local AutoRepair = true
 local UseGuildBank = true
 local CustomSellList = {
-	--[itemID] = true,
-	--[17058] = true, -- Fish Oil
 }
 
 local function formats(value)
@@ -24,14 +22,6 @@ local function formats(value)
 	end
 	str = str .. format('|c00eda55f%dc|r', (floor(value) % 100))
 	return str
-end
-
-function addon:PLAYER_REGEN_ENABLED()
-	if autoName then SetCVar('nameplateShowEnemies', 0) end
-end
-
-function addon:PLAYER_REGEN_DISABLED()
-	if autoName then SetCVar('nameplateShowEnemies', 1) end
 end
 
 function addon:MERCHANT_SHOW()
