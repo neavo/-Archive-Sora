@@ -22,14 +22,6 @@ local _, SR = ...
 cfg = SR.FilgerModConfig
 
 
-CreateBG = function(parent, offset, r, g, b, a)
-    local bg = parent:CreateTexture(nil, "BACKGROUND")
-    bg:SetPoint("TOPLEFT", parent, -offset, offset)
-    bg:SetPoint("BOTTOMRIGHT", parent, offset, -offset)
-    bg:SetTexture(r, g, b, a)
-    return bg
-end
-
 local f_s = Filger_Settings
 
 local class = select(2, UnitClass("player")) 
@@ -45,7 +37,7 @@ local MyUnits = {
 local time, Update 
 local function OnUpdate(self, elapsed)
 	time = self.filter == "CD" and self.expirationTime+self.duration-GetTime() or self.expirationTime-GetTime() 
-	if ( self:GetParent().Mode == "BAR" ) then
+	if self:GetParent().Mode == "BAR" then
 		self.statusbar:SetValue(time) 
 		if time <= 60 then
 			self.time:SetFormattedText("%.1f",(time)) 
@@ -53,7 +45,7 @@ local function OnUpdate(self, elapsed)
 			self.time:SetFormattedText("%d:%.1d",(time/60),(time/2)) 
 		end
 	end
-	if ( time < 0 and self.filter == "CD" ) then
+	if time < 0 and self.filter == "CD" then
 		local id = self:GetParent().Id 
 		for index, value in ipairs(active[id]) do
 			local spn = GetSpellInfo( value.data.spellID or value.data.slotID )
@@ -69,7 +61,7 @@ end
 
 function Update(self)
 	local id = self.Id 
-	if ( not bars[id] ) then
+	if not bars[id] then
 		bars[id] = {} 
 	end
 	for index, value in ipairs(bars[id]) do
@@ -78,14 +70,14 @@ function Update(self)
 	local bar 
 	for index, value in ipairs(active[id]) do
 		bar = bars[id][index] 
-		if ( not bar ) then
+		if not bar then
 			bar = CreateFrame("Frame", "FilgerAnker"..id.."Frame"..index, self) 
 			bar:SetWidth(value.data.size) 
 			bar:SetHeight(value.data.size) 
 			bar:SetFrameStrata("BACKGROUND")
 
-			if ( index == 1 ) then
-				if ( f_s.configmode ) then
+			if index == 1 then
+				if f_s.configmode then
 					local function Format(arg)
 						if arg == 1 then
 							return "PlayerBuff"
@@ -110,11 +102,11 @@ function Update(self)
 				end
 				bar:SetPoint(unpack(self.setPoint)) 
 			else
-				if ( self.Direction == "UP" ) then
+				if self.Direction == "UP" then
 					bar:SetPoint("BOTTOM", bars[id][index-1], "TOP", 0, self.Interval) 
-				elseif ( self.Direction == "RIGHT" ) then
+				elseif self.Direction == "RIGHT" then
 					bar:SetPoint("LEFT", bars[id][index-1], "RIGHT", self.Mode == "ICON" and self.Interval or value.data.barWidth+self.Interval, 0) 
-				elseif ( self.Direction == "LEFT" ) then
+				elseif self.Direction == "LEFT" then
 					bar:SetPoint("RIGHT", bars[id][index-1], "LEFT", self.Mode == "ICON" and -self.Interval or -(value.data.barWidth+self.Interval), 0) 
 				else
 					bar:SetPoint("TOP", bars[id][index-1], "BOTTOM", 0, -self.Interval) 
@@ -189,13 +181,13 @@ function Update(self)
 		
 		bar.icon:SetTexture(value.icon) 
 		bar.count:SetText(value.count > 1 and value.count or "") 
-		if ( self.Mode == "BAR" ) then
+		if self.Mode == "BAR" then
 			bar.spellname:SetText(value.data.displayName or GetSpellInfo( value.data.spellID )) 
 		end
-		if ( value.duration > 0 ) then
-			if ( self.Mode == "ICON" ) then
+		if value.duration > 0 then
+			if self.Mode == "ICON" then
 				CooldownFrame_SetTimer(bar.cooldown, value.data.filter == "CD" and value.expirationTime or value.expirationTime-value.duration, value.duration, 1) 
-				if ( value.data.filter == "CD" ) then
+				if value.data.filter == "CD" then
 					bar.expirationTime = value.expirationTime 
 					bar.duration = value.duration 
 					bar.filter = value.data.filter 
@@ -230,20 +222,20 @@ local function OnEvent(self, event, ...)
 		local id = self.Id 
 		for i=1, #Filger_Spells[class][id], 1 do
 			data = Filger_Spells[class][id][i] 
-			if ( data.filter == "BUFF" ) then
+			if data.filter == "BUFF" then
 				spn = GetSpellInfo( data.spellID )
 				name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitBuff(data.unitId or "Player", spn or "33763") 
-			elseif ( data.filter == "DEBUFF" ) then
+			elseif data.filter == "DEBUFF" then
 				spn = GetSpellInfo( data.spellID )
 				name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitDebuff(data.unitId or "Player", spn or "33763") 
 			else
-				if ( data.spellID ) then
+				if data.spellID then
 					spn = GetSpellInfo( data.spellID )
 					start, duration, enabled = GetSpellCooldown( spn ) 
 					_,_,icon = GetSpellInfo( data.spellID ) 
 				else
 					slotLink = GetInventoryItemLink("player", data.slotID) 
-					if ( slotLink ) then
+					if slotLink then
 						name, _, _, _, _, _, _, _, _, icon = GetItemInfo(slotLink) 
 						if ( not data.displayName ) then
 							data.displayName = name 
@@ -254,7 +246,7 @@ local function OnEvent(self, event, ...)
 				count = 0 
 				caster = "all" 
 			end
-			if ( not active[id] ) then
+			if not active[id] then
 				active[id] = {} 
 			end
 			for index, value in ipairs(active[id]) do
@@ -280,13 +272,15 @@ local function OnEvent(self, event, ...)
 	end
 end
 
-local FirstLoad = CreateFrame("Frame")
-FirstLoad:RegisterEvent("PLAYER_ENTERING_WORLD")
-FirstLoad:SetScript("OnEvent",function(self,event,addon)
-	FirstLoad:UnregisterEvent("PLAYER_ENTERING_WORLD")
-	if ( Filger_Spells and Filger_Spells[class] ) then
+
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_ENTERING_WORLD")
+Event:SetScript("OnEvent",function(self, event, ...)
+	Event:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	if Filger_Spells and Filger_Spells[class] then
 		for index in pairs(Filger_Spells) do
-			if ( index ~= class ) then
+			if index ~= class then
 				Filger_Spells[index] = nil 
 			end
 		end
@@ -305,17 +299,17 @@ FirstLoad:SetScript("OnEvent",function(self,event,addon)
 			frame:SetHeight(Filger_Spells[class][i][1] and Filger_Spells[class][i][1].size or 20) 
 			frame:SetPoint(unpack(data.setPoint))
 
-			if ( f_s.configmode ) then
+			if f_s.configmode then
 				for j=1, #Filger_Spells[class][i], 1 do
 					data = Filger_Spells[class][i][j] 
-					if ( not active[i] ) then
+					if not active[i] then
 						active[i] = {} 
 					end
-					if ( data.spellID ) then
+					if data.spellID then
 						_,_,spellIcon = GetSpellInfo(data.spellID)
 					else
 						slotLink = GetInventoryItemLink("player", data.slotID) 
-						if ( slotLink ) then
+						if slotLink then
 							name, _, _, _, _, _, _, _, _, spellIcon = GetItemInfo(slotLink) 
 						end
 					end

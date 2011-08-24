@@ -781,10 +781,11 @@ Filger_Spells = {
 			{ spellID = 59052, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--赤色天灾
 			{ spellID = 81141, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
+			--大墓地的意志
+			{ spellID = 81162, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--符文刃舞
 			{ spellID = 81256, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
-			--大墓地的意志
-			{ spellID = 81622, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
+
 		},
 		
 		{
