@@ -7,7 +7,7 @@ local C = select(2, ...) --retrieve addon table
 
 --font settings
 C.fontFace = STANDARD_TEXT_FONT  --what font to use
-C.fontSize = 22  --the base font size to use at a scale of 1
+C.fontSize = 20  --the base font size to use at a scale of 1
 
 --display settings
 C.minScale = 0.4  --the minimum button scale size to show cooldown text for
