@@ -32,8 +32,18 @@
 	{ spellID = 67696, size = 30, barWidth = 170 ,unitId = "player", caster = "player", filter = "BUFF", stack = 3},
 ]]
 
+
+----------------
+--  命名空间  --
+----------------
+
+local _, SR = ...
+cfg = SR.FilgerModConfig
+
+
+
 Filger_Settings = {
-	configmode = FMPos.FMConfigMode
+	configmode = false
 }
 
 Filger_Spells = {
@@ -44,7 +54,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--节能施法
 			{ spellID = 16870, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -73,7 +83,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -131,7 +141,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--急速射击
 			{ spellID =  3045, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -168,7 +178,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -212,7 +222,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--奥术强化
 			{ spellID = 12042, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -239,7 +249,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -283,7 +293,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--盾墙(防御姿态)
 			{ spellID =   871, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -342,7 +352,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -380,7 +390,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 			
 			--闪电之盾
 			{ spellID =   324, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -397,7 +407,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -437,7 +447,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--圣佑术
 			{ spellID =   498, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -476,7 +486,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -520,7 +530,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--消散
 			{ spellID = 47585, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -558,7 +568,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -602,7 +612,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--夜幕(等级2)
 			{ spellID = 18095, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -627,7 +637,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -687,7 +697,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerBuff)},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--佯攻
 			{ spellID =  1966, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -708,7 +718,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -749,7 +759,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos["PlayerBuff"])},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
 
 			--利刃屏障(等级3)
 			{ spellID = 64856, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
@@ -782,7 +792,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.PlayerDebuff)},
+			setPoint = { "CENTER",nil, "CENTER", -200, 200},
 			
 			--变羊
 			{ spellID =   118, size = 54, unitId = "player", caster = "all", filter = "DEBUFF" },
@@ -820,7 +830,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = {unpack(FMPos.CD)},
+			setPoint = { "CENTER", nil, "CENTER", -400, 100 },
 			
 			--Example
 			{ spellID = 48792, size = 54, unitId = "player", caster = "player", filter = "CD"},
