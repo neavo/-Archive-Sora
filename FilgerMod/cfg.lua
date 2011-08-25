@@ -12,7 +12,7 @@ cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.Statusbar = Media.."statusbar"
 cfg.GlowTex = Media.."glowTex"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
-cfg.ConfigMode = true
+cfg.ConfigMode = false
 	
 ----------------
 --  ÃüÃû¿Õ¼ä  --
