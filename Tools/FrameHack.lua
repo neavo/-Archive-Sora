@@ -25,8 +25,6 @@ hideBossFrames()
 
 -- 移动任务追踪框体 --
 
-local _G = _G
-  
 local function WatchFrameMove()
 	local Temp = _G['WatchFrame']
     Temp:ClearAllPoints()	
@@ -40,14 +38,13 @@ WatchFrameMove()
 
 -- 屏蔽系统红字提示 --
 
-local event = CreateFrame"Frame"
+local event = CreateFrame("Frame")
 local dummy = function() end
 
 UIErrorsFrame:UnregisterEvent"UI_ERROR_MESSAGE"
 event.UI_ERROR_MESSAGE = function(self, event, error)
-	if(not stuff[error]) then
+	if not stuff[error] then
 		UIErrorsFrame:AddMessage(error, 1, .1, .1)
 	end
-end
-	
+end	
 event:RegisterEvent"UI_ERROR_MESSAGE"

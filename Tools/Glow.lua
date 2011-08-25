@@ -53,7 +53,7 @@ end
 
 local function QualityGlow(frame, quality)
 	if quality and quality > 1 then
-		if not frame.bcthen then
+		if not frame.bc then
 			createBorder(frame)
 		end
 		local border = frame.bc
