@@ -35,7 +35,7 @@ local tooltip = CreateFrame("GameTooltip")
 tooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
 
 local function GetDurStrings(name)
-	if(not SlotDurStrs[name]) then
+	if not SlotDurStrs[name] then
 		local slot = getglobal("Character" .. name .. "Slot")
 		SlotDurStrs[name] = slot:CreateFontString(nil, "OVERLAY", "NumberFontNormal")
 		SlotDurStrs[name]:SetPoint("CENTER", slot, "BOTTOM", 2, 8)
