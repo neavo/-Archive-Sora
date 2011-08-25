@@ -13,7 +13,7 @@ cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.edgeFile = Media.."glowTex"
 cfg.Statusbar = Media.."Statusbar"
-cfg.Icon = Media.."icon\\"
+cfg.Icon ="Interface\\Addons\\Sora's\\Chat\\icon\\"
 	
 ----------------
 --  命名空间  --
