@@ -40,12 +40,6 @@
 local _, SR = ...
 cfg = SR.FilgerModConfig
 
-
-
-Filger_Settings = {
-	configmode = false
-}
-
 Filger_Spells = {
 
 	["DRUID"] = {
@@ -54,8 +48,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
-
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
+			
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--节能施法
 			{ spellID = 16870, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--自然之赐
@@ -141,8 +139,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--急速射击
 			{ spellID =  3045, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--野兽之心
@@ -222,8 +224,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--奥术强化
 			{ spellID = 12042, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--唤醒
@@ -293,8 +299,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--盾墙(防御姿态)
 			{ spellID =   871, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--怒火中烧
@@ -390,8 +400,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 			
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--闪电之盾
 			{ spellID =   324, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--水之护盾
@@ -447,8 +461,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--圣佑术
 			{ spellID =   498, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--圣盾术
@@ -530,8 +548,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--消散
 			{ spellID = 47585, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--争分夺秒
@@ -612,8 +634,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--夜幕(等级2)
 			{ spellID = 18095, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--反冲(等级3)
@@ -697,8 +723,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--佯攻
 			{ spellID =  1966, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--切割
@@ -759,8 +789,12 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			setPoint = { "BOTTOM", nil, "BOTTOM", -100, 190},
+			setPoint = { "BOTTOM", nil, "BOTTOM", -115, 190},
 
+			--嗜血
+			{ spellID =  2825, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
+			--英勇气概
+			{ spellID = 32182, size = 54, unitId = "player", caster = 	"all", filter = "BUFF" },
 			--利刃屏障(等级3)
 			{ spellID = 64856, size = 54, unitId = "player", caster = "player", filter = "BUFF"},
 			--反魔法护罩

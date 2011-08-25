@@ -22,8 +22,6 @@ local _, SR = ...
 cfg = SR.FilgerModConfig
 
 
-local f_s = Filger_Settings
-
 local class = select(2, UnitClass("player")) 
 local classcolor = RAID_CLASS_COLORS[class] 
 local active, bars = {}, {} 
@@ -77,7 +75,7 @@ function Update(self)
 			bar:SetFrameStrata("BACKGROUND")
 
 			if index == 1 then
-				if f_s.configmode then
+				if cfg.ConfigMode then
 					local function Format(arg)
 						if arg == 1 then
 							return "PlayerBuff"
@@ -118,24 +116,22 @@ function Update(self)
 				bar.icon:SetPoint("BOTTOMRIGHT", -2, 2)
 				bar.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92) 
 				
-				bar.count = bar:CreateFontString(nil, "OVERLAY") 
+				bar.icon.Overlay = CreateFrame("Frame", nil, bar)
+				bar.icon.Overlay:SetPoint("TOPLEFT",-3,3)
+				bar.icon.Overlay:SetPoint("BOTTOMRIGHT",3,-3)
+				bar.icon.Overlay:SetBackdrop({ 
+					edgeFile = cfg.GlowTex , edgeSize = 5,
+				})
+				bar.icon.Overlay:SetBackdropBorderColor(0,0,0,1)
+				
+				bar.count = bar.icon.Overlay:CreateFontString(nil, "OVERLAY") 
 				bar.count:SetFont(cfg.Font, value.data.size/30*10, "THINOUTLINE") 
-				bar.count:SetPoint("BOTTOMRIGHT", 3, -2) 
+				bar.count:SetPoint("BOTTOMRIGHT", 1, 1) 
 				
 				bar.cooldown = CreateFrame("Cooldown", nil, bar, "CooldownFrameTemplate") 
 				bar.cooldown:SetPoint("TOPLEFT", 2, -2) 
 				bar.cooldown:SetPoint("BOTTOMRIGHT", -2, 2) 
 				bar.cooldown:SetReverse(true) 
-				
-				if not _G["FilgerAnker"..id.."Frame"..index.."Overlay"] then
-					local Overlay = CreateFrame("Frame", "FilgerAnker"..id.."Frame"..index.."Overlay", bar)
-					Overlay:SetPoint("TOPLEFT",-3,3)
-					Overlay:SetPoint("BOTTOMRIGHT",3,-3)
-					Overlay:SetBackdrop({ 
-						edgeFile = cfg.GlowTex , edgeSize = 5,
-					})
-					Overlay:SetBackdropBorderColor(0,0,0,1)
-				end
 
 			else
 
@@ -143,28 +139,32 @@ function Update(self)
 				bar.icon:SetPoint("TOPLEFT", 2, -2)
 				bar.icon:SetPoint("BOTTOMRIGHT", -2, 2)
 				
-				bar.count = bar:CreateFontString(nil, "ARTWORK") 
-				bar.count:SetFont(cfg.Font, value.data.size/30*12, "THINOUTLINE") 
-				bar.count:SetPoint("BOTTOMRIGHT", 1, 1) 
-				
 				bar.statusbar = CreateFrame("StatusBar", nil, bar) 
 				bar.statusbar:SetWidth(value.data.barWidth) 
 				bar.statusbar:SetHeight(value.data.size-4) 
 				bar.statusbar:SetStatusBarTexture(cfg.Statusbar) 
-				bar.statusbar:SetStatusBarColor(classcolor.r, classcolor.g, classcolor.b, 1) 
-				bar.statusbar:SetPoint("LEFT", bar, "RIGHT", -1, 0) 
+				bar.statusbar:SetStatusBarColor(classcolor.r, classcolor.g, classcolor.b, 0.9) 
+				bar.statusbar:SetPoint("LEFT", bar, "RIGHT", -2, 0) 
 				bar.statusbar:SetMinMaxValues(0, 1) 
-				bar.statusbar:SetValue(0) 		
-				if not _G["FilgerAnker"..id.."Frame"..index.."Overlay"] then
-					local Overlay = CreateFrame("Frame", "FilgerAnker"..id.."Frame"..index.."Overlay", bar.statusbar)
-					Overlay:SetPoint("TOPLEFT",-22,5)
-					Overlay:SetPoint("BOTTOMRIGHT",5,-5)
-					Overlay:SetBackdrop({ 
-						edgeFile = cfg.GlowTex , edgeSize = 5,
-					})
-					Overlay:SetBackdropBorderColor(0,0,0,1)
-				end
+				bar.statusbar:SetValue(0) 	
 				
+				bar.statusbar.Overlay = CreateFrame("Frame", nil, bar.statusbar)
+				bar.statusbar.Overlay:SetPoint("TOPLEFT",-20,4)
+				bar.statusbar.Overlay:SetPoint("BOTTOMRIGHT",4,-4)
+				bar.statusbar.Overlay:SetBackdrop({ 
+					edgeFile = cfg.GlowTex , edgeSize = 4,
+				})
+				bar.statusbar.Overlay:SetBackdropBorderColor(0, 0, 0, 0.8)
+				
+				bar.count = bar.statusbar.Overlay:CreateFontString(nil, "ARTWORK") 
+				bar.count:SetFont(cfg.Font, value.data.size/30*12, "THINOUTLINE") 
+				bar.count:SetPoint("BOTTOMRIGHT", bar, 1, 1) 
+				
+				bar.statusbar.background = bar.statusbar:CreateTexture(nil, "BACKGROUND")
+				bar.statusbar.background:SetAllPoints() 
+				bar.statusbar.background:SetTexture(cfg.Statusbar)
+				bar.statusbar.background:SetVertexColor(1, 1, 1, 0.2) 
+			
 				bar.time = bar.statusbar:CreateFontString(nil, "ARTWORK") 
 				bar.time:SetFont(cfg.Font, value.data.size/30*16, "THINOUTLINE") 
 				bar.time:SetPoint("RIGHT", bar.statusbar, -2, 0) 
@@ -299,7 +299,7 @@ Event:SetScript("OnEvent",function(self, event, ...)
 			frame:SetHeight(Filger_Spells[class][i][1] and Filger_Spells[class][i][1].size or 20) 
 			frame:SetPoint(unpack(data.setPoint))
 
-			if f_s.configmode then
+			if cfg.ConfigMode then
 				for j=1, #Filger_Spells[class][i], 1 do
 					data = Filger_Spells[class][i][j] 
 					if not active[i] then
