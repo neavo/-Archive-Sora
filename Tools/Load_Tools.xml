@@ -9,7 +9,6 @@
 	<Script file="Align.lua"/>
 	<Script file="AlreadyKnown.lua"/>
 	<Script file="AutoRepair.lua"/>
-	<Script file="Castby.lua"/>
 	<Script file="ClearFont.lua"/>
 	<Script file="CombatAlert.lua"/>
 	<Script file="DragEmAll.lua"/>
