@@ -40,41 +40,43 @@ end
 
 local function createBorder(self)
 	local bc = self:CreateTexture(nil, "OVERLAY")
-	bc:SetTexture"Interface\\Buttons\\UI-ActionButton-Border"
-	bc:SetBlendMode"ADD"
-	bc:SetAlpha(.8)
+	bc:SetTexture("Interface\\Buttons\\UI-ActionButton-Border")
+	bc:SetBlendMode("ADD")
+	bc:SetAlpha(0.6)
 
-	bc:SetWidth(70)
-	bc:SetHeight(70)
+	bc:SetWidth(73)
+	bc:SetHeight(73)
 
 	bc:SetPoint("CENTER", self)
 	self.bc = bc
 end
 
 local function QualityGlow(frame, quality)
-	if(quality and quality > 1) then
-		if(not frame.bc) then createBorder(frame) end
+	if quality and quality > 1 then
+		if not frame.bcthen then
+			createBorder(frame)
+		end
 		local border = frame.bc
-		if(border) then
+		if border then
 			local r, g, b = colorTable(quality)
 			border:SetVertexColor(r, g, b)
 			border:Show()
 		end
-	elseif(frame.bc) then
+	elseif frame.bc then
 		frame.bc:Hide()
 	end
 end
 
 local function UpdataCharacterGlow()
-	if (not CharacterFrame:IsVisible()) then return end
+	if not CharacterFrame:IsVisible()then return end
 	for i, vl in pairs(items) do
 		local key, index = string.split(" ", vl)
 		q = GetInventoryItemQuality("player", i)
 		local self = G["Character"..key.."Slot"]
 
-		if(GetInventoryItemBroken("player", i)) then
+		if GetInventoryItemBroken("player", i) then
 			q = 100
-		elseif(index and GetInventoryAlertStatus(index) == 3) then
+		elseif index and GetInventoryAlertStatus(index) == 3 then
 			q = 99
 		end
 
@@ -83,13 +85,13 @@ local function UpdataCharacterGlow()
 end
 
 local function UpdataInspectGlow()
-	if (not InspectFrame:IsVisible()) then return end	
+	if not InspectFrame:IsVisible() then return end	
 	for i, value in pairs(items) do
 		local key, index = string.split(" ", value)
 		local link = GetInventoryItemLink("target", i)
 		local self = G["Inspect"..key.."Slot"]
 
-		if(link) then
+		if link then
 			q = select(3, GetItemInfo(link))
 			QualityGlow(self, q)
 		elseif(self.bc) then
