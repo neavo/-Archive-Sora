@@ -38,7 +38,7 @@
 ----------------
 
 local _, SR = ...
-cfg = SR.FilgerModConfig
+local cfg = SR.FilgerModConfig
 
 Filger_Spells = {
 

@@ -14,6 +14,7 @@
 	<Include file="Buff\Load_Buff.xml"/>
 	<Include file="Chat\Load_Chat.xml"/>
 	<Include file="FilgerMod\Load_FilgerMod.xml"/>
+	<Include file="Threat\Load_Threat.xml"/>
 	<Include file="Tools\Load_Tools.xml"/>
 
 </Ui>

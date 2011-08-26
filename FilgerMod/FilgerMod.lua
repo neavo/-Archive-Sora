@@ -19,7 +19,7 @@
 ----------------
 
 local _, SR = ...
-cfg = SR.FilgerModConfig
+local cfg = SR.FilgerModConfig
 
 
 local class = select(2, UnitClass("player")) 

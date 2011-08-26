@@ -7,7 +7,7 @@
 ----------------
 
 local _, SR = ...
-cfg = SR.ChatConfig
+local cfg = SR.ChatConfig
 
 
 
