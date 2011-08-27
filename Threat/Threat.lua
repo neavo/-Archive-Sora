@@ -149,8 +149,8 @@ local function UpdateThreatFlag()
 			local ThreatFlag = _G["ThreatFlag1"]
 			ThreatFlag:Show()
 			
-			ThreatFlag.Name:SetHeight(26)
-			ThreatFlag.Name:SetWidth(26)
+			ThreatFlag.Name:SetHeight(22)
+			ThreatFlag.Name:SetWidth(22)
 			ThreatFlag.Name:SetTexture(cfg.ArrowLarge)
 			ThreatFlag.Name:SetPoint("BOTTOM", ThreatFlag, "TOP", 0, 2)
 			ThreatFlag.Name:SetVertexColor(Color.r, Color.g, Color.b)
@@ -158,7 +158,7 @@ local function UpdateThreatFlag()
 			
 			ThreatFlag.Text:SetText(FormatNameText(value.name))
 			ThreatFlag.Text:SetTextColor(Color.r, Color.g, Color.b)
-			ThreatFlag.Text:SetPoint("BOTTOM", ThreatFlag.Name, "TOP", 1, -10)
+			ThreatFlag.Text:SetPoint("BOTTOM", ThreatFlag.Name, "TOP", 1, -8)
 			
 			ThreatFlag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*100/130+3, 0)
 			tremove(threatlist, key)
