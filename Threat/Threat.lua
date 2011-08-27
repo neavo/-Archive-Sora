@@ -6,12 +6,11 @@ local _, SR = ...
 local cfg = SR.ThreatConfig
 
 
-
 -- 主框体
 local ThreatFrame = CreateFrame("Frame")
 ThreatFrame:SetWidth(210)
 ThreatFrame:SetHeight(16)
-ThreatFrame:SetAlpha(0.80)
+ThreatFrame:SetAlpha(0.8)
 ThreatFrame:Hide()
 
 ThreatFrame.Overlay = CreateFrame("Frame", nil, ThreatFrame)
@@ -22,24 +21,32 @@ ThreatFrame.Overlay:SetBackdrop({
 	})
 ThreatFrame.Overlay:SetBackdropBorderColor(0,0,0,0.8)
 
+ThreatFrame.Tank = ThreatFrame:CreateTexture(nil,"OVERLAY")
+ThreatFrame.Tank:SetHeight(16)
+ThreatFrame.Tank:SetWidth(16)
+ThreatFrame.Tank:SetTexture(cfg.Tank)
+ThreatFrame.Tank:SetPoint("TOP", ThreatFrame, "BOTTOMLEFT", 207*100/130+3, -2)
+ThreatFrame.Tank:SetAlpha(1)
+
+
 -- 仇恨条背景
 local PreTex
 for i = 1,3 do
-	local Texture = ThreatFrame:CreateTexture(nil, "BACKGROUND")
+	local Texture = ThreatFrame:CreateTexture(nil, "BACKGROUND",ThreatFrame)
 	Texture:SetHeight(ThreatFrame:GetHeight())
 	Texture:SetTexture(cfg.Statusbar)
 	if i == 1 then
 		Texture:SetPoint("LEFT", 0, 0)
 		Texture:SetWidth(70)	
-		Texture:SetGradient("HORIZONTAL", 0.2, 1, 0.2, 1, 1, 0.2)
+		Texture:SetGradient("HORIZONTAL", 0.69, 0.69, 0.69, 1, 1, 0.47)
 	elseif i == 2 then
 		Texture:SetPoint("LEFT", PreTex, "RIGHT", 0, 0)
 		Texture:SetWidth(120)
-		Texture:SetGradient("HORIZONTAL", 1, 1, 0.2, 1, 0.2, 0.2)
+		Texture:SetGradient("HORIZONTAL", 1, 1, 0.47, 1, 0.6, 0)
 	elseif i == 3 then
 		Texture:SetPoint("LEFT", PreTex, "RIGHT", 0, 0)
 		Texture:SetWidth(20)
-		Texture:SetVertexColor(1, 0.2, 0.2)
+		Texture:SetGradient("HORIZONTAL", 1, 0.6, 0, 1, 0, 0)
 	end
 	PreTex = Texture
 end	
@@ -84,49 +91,95 @@ end
 -- 仇恨滑块
 for i = 1,3 do
 	ThreatFlag = CreateFrame("Frame","ThreatFlag"..i,ThreatFrame)
-	ThreatFlag:SetWidth(7)
-	ThreatFlag:SetHeight(ThreatFrame:GetHeight())
-	ThreatFlag:SetBackdrop({ 
-		bgFile = cfg.Solid , 
-		insets = { left = 1, right = 1, top = 1, bottom = 1 },
-		edgeFile = cfg.Solid , edgeSize = 1,
-	})
-	ThreatFlag:SetBackdropColor(1,1,1,1)
-	ThreatFlag:SetBackdropBorderColor(0,0,0,1)
-	ThreatFlag.Per = ThreatFlag:CreateFontString(nil,"OVERLAY")
-	ThreatFlag.Per:SetFont(cfg.Font,10,"THINOUTLINE")
-	ThreatFlag.Per:SetPoint("BOTTOM", ThreatFlag, "TOP", 0, 2)
-	ThreatFlag.Name = ThreatFlag:CreateFontString(nil,"OVERLAY")
-	ThreatFlag.Name:SetFont(cfg.Font,10,"THINOUTLINE")
-	ThreatFlag.Name:SetPoint("TOP", ThreatFlag, "BOTTOM", 0, -2)
-	ThreatFlag.Name:SetSpacing(2)
-end
+	ThreatFlag:SetWidth(2)
+	ThreatFlag:SetHeight(ThreatFrame:GetHeight()+4)
+	ThreatFlag:SetBackdrop({ bgFile = cfg.Solid })
+	ThreatFlag:SetBackdropColor(0,0,0)
+	ThreatFlag:SetFrameLevel(2)
 	
+	ThreatFlag.Name = CreateFrame("Frame",nil,ThreatFlag)
+	ThreatFlag.Name:SetHeight(18)
+	ThreatFlag.Name:SetWidth(38)
+	ThreatFlag.Name:SetBackdrop({
+		bgFile = cfg.Solid , 
+		insets = { left = 3, right = 3, top = 3, bottom = 3 },
+		edgeFile = cfg.GlowTex , edgeSize = 3 ,
+		})
+	ThreatFlag.Name:SetBackdropBorderColor(0,0,0,1)	
+	ThreatFlag.Name.Text = ThreatFlag.Name:CreateFontString(nil,"OVERLAY")
+	ThreatFlag.Name.Text:SetFont(cfg.Font,9,"THINOUTLINE")
+	ThreatFlag.Name.Text:SetPoint("CENTER", ThreatFlag.Name, "CENTER", 1, 0)
+end
+
+-- 文字竖排
+local function VerticalNameText(nametext)
+	local t
+	if strupper(nametext) ~= nametext then
+		t = 'English'
+	else
+		t = 'Chinese'
+	end
+
+	local L = 3
+	local strbox = {}
+	if t == 'English' then
+		for i = 1, L do
+			tinsert(strbox, strsub(nametext, i, i))
+		end
+	elseif t == 'Chinese' then
+		for i = 1, L*3, 3 do
+			tinsert(strbox, strsub(nametext, i, i+2))
+		end
+	end
+	return table.concat(strbox,'')
+end
+
+-- 仇恨排序	
 local function SortThreat(a,b)
 	return a.rawPercent > b.rawPercent
 end
-local function UpdateThreatFlag()
+
+-- 清除旧的ThreatFlag
+local function ClearThreatFlag()
 	ThreatFrame:Hide()
 	for i = 1,3 do
 		local ThreatFlag = _G["ThreatFlag"..i]
+		ThreatFlag:Hide()
+	end	
+end
+
+local function UpdateThreatFlag()
+	ClearThreatFlag()
+	for i = 1,3 do
+		local ThreatFlag = _G["ThreatFlag"..i]
 	end
-	for key, _ in ipairs(threatlist) do
-		if threatlist[key].isTanking then	
+	for key, value in ipairs(threatlist) do
+		if threatlist[key].isTanking then
+			local Color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[value.class] and CUSTOM_CLASS_COLORS[value.class] or RAID_CLASS_COLORS[value.class]		
 			ThreatFrame:Show()
 			local ThreatFlag = _G["ThreatFlag1"]
-			ThreatFlag.Name:SetText(format("%.6s",threatlist[key].name))
-			ThreatFlag.Per:SetText("100%")
+			ThreatFlag:Show()
+			
+			ThreatFlag.Name:SetPoint("BOTTOM", ThreatFlag, "TOP", 0, -3)
+			ThreatFlag.Name:SetBackdropColor( Color.r, Color.g, Color.b)
+			ThreatFlag.Name.Text:SetText(VerticalNameText(value.name))
+			
 			ThreatFlag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*100/130+3, 0)
 			tremove(threatlist, key)
 		end
 	end
 	table.sort(threatlist, SortThreat)
-	for key, _ in ipairs(threatlist) do
+	for key, value in ipairs(threatlist) do
 		if key > 2 then return end
-		local rawPercent = threatlist[key].rawPercent
+		local Color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[value.class] and CUSTOM_CLASS_COLORS[value.class] or RAID_CLASS_COLORS[value.class]	
+		local rawPercent = value.rawPercent
 		local ThreatFlag = _G["ThreatFlag"..key + 1]
-		ThreatFlag.Name:SetText(format("↑\n%.6s",threatlist[key].name))
-		ThreatFlag.Per:SetText(format("%.2s%%",threatlist[key].rawPercent))
+		ThreatFlag:Show()
+		
+		ThreatFlag.Name:SetPoint("TOP", ThreatFlag, "BOTTOM", 0, 3)
+		ThreatFlag.Name:SetBackdropColor( Color.r, Color.g, Color.b)
+		ThreatFlag.Name.Text:SetText(VerticalNameText(value.name))
+		
 		ThreatFlag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*rawPercent/130+3, 0)
 	end
 end
@@ -146,7 +199,7 @@ Event:SetScript("OnEvent",function(self, event, unit)
 		ThreatFrame:Show()
 	elseif event == "PLAYER_REGEN_ENABLED" then
 		wipe(threatlist)
-		ThreatFrame:Hide()
+		ClearThreatFlag()
 	elseif event == "UNIT_THREAT_LIST_UPDATE" then
 		if unit and UnitExists(unit) and UnitGUID(unit) == threatguid and UnitCanAttack("player", threatunit) then
 			if GetNumRaidMembers() > 0 then

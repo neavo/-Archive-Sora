@@ -12,6 +12,7 @@ cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.Statusbar = Media.."statusbar"
 cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"
+cfg.Tank = Media.."Tank"
 	
 ----------------
 --  ÃüÃû¿Õ¼ä  --
