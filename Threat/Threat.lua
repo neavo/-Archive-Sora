@@ -153,10 +153,11 @@ local function UpdateThreatFlag()
 			ThreatFlag.Name:SetWidth(26)
 			ThreatFlag.Name:SetTexture(cfg.ArrowLarge)
 			ThreatFlag.Name:SetPoint("BOTTOM", ThreatFlag, "TOP", 0, 2)
-			ThreatFlag.Name:SetVertexColor( Color.r, Color.g, Color.b)
+			ThreatFlag.Name:SetVertexColor(Color.r, Color.g, Color.b)
 
 			
 			ThreatFlag.Text:SetText(FormatNameText(value.name))
+			ThreatFlag.Text:SetTextColor(Color.r, Color.g, Color.b)
 			ThreatFlag.Text:SetPoint("BOTTOM", ThreatFlag.Name, "TOP", 1, -10)
 			
 			ThreatFlag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*100/130+3, 0)
@@ -178,6 +179,7 @@ local function UpdateThreatFlag()
 		ThreatFlag.Name:SetVertexColor( Color.r, Color.g, Color.b)
 		
 		ThreatFlag.Text:SetText(FormatNameText(value.name))
+		ThreatFlag.Text:SetTextColor(Color.r, Color.g, Color.b)
 		ThreatFlag.Text:SetPoint("TOP", ThreatFlag.Name, "BOTTOM", 1, 3)
 		
 		ThreatFlag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*rawPercent/130+3, 0)
