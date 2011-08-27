@@ -9,8 +9,8 @@ local cfg = SR.ThreatConfig
 -- 主框体
 local ThreatFrame = CreateFrame("Frame")
 ThreatFrame:SetWidth(210)
-ThreatFrame:SetHeight(16)
-ThreatFrame:SetAlpha(0.8)
+ThreatFrame:SetHeight(6)
+ThreatFrame:SetAlpha(0.9)
 ThreatFrame:Hide()
 
 ThreatFrame.Overlay = CreateFrame("Frame", nil, ThreatFrame)
@@ -21,32 +21,28 @@ ThreatFrame.Overlay:SetBackdrop({
 	})
 ThreatFrame.Overlay:SetBackdropBorderColor(0,0,0,0.8)
 
-ThreatFrame.Tank = ThreatFrame:CreateTexture(nil,"OVERLAY")
-ThreatFrame.Tank:SetHeight(16)
-ThreatFrame.Tank:SetWidth(16)
-ThreatFrame.Tank:SetTexture(cfg.Tank)
-ThreatFrame.Tank:SetPoint("TOP", ThreatFrame, "BOTTOMLEFT", 207*100/130+3, -2)
-ThreatFrame.Tank:SetAlpha(1)
-
-
 -- 仇恨条背景
 local PreTex
-for i = 1,3 do
+for i = 1,4 do
 	local Texture = ThreatFrame:CreateTexture(nil, "BACKGROUND",ThreatFrame)
 	Texture:SetHeight(ThreatFrame:GetHeight())
 	Texture:SetTexture(cfg.Statusbar)
 	if i == 1 then
 		Texture:SetPoint("LEFT", 0, 0)
-		Texture:SetWidth(70)	
+		Texture:SetWidth(53)	
 		Texture:SetGradient("HORIZONTAL", 0.69, 0.69, 0.69, 1, 1, 0.47)
 	elseif i == 2 then
 		Texture:SetPoint("LEFT", PreTex, "RIGHT", 0, 0)
-		Texture:SetWidth(120)
+		Texture:SetWidth(54)
 		Texture:SetGradient("HORIZONTAL", 1, 1, 0.47, 1, 0.6, 0)
 	elseif i == 3 then
 		Texture:SetPoint("LEFT", PreTex, "RIGHT", 0, 0)
-		Texture:SetWidth(20)
+		Texture:SetWidth(54)
 		Texture:SetGradient("HORIZONTAL", 1, 0.6, 0, 1, 0, 0)
+	elseif i == 4 then
+		Texture:SetPoint("LEFT", PreTex, "RIGHT", 0, 0)
+		Texture:SetWidth(48)
+		Texture:SetVertexColor(1, 0, 0)
 	end
 	PreTex = Texture
 end	
@@ -92,27 +88,19 @@ end
 for i = 1,3 do
 	ThreatFlag = CreateFrame("Frame","ThreatFlag"..i,ThreatFrame)
 	ThreatFlag:SetWidth(2)
-	ThreatFlag:SetHeight(ThreatFrame:GetHeight()+4)
+	ThreatFlag:SetHeight(ThreatFrame:GetHeight())
 	ThreatFlag:SetBackdrop({ bgFile = cfg.Solid })
 	ThreatFlag:SetBackdropColor(0,0,0)
 	ThreatFlag:SetFrameLevel(2)
 	
-	ThreatFlag.Name = CreateFrame("Frame",nil,ThreatFlag)
-	ThreatFlag.Name:SetHeight(18)
-	ThreatFlag.Name:SetWidth(38)
-	ThreatFlag.Name:SetBackdrop({
-		bgFile = cfg.Solid , 
-		insets = { left = 3, right = 3, top = 3, bottom = 3 },
-		edgeFile = cfg.GlowTex , edgeSize = 3 ,
-		})
-	ThreatFlag.Name:SetBackdropBorderColor(0,0,0,1)	
-	ThreatFlag.Name.Text = ThreatFlag.Name:CreateFontString(nil,"OVERLAY")
-	ThreatFlag.Name.Text:SetFont(cfg.Font,9,"THINOUTLINE")
-	ThreatFlag.Name.Text:SetPoint("CENTER", ThreatFlag.Name, "CENTER", 1, 0)
+	ThreatFlag.Name = ThreatFlag:CreateTexture(nil,"OVERLAY")
+	
+	ThreatFlag.Text = ThreatFlag:CreateFontString(nil,"OVERLAY")
+	ThreatFlag.Text:SetFont(cfg.Font,9,"THINOUTLINE")
 end
 
--- 文字竖排
-local function VerticalNameText(nametext)
+-- 文字格式
+local function FormatNameText(nametext)
 	local t
 	if strupper(nametext) ~= nametext then
 		t = 'English'
@@ -157,12 +145,19 @@ local function UpdateThreatFlag()
 		if threatlist[key].isTanking then
 			local Color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[value.class] and CUSTOM_CLASS_COLORS[value.class] or RAID_CLASS_COLORS[value.class]		
 			ThreatFrame:Show()
+			
 			local ThreatFlag = _G["ThreatFlag1"]
 			ThreatFlag:Show()
 			
-			ThreatFlag.Name:SetPoint("BOTTOM", ThreatFlag, "TOP", 0, -3)
-			ThreatFlag.Name:SetBackdropColor( Color.r, Color.g, Color.b)
-			ThreatFlag.Name.Text:SetText(VerticalNameText(value.name))
+			ThreatFlag.Name:SetHeight(26)
+			ThreatFlag.Name:SetWidth(26)
+			ThreatFlag.Name:SetTexture(cfg.ArrowLarge)
+			ThreatFlag.Name:SetPoint("BOTTOM", ThreatFlag, "TOP", 0, 2)
+			ThreatFlag.Name:SetVertexColor( Color.r, Color.g, Color.b)
+
+			
+			ThreatFlag.Text:SetText(FormatNameText(value.name))
+			ThreatFlag.Text:SetPoint("BOTTOM", ThreatFlag.Name, "TOP", 1, -11)
 			
 			ThreatFlag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*100/130+3, 0)
 			tremove(threatlist, key)
@@ -176,9 +171,14 @@ local function UpdateThreatFlag()
 		local ThreatFlag = _G["ThreatFlag"..key + 1]
 		ThreatFlag:Show()
 		
-		ThreatFlag.Name:SetPoint("TOP", ThreatFlag, "BOTTOM", 0, 3)
-		ThreatFlag.Name:SetBackdropColor( Color.r, Color.g, Color.b)
-		ThreatFlag.Name.Text:SetText(VerticalNameText(value.name))
+		ThreatFlag.Name:SetHeight(16)
+		ThreatFlag.Name:SetWidth(16)
+		ThreatFlag.Name:SetTexture(cfg.ArrowSmall)
+		ThreatFlag.Name:SetPoint("TOP", ThreatFlag, "BOTTOM", 0, -2)
+		ThreatFlag.Name:SetVertexColor( Color.r, Color.g, Color.b)
+		
+		ThreatFlag.Text:SetText(FormatNameText(value.name))
+		ThreatFlag.Text:SetPoint("TOP", ThreatFlag.Name, "BOTTOM", 1, 3)
 		
 		ThreatFlag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*rawPercent/130+3, 0)
 	end
