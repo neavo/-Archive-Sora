@@ -157,7 +157,7 @@ local function UpdateThreatFlag()
 
 			
 			ThreatFlag.Text:SetText(FormatNameText(value.name))
-			ThreatFlag.Text:SetPoint("BOTTOM", ThreatFlag.Name, "TOP", 1, -11)
+			ThreatFlag.Text:SetPoint("BOTTOM", ThreatFlag.Name, "TOP", 1, -10)
 			
 			ThreatFlag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*100/130+3, 0)
 			tremove(threatlist, key)
