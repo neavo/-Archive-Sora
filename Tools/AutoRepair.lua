@@ -45,12 +45,12 @@ function addon:MERCHANT_SHOW()
 			local str = formats(cost)
 			if UseGuildBank and IsInGuild() and CanGuildBankRepair() and (GetGuildBankWithdrawMoney() >= cost or (GetGuildBankWithdrawMoney() == -1 and GetGuildBankMoney() >= cost)) then
 				RepairAllItems(1)
-				str = '公会修理 ' .. str
+				str = '公会修理：' .. str
 			elseif GetMoney() >= cost then
 				RepairAllItems()
-				str = '自费修理 ' .. str
+				str = '自费修理：' .. str
 			else
-				DEFAULT_CHAT_FRAME:AddMessage('修理花费 ' .. str)
+				DEFAULT_CHAT_FRAME:AddMessage('修理花费：' .. str)
 				return
 			end
 			PlaySound('ITEM_REPAIR')
