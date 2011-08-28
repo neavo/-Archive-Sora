@@ -6,7 +6,7 @@ local function GetTaggedTitle(i)
 	local name, level, tag, group, header, _, complete, daily = GetQuestLogTitle(i)
 	if header or not name then return end
 	if not group or group == 0 then group = nil end
-	return string.format("[%s%s%s%s] %s", level, tag and tags[tag] or "", daily and tags.Daily or "",group or "", name), tag, daily, complete
+	return string.format("[%s %s %s %s] %s", level, tag and tags[tag] or "", daily and tags.Daily or "",group or "", name), tag, daily, complete
 end
 
 -- Add tags to the quest log
