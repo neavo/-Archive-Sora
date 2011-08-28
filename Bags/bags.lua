@@ -24,8 +24,8 @@ local f = {}
 function Bags:OnInit()
 
 	local onlyBags = function(item) return item.bagID >= 0 and item.bagID <= 4 end
-	local onlyBank = function(item) return item.bagID >= 5 and item.bagID <= 11 end
-
+	local onlyBank = function(item) return item.bagID == -1 or item.bagID >= 5 and item.bagID <= 11 end
+	
 	local MyContainer = Bags:GetContainerClass()
 	
 	-- 玩家背包
@@ -42,7 +42,7 @@ function Bags:OnInit()
 	f.bank = MyContainer:New("Bank", {
 			Columns = 13,
 			Scale = cfg.Scale,
-			Bags = "bankframe+bank",
+			Bags = "bank",
 			Movable = true,
 	})
 	f.bank:SetFilter(onlyBank, true) 
