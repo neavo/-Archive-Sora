@@ -196,7 +196,7 @@ Event:RegisterEvent("PLAYER_REGEN_ENABLED")
 Event:RegisterEvent("ADDON_LOADED")
 Event:SetScript("OnEvent",function(self, event, unit)
 	if event == "PLAYER_ENTERING_WORLD" then
-		ThreatFrame:SetPoint("TOP","oUF_NevoPlayer", "BOTTOM", 0, -50)
+		ThreatFrame:SetPoint(unpack(cfg.Pos))
 	elseif event == "PLAYER_REGEN_DISABLED" then
 		ThreatFrame:Show()
 	elseif event == "PLAYER_REGEN_ENABLED" then

@@ -14,6 +14,7 @@ cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"
 cfg.ArrowLarge = Media.."ArrowLarge"
 cfg.ArrowSmall = Media.."ArrowSmall"
+cfg.Pos = {"TOP","oUF_NevoPlayer", "BOTTOM", 0, -50}
 	
 ----------------
 --  ÃüÃû¿Õ¼ä  --
