@@ -61,6 +61,7 @@ local UnitSpecific = {
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
+		lib.gen_portrait(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
 		lib.gen_ppbar(self)
@@ -69,15 +70,6 @@ local UnitSpecific = {
 		lib.HealPred(self)
 		lib.gen_castbar(self)
 		lib.RogueComboPoints(self)
-		
-		-- Buffs and Debuffs
-		if cfg.showPlayerAuras then
-			BuffFrame:Hide()
-			lib.createBuffs(self)
-			lib.createDebuffs(self)
-			lib.gen_WeaponEnchant(self)
-			lib.debuffHighlight(self)
-		end
 
 		self.Health.frequentUpdates = true
 		self.Health.colorSmooth = true
@@ -86,13 +78,13 @@ local UnitSpecific = {
 		self.Power.colorPower = true
 		self.Power.Smooth = true
 		self.Power.frequentUpdates = true
-		self.Power.bg.multiplier = 0.2
+		self.Power.BG.multiplier = 0.2
 
-		if cfg.showRunebar then lib.genRunes(self) end
-		if cfg.showHolybar then lib.genHolyPower(self) end
-		if cfg.showShardbar then lib.genShards(self) end
-		if cfg.showEclipsebar then lib.addEclipseBar(self) end
-		if cfg.showTotemBar then lib.gen_TotemBar(self) end
+		lib.genRunes(self)
+		lib.genHolyPower(self)
+		lib.genShards(self)
+		lib.addEclipseBar(self)
+		lib.gen_TotemBar(self)
 		
 	end,
 	
@@ -106,6 +98,7 @@ local UnitSpecific = {
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
+		lib.gen_portrait(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
 		lib.gen_ppbar(self)
@@ -124,7 +117,7 @@ local UnitSpecific = {
 		self.Power.frequentUpdates = true
 		self.Power.Smooth = true
 		self.Power.colorPower = true
-		self.Power.bg.multiplier = 0.2
+		self.Power.BG.multiplier = 0.2
 
 
 		if cfg.showTargetBuffs then	lib.createBuffs(self) end
@@ -142,6 +135,7 @@ local UnitSpecific = {
 		
 		-- Generate Bars
 		lib.gen_hpbar(self)
+		lib.gen_portrait(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
 		lib.gen_ppbar(self)
@@ -157,7 +151,7 @@ local UnitSpecific = {
 		self.Power.frequentUpdates = true
 		self.Power.Smooth = true
 		self.Power.colorPower = true
-		self.Power.bg.multiplier = 0.2
+		self.Power.BG.multiplier = 0.2
 
 		
 	end,
@@ -168,7 +162,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60, 10)
+		self:SetSize(60, 14)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -190,7 +184,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60, 10)
+		self:SetSize(60, 14)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -213,10 +207,11 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60,10)
+		self:SetSize(60,14)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
+		lib.gen_ppbar(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
 		lib.gen_ppbar(self)
@@ -226,6 +221,11 @@ local UnitSpecific = {
 		self.Health.frequentUpdates = true
 		self.Health.colorSmooth = true
 		self.Health.Smooth = true
+		
+		self.Power.frequentUpdates = true
+		self.Power.Smooth = true
+		self.Power.colorPower = true
+		self.Power.BG.multiplier = 0.2
 
 	end,
 
@@ -251,7 +251,7 @@ local UnitSpecific = {
 		self.Health.frequentUpdates = true
 		self.Health.colorSmooth = true
 		self.Power.colorPower = true
-		self.Power.bg.multiplier = 0.2
+		self.Power.BG.multiplier = 0.2
 		lib.gen_InfoIcons(self)
 		lib.CreateThreatBorder(self)
 		lib.HealPred(self)
@@ -302,9 +302,9 @@ oUF:Factory(function(self)
 	self:SetActiveStyle('Sora')
 	self:Spawn('player'):SetPoint("CENTER", UIParent, "CENTER", -270, -100)
 	self:Spawn('target'):SetPoint("CENTER", UIParent, "CENTER", 270, -100)
-	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -15) end
-	if cfg.showpet then self:Spawn('pet'):SetPoint("TOPLEFT",oUF_SoraPlayer,"BOTTOMLEFT", 0, -15) end
-	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 100) end
+	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -25) end
+	if cfg.showpet then self:Spawn('pet'):SetPoint("RIGHT",oUF_SoraPlayer,"LEFT", -10, 0) end
+	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 150) end
 	if cfg.showfocustarget then self:Spawn('focustarget'):SetPoint("BOTTOMLEFT",oUF_SoraFocus,"TOPLEFT", 0, 10) end
 	
 	-- Raid Frames

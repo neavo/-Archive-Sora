@@ -5,56 +5,42 @@ local cast = ns.cast
 local lib = CreateFrame("Frame")  
 local _, playerClass = UnitClass("player")
     
-  -- FUNCTIONS
- 
- local retVal = function(f, val1, val2, val3)
-	if f.mystyle == "player" or f.mystyle == "target" then
+-- FUNCTIONS
+
+local retVal = function(self, val1, val2, val3)
+	if self.mystyle == "player" or self.mystyle == "target" then
 		return val1
-	elseif f.mystyle == "raid" or f.mystyle == "party" then
+	elseif self.mystyle == "raid" or self.mystyle == "party" then
 		return val3
 	else
 		return val2
 	end
 end
   
-  --status bar filling fix (from oUF_Mono)
-  local fixStatusbar = function(b)
-    b:GetStatusBarTexture():SetHorizTile(false)
-    b:GetStatusBarTexture():SetVertTile(false)
-  end
+--status bar filling fix (from oUF_Mono)
+local fixStatusbar = function(BG)
+	BG:GetStatusBarTexture():SetHorizTile(false)
+	BG:GetStatusBarTexture():SetVertTile(false)
+end
 
-  --backdrop table
-  local backdrop_tab = { 
-    bgFile = cfg.backdrop_texture, 
-    edgeFile = cfg.backdrop_edge_texture,
-    tile = false,
-    tileSize = 0, 
-    edgeSize = 5, 
-    insets = { 
-      left = 3, 
-      right = 3, 
-      top = 3, 
-      bottom = 3,
-    },
-  }
+--backdrop table
+local backdrop_tab = { 
+	bgFile = cfg.backdrop_texture, 
+	edgeFile = cfg.backdrop_edge_texture, edgeSize = 5, 
+	insets = { left = 3, right = 3, top = 3, bottom = 3}
+}
   
 -- backdrop func
-lib.gen_backdrop = function(f)
-	f:SetBackdrop(backdrop_tab);
-	f:SetBackdropColor(0,0,0,1)
-	f:SetBackdropBorderColor(0,0,0,0.8)
+lib.gen_backdrop = function(self)
+	self:SetBackdrop(backdrop_tab);
+	self:SetBackdropColor(0,0,0,1)
+	self:SetBackdropBorderColor(0,0,0,0.8)
 end
 
-lib.gen_castbackdrop = function(f)
-	f:SetBackdrop(backdrop_tab);
-	f:SetBackdropColor(0,0,0,0.6)
-	f:SetBackdropBorderColor(0,0,0,1)
-end
-  
-lib.gen_totemback = function(f)
-	f:SetBackdrop(backdrop_tab);
-	f:SetBackdropColor(0,0,0,0.6)
-	f:SetBackdropBorderColor(0,0,0,0.8)
+lib.gen_castbackdrop = function(self)
+	self:SetBackdrop(backdrop_tab);
+	self:SetBackdropColor(0,0,0,0.6)
+	self:SetBackdropBorderColor(0,0,0,1)
 end
 
 -- Right Click Menu
@@ -78,233 +64,315 @@ lib.spawnMenu = function(self)
 	end
 end
   
-  --fontstring func
-  lib.gen_fontstring = function(f, name, size, outline)
-    local fs = f:CreateFontString(nil, "OVERLAY")
-    fs:SetFont(name, size, outline)
-    fs:SetShadowColor(0,0,0,0.8)
-    fs:SetShadowOffset(1,-1)
-    return fs
-  end  
+--fontstring func
+lib.gen_fontstring = function(self, name, size, outline)
+	local fs = self:CreateFontString(nil, "OVERLAY")
+	fs:SetFont(name, size, outline)
+	return fs
+end  
   
-  --gen healthbar func
-  lib.gen_hpbar = function(f)
-    --statusbar
-    local s = CreateFrame("StatusBar", nil, f)
-    s:SetStatusBarTexture(cfg.statusbar_texture)
-	s:GetStatusBarTexture():SetHorizTile(true)
-	s:SetHeight(retVal(f,24,24,20))
-	if f.mystyle == "tot"  or f.mystyle == "pet" or f.mystyle =="focustarget" then
-		s:SetHeight(14)
+--gen healthbar func
+lib.gen_hpbar = function(self)
+	-- Statusbar
+	local Statusbar = CreateFrame("StatusBar", nil, self)
+	Statusbar:SetStatusBarTexture(cfg.statusbar_texture)
+	Statusbar:GetStatusBarTexture():SetHorizTile(true)
+	Statusbar:SetHeight(retVal(self,24,24,20))
+	if self.mystyle == "tot"  or self.mystyle == "pet" or self.mystyle =="focustarget" then
+		Statusbar:SetHeight(14)
 	end
-    s:SetWidth(f:GetWidth())
-    s:SetPoint("TOP",0,0)
-    s:SetFrameLevel(4) 
-	s.colorClass = true
-	s.colorReaction = true
+	Statusbar:SetWidth(self:GetWidth())
+	Statusbar:SetPoint("TOP",0,0)
+	Statusbar:SetFrameLevel(4) 
+	Statusbar.colorClass = true
+	Statusbar.colorReaction = true
 
-	--helper
-    local h = CreateFrame("Frame", nil, s)
-    h:SetFrameLevel(3)
-    h:SetPoint("TOPLEFT",-5,5)
-	h:SetPoint("BOTTOMRIGHT", 5, -5)
-    lib.gen_backdrop(h)
-    --bg
-    local b = s:CreateTexture(nil, "BACKGROUND")
-    b:SetTexture(cfg.statusbar_texture)
-    b:SetAllPoints(s)
-	b:SetVertexColor(0.1,0.1,0.1)
-	b.multiplier = .2
-	
-	f.Health = s
-	f.Health.bg2 = b
-  end
+	-- Border
+	local Border = CreateFrame("Frame", nil, Statusbar)
+	Border:SetFrameLevel(3)
+	Border:SetPoint("TOPLEFT", -5, 5)
+	Border:SetPoint("BOTTOMRIGHT", 5, -5)
+	lib.gen_backdrop(Border)
+
+	-- BG
+	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
+	BG:SetTexture(cfg.statusbar_texture)
+	BG:SetAllPoints(Statusbar)
+	BG:SetVertexColor(0.1,0.1,0.1)
+	BG.multiplier = .2
+
+	self.Health = Statusbar
+	self.Health.bg2 = BG
+end
   
-  --gen hp strings func
-lib.gen_hpstrings = function(f, unit)
-    --creating helper frame here so our font strings don't inherit healthbar parameters
-    local h = CreateFrame("Frame", nil, f)
-    h:SetAllPoints(f.Health)
-    h:SetFrameLevel(15)
+--gen 3D portrait func
+lib.gen_portrait = function(self)
+	local portrait = CreateFrame("PlayerModel", nil, self)
+	portrait.PostUpdate = function(self) 
+	portrait:SetAlpha(0.3) 
+		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then
+			self:SetCamera(1)
+		end	
+	end
+	portrait:SetAllPoints()
+	portrait:SetFrameLevel(5)
+	table.insert(self.__elements, HidePortrait)
+	self.Portrait = portrait
+	
+	-- Event
+	local Event = CreateFrame("Frame")
+	Event:RegisterEvent("PLAYER_REGEN_DISABLED")
+	Event:RegisterEvent("PLAYER_REGEN_ENABLED")
+	Event:SetScript("OnEvent",function(self, event, ...)
+		if event == "PLAYER_REGEN_DISABLED" then
+			UIFrameFadeIn(portrait, 0.5, 0.3, 0)
+		elseif event == "PLAYER_REGEN_ENABLED" then
+			UIFrameFadeOut(portrait, 0.5, 0, 0.3)
+		end
+	end)
+	
+end
+  
+--gen hp strings func
+lib.gen_hpstrings = function(self, unit)
+    --creating Border frame here so our font strings don't inherit healthbar parameters
+    local Border = CreateFrame("Frame", nil, self)
+    Border:SetAllPoints(self.Health)
+    Border:SetFrameLevel(15)
 	
 	local level , hpval , ppval , DeadInfo
-	if f.mystyle == "player" and cfg.ShowPlayerName then
-		level = lib.gen_fontstring(f.Health, cfg.font, 12, "THINOUTLINE")
-		level:SetPoint("LEFT", f.Health, "LEFT", 0, 0)
-		f:Tag(level, " [karma:level] [karma:color][name][karma:afkdnd]")
-	elseif f.mystyle =="target" or f.mystyle =="focus"  then
-		level = lib.gen_fontstring(f.Health, cfg.font, 12, "THINOUTLINE")
-		level:SetPoint("LEFT", f.Health, "LEFT", 0, 0)
-		f:Tag(level, " [karma:level] [karma:color][name]")
-	elseif f.mystyle == "pet" or f.mystyle == "tot" or f.mystyle == "focustarget" then
-		level = lib.gen_fontstring(f.Health, cfg.font, 10, "THINOUTLINE")
-		level:SetPoint("LEFT", f.Health, "LEFT", 0, 5)
-		f:Tag(level, "[name]")
-	elseif f.mystyle=="raid" then
-		level = lib.gen_fontstring(f.Health, cfg.font, 10, "THINOUTLINE")
-		level:SetPoint("CENTER", f.Health, "CENTER", 0, 0)
-		f:Tag(level, "[karma:color][name]")
+	if self.mystyle == "player" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
+		self:Tag(level, "[Sora:color][name]")
+		level:SetAlpha(0)
+	elseif self.mystyle == "target" or self.mystyle =="focus" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
+		self:Tag(level, "[Sora:level]　[Sora:color][name]")
+		level:SetAlpha(0.3)
+	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		level:SetPoint("LEFT", self.Health, "LEFT", 0, 5)
+		self:Tag(level, "[name]")
+	elseif self.mystyle=="raid" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		level:SetPoint("CENTER", self.Health, "CENTER", 0, 0)
+		self:Tag(level, "[Sora:color][name]")
 	end
 
-	if f.mystyle == "player" or f.mystyle == "target" or f.mystyle == "focus"  then
-		hpval = lib.gen_fontstring(f.Health, cfg.font, 12, "THINOUTLINE")
-		hpval:SetPoint("RIGHT", f.Health, "RIGHT", 0, 0)
-		f:Tag(hpval, "[karma:color][karma:hp] ")
-	elseif f.mystyle == "pet" or f.mystyle == "tot" or f.mystyle == "focustarget" then
-		hpval = lib.gen_fontstring(f.Health, cfg.font, 8, "THINOUTLINE")
-		hpval:SetPoint("RIGHT", f.Health, "RIGHT", 7, -7)
-		f:Tag(hpval, "[karma:hp] ")
+	if self.mystyle == "player" then
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
+		self:Tag(hpval, "[Sora:color][Sora:hp]")
+		hpval:SetAlpha(0)
+	elseif self.mystyle == "target" or self.mystyle == "focus" then
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
+		self:Tag(hpval, "[Sora:color][Sora:hp]")
+		hpval:SetAlpha(0.3)	
+	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
+		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 7, -5)
+		self:Tag(hpval, "[Sora:hp]")
 	end
 	
-	if f.mystyle == "player" or f.mystyle == "target" or f.mystyle == "focus" then
-		ppval = lib.gen_fontstring(f.Health, cfg.font, 9, "THINOUTLINE")
-		ppval:SetPoint("TOPRIGHT", f, "BOTTOMRIGHT", 3, -1)
-		f:Tag(ppval, "[karma:pp]")
+	if self.mystyle == "player" then 
+		ppval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		ppval:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -5)
+		self:Tag(ppval, "[Sora:pp]")
+		ppval:SetAlpha(0)
+	elseif self.mystyle == "target" or self.mystyle == "focus" then
+		ppval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		ppval:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -5)
+		self:Tag(ppval, "[Sora:pp]")
+		ppval:SetAlpha(0.3)	
 	end
 	
-	if f.mystyle =="raid" then
-		DeadInfo = lib.gen_fontstring(f.Health, cfg.font, 8, "THINOUTLINE")
-		DeadInfo:SetPoint("CENTER", f.Health, "CENTER", 0, -10)
-		f:Tag(DeadInfo, "[karma:info]")
+	if self.mystyle =="raid" then
+		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
+		DeadInfo:SetPoint("CENTER", self.Health, "CENTER", 0, -10)
+		self:Tag(DeadInfo, "[Sora:info]")
 	end
+	
+	-- Event
+	local mystyle = self.mystyle
+	local Event = CreateFrame("Frame")
+	Event:RegisterEvent("PLAYER_REGEN_DISABLED")
+	Event:RegisterEvent("PLAYER_REGEN_ENABLED")
+	Event:SetScript("OnEvent",function(self, event, ...)
+		if event == "PLAYER_REGEN_DISABLED" then
+			if mystyle == "player" then
+				UIFrameFadeIn(level, 0.5, 0, 1)
+				UIFrameFadeIn(hpval, 0.5, 0, 1)
+				UIFrameFadeIn(ppval, 0.5, 0, 1)
+			elseif mystyle == "target" or mystyle == "focus" then
+				UIFrameFadeIn(level, 0.5, 0.3, 1)
+				UIFrameFadeIn(hpval, 0.5, 0.3, 1)
+				UIFrameFadeIn(ppval, 0.5, 0.3, 1)
+			end
+		elseif event == "PLAYER_REGEN_ENABLED" then
+			if mystyle == "player" then
+				UIFrameFadeOut(level, 0.5, 1, 0)
+				UIFrameFadeOut(hpval, 0.5, 1, 0)
+				UIFrameFadeOut(ppval, 0.5, 1, 0)
+			elseif mystyle == "target" or mystyle == "focus" then
+				UIFrameFadeOut(level, 0.5, 1, 0.3)
+				UIFrameFadeOut(hpval, 0.5, 1, 0.3)
+				UIFrameFadeOut(ppval, 0.5, 1, 0.3)
+			end		
+		end
+	end)
 end
   
-  --gen powerbar func
-  lib.gen_ppbar = function(f)
-    --statusbar
-	local s = CreateFrame("StatusBar", nil, f)
-	s:SetStatusBarTexture(cfg.powerbar_texture)
-	s:GetStatusBarTexture():SetHorizTile(true)
-	s:SetWidth(f:GetWidth())
-	if f.mystyle == "target" or f.mystyle == "player" or f.mystyle == "focus" then
-		s:SetHeight(12)
-		s:SetPoint("TOP",f,"BOTTOM",4,3)
-	elseif f.mystyle == "raid" then
-		s:SetHeight(3)
-		s:SetPoint("TOP",f,"BOTTOM",0,2)	
+--gen powerbar func
+lib.gen_ppbar = function(self)
+	-- statusbar
+	local Statusbar = CreateFrame("StatusBar", nil, self)
+	Statusbar:SetStatusBarTexture(cfg.powerbar_texture)
+	Statusbar:GetStatusBarTexture():SetHorizTile(true)
+	Statusbar:SetWidth(self:GetWidth())
+	if self.mystyle == "target" or self.mystyle == "player" or self.mystyle == "focus" then
+		Statusbar:SetHeight(6)
+		Statusbar:SetPoint("TOP",self.Health,"BOTTOM",0,-5)
+	elseif self.mystyle == "pet" then
+		Statusbar:SetHeight(4)
+		Statusbar:SetPoint("TOP",self.Health,"BOTTOM",0,-5)
+	elseif self.mystyle == "raid" then
+		Statusbar:SetHeight(3)
+		Statusbar:SetPoint("TOP",self,"BOTTOM",0,2)	
 	end
-	s:SetFrameLevel(1)
-	--helper
-	local h = CreateFrame("Frame", nil, s)
-	h:SetFrameLevel(0)
-	h:SetPoint("TOPLEFT",-5,5)
-	h:SetPoint("BOTTOMRIGHT",5,-5)
-	lib.gen_backdrop(h)
-    --bg
-    local b = s:CreateTexture(nil, "BACKGROUND")
-    b:SetTexture(cfg.powerbar_texture)
-    b:SetAllPoints(s)
-    f.Power = s
-    f.Power.bg = b
-  end
+	Statusbar:SetFrameLevel(1)
+	
+	-- Border
+	local Border = CreateFrame("Frame", nil, Statusbar)
+	Border:SetFrameLevel(0)
+	Border:SetPoint("TOPLEFT",-5,5)
+	Border:SetPoint("BOTTOMRIGHT",5,-5)
+	lib.gen_backdrop(Border)
+	
+	-- BG
+	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
+	BG:SetTexture(cfg.powerbar_texture)
+	BG:SetAllPoints(Statusbar)
+	BG:SetVertexColor(0.2,0.2,0.2)
+	
+	self.Power = Statusbar
+	self.Power.BG = BG
+end
   
-  --gen combat and LFD icons
-  lib.gen_InfoIcons = function(f)
-    local h = CreateFrame("Frame",nil,f)
-    h:SetAllPoints(f)
-    h:SetFrameLevel(10)
+--gen combat and LFD icons
+lib.gen_InfoIcons = function(self)
+	local Border = CreateFrame("Frame",nil,self)
+	Border:SetAllPoints(self)
+	Border:SetFrameLevel(10)
+	
 	-- rest icon
-    if f.mystyle == 'player' then
-		f.Resting = h:CreateTexture(nil, 'OVERLAY')
-		f.Resting:SetSize(20,20)
-		f.Resting:SetPoint('TOPLEFT', -8, 16)
-		f.Resting:SetTexture([[Interface\Addons\oUF_Karma\media\resting]])
-		f.Resting:SetAlpha(0.75)
+	if self.mystyle == 'player' then
+		self.Resting = Border:CreateTexture(nil, 'OVERLAY')
+		self.Resting:SetSize(20,20)
+		self.Resting:SetPoint("TOPRIGHT", Border, "TOPLEFT", 0, 16)
+		self.Resting:SetTexture([[Interface\Addons\oUF_Karma\media\resting]])
+		self.Resting:SetAlpha(0.75)
 	end
-    --Leader icon
-    li = h:CreateTexture(nil, "OVERLAY")
-    li:SetPoint("TOPLEFT", f, -4, 10)
-    li:SetSize(16,16)
-    f.Leader = li
-    --Assist icon
-    ai = h:CreateTexture(nil, "OVERLAY")
-    ai:SetPoint("TOPLEFT", f, 0, 8)
-    ai:SetSize(12,12)
-    f.Assistant = ai
-    --ML icon
-    local ml = h:CreateTexture(nil, 'OVERLAY')
-    ml:SetSize(16,16)
-    ml:SetPoint('LEFT', f.Leader, 'RIGHT')
-    f.MasterLooter = ml
-  end
+	
+	--Leader icon
+	li = Border:CreateTexture(nil, "OVERLAY")
+	li:SetPoint("TOPLEFT", self, -4, 10)
+	li:SetSize(16,16)
+	self.Leader = li
+	
+	--Assist icon
+	ai = Border:CreateTexture(nil, "OVERLAY")
+	ai:SetPoint("TOPLEFT", self, 0, 8)
+	ai:SetSize(12,12)
+	self.Assistant = ai
+	
+	--ML icon
+	local ml = Border:CreateTexture(nil, 'OVERLAY')
+	ml:SetSize(16,16)
+	ml:SetPoint('LEFT', self.Leader, 'RIGHT')
+	self.MasterLooter = ml
+end
 
 -- LFG Role Indicator
-lib.gen_LFDRole = function(f)
-	local h = CreateFrame("Frame",nil,f)
-	h:SetAllPoints(f)
-	h:SetFrameLevel(10)
-	lfdi = h:CreateTexture(nil, "OVERLAY")
-	lfdi:SetPoint('BOTTOM', f.Health, 'TOP', 15, -7)
+lib.gen_LFDRole = function(self)
+	local Border = CreateFrame("Frame",nil,self)
+	Border:SetAllPoints(self)
+	Border:SetFrameLevel(10)
+	lfdi = Border:CreateTexture(nil, "OVERLAY")
+	lfdi:SetPoint('BOTTOM', self.Health, 'TOP', 15, -7)
 	lfdi:SetSize(16,16)
-	f.LFDRole = lfdi
+	self.LFDRole = lfdi
 end
 
-	--gen raid mark icons
-  lib.gen_RaidMark = function(f)
-    local h = CreateFrame("Frame", nil, f)
-    h:SetAllPoints(f)
-    h:SetFrameLevel(10)
-    h:SetAlpha(0.8)
-    local ri = h:CreateTexture(nil,'OVERLAY',h)
-    ri:SetPoint("CENTER", f, "TOP", 0, 2)
-	local size = retVal(f, 16, 13, 12)
-    ri:SetSize(size, size)
-    f.RaidIcon = ri
-  end
+--gen raid mark icons
+lib.gen_RaidMark = function(self)
+	local Border = CreateFrame("Frame", nil, self)
+		Border:SetAllPoints(self)
+		Border:SetFrameLevel(10)
+		Border:SetAlpha(0.8)
+	local ri = Border:CreateTexture(nil,'OVERLAY',Border)
+	local size = retVal(self, 16, 13, 12)
+	ri:SetSize(size, size)
+	ri:SetPoint("CENTER", self, "TOP", 0, 2)
+	self.RaidIcon = ri
+end
   
-    --gen hilight texture
-  lib.gen_highlight = function(f)
-    local OnEnter = function(f)
-		UnitFrame_OnEnter(f)
-		f.Highlight:Show()
-    end
-    local OnLeave = function(f)
-      UnitFrame_OnLeave(f)
-      f.Highlight:Hide()
-    end
-    f:SetScript("OnEnter", OnEnter)
-    f:SetScript("OnLeave", OnLeave)
-    local hl = f.Health:CreateTexture(nil, "OVERLAY")
-    hl:SetAllPoints(f.Health)
-    hl:SetTexture(cfg.highlight_texture)
-    hl:SetVertexColor(.5,.5,.5,.1)
-    hl:SetBlendMode("ADD")
-    hl:Hide()
-    f.Highlight = hl
-  end
-	
-	-- Create Raid Threat Status Border
-	function lib.CreateThreatBorder(self)
-		
-		local glowBorder = {edgeFile = cfg.backdrop_edge_texture, edgeSize = 5}
-		self.Thtborder = CreateFrame("Frame", nil, self)
-		self.Thtborder:SetPoint("TOPLEFT", self, "TOPLEFT", -6, 6)
-		self.Thtborder:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 6, -6)
-		self.Thtborder:SetBackdrop(glowBorder)
-		self.Thtborder:SetFrameLevel(1)
-		self.Thtborder:Hide()	
+--gen hilight texture
+lib.gen_highlight = function(self)
+	local OnEnter = function(self)
+		UnitFrame_OnEnter(self)
+		self.Highlight:Show()
 	end
-  
-  	-- Raid Frames Threat Highlight
-	function lib.UpdateThreat(self, event, unit)
-	
-		if (self.unit ~= unit) then return end
-		
-		local status = UnitThreatSituation(unit)
-		unit = unit or self.unit
-		
-		if status and status > 1 then
-			local r, g, b = GetThreatStatusColor(status)
-			self.Thtborder:Show()
-			self.Thtborder:SetBackdropBorderColor(r, g, b, 1)
-		else
-			self.Thtborder:SetBackdropBorderColor(r, g, b, 0)
-			self.Thtborder:Hide()
-		end
+	local OnLeave = function(self)
+	  UnitFrame_OnLeave(self)
+	  self.Highlight:Hide()
 	end
+	self:SetScript("OnEnter", OnEnter)
+	self:SetScript("OnLeave", OnLeave)
+	local hl = self.Health:CreateTexture(nil, "OVERLAY")
+	hl:SetAllPoints(self.Health)
+	hl:SetTexture(cfg.highlight_texture)
+	hl:SetVertexColor(.5,.5,.5,.1)
+	hl:SetBlendMode("ADD")
+	hl:Hide()
+	self.Highlight = hl
+end
+	
+-- Create Raid Threat Status Border
+function lib.CreateThreatBorder(self)
+	
+	local glowBorder = {edgeFile = cfg.backdrop_edge_texture, edgeSize = 5}
+	self.Thtborder = CreateFrame("Frame", nil, self)
+	self.Thtborder:SetPoint("TOPLEFT", self, "TOPLEFT", -6, 6)
+	self.Thtborder:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 6, -6)
+	self.Thtborder:SetBackdrop(glowBorder)
+	self.Thtborder:SetFrameLevel(1)
+	self.Thtborder:Hide()
+	
+end
+  
+-- Raid Frames Threat Highlight
+function lib.UpdateThreat(self, event, unit)
+
+	if self.unit ~= unit then return end
+	
+	local status = UnitThreatSituation(unit)
+	unit = unit or self.unit
+	
+	if status and status > 1 then
+		local r, g, BG = GetThreatStatusColor(status)
+		self.Thtborder:Show()
+		self.Thtborder:SetBackdropBorderColor(r, g, BG, 1)
+	else
+		self.Thtborder:SetBackdropBorderColor(r, g, BG, 0)
+		self.Thtborder:Hide()
+	end
+end
 	
   
-  --gen castbar
+--gen castbar
 local PostCastStart = function(castbar, unit)
     if unit ~= 'player' then
         if castbar.interrupt then
@@ -317,147 +385,148 @@ local PostCastStart = function(castbar, unit)
     end
 end
 
-local CustomTimeText = function(castbar, duration)
-    if castbar.casting then
-        castbar.Time:SetFormattedText("%.1f / %.1f", duration, castbar.max)
-    elseif castbar.channeling then
-        castbar.Time:SetFormattedText("%.1f / %.1f", castbar.max - duration, castbar.max)
-    end
-end
-
-  --gen castbar
-  lib.gen_castbar = function(f)
+--gen castbar
+lib.gen_castbar = function(self)
 	if not cfg.Castbars then return end
+	
 	local cbColor = {95/255, 182/255, 255/255}
-    local s = CreateFrame("StatusBar", "oUF_NevoCastbar"..f.mystyle, f)
-    s:SetHeight(10)
-    s:SetWidth(f:GetWidth()+2)
-    if f.mystyle == "player" then
-		s:SetWidth(f:GetWidth()-70)
-		s:SetPoint("TOPRIGHT",f,"BOTTOMRIGHT",0, -16)
-	elseif f.mystyle == "target" then
-		s:SetWidth(f:GetWidth()-70)
-		s:SetPoint("TOPLEFT", f, "BOTTOMLEFT", 0, -18)
-	elseif f.mystyle == "focus" then
-		s:SetWidth(f:GetWidth()-70)
-		s:SetPoint("BOTTOMRIGHT", f, "TOPRIGHT", 0, 10)
-	elseif f.mystyle == "focus" then
-		s:SetPoint("BOTTOM",f,"TOP",15,10)
+	local Statusbar = CreateFrame("StatusBar", "oUF_NevoCastbar"..self.mystyle, self)
+	Statusbar:SetHeight(9)
+	Statusbar:SetWidth(self:GetWidth())
+	
+	if self.mystyle == "player" then
+		Statusbar:SetWidth(self:GetWidth())
+		Statusbar:SetPoint("TOPRIGHT",self,"BOTTOMRIGHT",0, -23)
+	elseif self.mystyle == "target" then
+		Statusbar:SetWidth(self:GetWidth()-70)
+		Statusbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -23)
+	elseif self.mystyle == "focus" then
+		Statusbar:SetWidth(self:GetWidth()-70)
+		Statusbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 10)
+	elseif self.mystyle == "focus" then
+		Statusbar:SetPoint("BOTTOM",self,"TOP",15,10)
 	else
-		s:SetPoint("BOTTOM",f,"TOP",15,42)
-    end
-    s:SetStatusBarTexture(cfg.statusbar_texture)
-    s:SetStatusBarColor(95/255, 182/255, 255/255,1)
-	s:SetFrameLevel(9)
-    --color
-    s.CastingColor = cbColor
-    s.CompleteColor = {20/255, 208/255, 0/255}
-    s.FailColor = {255/255, 12/255, 0/255}
-    s.ChannelingColor = cbColor
-    --helper
-    local h = CreateFrame("Frame", nil, s)
-    h:SetFrameLevel(0)
-    h:SetPoint("TOPLEFT",-5,5)
-    h:SetPoint("BOTTOMRIGHT",5,-5)
-    lib.gen_castbackdrop(h)
-    --spark
-    sp = s:CreateTexture(nil, "OVERLAY")
-    sp:SetTexture(spark)
+		Statusbar:SetPoint("BOTTOM",self,"TOP",15,42)
+	end
+	
+	Statusbar:SetStatusBarTexture(cfg.statusbar_texture)
+	Statusbar:SetStatusBarColor(95/255, 182/255, 255/255,1)
+	Statusbar:SetFrameLevel(9)
+	
+	--color
+	Statusbar.CastingColor = cbColor
+	Statusbar.CompleteColor = {20/255, 208/255, 0/255}
+	Statusbar.FailColor = {255/255, 12/255, 0/255}
+	Statusbar.ChannelingColor = cbColor
+	
+	--Border
+	local Border = CreateFrame("Frame", nil, Statusbar)
+	Border:SetFrameLevel(0)
+	Border:SetPoint("TOPLEFT",-5,5)
+	Border:SetPoint("BOTTOMRIGHT",5,-5)
+	lib.gen_castbackdrop(Border)
+	
+	--spark
+	sp = Statusbar:CreateTexture(nil, "OVERLAY")
+	sp:SetTexture(spark)
 	sp:SetBlendMode("ADD")
 	sp:SetVertexColor(1, 1, 1, 1)
-    sp:SetHeight(s:GetHeight()*2.5)
-    sp:SetWidth(s:GetWidth()/18)
-    --spell text
-    local txt = lib.gen_fontstring(s, cfg.font, 12, "THINOUTLINE")
-    txt:SetPoint("LEFT", 2, 0)
-    txt:SetJustifyH("LEFT")
-    --time
-    local t = lib.gen_fontstring(s, cfg.font, 12, 'THINOUTLINE')
-    t:SetPoint("RIGHT", -2, 0)
-    txt:SetPoint("RIGHT", t, "LEFT", -5, 0)
-    --icon
-    local i = s:CreateTexture(nil, "ARTWORK")
+	sp:SetHeight(Statusbar:GetHeight()*2.5)
+	sp:SetWidth(Statusbar:GetWidth()/18)
+	
+	--spell text
+	local txt = lib.gen_fontstring(Statusbar, cfg.font, 10, "THINOUTLINE")
+	txt:SetPoint("LEFT", 2, 0)
+	txt:SetJustifyH("LEFT")
+	
+	--time
+	local t = lib.gen_fontstring(Statusbar, cfg.font, 10, 'THINOUTLINE')
+	t:SetPoint("RIGHT", -2, 0)
+	txt:SetPoint("RIGHT", t, "LEFT", -5, 0)
+	
+	--icon
+	local i = Statusbar:CreateTexture(nil, "ARTWORK")
 	i:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	i:SetSize(20,20)
-	if f.mystyle == "player" then 
-		i:SetPoint("LEFT", s, "RIGHT", 8, 4)
-	elseif f.mystyle == "target" then
-		i:SetPoint("RIGHT", s, "LEFT", -8, 4)
-	elseif f.mystyle == "focus" then 
-		i:SetPoint("LEFT", s, "RIGHT", 8, -4)
+	if self.mystyle == "player" then 
+		i:SetPoint("LEFT", Statusbar, "RIGHT", 8, 4)
+	elseif self.mystyle == "target" then
+		i:SetPoint("RIGHT", Statusbar, "LEFT", -8, 4)
+	elseif self.mystyle == "focus" then 
+		i:SetPoint("LEFT", Statusbar, "RIGHT", 8, -4)
 	end
-    --helper2 for icon
-    local h2 = CreateFrame("Frame", nil, s)
-    h2:SetFrameLevel(0)
-    h2:SetPoint("TOPLEFT",i,"TOPLEFT",-5,5)
-    h2:SetPoint("BOTTOMRIGHT",i,"BOTTOMRIGHT",5,-5)
-    lib.gen_backdrop(h2)
-    if f.mystyle == "player" then
-      --latency (only for player unit)
-      local z = s:CreateTexture(nil,"OVERLAY")
-      z:SetTexture(cfg.statusbar_texture)
-      z:SetVertexColor(1,0.1,0,.6)
-      z:SetPoint("TOPRIGHT")
-      z:SetPoint("BOTTOMRIGHT")
-	  s:SetFrameLevel(1)
-      s.SafeZone = z
-      -- custom latency display
-      local l = lib.gen_fontstring(s, cfg.font, 10, "THINOUTLINE")
-      l:SetPoint("CENTER", -2, 17)
-      l:SetJustifyH("RIGHT")
+	
+	--helper2 for icon
+	local h2 = CreateFrame("Frame", nil, Statusbar)
+	h2:SetFrameLevel(0)
+	h2:SetPoint("TOPLEFT",i,"TOPLEFT",-5,5)
+	h2:SetPoint("BOTTOMRIGHT",i,"BOTTOMRIGHT",5,-5)
+	lib.gen_backdrop(h2)
+	if self.mystyle == "player" then
+	  --latency (only for player unit)
+	  local z = Statusbar:CreateTexture(nil,"OVERLAY")
+	  z:SetTexture(cfg.statusbar_texture)
+	  z:SetVertexColor(1,0.1,0,.6)
+	  z:SetPoint("TOPRIGHT")
+	  z:SetPoint("BOTTOMRIGHT")
+	  Statusbar:SetFrameLevel(1)
+	  Statusbar.SafeZone = z
+	  -- custom latency display
+	  local l = lib.gen_fontstring(Statusbar, cfg.font, 10, "THINOUTLINE")
+	  l:SetPoint("CENTER", -2, 17)
+	  l:SetJustifyH("RIGHT")
 	  l:Hide()
-      s.Lag = l
-      f:RegisterEvent("UNIT_SPELLCAST_SENT", cast.OnCastSent)
-    end
-    s.OnUpdate = cast.OnCastbarUpdate
-    s.PostCastStart = cast.PostCastStart
-    s.PostChannelStart = cast.PostCastStart
-    s.PostCastStop = cast.PostCastStop
-    s.PostChannelStop = cast.PostChannelStop
-    s.PostCastFailed = cast.PostCastFailed
-    s.PostCastInterrupted = cast.PostCastFailed
-	
-    f.Castbar = s
-    f.Castbar.Text = txt
-    f.Castbar.Time = t
-    f.Castbar.Icon = i
-    f.Castbar.Spark = sp
-  end
-  
-  	-- Post Create Icon Function
-	local myPostCreateIcon = function(self, button)
-	
-		self.showDebuffType = true
-		self.disableCooldown = true
-		button.cd.noOCC = true
-		button.cd.noCooldownCount = true
-
-		button.icon:SetTexCoord(.07, .93, .07, .93)
-		button.icon:SetPoint("TOPLEFT", button, "TOPLEFT", 0, 0)
-		button.icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 0, 0)
-		button.overlay:SetTexture(cfg.debuffBorder)
-		button.overlay:SetTexCoord(0,1,0,1)
-		button.overlay.Hide = function(self) self:SetVertexColor(0.3, 0.3, 0.3) end
-		
-		
-		button.time = lib.gen_fontstring(button, cfg.smallfont, 12, "OUTLINE")
-		button.time:SetPoint("BOTTOM", button, 2, -6)
-		button.time:SetJustifyH('CENTER')
-		button.time:SetVertexColor(1,1,1)
-		
-		button.count = lib.gen_fontstring(button, cfg.smallfont, 15, "OUTLINE")
-		button.count:ClearAllPoints()
-		button.count:SetPoint("TOPRIGHT", button, 5, 3)
-		button.count:SetJustifyH('RIGHT')
-		button.count:SetVertexColor(1,1,1)	
-		
-    --helper
-		local h = CreateFrame("Frame", nil, button)
-		h:SetFrameLevel(0)
-		h:SetPoint("TOPLEFT",-5,5)
-		h:SetPoint("BOTTOMRIGHT",5,-5)
-		lib.gen_backdrop(h)
+	  Statusbar.Lag = l
+	  self:RegisterEvent("UNIT_SPELLCAST_SENT", cast.OnCastSent)
 	end
+	Statusbar.OnUpdate = cast.OnCastbarUpdate
+	Statusbar.PostCastStart = cast.PostCastStart
+	Statusbar.PostChannelStart = cast.PostCastStart
+	Statusbar.PostCastStop = cast.PostCastStop
+	Statusbar.PostChannelStop = cast.PostChannelStop
+	Statusbar.PostCastFailed = cast.PostCastFailed
+	Statusbar.PostCastInterrupted = cast.PostCastFailed
+
+	self.Castbar = Statusbar
+	self.Castbar.Text = txt
+	self.Castbar.Time = t
+	self.Castbar.Icon = i
+	self.Castbar.Spark = sp
+end
+  
+-- Post Create Icon Function
+local myPostCreateIcon = function(self, button)
+
+	self.showDebuffType = false
+	self.disableCooldown = true
+	button.cd.noOCC = true
+	button.cd.noCooldownCount = true
+
+	button.icon:SetTexCoord(.07, .93, .07, .93)
+	button.icon:SetPoint("TOPLEFT", button, "TOPLEFT", 0, 0)
+	button.icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 0, 0)	
+	
+	button.time = lib.gen_fontstring(button, cfg.smallfont, 12, "OUTLINE")
+	button.time:SetPoint("BOTTOM", button, 2, -6)
+	button.time:SetJustifyH('CENTER')
+	button.time:SetVertexColor(1,1,1)
+	
+	button.count = lib.gen_fontstring(button, cfg.smallfont, 15, "OUTLINE")
+	button.count:ClearAllPoints()
+	button.count:SetPoint("TOPRIGHT", button, 5, 3)
+	button.count:SetJustifyH('RIGHT')
+	button.count:SetVertexColor(1,1,1)	
+	
+	--Border
+	local Border = CreateFrame("Frame", nil, button)
+	Border:SetFrameLevel(0)
+	Border:SetPoint("TOPLEFT",-5,5)
+	Border:SetPoint("BOTTOMRIGHT",5,-5)
+	Border:SetBackdrop{
+		edgeFile = cfg.backdrop_edge_texture, edgeSize = 5 
+	}
+	Border:SetBackdropBorderColor(0,0,0,0.8)
+end
   
 -- Post Update Icon Function
 local myPostUpdateIcon = function(self, unit, icon, index, offset, filter, isDebuff)
@@ -475,11 +544,11 @@ local myPostUpdateIcon = function(self, unit, icon, index, offset, filter, isDeb
 	end
 		
 	-- Desaturate non-Player Debuffs
-	if(icon.debuff) then
-		if(unit == "target") then	
-			if (unitCaster == 'player' or unitCaster == 'vehicle') then
+	if icon.debuff then
+		if unit == "target" then	
+			if unitCaster == 'player' or unitCaster == 'vehicle' then
 				icon.icon:SetDesaturated(false)                 
-			elseif(not UnitPlayerControlled(unit)) then -- If Unit is Player Controlled don't desaturate debuffs
+			elseif not UnitPlayerControlled(unit) then -- If Unit is Player Controlled don't desaturate debuffs
 				icon:SetBackdropColor(0, 0, 0)
 				icon.overlay:SetVertexColor(0.3, 0.3, 0.3)      
 				icon.icon:SetDesaturated(true)  
@@ -496,21 +565,21 @@ local myPostUpdateIcon = function(self, unit, icon, index, offset, filter, isDeb
 	icon.first = true
 end
 
-local FormatTime = function(s)
+local FormatTime = function(Statusbar)
 	local day, hour, minute = 86400, 3600, 60
-	if s >= day then
-		return format("%dd", floor(s/day + 0.5)), s % day
-	elseif s >= hour then
-		return format("%dh", floor(s/hour + 0.5)), s % hour
-	elseif s >= minute then
-		if s <= minute * 5 then
-			return format("%d:%02d", floor(s/60), s % minute), s - floor(s)
+	if Statusbar >= day then
+		return format("%dd", floor(Statusbar/day + 0.5)), Statusbar % day
+	elseif Statusbar >= hour then
+		return format("%dh", floor(Statusbar/hour + 0.5)), Statusbar % hour
+	elseif Statusbar >= minute then
+		if Statusbar <= minute * 5 then
+			return format("%d:%02d", floor(Statusbar/60), Statusbar % minute), Statusbar - floor(Statusbar)
 		end
-		return format("%dm", floor(s/minute + 0.5)), s % minute
-	elseif s >= minute / 12 then
-		return floor(s + 0.5), (s * 100 - floor(s * 100))/100
+		return format("%dm", floor(Statusbar/minute + 0.5)), Statusbar % minute
+	elseif Statusbar >= minute / 12 then
+		return floor(Statusbar + 0.5), (Statusbar * 100 - floor(Statusbar * 100))/100
 	end
-	return format("%.1f", s), (s * 100 - floor(s * 100))/100
+	return format("%.1f", Statusbar), (Statusbar * 100 - floor(Statusbar * 100))/100
 end
 
 -- Create Buff/Debuff Timer Function 
@@ -544,56 +613,44 @@ function CreateBuffTimer(self, elapsed)
 end
   
 -- Generates the Buffs
-  lib.createBuffs = function(f)
-    b = CreateFrame("Frame", nil, f)
-    b.onlyShowPlayer = cfg.buffsOnlyShowPlayer
-    if f.mystyle == "target" then
-		b:SetPoint("TOPLEFT", f, "TOPRIGHT", 12, 0)
-		b.initialAnchor = "TOPLEFT"
-		b["growth-x"] = "RIGHT"
-		b["growth-y"] = "DOWN"
-		b.size = 20
-		b.num = 18
-		b.spacing = 5
-		b:SetWidth((b.size+b.spacing)*6-b.spacing)
-		b:SetHeight((b.size+b.spacing)*3)
-    elseif f.mystyle == "player" then
-		b:SetPoint("TOPRIGHT", f, "TOPLEFT", -5, 0)
-		b.initialAnchor = "TOPRIGHT"
-		b["growth-x"] = "LEFT"
-		b["growth-y"] = "DOWN"
-		b.size = 20
-		b.num = 40
-		b.spacing = 5
-		b:SetHeight((b.size+b.spacing)*4)
-		b:SetWidth(f:GetWidth())
-	else
-		b.num = 0
-    end
-    b.PostCreateIcon = myPostCreateIcon
-    b.PostUpdateIcon = myPostUpdateIcon
+lib.createBuffs = function(self)
+	Buff = CreateFrame("Frame", nil, self)
+	Buff.onlyShowPlayer = cfg.buffsOnlyShowPlayer
+	if self.mystyle == "target" then
+		Buff:SetPoint("TOPLEFT", self, "TOPRIGHT", 12, 0)
+		Buff.initialAnchor = "TOPLEFT"
+		Buff["growth-x"] = "RIGHT"
+		Buff["growth-y"] = "DOWN"
+		Buff.size = 20
+		Buff.num = 18
+		Buff.spacing = 5
+		Buff:SetWidth((Buff.size+Buff.spacing)*6-Buff.spacing)
+		Buff:SetHeight((Buff.size+Buff.spacing)*3)
+	end
+	Buff.PostCreateIcon = myPostCreateIcon
+	Buff.PostUpdateIcon = myPostUpdateIcon
 
-    f.Buffs = b
-  end
+	self.Buffs = Buff
+end
 
 -- Generates the Debuffs
-  lib.createDebuffs = function(f)
-    b = CreateFrame("Frame", nil, f)
-    b.size = 20
-	b.num = 40
-	b.onlyShowPlayer = cfg.debuffsOnlyShowPlayer
-    b.spacing = 5
-    b:SetHeight((b.size+b.spacing)*5)
-    b:SetWidth(f:GetWidth())
-    b:SetPoint("TOPLEFT", f.Power, "BOTTOMLEFT", 0, -30)
-    b.initialAnchor = "TOPLEFT"
-    b["growth-x"] = "RIGHT"
-    b["growth-y"] = "DOWN"
-    b.PostCreateIcon = myPostCreateIcon
-    b.PostUpdateIcon = myPostUpdateIcon
+lib.createDebuffs = function(self)
+	DeBuff = CreateFrame("Frame", nil, self)
+	DeBuff.size = 20
+	DeBuff.num = 40
+	DeBuff.onlyShowPlayer = cfg.debuffsOnlyShowPlayer
+	DeBuff.spacing = 5
+	DeBuff:SetHeight((DeBuff.size+DeBuff.spacing)*5)
+	DeBuff:SetWidth(self:GetWidth())
+	DeBuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -30)
+	DeBuff.initialAnchor = "TOPLEFT"
+	DeBuff["growth-x"] = "RIGHT"
+	DeBuff["growth-y"] = "DOWN"
+	DeBuff.PostCreateIcon = myPostCreateIcon
+	DeBuff.PostUpdateIcon = myPostUpdateIcon
 
-    f.Debuffs = b
-  end
+	self.Debuffs = DeBuff
+end
  
 -- raid post update
 lib.PostUpdateRaidFrame = function(Health, unit, min, max)
@@ -605,11 +662,11 @@ lib.PostUpdateRaidFrame = function(Health, unit, min, max)
 	if disconnnected or dead or ghost then
 		Health:SetValue(max)
 		
-		if(disconnnected) then
+		if disconnnectedthen then
 			Health:SetStatusBarColor(0,0,0,0.7)
-		elseif(ghost) then
+		elseif ghost then
 			Health:SetStatusBarColor(0,0,0,0.7)
-		elseif(dead) then
+		elseif dead then
 			Health:SetStatusBarColor(0,0,0,0.7)
 	end
 	else
@@ -635,15 +692,17 @@ lib.addEclipseBar = function(self)
 	if playerClass ~= "DRUID" then return end
 	
 	local eclipseBar = CreateFrame('Frame', nil, self)
-	eclipseBar:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 2)
-	eclipseBar:SetHeight(4)
+	eclipseBar:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
+	eclipseBar:SetHeight(6)
 	eclipseBar:SetWidth(self.Health:GetWidth())
 	eclipseBar:SetFrameLevel(4)
-	local h = CreateFrame("Frame", nil, eclipseBar)
-	h:SetPoint("TOPLEFT",-5,5)
-	h:SetPoint("BOTTOMRIGHT",5,-5)
-	lib.gen_backdrop(h)
-	eclipseBar.eBarBG = h
+	
+	local Border = CreateFrame("Frame", nil, eclipseBar)
+	Border:SetFrameLevel(1)
+	Border:SetPoint("TOPLEFT",-5,5)
+	Border:SetPoint("BOTTOMRIGHT",5,-5)
+	lib.gen_backdrop(Border)
+	eclipseBar.eBarBG = Border
 
 	local lunarBar = CreateFrame('StatusBar', nil, eclipseBar)
 	lunarBar:SetPoint('LEFT', eclipseBar, 'LEFT', 0, 0)
@@ -673,44 +732,44 @@ end
 lib.genShards = function(self)
 	if playerClass ~= "WARLOCK" then return end
 			local ssOverride = function(self, event, unit, powerType)
-				if(self.unit ~= unit or (powerType and powerType ~= "SOUL_SHARDS")) then return end
+				if self.unit ~= unit or (powerType and powerType ~= "SOUL_SHARDS")then return end
 				local ss = self.SoulShards
 				local num = UnitPower(unit, SPELL_POWER_SOUL_SHARDS)
 				for i = 1, SHARD_BAR_NUM_SHARDS do
-					if(i <= num) then
+					if i <= num then
 						ss[i]:SetAlpha(1)
 					else
-						ss[i]:SetAlpha(0.2)
+						ss[i]:SetAlpha(0.3)
 					end
 				end
 			end
 			
 		local barFrame = CreateFrame("Frame", nil, self)
 		barFrame:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 5)
-		barFrame:SetHeight(8)
+		barFrame:SetHeight(6)
 		barFrame:SetWidth(self:GetWidth())
 		barFrame:SetFrameLevel(4)
+		
+		local Border = CreateFrame("Frame", nil, barFrame)
+		Border:SetFrameLevel(1)
+		Border:SetPoint("TOPLEFT",-5,5)
+		Border:SetPoint("BOTTOMRIGHT",5,-5)
+		lib.gen_backdrop(Border)
 
 		for i= 1, 3 do
 			local shard = CreateFrame("StatusBar", nil, barFrame)
-			shard:SetSize((self.Health:GetWidth() / 3)-6, 8)
+			shard:SetSize((self.Health:GetWidth()-7)/3, barFrame:GetHeight())
 			shard:SetStatusBarTexture(cfg.statusbar_texture)
 			shard:SetStatusBarColor(.86,.44, 1)
 			shard:SetFrameLevel(4)
-				
-			local h = CreateFrame("Frame", nil, shard)
-			h:SetFrameLevel(1)
-			h:SetPoint("TOPLEFT",-5,5)
-			h:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_totemback(h)
 
-		if (i == 1) then
-			shard:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 3, 5)
-		else
-			shard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 6, 0)
+			if i == 1 then
+				shard:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
+			else
+				shard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 3, 0)
+			end
+			barFrame[i] = shard
 		end
-		barFrame[i] = shard
-	end
 	self.SoulShards = barFrame
 	self.SoulShards.Override = ssOverride
 			
@@ -720,45 +779,47 @@ end
 lib.genHolyPower = function(self)
 	if playerClass ~= "PALADIN" then return end
 		local hpOverride = function(self, event, unit, powerType)
-				if(self.unit ~= unit or (powerType and powerType ~= "HOLY_POWER")) then return end
+				if self.unit ~= unit or (powerType and powerType ~= "HOLY_POWER") then return end
 				
 				local hp = self.HolyPower
-				if(hp.PreUpdate) then hp:PreUpdate(unit) end
+				if hp.PreUpdate then 
+					hp:PreUpdate(unit) 
+				end
 				
 				local num = UnitPower(unit, SPELL_POWER_HOLY_POWER)
 				for i = 1, MAX_HOLY_POWER do
-					if(i <= num) then
+					if i <= num then
 						hp[i]:SetAlpha(1)
 					else
-						hp[i]:SetAlpha(0.2)
+						hp[i]:SetAlpha(0.3)
 					end
 				end
 			end
 			
 		local barFrame = CreateFrame("Frame", nil, self)
-		barFrame:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
-		barFrame:SetHeight(8)
+		barFrame:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 5)
+		barFrame:SetHeight(6)
 		barFrame:SetWidth(self:GetWidth())
 		barFrame:SetFrameLevel(4)
+		
+		local Border = CreateFrame("Frame", nil, barFrame)
+		Border:SetFrameLevel(1)
+		Border:SetPoint("TOPLEFT",-5,5)
+		Border:SetPoint("BOTTOMRIGHT",5,-5)
+		lib.gen_backdrop(Border)
 
 		for i = 1, 3 do
 			local holyShard = CreateFrame("StatusBar", self:GetName().."_Holypower"..i, self)
-			holyShard:SetHeight(8)
-			holyShard:SetWidth((self.Health:GetWidth() / 3)-6, 6)
+			holyShard:SetHeight(6)
+			holyShard:SetWidth((self.Health:GetWidth()-7)/3, 6)
 			holyShard:SetStatusBarTexture(cfg.statusbar_texture)
 			holyShard:SetStatusBarColor(.9,.95,.33)
 			holyShard:SetFrameLevel(4)
-				
-			local h = CreateFrame("Frame", nil, holyShard)
-			h:SetFrameLevel(1)
-			h:SetPoint("TOPLEFT",-5,5)
-			h:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_totemback(h)
 			
-			if (i == 1) then
-				holyShard:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 3, 6)
+			if i == 1 then
+				holyShard:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
 			else
-				holyShard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 6, 0)
+				holyShard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 3, 0)
 			end
 			barFrame[i] = holyShard
 	end
@@ -771,28 +832,28 @@ lib.genRunes = function(self)
 	if playerClass ~= "DEATHKNIGHT" then return end
 
 	local runeFrame = CreateFrame("Frame", nil, self)
-	runeFrame:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
-	runeFrame:SetHeight(8)
+	runeFrame:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 5)
+	runeFrame:SetHeight(6)
 	runeFrame:SetWidth(self:GetWidth())
 	runeFrame:SetFrameLevel(4)
 	
+	local Border = CreateFrame("Frame", nil, runeFrame)
+	Border:SetFrameLevel(1)
+	Border:SetPoint("TOPLEFT",-5,5)
+	Border:SetPoint("BOTTOMRIGHT",5,-5)
+	lib.gen_backdrop(Border)
+	
 	for i= 1, 6 do
 		local rune = CreateFrame("StatusBar", nil, runeFrame)
-		rune:SetSize((self.Health:GetWidth() / 6)-6, 6)
+		rune:SetSize((self.Health:GetWidth()-15)/6, 6)
 		rune:SetStatusBarTexture(cfg.statusbar_texture)
 		rune:SetFrameLevel(8)
 		
-			local h = CreateFrame("Frame", nil, rune)
-			h:SetFrameLevel(1)
-			h:SetPoint("TOPLEFT",-5,5)
-			h:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_totemback(h)
-
-			if (i == 1) then
-				rune:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 3, 6)
-			else
-				rune:SetPoint("TOPLEFT", runeFrame[i-1], "TOPRIGHT", 6, 0)
-			end
+		if i == 1 then
+			rune:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 5)
+		else
+			rune:SetPoint("LEFT", runeFrame[i-1], "RIGHT", 3, 0)
+		end
 
 		runeFrame[i] = rune
 	end
@@ -890,11 +951,11 @@ lib.RogueComboPoints = function(self)
 			point:SetStatusBarTexture(cfg.statusbar_texture)
 			point:SetStatusBarColor(1.0, 0.9, 0)
 
-			local h = CreateFrame("Frame", nil, point)
-			h:SetFrameLevel(1)
-			h:SetPoint("TOPLEFT",-5,5)
-			h:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_totemback(h)
+			local Border = CreateFrame("Frame", nil, point)
+			Border:SetFrameLevel(1)
+			Border:SetPoint("TOPLEFT",-5,5)
+			Border:SetPoint("BOTTOMRIGHT",5,-5)
+			lib.gen_totemback(Border)
 
 		if (i == 1) then
 			point:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
@@ -909,11 +970,9 @@ lib.RogueComboPoints = function(self)
 	
 end
 
--- Addons/Plugins -------------------------------------------
-
 -- Totem timer support (requires oUF_boring_totembar) 
 lib.gen_TotemBar = function(self)
-	if ( playerClass == "SHAMAN" ) then
+	if playerClass == "SHAMAN" then
 		local TotemBar = CreateFrame("Frame", nil, self)
 		TotemBar:SetPoint("TOP", self, "BOTTOM", 0, -4)
 		TotemBar:SetWidth(self:GetWidth())
@@ -932,7 +991,7 @@ lib.gen_TotemBar = function(self)
 
 		for i = 1, 4 do
 		local t = CreateFrame("Frame", nil, TotemBar)
-			t:SetHeight(8)
+			t:SetHeight(6)
 			t:SetWidth(self.Health:GetWidth()/4 - 6)
 
 			local bar = CreateFrame("StatusBar", nil, t)
@@ -940,26 +999,26 @@ lib.gen_TotemBar = function(self)
 			bar:SetStatusBarTexture(cfg.statusbar_texture)
 			t.StatusBar = bar
 
-			local h = CreateFrame("Frame", nil, t)
-			h:SetFrameLevel(1)
-			h:SetPoint("TOPLEFT",-5,5)
-			h:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_totemback(h)
+			local Border = CreateFrame("Frame", nil, t)
+			Border:SetFrameLevel(1)
+			Border:SetPoint("TOPLEFT",-5,5)
+			Border:SetPoint("BOTTOMRIGHT",5,-5)
+			lib.gen_totemback(Border)
 			
-			if (i == 1) then
+			if i == 1 then
 				t:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 3, 6)
 			else
 				t:SetPoint('TOPLEFT', TotemBar[i-1], "TOPRIGHT", 6, 0)
 			end
 
-			t.bg = t:CreateTexture(nil, "BORDER")
-			t.bg:SetAllPoints(t)
-			t.bg:SetTexture(cfg.backdrop_texture)
-			t.bg.multiplier = 0.15
-			t.bg:SetAlpha(0.6)
+			t.BG = t:CreateTexture(nil, "BORDER")
+			t.BG:SetAllPoints(t)
+			t.BG:SetTexture(cfg.backdrop_texture)
+			t.BG.multiplier = 0.15
+			t.BG:SetAlpha(0.6)
 	
 			local text = lib.gen_fontstring(t, cfg.smallfont, 8, "THINOUTLINE")
-			text:SetPoint("CENTER",t,"TOP",0,8)
+			text:SetPoint("CENTER",t,"CENTER",1,12)
 			text:SetFontObject"GameFontNormal"
 			t.Text = text
 
@@ -989,11 +1048,11 @@ local AWPostCreateIcon = function(AWatch, icon, spellID, name, self)
 	local count = lib.gen_fontstring(icon, cfg.smallfont, 12, "OUTLINE")
 	count:SetPoint("CENTER", icon, "BOTTOM", 3, 3)
 	icon.count = count
-	local h = CreateFrame("Frame", nil, icon)
-	h:SetFrameLevel(4)
-	h:SetPoint("TOPLEFT",-3,3)
-	h:SetPoint("BOTTOMRIGHT",3,-3)
-	lib.gen_backdrop(h)
+	local Border = CreateFrame("Frame", nil, icon)
+	Border:SetFrameLevel(4)
+	Border:SetPoint("TOPLEFT",-3,3)
+	Border:SetPoint("BOTTOMRIGHT",3,-3)
+	lib.gen_backdrop(Border)
 end
 lib.createAuraWatch = function(self, unit)
 	if cfg.showAuraWatch then
