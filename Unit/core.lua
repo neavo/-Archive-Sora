@@ -162,7 +162,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60, 14)
+		self:SetSize(60, 10)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -184,7 +184,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60, 14)
+		self:SetSize(60, 10)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -207,7 +207,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60,14)
+		self:SetSize(60,10)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
