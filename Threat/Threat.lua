@@ -207,9 +207,9 @@ Event:SetScript("OnEvent",function(self, event, unit)
 	if event == "PLAYER_ENTERING_WORLD" then
 		ThreatFrame:SetPoint(unpack(cfg.Pos))
 	elseif event == "PLAYER_REGEN_DISABLED" then
-		UIFrameFadeIn(ThreatFrame, 0.7, 0, 0.8)
+		UIFrameFadeIn(ThreatFrame, 0.5, 0, 0.8)
 	elseif event == "PLAYER_REGEN_ENABLED" then
-		UIFrameFadeOut(ThreatFrame, 0.7, 0.8, 0)
+		UIFrameFadeOut(ThreatFrame, 0.5, 0.8, 0)
 	elseif event == "UNIT_THREAT_LIST_UPDATE" then
 		if unit and UnitExists(unit) and UnitGUID(unit) == ThreatGuid and UnitCanAttack("player", ThreatUnit) then
 			wipe(ThreatList)
@@ -232,7 +232,7 @@ Event:SetScript("OnEvent",function(self, event, unit)
 			ThreatGuid = UnitGUID("target")
 			local TargetSwitch = function()
 				if UnitAffectingCombat("player") then
-					UIFrameFadeIn(ThreatFrame, 0.7, 0, 0.8)
+					UIFrameFadeIn(ThreatFrame, 0.5, 0, 0.8)
 				end
 			end
 			TargetSwitch()
