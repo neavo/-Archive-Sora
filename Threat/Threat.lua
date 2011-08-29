@@ -8,17 +8,22 @@ local cfg = SR.ThreatConfig
 
 -- 主框体
 local ThreatFrame = CreateFrame("Frame")
-ThreatFrame:SetWidth(210)
+ThreatFrame:SetWidth(220)
 ThreatFrame:SetHeight(6)
 ThreatFrame:SetAlpha(0)
+ThreatFrame:SetFrameLevel(1)
 
 ThreatFrame.Overlay = CreateFrame("Frame", nil, ThreatFrame)
 ThreatFrame.Overlay:SetPoint("TOPLEFT",-5,5)
 ThreatFrame.Overlay:SetPoint("BOTTOMRIGHT",5,-5)
 ThreatFrame.Overlay:SetBackdrop({ 
-	edgeFile = cfg.GlowTex , edgeSize = 5,
+	bgFile = cfg.Solid, 
+	insets = { left = 3, right = 3, top = 3, bottom = 3},
+	edgeFile = cfg.GlowTex, edgeSize = 5
 	})
+ThreatFrame.Overlay:SetBackdropColor(0,0,0,1)
 ThreatFrame.Overlay:SetBackdropBorderColor(0,0,0,0.8)
+ThreatFrame.Overlay:SetFrameLevel(0)
 
 -- 仇恨条背景
 local PreTex
@@ -28,19 +33,19 @@ for i = 1,4 do
 	Texture:SetTexture(cfg.Statusbar)
 	if i == 1 then
 		Texture:SetPoint("LEFT", 0, 0)
-		Texture:SetWidth(53)	
+		Texture:SetWidth(55)	
 		Texture:SetGradient("HORIZONTAL", 0.69, 0.69, 0.69, 1, 1, 0.47)
 	elseif i == 2 then
 		Texture:SetPoint("LEFT", PreTex, "RIGHT", 0, 0)
-		Texture:SetWidth(54)
+		Texture:SetWidth(55)
 		Texture:SetGradient("HORIZONTAL", 1, 1, 0.47, 1, 0.6, 0)
 	elseif i == 3 then
 		Texture:SetPoint("LEFT", PreTex, "RIGHT", 0, 0)
-		Texture:SetWidth(54)
+		Texture:SetWidth(55)
 		Texture:SetGradient("HORIZONTAL", 1, 0.6, 0, 1, 0, 0)
 	elseif i == 4 then
 		Texture:SetPoint("LEFT", PreTex, "RIGHT", 0, 0)
-		Texture:SetWidth(49)
+		Texture:SetWidth(54)
 		Texture:SetVertexColor(1, 0, 0)
 	end
 	PreTex = Texture
@@ -207,9 +212,9 @@ Event:SetScript("OnEvent",function(self, event, unit)
 	if event == "PLAYER_ENTERING_WORLD" then
 		ThreatFrame:SetPoint(unpack(cfg.Pos))
 	elseif event == "PLAYER_REGEN_DISABLED" then
-		UIFrameFadeIn(ThreatFrame, 0.5, 0, 0.8)
+		UIFrameFadeIn(ThreatFrame, 0.5, 0, 1)
 	elseif event == "PLAYER_REGEN_ENABLED" then
-		UIFrameFadeOut(ThreatFrame, 0.5, 0.8, 0)
+		UIFrameFadeOut(ThreatFrame, 0.5, 1, 0)
 	elseif event == "UNIT_THREAT_LIST_UPDATE" then
 		if unit and UnitExists(unit) and UnitGUID(unit) == ThreatGuid and UnitCanAttack("player", ThreatUnit) then
 			wipe(ThreatList)
@@ -232,7 +237,7 @@ Event:SetScript("OnEvent",function(self, event, unit)
 			ThreatGuid = UnitGUID("target")
 			local TargetSwitch = function()
 				if UnitAffectingCombat("player") then
-					UIFrameFadeIn(ThreatFrame, 0.5, 0, 0.8)
+					UIFrameFadeIn(ThreatFrame, 0.5, 0, 1)
 				end
 			end
 			TargetSwitch()
