@@ -106,7 +106,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--挫志咆哮(熊)
 			{ spellID =    99, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -205,7 +205,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--猎人印记
 			{ spellID =  1130, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -280,7 +280,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--点燃
 			{ spellID = 12654, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -387,7 +387,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--撕裂(战斗,防御姿态)
 			{ spellID = 94009, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -446,7 +446,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--灼热烈焰
 			{ spellID = 77661, size = 54, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -529,7 +529,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--制裁之锤
 			{ spellID = 853, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -615,7 +615,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--暗言术:痛
 			{ spellID =   589, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -688,7 +688,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--腐蚀术
 			{ spellID =   172, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -773,7 +773,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM", "oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--割裂
 			{ spellID =  1943, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
@@ -852,7 +852,7 @@ Filger_Spells = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			setPoint = { "BOTTOM","oUF_NevoTarget", "TOP", -90, 5 },
+			setPoint = { "BOTTOM","oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--血之疫病
 			{ spellID = 55078, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
