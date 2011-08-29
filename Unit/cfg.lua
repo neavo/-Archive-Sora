@@ -21,8 +21,8 @@ cfg.showBossFrame = true -- show boss frame
 -- Raid and Party
 cfg.party_leader_icon = true	-- Show Leader Icon
 cfg.ShowRaid = true				-- 显示团队框架
-cfg.RaidUnitHeight = 21			-- 团队框架单位高度
-cfg.RaidUnitWidth = 70			-- 团队框架单位高度
+cfg.RaidUnitHeight = 22			-- 团队框架单位高度
+cfg.RaidUnitWidth = 74			-- 团队框架单位高度
 cfg.RaidPartyH = true			-- 团队框架中各小队横向排列  
 
 -- Auras

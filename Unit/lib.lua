@@ -108,29 +108,32 @@ end
 --gen 3D portrait func
 lib.gen_portrait = function(self)
 	local portrait = CreateFrame("PlayerModel", nil, self)
-	portrait.PostUpdate = function(self) 
 	portrait:SetAlpha(0.3) 
+	portrait.PostUpdate = function(self) 
 		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then
 			self:SetCamera(1)
 		end	
 	end
 	portrait:SetAllPoints()
 	portrait:SetFrameLevel(5)
-	table.insert(self.__elements, HidePortrait)
 	self.Portrait = portrait
 	
 	-- Event
+	local IsInCombat = false
+	local Timer = 0
 	local Event = CreateFrame("Frame")
 	Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 	Event:RegisterEvent("PLAYER_REGEN_ENABLED")
 	Event:SetScript("OnEvent",function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
+			IsInCombat = true
 			UIFrameFadeIn(portrait, 0.5, 0.3, 0)
 		elseif event == "PLAYER_REGEN_ENABLED" then
+			IsInCombat = false
 			UIFrameFadeOut(portrait, 0.5, 0, 0.3)
 		end
 	end)
-	
+
 end
   
 --gen hp strings func
@@ -149,7 +152,7 @@ lib.gen_hpstrings = function(self, unit)
 	elseif self.mystyle == "target" or self.mystyle =="focus" then
 		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
 		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
-		self:Tag(level, "[Sora:level]　[Sora:color][name]")
+		self:Tag(level, "[Sora:level] [Sora:color][name]")
 		level:SetAlpha(0.3)
 	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
 		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
@@ -223,8 +226,9 @@ lib.gen_hpstrings = function(self, unit)
 			end		
 		end
 	end)
+
 end
-  
+
 --gen powerbar func
 lib.gen_ppbar = function(self)
 	-- statusbar
@@ -240,7 +244,7 @@ lib.gen_ppbar = function(self)
 		Statusbar:SetPoint("TOP",self.Health,"BOTTOM",0,-5)
 	elseif self.mystyle == "raid" then
 		Statusbar:SetHeight(3)
-		Statusbar:SetPoint("TOP",self,"BOTTOM",0,2)	
+		Statusbar:SetPoint("TOP",self,"BOTTOM",0,0)	
 	end
 	Statusbar:SetFrameLevel(1)
 	
@@ -395,7 +399,7 @@ lib.gen_castbar = function(self)
 	Statusbar:SetWidth(self:GetWidth())
 	
 	if self.mystyle == "player" then
-		Statusbar:SetWidth(self:GetWidth())
+		Statusbar:SetWidth(self:GetWidth()-70)
 		Statusbar:SetPoint("TOPRIGHT",self,"BOTTOMRIGHT",0, -23)
 	elseif self.mystyle == "target" then
 		Statusbar:SetWidth(self:GetWidth()-70)
@@ -642,7 +646,7 @@ lib.createDebuffs = function(self)
 	DeBuff.spacing = 5
 	DeBuff:SetHeight((DeBuff.size+DeBuff.spacing)*5)
 	DeBuff:SetWidth(self:GetWidth())
-	DeBuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -30)
+	DeBuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -35)
 	DeBuff.initialAnchor = "TOPLEFT"
 	DeBuff["growth-x"] = "RIGHT"
 	DeBuff["growth-y"] = "DOWN"

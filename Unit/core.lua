@@ -168,7 +168,6 @@ local UnitSpecific = {
 		lib.gen_hpbar(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
-		lib.gen_ppbar(self)
 		lib.gen_RaidMark(self)
 
 		--style specific stuff
@@ -190,7 +189,6 @@ local UnitSpecific = {
 		lib.gen_hpbar(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
-		lib.gen_ppbar(self)
 		lib.gen_RaidMark(self)
 		
 		--style specific stuff
@@ -211,21 +209,14 @@ local UnitSpecific = {
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
-		lib.gen_ppbar(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
-		lib.gen_ppbar(self)
 		lib.gen_RaidMark(self)
 		
 		--style specific stuff
 		self.Health.frequentUpdates = true
 		self.Health.colorSmooth = true
 		self.Health.Smooth = true
-		
-		self.Power.frequentUpdates = true
-		self.Power.Smooth = true
-		self.Power.colorPower = true
-		self.Power.BG.multiplier = 0.2
 
 	end,
 
@@ -302,8 +293,8 @@ oUF:Factory(function(self)
 	self:SetActiveStyle('Sora')
 	self:Spawn('player'):SetPoint("CENTER", UIParent, "CENTER", -270, -100)
 	self:Spawn('target'):SetPoint("CENTER", UIParent, "CENTER", 270, -100)
-	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -25) end
-	if cfg.showpet then self:Spawn('pet'):SetPoint("RIGHT",oUF_SoraPlayer,"LEFT", -10, 0) end
+	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -20) end
+	if cfg.showpet then self:Spawn('pet'):SetPoint("TOPLEFT",oUF_SoraPlayer,"BOTTOMLEFT", 0, -20) end
 	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 150) end
 	if cfg.showfocustarget then self:Spawn('focustarget'):SetPoint("BOTTOMLEFT",oUF_SoraFocus,"TOPLEFT", 0, 10) end
 	
@@ -340,7 +331,7 @@ oUF:Factory(function(self)
 			self:SetHeight(%d)
 			]]):format(cfg.RaidUnitWidth, cfg.RaidUnitHeight))
 		raid:SetScale(cfg.raidScale)
-		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -425, 165)		
+		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -410, 160)		
 	else
 		local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
 			"showRaid", cfg.ShowRaid,  
