@@ -235,7 +235,7 @@ lib.gen_hpstrings = function(self, unit)
 		local Event = CreateFrame("Frame")
 		Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 		Event:RegisterEvent("PLAYER_REGEN_ENABLED")
-		Event:SetScript("OnEvent",function(self, event, ...)
+		Event:SetScript("OnEvent",function( _, event, ...)
 			if event == "PLAYER_REGEN_DISABLED" then
 				UIFrameFadeIn(level, 0.5, 0, 1)
 				UIFrameFadeIn(hpval, 0.5, 0, 1)
@@ -246,15 +246,21 @@ lib.gen_hpstrings = function(self, unit)
 				UIFrameFadeOut(ppval, 0.5, 1, 0)	
 			end
 		end)
-		self.Power:SetScript("OnEnter",function(self)
-			UIFrameFadeIn(level, 0.5, 0, 1)
-			UIFrameFadeIn(hpval, 0.5, 0, 1)
-			UIFrameFadeIn(ppval, 0.5, 0, 1)
+		self.Power:SetScript("OnEnter",function()
+			if not UnitAffectingCombat("player") then
+				UIFrameFadeIn(self.Portrait, 0.5, 0.3, 0)
+				UIFrameFadeIn(level, 0.5, 0, 1)
+				UIFrameFadeIn(hpval, 0.5, 0, 1)
+				UIFrameFadeIn(ppval, 0.5, 0, 1)
+			end
 		end)
-		self.Power:SetScript("OnLeave",function(self)
-			UIFrameFadeOut(level, 0.5, 1, 0)
-			UIFrameFadeOut(hpval, 0.5, 1, 0)
-			UIFrameFadeOut(ppval, 0.5, 1, 0)	
+		self.Power:SetScript("OnLeave",function()
+			if not UnitAffectingCombat("player") then
+				UIFrameFadeOut(self.Portrait, 0.5, 0, 0.3)
+				UIFrameFadeOut(level, 0.5, 1, 0)
+				UIFrameFadeOut(hpval, 0.5, 1, 0)
+				UIFrameFadeOut(ppval, 0.5, 1, 0)
+			end
 		end)
 	end
 end
@@ -393,7 +399,7 @@ lib.gen_castbar = function(self)
 	Statusbar:SetWidth(self:GetWidth())
 	
 	if self.mystyle == "player" then
-		Statusbar:SetWidth(self:GetWidth()-70)
+		Statusbar:SetWidth(self:GetWidth())
 		Statusbar:SetPoint("TOPRIGHT",self,"BOTTOMRIGHT",0, -23)
 	elseif self.mystyle == "target" then
 		Statusbar:SetWidth(self:GetWidth()-70)
@@ -405,6 +411,23 @@ lib.gen_castbar = function(self)
 		Statusbar:SetPoint("BOTTOM",self,"TOP",15,10)
 	else
 		Statusbar:SetPoint("BOTTOM",self,"TOP",15,42)
+	end
+	
+	-- Event
+	local Timer = 0
+	if self.mystyle == "player" then
+		local Event = CreateFrame("Frame")
+		Event:SetScript("OnUpdate",function( _,elapsed)
+			Timer = Timer + elapsed
+			if Timer > 1 then
+				Timer = 0
+				if GetPetIcon() then
+					Statusbar:SetWidth(self:GetWidth()-70)
+				else
+					Statusbar:SetWidth(self:GetWidth())	
+				end
+			end
+		end)
 	end
 	
 	Statusbar:SetStatusBarTexture(cfg.statusbar_texture)
@@ -934,28 +957,23 @@ end
 
 -- Combo points
 lib.RogueComboPoints = function(self)
-	if(playerClass == "ROGUE" or playerClass == "DRUID") then
+	if playerClass == "ROGUE" or playerClass == "DRUID" then
 		
 		local barFrame = CreateFrame("Frame", nil, self)
 		barFrame:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 5)
-		barFrame:SetHeight(8)
+		barFrame:SetHeight(6)
 		barFrame:SetWidth(self:GetWidth())
 		barFrame:SetFrameLevel(4)
 		
 		for i = 1, MAX_COMBO_POINTS do
+		
 			local point = CreateFrame("StatusBar", nil, barFrame)
 			point:SetSize((self.Health:GetWidth() / 5)-5, 6)
 			if i > 1 then point:SetPoint("LEFT", point[i - 1], "RIGHT") end
 			point:SetStatusBarTexture(cfg.statusbar_texture)
 			point:SetStatusBarColor(1.0, 0.9, 0)
 
-			local Border = CreateFrame("Frame", nil, point)
-			Border:SetFrameLevel(1)
-			Border:SetPoint("TOPLEFT",-5,5)
-			Border:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_totemback(Border)
-
-		if (i == 1) then
+		if i == 1 then
 			point:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
 		else
 			point:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 6, 0)

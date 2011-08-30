@@ -61,8 +61,8 @@ local UnitSpecific = {
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
-		lib.gen_ppbar(self)
 		lib.gen_portrait(self)
+		lib.gen_ppbar(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
 		lib.gen_RaidMark(self)
@@ -98,8 +98,8 @@ local UnitSpecific = {
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
-		lib.gen_ppbar(self)
 		lib.gen_portrait(self)
+		lib.gen_ppbar(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
 		lib.gen_RaidMark(self)
@@ -135,8 +135,8 @@ local UnitSpecific = {
 		
 		-- Generate Bars
 		lib.gen_hpbar(self)
-		lib.gen_ppbar(self)
 		lib.gen_portrait(self)
+		lib.gen_ppbar(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
 		lib.gen_RaidMark(self)
