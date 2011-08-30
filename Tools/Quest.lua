@@ -1,21 +1,18 @@
--- Quel'evel 3.3.0.9 by Tekkub Stoutwrithe
-
-local questtags, tags = {}, {Elite = "+", Group = "G", Dungeon = "D", Raid = "R", PvP = "P", Daily = "•", Heroic = "H", Repeatable = "∞"}
+﻿-- Quel'evel 3.3.0.9 by Tekkub Stoutwrithe
 
 local function GetTaggedTitle(i)
-	local name, level, tag, group, header, _, complete, daily = GetQuestLogTitle(i)
+	local name, level, _, group, header, _, _, _ = GetQuestLogTitle(i)
 	if header or not name then return end
 	if not group or group == 0 then group = nil end
-	return string.format("[%s %s %s %s] %s", level, tag and tags[tag] or "", daily and tags.Daily or "",group or "", name), tag, daily, complete
+	return string.format("%s%s%s", "["..level.."]",group and "["..group.."+]"or "", name)
 end
 
 -- Add tags to the quest log
 local function QuestLog_Update()
 	for i, butt in pairs(QuestLogScrollFrame.buttons) do
 		local qi = butt:GetID()
-		local title, tag, daily, complete = GetTaggedTitle(qi)
+		local title = GetTaggedTitle(qi)
 		if title then butt:SetText("  "..title) end
-		if (tag or daily) and not complete then butt.tag:SetText("") end
 		QuestLogTitleButton_Resize(butt)
 	end
 end
