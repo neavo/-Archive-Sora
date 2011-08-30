@@ -61,10 +61,10 @@ local UnitSpecific = {
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
+		lib.gen_ppbar(self)
 		lib.gen_portrait(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
-		lib.gen_ppbar(self)
 		lib.gen_RaidMark(self)
 		lib.gen_InfoIcons(self)
 		lib.HealPred(self)
@@ -98,10 +98,10 @@ local UnitSpecific = {
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
+		lib.gen_ppbar(self)
 		lib.gen_portrait(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
-		lib.gen_ppbar(self)
 		lib.gen_RaidMark(self)
 		lib.gen_InfoIcons(self)
 		lib.gen_castbar(self)
@@ -135,10 +135,10 @@ local UnitSpecific = {
 		
 		-- Generate Bars
 		lib.gen_hpbar(self)
+		lib.gen_ppbar(self)
 		lib.gen_portrait(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
-		lib.gen_ppbar(self)
 		lib.gen_RaidMark(self)
 		lib.gen_castbar(self)
 		lib.HealPred(self)

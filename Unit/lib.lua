@@ -119,111 +119,14 @@ lib.gen_portrait = function(self)
 	self.Portrait = portrait
 	
 	-- Event
-	local IsInCombat = false
-	local Timer = 0
 	local Event = CreateFrame("Frame")
 	Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 	Event:RegisterEvent("PLAYER_REGEN_ENABLED")
 	Event:SetScript("OnEvent",function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
-			IsInCombat = true
 			UIFrameFadeIn(portrait, 0.5, 0.3, 0)
 		elseif event == "PLAYER_REGEN_ENABLED" then
-			IsInCombat = false
 			UIFrameFadeOut(portrait, 0.5, 0, 0.3)
-		end
-	end)
-
-end
-  
---gen hp strings func
-lib.gen_hpstrings = function(self, unit)
-    --creating Border frame here so our font strings don't inherit healthbar parameters
-    local Border = CreateFrame("Frame", nil, self)
-    Border:SetAllPoints(self.Health)
-    Border:SetFrameLevel(15)
-	
-	local level , hpval , ppval , DeadInfo
-	if self.mystyle == "player" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
-		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
-		self:Tag(level, "[Sora:color][name]")
-		level:SetAlpha(0)
-	elseif self.mystyle == "target" or self.mystyle =="focus" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
-		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
-		self:Tag(level, "[Sora:level] [Sora:color][name]")
-		level:SetAlpha(0.3)
-	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
-		level:SetPoint("LEFT", self.Health, "LEFT", 0, 5)
-		self:Tag(level, "[name]")
-	elseif self.mystyle=="raid" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
-		level:SetPoint("CENTER", self.Health, "CENTER", 0, 0)
-		self:Tag(level, "[Sora:color][name]")
-	end
-
-	if self.mystyle == "player" then
-		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
-		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
-		self:Tag(hpval, "[Sora:color][Sora:hp]")
-		hpval:SetAlpha(0)
-	elseif self.mystyle == "target" or self.mystyle == "focus" then
-		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
-		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
-		self:Tag(hpval, "[Sora:color][Sora:hp]")
-		hpval:SetAlpha(0.3)	
-	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
-		hpval = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
-		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 7, -5)
-		self:Tag(hpval, "[Sora:hp]")
-	end
-	
-	if self.mystyle == "player" then 
-		ppval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
-		ppval:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -5)
-		self:Tag(ppval, "[Sora:pp]")
-		ppval:SetAlpha(0)
-	elseif self.mystyle == "target" or self.mystyle == "focus" then
-		ppval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
-		ppval:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -5)
-		self:Tag(ppval, "[Sora:pp]")
-		ppval:SetAlpha(0.3)	
-	end
-	
-	if self.mystyle =="raid" then
-		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
-		DeadInfo:SetPoint("CENTER", self.Health, "CENTER", 0, -10)
-		self:Tag(DeadInfo, "[Sora:info]")
-	end
-	
-	-- Event
-	local mystyle = self.mystyle
-	local Event = CreateFrame("Frame")
-	Event:RegisterEvent("PLAYER_REGEN_DISABLED")
-	Event:RegisterEvent("PLAYER_REGEN_ENABLED")
-	Event:SetScript("OnEvent",function(self, event, ...)
-		if event == "PLAYER_REGEN_DISABLED" then
-			if mystyle == "player" then
-				UIFrameFadeIn(level, 0.5, 0, 1)
-				UIFrameFadeIn(hpval, 0.5, 0, 1)
-				UIFrameFadeIn(ppval, 0.5, 0, 1)
-			elseif mystyle == "target" or mystyle == "focus" then
-				UIFrameFadeIn(level, 0.5, 0.3, 1)
-				UIFrameFadeIn(hpval, 0.5, 0.3, 1)
-				UIFrameFadeIn(ppval, 0.5, 0.3, 1)
-			end
-		elseif event == "PLAYER_REGEN_ENABLED" then
-			if mystyle == "player" then
-				UIFrameFadeOut(level, 0.5, 1, 0)
-				UIFrameFadeOut(hpval, 0.5, 1, 0)
-				UIFrameFadeOut(ppval, 0.5, 1, 0)
-			elseif mystyle == "target" or mystyle == "focus" then
-				UIFrameFadeOut(level, 0.5, 1, 0.3)
-				UIFrameFadeOut(hpval, 0.5, 1, 0.3)
-				UIFrameFadeOut(ppval, 0.5, 1, 0.3)
-			end		
 		end
 	end)
 
@@ -263,6 +166,97 @@ lib.gen_ppbar = function(self)
 	
 	self.Power = Statusbar
 	self.Power.BG = BG
+end
+
+--gen hp strings func
+lib.gen_hpstrings = function(self, unit)
+    --creating Border frame here so our font strings don't inherit healthbar parameters
+    local Border = CreateFrame("Frame", nil, self)
+    Border:SetAllPoints(self.Health)
+    Border:SetFrameLevel(15)
+	
+	local level , hpval , ppval , DeadInfo
+	if self.mystyle == "player" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
+		self:Tag(level, "[Sora:color][name]")
+		level:SetAlpha(0)
+	elseif self.mystyle == "target" or self.mystyle =="focus" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
+		self:Tag(level, "[Sora:level] [Sora:color][name]")
+		level:SetAlpha(0)
+	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		level:SetPoint("LEFT", self.Health, "LEFT", 0, 5)
+		self:Tag(level, "[name]")
+	elseif self.mystyle=="raid" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		level:SetPoint("CENTER", self.Health, "CENTER", 0, 0)
+		self:Tag(level, "[Sora:color][name]")
+	end
+
+	if self.mystyle == "player" then
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
+		self:Tag(hpval, "[Sora:color][Sora:hp]")
+		hpval:SetAlpha(0)
+	elseif self.mystyle == "target" or self.mystyle == "focus" then
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
+		self:Tag(hpval, "[Sora:color][Sora:hp]")
+		hpval:SetAlpha(0)	
+	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
+		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 7, -5)
+		self:Tag(hpval, "[Sora:hp]")
+	end
+	
+	if self.mystyle == "player" then 
+		ppval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		ppval:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -5)
+		self:Tag(ppval, "[Sora:pp]")
+		ppval:SetAlpha(0)
+	elseif self.mystyle == "target" or self.mystyle == "focus" then
+		ppval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		ppval:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -5)
+		self:Tag(ppval, "[Sora:pp]")
+		ppval:SetAlpha(0)	
+	end
+	
+	if self.mystyle =="raid" then
+		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
+		DeadInfo:SetPoint("CENTER", self.Health, "CENTER", 0, -10)
+		self:Tag(DeadInfo, "[Sora:info]")
+	end
+	
+	-- Event
+	if self.mystyle == "player" or self.mystyle == "target" or self.mystyle == "focus" then
+		local Event = CreateFrame("Frame")
+		Event:RegisterEvent("PLAYER_REGEN_DISABLED")
+		Event:RegisterEvent("PLAYER_REGEN_ENABLED")
+		Event:SetScript("OnEvent",function(self, event, ...)
+			if event == "PLAYER_REGEN_DISABLED" then
+				UIFrameFadeIn(level, 0.5, 0, 1)
+				UIFrameFadeIn(hpval, 0.5, 0, 1)
+				UIFrameFadeIn(ppval, 0.5, 0, 1)
+			elseif event == "PLAYER_REGEN_ENABLED" then
+				UIFrameFadeOut(level, 0.5, 1, 0)
+				UIFrameFadeOut(hpval, 0.5, 1, 0)
+				UIFrameFadeOut(ppval, 0.5, 1, 0)	
+			end
+		end)
+		self.Power:SetScript("OnEnter",function(self)
+			UIFrameFadeIn(level, 0.5, 0, 1)
+			UIFrameFadeIn(hpval, 0.5, 0, 1)
+			UIFrameFadeIn(ppval, 0.5, 0, 1)
+		end)
+		self.Power:SetScript("OnLeave",function(self)
+			UIFrameFadeOut(level, 0.5, 1, 0)
+			UIFrameFadeOut(hpval, 0.5, 1, 0)
+			UIFrameFadeOut(ppval, 0.5, 1, 0)	
+		end)
+	end
 end
   
 --gen combat and LFD icons
