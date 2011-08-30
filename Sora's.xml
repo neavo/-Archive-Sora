@@ -17,6 +17,7 @@
 	<Include file="Buff\Load_Buff.xml"/>
 	<Include file="Chat\Load_Chat.xml"/>
 	<Include file="FilgerMod\Load_FilgerMod.xml"/>
+	<Include file="Nameplates\Load_Nameplates.xml"/>
 	<Include file="RightButtonMenu\Load_RightButtonMenu.xml"/>
 	<Include file="Threat\Load_Threat.xml"/>
 	<Include file="Tools\Load_Tools.xml"/>
