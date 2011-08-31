@@ -20,9 +20,9 @@ function round(val, idp)
 end
 
 function SVal(val)
-	if(val >= 1e6) then
+	if val >= 1e6 then
 		return round(val/1e6,1).."m"
-	elseif(val >= 1e3) then
+	elseif val >= 1e3 then
 		return round(val/1e3,1).."k"
 	else
 		return val
@@ -36,7 +36,7 @@ end
 
 local function HideObjects(parent)
 	for object in pairs(parent.queue) do
-		if(object:GetObjectType() == 'Texture') then
+		if object:GetObjectType() == "Texture" then
 			object:SetTexture(nil)
 		else
 			object:Hide()
@@ -56,13 +56,13 @@ local function UpdateThreat(frame,elapsed)
     local valueHealth = frame.healthOriginal:GetValue()
 	local d =(valueHealth/maxHealth)*100
 
-		if(d < 100) and valueHealth > 1 then
+		if d < 100 and valueHealth > 1 then
 			frame.hp.pct:SetText(format("%.1f %s",d,"%"))
 		else
 			frame.hp.pct:SetText("")
 		end
 
-		if(d <= 35 and d >= 25) then
+		if d <= 35 and d >= 25 then
 			frame.hp.pct:SetTextColor(253/255, 238/255, 80/255)
 		elseif(d < 25 and d >= 20) then
 			frame.hp.pct:SetTextColor(250/255, 130/255, 0/255)
