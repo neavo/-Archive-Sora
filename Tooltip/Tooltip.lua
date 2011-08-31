@@ -162,7 +162,7 @@ local function style(frame)
         setBakdrop(frame)
     end
 
-    frame:SetBackdropColor(0, 0, 0, 1)
+    frame:SetBackdropColor(0, 0, 0, 0.8)
 
     if frame.GetItem then
         local _, item = frame:GetItem()
