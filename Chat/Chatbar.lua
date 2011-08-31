@@ -27,7 +27,7 @@ local Color = {
 local Chatbar = CreateFrame("Frame","Chatbar",UIParent)
 Chatbar:SetWidth(160)
 Chatbar:SetHeight(16)
-Chatbar:SetPoint("BOTTOM", ChatFrame1, "TOP", 125, 7)
+Chatbar:SetPoint("BOTTOM", ChatFrame1, "TOP", 115, 7)
 Chatbar:SetScale(0.9)
 
 for i=1,7 do
