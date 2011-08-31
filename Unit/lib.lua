@@ -4,18 +4,6 @@ local cfg = ns.cfg
 local cast = ns.cast
 local lib = CreateFrame("Frame")  
 local _, playerClass = UnitClass("player")
-    
--- FUNCTIONS
-
-local retVal = function(self, val1, val2, val3)
-	if self.mystyle == "player" or self.mystyle == "target" then
-		return val1
-	elseif self.mystyle == "raid" or self.mystyle == "party" then
-		return val3
-	else
-		return val2
-	end
-end
   
 --status bar filling fix (from oUF_Mono)
 local fixStatusbar = function(BG)
@@ -77,9 +65,12 @@ lib.gen_hpbar = function(self)
 	local Statusbar = CreateFrame("StatusBar", nil, self)
 	Statusbar:SetStatusBarTexture(cfg.statusbar_texture)
 	Statusbar:GetStatusBarTexture():SetHorizTile(true)
-	Statusbar:SetHeight(retVal(self,24,24,20))
-	if self.mystyle == "tot"  or self.mystyle == "pet" or self.mystyle =="focustarget" then
+	if self.mystyle == "player"  or self.mystyle == "target" or self.mystyle =="focus" then
+		Statusbar:SetHeight(24)
+	elseif self.mystyle == "tot"  or self.mystyle == "pet" or self.mystyle =="focustarget" then
 		Statusbar:SetHeight(14)
+	elseif self.mystyle == "party" or self.mystyle == "raid" then
+		Statusbar:SetHeight(18)	
 	end
 	Statusbar:SetWidth(self:GetWidth())
 	Statusbar:SetPoint("TOP",0,0)
@@ -107,7 +98,7 @@ end
   
 --gen 3D portrait func
 lib.gen_portrait = function(self)
-	local portrait = CreateFrame("PlayerModel", nil, self)
+	local portrait = CreateFrame("PlayerModel", nil, self.Health)
 	portrait:SetAlpha(0.3) 
 	portrait.PostUpdate = function(self) 
 		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then
@@ -141,13 +132,10 @@ lib.gen_ppbar = function(self)
 	Statusbar:SetWidth(self:GetWidth())
 	if self.mystyle == "target" or self.mystyle == "player" or self.mystyle == "focus" then
 		Statusbar:SetHeight(6)
-		Statusbar:SetPoint("TOP",self.Health,"BOTTOM",0,-5)
-	elseif self.mystyle == "pet" then
-		Statusbar:SetHeight(4)
-		Statusbar:SetPoint("TOP",self.Health,"BOTTOM",0,-5)
-	elseif self.mystyle == "raid" then
+		Statusbar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
+	elseif self.mystyle == "party" or self.mystyle == "raid" then
 		Statusbar:SetHeight(3)
-		Statusbar:SetPoint("TOP",self,"BOTTOM",0,0)	
+		Statusbar:SetPoint("BOTTOM",self,"BOTTOM",0,0)	
 	end
 	Statusbar:SetFrameLevel(1)
 	
@@ -194,14 +182,13 @@ lib.gen_hpstrings = function(self, unit)
 		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
 		level:SetPoint("CENTER", self.Health, "CENTER", 0, 0)
 		self:Tag(level, "[Sora:color][name]")
+	elseif self.mystyle=="party" then
+		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
+		self:Tag(level, "[Sora:level] [Sora:color][name]")
 	end
 
-	if self.mystyle == "player" then
-		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
-		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
-		self:Tag(hpval, "[Sora:color][Sora:hp]")
-		hpval:SetAlpha(0)
-	elseif self.mystyle == "target" or self.mystyle == "focus" then
+	if self.mystyle == "player" or self.mystyle == "target" or self.mystyle == "focus" then
 		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
 		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
 		self:Tag(hpval, "[Sora:color][Sora:hp]")
@@ -210,21 +197,28 @@ lib.gen_hpstrings = function(self, unit)
 		hpval = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
 		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 7, -5)
 		self:Tag(hpval, "[Sora:hp]")
+	elseif self.mystyle == "party" then
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
+		self:Tag(hpval, "[Sora:color][Sora:hp]")
 	end
 	
-	if self.mystyle == "player" then 
-		ppval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
-		ppval:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -5)
+	if self.mystyle == "player" or self.mystyle == "target" or self.mystyle == "focus" then 
+		ppval = lib.gen_fontstring(self.Power, cfg.font, 10, "THINOUTLINE")
+		ppval:SetPoint("RIGHT", self.Power, "RIGHT", 0, 0)
 		self:Tag(ppval, "[Sora:pp]")
 		ppval:SetAlpha(0)
-	elseif self.mystyle == "target" or self.mystyle == "focus" then
-		ppval = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
-		ppval:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -5)
-		self:Tag(ppval, "[Sora:pp]")
-		ppval:SetAlpha(0)	
+	elseif self.mystyle == "party" then
+		ppval = lib.gen_fontstring(self.Power, cfg.font, 8, "THINOUTLINE")
+		ppval:SetPoint("RIGHT", self.Power, "RIGHT", 0, 0)
+		self:Tag(ppval, "[Sora:pp]")	
 	end
 	
-	if self.mystyle =="raid" then
+	if self.mystyle == "raid" then
+		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
+		DeadInfo:SetPoint("CENTER", self.Health, "CENTER", 0, -10)
+		self:Tag(DeadInfo, "[Sora:info]")
+	elseif self.mystyle == "party" then
 		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
 		DeadInfo:SetPoint("CENTER", self.Health, "CENTER", 0, -10)
 		self:Tag(DeadInfo, "[Sora:info]")
@@ -232,7 +226,8 @@ lib.gen_hpstrings = function(self, unit)
 	
 	-- Event
 	if self.mystyle == "player" or self.mystyle == "target" or self.mystyle == "focus" then
-		local Event = CreateFrame("Frame")
+		local Event = CreateFrame("Frame",nil,self.Power)
+		Event:SetAllPoints(self.Power)
 		Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 		Event:RegisterEvent("PLAYER_REGEN_ENABLED")
 		Event:SetScript("OnEvent",function( _, event, ...)
@@ -246,7 +241,7 @@ lib.gen_hpstrings = function(self, unit)
 				UIFrameFadeOut(ppval, 0.5, 1, 0)	
 			end
 		end)
-		self.Power:SetScript("OnEnter",function()
+		Event:SetScript("OnEnter",function()
 			if not UnitAffectingCombat("player") then
 				UIFrameFadeIn(self.Portrait, 0.5, 0.3, 0)
 				UIFrameFadeIn(level, 0.5, 0, 1)
@@ -254,7 +249,7 @@ lib.gen_hpstrings = function(self, unit)
 				UIFrameFadeIn(ppval, 0.5, 0, 1)
 			end
 		end)
-		self.Power:SetScript("OnLeave",function()
+		Event:SetScript("OnLeave",function()
 			if not UnitAffectingCombat("player") then
 				UIFrameFadeOut(self.Portrait, 0.5, 0, 0.3)
 				UIFrameFadeOut(level, 0.5, 1, 0)
@@ -317,7 +312,7 @@ lib.gen_RaidMark = function(self)
 		Border:SetFrameLevel(10)
 		Border:SetAlpha(0.8)
 	local ri = Border:CreateTexture(nil,'OVERLAY',Border)
-	local size = retVal(self, 16, 13, 12)
+	local size = 14
 	ri:SetSize(size, size)
 	ri:SetPoint("CENTER", self, "TOP", 0, 2)
 	self.RaidIcon = ri
@@ -347,10 +342,10 @@ end
 -- Create Raid Threat Status Border
 function lib.CreateThreatBorder(self)
 	
-	local glowBorder = {edgeFile = cfg.backdrop_edge_texture, edgeSize = 5}
+	local glowBorder = {edgeFile = cfg.backdrop_edge_texture, edgeSize = 3}
 	self.Thtborder = CreateFrame("Frame", nil, self)
-	self.Thtborder:SetPoint("TOPLEFT", self, "TOPLEFT", -6, 6)
-	self.Thtborder:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 6, -6)
+	self.Thtborder:SetPoint("TOPLEFT", self, "TOPLEFT", -3, 3)
+	self.Thtborder:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 3, -6)
 	self.Thtborder:SetBackdrop(glowBorder)
 	self.Thtborder:SetFrameLevel(1)
 	self.Thtborder:Hide()
@@ -391,7 +386,7 @@ end
 
 --gen castbar
 lib.gen_castbar = function(self)
-	if not cfg.Castbars then return end
+	if not cfg.ShowCastbar then return end
 	
 	local cbColor = {95/255, 182/255, 255/255}
 	local Statusbar = CreateFrame("StatusBar", "oUF_NevoCastbar"..self.mystyle, self)
@@ -399,35 +394,20 @@ lib.gen_castbar = function(self)
 	Statusbar:SetWidth(self:GetWidth())
 	
 	if self.mystyle == "player" then
-		Statusbar:SetWidth(self:GetWidth())
-		Statusbar:SetPoint("TOPRIGHT",self,"BOTTOMRIGHT",0, -23)
+		if cfg.CastbarAlone then
+			Statusbar:SetHeight(20)
+			Statusbar:SetPoint("BOTTOMLEFT",MultiBarBottomRightButton1,"TOPLEFT",2, 5)
+			Statusbar:SetPoint("BOTTOMRIGHT",MultiBarBottomRightButton12,"TOPRIGHT",-32, 5)			
+		else
+			Statusbar:SetWidth(self:GetWidth()-70)
+			Statusbar:SetPoint("TOPRIGHT",self,"BOTTOMRIGHT",0, -15)
+		end
 	elseif self.mystyle == "target" then
 		Statusbar:SetWidth(self:GetWidth()-70)
-		Statusbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -23)
+		Statusbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -15)
 	elseif self.mystyle == "focus" then
 		Statusbar:SetWidth(self:GetWidth()-70)
-		Statusbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 10)
-	elseif self.mystyle == "focus" then
-		Statusbar:SetPoint("BOTTOM",self,"TOP",15,10)
-	else
-		Statusbar:SetPoint("BOTTOM",self,"TOP",15,42)
-	end
-	
-	-- Event
-	local Timer = 0
-	if self.mystyle == "player" then
-		local Event = CreateFrame("Frame")
-		Event:SetScript("OnUpdate",function( _,elapsed)
-			Timer = Timer + elapsed
-			if Timer > 1 then
-				Timer = 0
-				if GetPetIcon() then
-					Statusbar:SetWidth(self:GetWidth()-70)
-				else
-					Statusbar:SetWidth(self:GetWidth())	
-				end
-			end
-		end)
+		Statusbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 15)
 	end
 	
 	Statusbar:SetStatusBarTexture(cfg.statusbar_texture)
@@ -470,11 +450,11 @@ lib.gen_castbar = function(self)
 	i:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	i:SetSize(20,20)
 	if self.mystyle == "player" then 
-		i:SetPoint("LEFT", Statusbar, "RIGHT", 8, 4)
+		i:SetPoint("BOTTOMLEFT", Statusbar, "BOTTOMRIGHT", 8, 0)
 	elseif self.mystyle == "target" then
-		i:SetPoint("RIGHT", Statusbar, "LEFT", -8, 4)
+		i:SetPoint("BOTTOMRIGHT", Statusbar, "BOTTOMLEFT", -8, 0)
 	elseif self.mystyle == "focus" then 
-		i:SetPoint("LEFT", Statusbar, "RIGHT", 8, -4)
+		i:SetPoint("TOPLEFT", Statusbar, "TOPRIGHT", 8, 0)
 	end
 	
 	--helper2 for icon
@@ -527,14 +507,13 @@ local myPostCreateIcon = function(self, button)
 	button.icon:SetPoint("TOPLEFT", button, "TOPLEFT", 0, 0)
 	button.icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 0, 0)	
 	
-	button.time = lib.gen_fontstring(button, cfg.smallfont, 12, "OUTLINE")
-	button.time:SetPoint("BOTTOM", button, 2, -6)
-	button.time:SetJustifyH('CENTER')
+	button.time = lib.gen_fontstring(button, cfg.smallfont, 9, "OUTLINE")
+	button.time:SetPoint("BOTTOM", button, 1, -5)
 	button.time:SetVertexColor(1,1,1)
 	
-	button.count = lib.gen_fontstring(button, cfg.smallfont, 15, "OUTLINE")
+	button.count = lib.gen_fontstring(button, cfg.smallfont, 9, "OUTLINE")
 	button.count:ClearAllPoints()
-	button.count:SetPoint("TOPRIGHT", button, 5, 3)
+	button.count:SetPoint("TOPRIGHT", button, 3, 0)
 	button.count:SetJustifyH('RIGHT')
 	button.count:SetVertexColor(1,1,1)	
 	
@@ -636,11 +615,21 @@ end
 -- Generates the Buffs
 lib.createBuffs = function(self)
 	Buff = CreateFrame("Frame", nil, self)
-	Buff.onlyShowPlayer = cfg.buffsOnlyShowPlayer
+	Buff.onlyShowPlayer = cfg.BuffOnlyShowPlayer
 	if self.mystyle == "target" then
 		Buff:SetPoint("TOPLEFT", self, "TOPRIGHT", 12, 0)
 		Buff.initialAnchor = "TOPLEFT"
 		Buff["growth-x"] = "RIGHT"
+		Buff["growth-y"] = "DOWN"
+		Buff.size = 20
+		Buff.num = 18
+		Buff.spacing = 5
+		Buff:SetWidth((Buff.size+Buff.spacing)*6-Buff.spacing)
+		Buff:SetHeight((Buff.size+Buff.spacing)*3)
+	elseif self.mystyle == "focus" then
+		Buff:SetPoint("TOPRIGHT", self, "TOPLEFT", -12, 0)
+		Buff.initialAnchor = "TOPRIGHT"
+		Buff["growth-x"] = "LEFT"
 		Buff["growth-y"] = "DOWN"
 		Buff.size = 20
 		Buff.num = 18
@@ -656,21 +645,28 @@ end
 
 -- Generates the Debuffs
 lib.createDebuffs = function(self)
-	DeBuff = CreateFrame("Frame", nil, self)
-	DeBuff.size = 20
-	DeBuff.num = 40
-	DeBuff.onlyShowPlayer = cfg.debuffsOnlyShowPlayer
-	DeBuff.spacing = 5
-	DeBuff:SetHeight((DeBuff.size+DeBuff.spacing)*5)
-	DeBuff:SetWidth(self:GetWidth())
-	DeBuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -35)
-	DeBuff.initialAnchor = "TOPLEFT"
-	DeBuff["growth-x"] = "RIGHT"
-	DeBuff["growth-y"] = "DOWN"
-	DeBuff.PostCreateIcon = myPostCreateIcon
-	DeBuff.PostUpdateIcon = myPostUpdateIcon
 
-	self.Debuffs = DeBuff
+	Debuff = CreateFrame("Frame", nil, self)
+	Debuff.size = 20
+	Debuff.num = 40
+	Debuff.onlyShowPlayer = cfg.DebuffOnlyShowPlayer
+	Debuff.spacing = 5
+	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
+	Debuff:SetWidth(self:GetWidth())
+	if self.mystyle == "target" then
+		Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -25)
+	elseif self.mystyle == "focus" then
+		Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -10)
+	elseif self.mystyle == "party" then
+		Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -5)
+	end
+	Debuff.initialAnchor = "TOPLEFT"
+	Debuff["growth-x"] = "RIGHT"
+	Debuff["growth-y"] = "DOWN"
+	Debuff.PostCreateIcon = myPostCreateIcon
+	Debuff.PostUpdateIcon = myPostUpdateIcon
+
+	self.Debuffs = Debuff
 end
  
 -- raid post update
@@ -692,7 +688,7 @@ lib.PostUpdateRaidFrame = function(Health, unit, min, max)
 	end
 	else
 		Health:SetValue(min)
-		if(unit == 'vehicle') then
+		if unit == 'vehicle' then
 			Health:SetStatusBarColor(22/255, 106/255, 44/255)
 		end
 	end
@@ -900,31 +896,26 @@ lib.raidDebuffs = function(self)
 		self:SetScript("OnEnter", UnitFrame_OnEnter)
 		self:SetScript("OnLeave", UnitFrame_OnLeave)
 
-		self:RegisterForClicks"AnyUp"
+		self:RegisterForClicks("AnyUp")
 		
-		self.RaidDebuffs = CreateFrame('Frame', nil, self)
-		self.RaidDebuffs:SetHeight(20)
-		self.RaidDebuffs:SetWidth(20)
-		self.RaidDebuffs:SetPoint('CENTER', self)
-		self.RaidDebuffs:SetFrameStrata'HIGH'
+		self.RaidDebuffs = CreateFrame("Frame", nil, self)
+		self.RaidDebuffs:SetHeight(18)
+		self.RaidDebuffs:SetWidth(18)
+		self.RaidDebuffs:SetPoint("CENTER", self.Health)
+		self.RaidDebuffs:SetFrameStrata("HIGH")
 
-		self.RaidDebuffs.icon = self.RaidDebuffs:CreateTexture(nil, 'OVERLAY')
+		self.RaidDebuffs.icon = self.RaidDebuffs:CreateTexture(nil, "OVERLAY")
 		self.RaidDebuffs.icon:SetTexCoord(.1,.9,.1,.9)
 		self.RaidDebuffs.icon:SetAllPoints(self.RaidDebuffs)
-			
-		local overlay = self.RaidDebuffs:CreateTexture(nil, 'OVERLAY')
-		overlay:SetTexture("Interface\\AddOns\\NevoUI\\UnitFrame\\media\\iconborder")
-		overlay:SetPoint('TOPLEFT', self.RaidDebuffs, -1, 1)
-		overlay:SetPoint('BOTTOMRIGHT', self.RaidDebuffs, 1, -1)
 		
-		self.RaidDebuffs.time = self.RaidDebuffs:CreateFontString(nil, 'OVERLAY')
-		self.RaidDebuffs.time:SetFont(STANDARD_TEXT_FONT, 12, 'THINOUTLINE')
-		self.RaidDebuffs.time:SetPoint('CENTER', self.RaidDebuffs, 'CENTER', 0, 0)
+		self.RaidDebuffs.time = self.RaidDebuffs:CreateFontString(nil, "OVERLAY")
+		self.RaidDebuffs.time:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
+		self.RaidDebuffs.time:SetPoint("CENTER", self.RaidDebuffs, "CENTER", 0, 0)
 		self.RaidDebuffs.time:SetTextColor(1, .9, 0)
 
-		self.RaidDebuffs.count = self.RaidDebuffs:CreateFontString(nil, 'OVERLAY')
-		self.RaidDebuffs.count:SetFont(STANDARD_TEXT_FONT, 8, 'OUTLINE')
-		self.RaidDebuffs.count:SetPoint('BOTTOMRIGHT', self.RaidDebuffs, 'BOTTOMRIGHT', 2, 0)
+		self.RaidDebuffs.count = self.RaidDebuffs:CreateFontString(nil, "OVERLAY")
+		self.RaidDebuffs.count:SetFont(STANDARD_TEXT_FONT, 8, "OUTLINE")
+		self.RaidDebuffs.count:SetPoint("BOTTOMRIGHT", self.RaidDebuffs, "BOTTOMRIGHT", 2, 0)
 		self.RaidDebuffs.count:SetTextColor(1, .9, 0)	
 	end
 end
@@ -1046,16 +1037,14 @@ end
 
 -- oUF_DebuffHighlight
 lib.debuffHighlight = function(self)
-	if cfg.enableDebuffHighlight then
-		local dbh = self.Health:CreateTexture(nil, "OVERLAY")
-		dbh:SetAllPoints(self.Health)
-		dbh:SetTexture(cfg.debuffhighlight_texture)
-		dbh:SetBlendMode("ADD")
-		dbh:SetVertexColor(0,0,0,0) -- set alpha to 0 to hide the texture
-		self.DebuffHighlight = dbh
-		self.DebuffHighlightAlpha = 0.5
-		self.DebuffHighlightFilter = true
-	end
+	local dbh = self.Health:CreateTexture(nil, "OVERLAY")
+	dbh:SetAllPoints(self.Health)
+	dbh:SetTexture(cfg.debuffhighlight_texture)
+	dbh:SetBlendMode("ADD")
+	dbh:SetVertexColor(0,0,0,0) -- set alpha to 0 to hide the texture
+	self.DebuffHighlight = dbh
+	self.DebuffHighlightAlpha = 0.5
+	self.DebuffHighlightFilter = true
 end
 
 -- AuraWatch

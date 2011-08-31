@@ -4,35 +4,35 @@ local oUF = ns.oUF or oUF
 local cfg = ns.cfg
 local lib = ns.lib
   
-	-- Unit has an Aura
-	function hasUnitAura(unit, name)
-	
-		local _, _, _, count, _, _, _, caster = UnitAura(unit, name)
-		if (caster and caster == "player") then
-			return count
-		end
+-- Unit has an Aura
+function hasUnitAura(unit, name)
+
+	local _, _, _, count, _, _, _, caster = UnitAura(unit, name)
+	if caster and caster == "player" then
+		return count
 	end
+end
+
+-- Unit has a Debuff
+function hasUnitDebuff(unit, name)
 	
-	-- Unit has a Debuff
-	function hasUnitDebuff(unit, name)
-		
-		local _, _, _, count, _, _, _, _ = UnitDebuff(unit, name)
-		if (count) then return count
-		end
+	local _, _, _, count, _, _, _, _ = UnitDebuff(unit, name)
+	if count then return count
 	end
+end
 			
 local MyPvPUpdate = function(self, event, unit)
-	if(unit ~= self.unit) then return end
+	if unit ~= self.unit then return end
 
 	local pvp = self.MyPvP
-	if(pvp) then
+	if pvp then
 		local factionGroup = UnitFactionGroup(unit)
 		-- FFA!
-		if(UnitIsPVPFreeForAll(unit)) then
+		if UnitIsPVPFreeForAll(unit) then
 			pvp:SetTexture([[Interface\TargetingFrame\UI-PVP-FFA]])
 			pvp:Show()
 		elseif(UnitIsPVP(unit) and factionGroup) then
-			if(factionGroup == 'Horde') then
+			if factionGroup == 'Horde' then
 				pvp:SetTexture([[Interface\Addons\oUF_Fail\media\Horde]])
 			else
 				pvp:SetTexture([[Interface\Addons\oUF_Fail\media\Alliance]])
@@ -45,9 +45,9 @@ local MyPvPUpdate = function(self, event, unit)
 end
 
 oUF.colors.smooth = {42/255,48/255,50/255, 42/255,48/255,50/255, 42/255,48/255,50/255}
-  -----------------------------
-  -- STYLE FUNCTIONS
-  -----------------------------
+-----------------------------
+-- STYLE FUNCTIONS
+-----------------------------
 
 local UnitSpecific = {
 
@@ -57,7 +57,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(220, 22)
+		self:SetSize(220, 35)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -94,7 +94,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(220, 22)
+		self:SetSize(220, 35)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -105,7 +105,6 @@ local UnitSpecific = {
 		lib.gen_RaidMark(self)
 		lib.gen_InfoIcons(self)
 		lib.gen_castbar(self)
-		lib.debuffHighlight(self)
 		lib.HealPred(self)
 
 		--style specific stuff
@@ -120,8 +119,8 @@ local UnitSpecific = {
 		self.Power.BG.multiplier = 0.2
 
 
-		if cfg.showTargetBuffs then	lib.createBuffs(self) end
-		if cfg.showTargetDebuffs then lib.createDebuffs(self) end
+		if cfg.showTargetBuff then	lib.createBuffs(self) end
+		if cfg.showTargetDebuff then lib.createDebuffs(self) end
 
 	end,
 	
@@ -131,7 +130,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(220, 22)
+		self:SetSize(220, 35)
 		
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -153,6 +152,8 @@ local UnitSpecific = {
 		self.Power.colorPower = true
 		self.Power.BG.multiplier = 0.2
 
+		if cfg.showFocusBuff then	lib.createBuffs(self) end
+		if cfg.showFocusDebuff then	lib.createDebuffs(self) end
 		
 	end,
 	
@@ -162,7 +163,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60, 10)
+		self:SetSize(60, 14)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -183,7 +184,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60, 10)
+		self:SetSize(60, 14)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -205,7 +206,7 @@ local UnitSpecific = {
 		
 		-- Size and Scale
 		self:SetScale(cfg.scale)
-		self:SetSize(60,10)
+		self:SetSize(60,14)
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
@@ -220,6 +221,41 @@ local UnitSpecific = {
 
 	end,
 
+	party = function(self, ...)
+				
+		self.mystyle = "party"
+
+		self.Range = {
+			insideAlpha = 1,
+			outsideAlpha = 0.4,
+		}
+
+		-- Generate Bars
+		lib.gen_hpbar(self)
+		lib.gen_ppbar(self)
+		lib.gen_hpstrings(self)
+		lib.gen_highlight(self)
+		lib.gen_RaidMark(self)
+		lib.ReadyCheck(self)
+		lib.gen_LFDRole(self)
+		
+		-- style specific stuff
+		self.Health.frequentUpdates = true
+		self.Health.colorSmooth = true
+		self.Power.colorPower = true
+		self.Power.BG.multiplier = 0.2
+		lib.gen_InfoIcons(self)
+		lib.CreateThreatBorder(self)
+		lib.HealPred(self)
+		lib.debuffHighlight(self)
+		
+		if cfg.showPartyDebuff then lib.createDebuffs(self) end
+
+		self.Health.PostUpdate = lib.PostUpdateRaidFrame
+		self:RegisterEvent("UNIT_THREAT_LIST_UPDATE", lib.UpdateThreat)
+		self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", lib.UpdateThreat)
+	end,
+
   raid = function(self, ...)
 				
 		self.mystyle = "raid"
@@ -231,9 +267,9 @@ local UnitSpecific = {
 
 		-- Generate Bars
 		lib.gen_hpbar(self)
+		lib.gen_ppbar(self)
 		lib.gen_hpstrings(self)
 		lib.gen_highlight(self)
-		lib.gen_ppbar(self)
 		lib.gen_RaidMark(self)
 		lib.ReadyCheck(self)
 		lib.gen_LFDRole(self)
@@ -249,7 +285,6 @@ local UnitSpecific = {
 		lib.debuffHighlight(self)
 		lib.raidDebuffs(self)
 		lib.createAuraWatch(self, unit)
-
 		self.Health.PostUpdate = lib.PostUpdateRaidFrame
 		self:RegisterEvent("UNIT_THREAT_LIST_UPDATE", lib.UpdateThreat)
 		self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", lib.UpdateThreat)
@@ -285,7 +320,7 @@ end
   -----------------------------
 
 oUF:RegisterStyle('Sora', GlobalStyle)
-oUF:RegisterStyle('SoraGroup', GroupGlobalStyle)
+--oUF:RegisterStyle('SoraGroup', GroupGlobalStyle)
 
 oUF:Factory(function(self)
 
@@ -293,10 +328,25 @@ oUF:Factory(function(self)
 	self:SetActiveStyle('Sora')
 	self:Spawn('player'):SetPoint("CENTER", UIParent, "CENTER", -270, -100)
 	self:Spawn('target'):SetPoint("CENTER", UIParent, "CENTER", 270, -100)
-	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -20) end
-	if cfg.showpet then self:Spawn('pet'):SetPoint("TOPLEFT",oUF_SoraPlayer,"BOTTOMLEFT", 0, -20) end
+	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -10) end
+	if cfg.showpet then self:Spawn('pet'):SetPoint("TOPLEFT",oUF_SoraPlayer,"BOTTOMLEFT", 0, -10) end
 	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 150) end
 	if cfg.showfocustarget then self:Spawn('focustarget'):SetPoint("BOTTOMLEFT",oUF_SoraFocus,"TOPLEFT", 0, 10) end
+
+	-- Party Frames
+	if cfg.ShowParty then
+		local party = oUF:SpawnHeader("oUF_Party", nil, 'raid,party,solo',
+		"showParty", cfg.ShowParty, 
+		'showSolo', true,
+		"showPlayer", true,
+		"yoffset", -30,
+		"oUF-initialConfigFunction", ([[
+			self:SetWidth(%d)
+			self:SetHeight(%d)
+   		]]):format(180, 26))
+		party:SetScale(cfg.raidScale)
+		party:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -250)
+	end
 	
 	-- Raid Frames
 	if cfg.ShowRaid then
@@ -329,7 +379,7 @@ oUF:Factory(function(self)
 			"oUF-initialConfigFunction", ([[
 			self:SetWidth(%d)
 			self:SetHeight(%d)
-			]]):format(cfg.RaidUnitWidth, cfg.RaidUnitHeight))
+			]]):format(cfg.RaidUnitWidth, 23))
 		raid:SetScale(cfg.raidScale)
 		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -410, 160)		
 	else
@@ -352,7 +402,7 @@ oUF:Factory(function(self)
 			"oUF-initialConfigFunction", ([[
 			self:SetWidth(%d)
 			self:SetHeight(%d)
-			]]):format(cfg.RaidUnitWidth, cfg.RaidUnitHeight))
+			]]):format(cfg.RaidUnitWidth, 23))
 		raid:SetScale(cfg.raidScale)
 		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -430, 165)
 	end
