@@ -363,7 +363,7 @@ oUF:Factory(function(self)
 		local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
 			"showRaid", cfg.ShowRaid,  
 			'showPlayer', true,
-			'showSolo', false,
+			'showSolo', true,
 			'showParty', true,
 			"xoffset", 7,
 			"yOffset", -10,

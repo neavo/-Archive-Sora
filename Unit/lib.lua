@@ -901,7 +901,7 @@ lib.raidDebuffs = function(self)
 		self.RaidDebuffs = CreateFrame("Frame", nil, self)
 		self.RaidDebuffs:SetHeight(18)
 		self.RaidDebuffs:SetWidth(18)
-		self.RaidDebuffs:SetPoint("CENTER", self.Health)
+		self.RaidDebuffs:SetPoint("CENTER", self)
 		self.RaidDebuffs:SetFrameStrata("HIGH")
 
 		self.RaidDebuffs.icon = self.RaidDebuffs:CreateTexture(nil, "OVERLAY")
