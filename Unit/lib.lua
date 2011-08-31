@@ -963,6 +963,12 @@ lib.RogueComboPoints = function(self)
 			if i > 1 then point:SetPoint("LEFT", point[i - 1], "RIGHT") end
 			point:SetStatusBarTexture(cfg.statusbar_texture)
 			point:SetStatusBarColor(1.0, 0.9, 0)
+							
+			local Border = CreateFrame("Frame", nil, point)
+			Border:SetFrameLevel(1)
+			Border:SetPoint("TOPLEFT",-5,5)
+			Border:SetPoint("BOTTOMRIGHT",5,-5)
+			lib.gen_backdrop(Border)
 
 		if i == 1 then
 			point:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
@@ -1010,20 +1016,14 @@ lib.gen_TotemBar = function(self)
 			Border:SetFrameLevel(1)
 			Border:SetPoint("TOPLEFT",-5,5)
 			Border:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_totemback(Border)
+			lib.gen_backdrop(Border)
 			
 			if i == 1 then
 				t:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 3, 6)
 			else
 				t:SetPoint('TOPLEFT', TotemBar[i-1], "TOPRIGHT", 6, 0)
 			end
-
-			t.BG = t:CreateTexture(nil, "BORDER")
-			t.BG:SetAllPoints(t)
-			t.BG:SetTexture(cfg.backdrop_texture)
-			t.BG.multiplier = 0.15
-			t.BG:SetAlpha(0.6)
-	
+			
 			local text = lib.gen_fontstring(t, cfg.smallfont, 8, "THINOUTLINE")
 			text:SetPoint("CENTER",t,"CENTER",1,12)
 			text:SetFontObject"GameFontNormal"
