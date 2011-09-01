@@ -330,14 +330,14 @@ oUF:Factory(function(self)
 	self:Spawn('target'):SetPoint("CENTER", UIParent, "CENTER", 270, -100)
 	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -10) end
 	if cfg.showpet then self:Spawn('pet'):SetPoint("TOPLEFT",oUF_SoraPlayer,"BOTTOMLEFT", 0, -10) end
-	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 150) end
+	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 250) end
 	if cfg.showfocustarget then self:Spawn('focustarget'):SetPoint("BOTTOMLEFT",oUF_SoraFocus,"TOPLEFT", 0, 10) end
 
 	-- Party Frames
 	if cfg.ShowParty then
 		local party = oUF:SpawnHeader("oUF_Party", nil, 'raid,party,solo',
 		"showParty", cfg.ShowParty, 
-		'showSolo', true,
+		'showSolo', false,
 		"showPlayer", false,
 		"yoffset", -30,
 		"oUF-initialConfigFunction", ([[
@@ -345,7 +345,7 @@ oUF:Factory(function(self)
 			self:SetHeight(%d)
    		]]):format(180, 26))
 		party:SetScale(cfg.raidScale)
-		party:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -250)
+		party:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -280)
 	end
 	
 	-- Raid Frames
