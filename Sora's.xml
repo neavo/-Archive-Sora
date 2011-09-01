@@ -19,6 +19,7 @@
 	<Include file="Chat\Load_Chat.xml"/>
 	<Include file="FilgerMod\Load_FilgerMod.xml"/>
 	<Include file="Loot\Load_Loot.xml"/>
+	<Include file="Map\Load_Map.xml"/>
 	<Include file="Nameplates\Load_Nameplates.xml"/>
 	<Include file="RightButtonMenu\Load_RightButtonMenu.xml"/>
 	<Include file="Threat\Load_Threat.xml"/>
