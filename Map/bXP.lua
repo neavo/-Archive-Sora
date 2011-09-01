@@ -8,7 +8,6 @@ local cfg = SR.MapConfig
 
 local color = {r = .4, g = .1, b = 0.6}
 local restedcolor = {r = .2, g = .4, b = 0.8}
-
 local numberize = function(v)
     if v <= 9999 then return v end
     if v >= 1000000 then
@@ -21,7 +20,7 @@ local numberize = function(v)
 end
 
 local function setup(frame, level)
-    frame:SetStatusBarcfg.Statusbar(cfg.Statusbar)
+    frame:SetStatusBarTexture(cfg.Statusbar)
     frame:SetFrameStrata("LOW")
     frame:SetFrameLevel(level)
     frame:SetPoint("LEFT",Minimap,"LEFT",0,0)
@@ -33,11 +32,11 @@ end
 
 local bar = CreateFrame("StatusBar", "bXP", UIParent)
 setup(bar, 2)
-bar:SetPoint("TOP", Minimap, "BOTTOM", 0, -30)
+bar:SetPoint("TOP", Minimap, "BOTTOM", 0, -35)
         
-xptext = bar:Createcfg.FontString("XP Text")
+xptext = bar:CreateFontString("XP Text")
 xptext:SetPoint("CENTER", bar,"CENTER", 0,-18)
-xptext:Setcfg.Font(cfg.Font, 10, "THINOUTLINE")
+xptext:SetFont(cfg.Font, 11, "THINOUTLINE")
 xptext:SetAlpha(0)
 
 bar:RegisterEvent("PLAYER_XP_UPDATE")
@@ -55,9 +54,9 @@ rbar:SetBackdrop({
 rbar:SetBackdropColor(0,0,0,1)
 rbar:EnableMouse(true)
 rbar:SetPoint("TOPLEFT", bar, "TOPLEFT")
-bg = rbar:Createcfg.Statusbar(nil, 'BORDER')
+bg = rbar:CreateTexture(nil, 'BORDER')
 bg:SetAllPoints(rbar)
-bg:Setcfg.Statusbar(cfg.Statusbar)
+bg:SetTexture(cfg.Statusbar)
 bg:SetVertexColor(0.16,0.16,0.16,1)
 
 local function Rested()
