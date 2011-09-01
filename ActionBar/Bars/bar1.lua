@@ -1,7 +1,7 @@
 local bar = CreateFrame("Frame","rABS_MainMenuBar",UIParent, "SecureHandlerStateTemplate") 
 bar:SetWidth(30*12+3*11)
 bar:SetHeight(30)
-bar:SetPoint("BOTTOM", UIParent, "BOTTOM", -20, 10)
+bar:SetPoint("BOTTOM", UIParent, "BOTTOM", -20, 7)
   
 local Page = {
 	["DRUID"] = "[bonusbar:1,nostealth] 7; [bonusbar:1,stealth] 8; [bonusbar:2] 8; [bonusbar:3] 9; [bonusbar:4] 10;",

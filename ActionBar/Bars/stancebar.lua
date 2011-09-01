@@ -1,7 +1,7 @@
 local bar = CreateFrame("Frame","rABS_StanceBar",UIParent, "SecureHandlerStateTemplate")
 bar:SetWidth(24*NUM_SHAPESHIFT_SLOTS+1*(NUM_SHAPESHIFT_SLOTS-1))
 bar:SetHeight(24)
-bar:SetPoint("BOTTOM", UIParent, "BOTTOM", -92, 113)
+bar:SetPoint("BOTTOM", UIParent, "BOTTOM", -92, 111)
 ShapeshiftBarFrame:SetParent(bar)
 ShapeshiftBarFrame:EnableMouse(false)
 
@@ -21,3 +21,21 @@ local function rABS_MoveShapeshift()
 	ShapeshiftButton1:SetPoint("BOTTOMLEFT", bar, 0,0)
 end
 hooksecurefunc("ShapeshiftBar_Update", rABS_MoveShapeshift)
+
+local function lighton(alpha)
+	if ShapeshiftBarFrame:IsShown() then
+		for i=1, NUM_SHAPESHIFT_SLOTS do
+			local pb = _G["ShapeshiftButton"..i]
+			pb:SetAlpha(alpha)
+		end
+	end
+end    
+bar:EnableMouse(true)
+bar:SetScript("OnEnter", function(self) lighton(1) end)
+bar:SetScript("OnLeave", function(self) lighton(0.3) end)  
+for i=1, NUM_SHAPESHIFT_SLOTS do
+	local pb = _G["ShapeshiftButton"..i]
+	pb:SetAlpha(0.3)
+	pb:HookScript("OnEnter", function(self) lighton(1) end)
+	pb:HookScript("OnLeave", function(self) lighton(0.1) end)
+end

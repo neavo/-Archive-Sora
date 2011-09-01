@@ -7,7 +7,7 @@ local cfg = SR.ActionBarConfig
 
 local MainBar = CreateFrame("Frame")
 MainBar:SetPoint("TOPLEFT",MultiBarBottomRightButton1,"TOPLEFT", -7, 7)
-MainBar:SetPoint("BOTTOMRIGHT",ActionButton12,"BOTTOMRIGHT", 7, -10)
+MainBar:SetPoint("BOTTOMRIGHT",ActionButton12,"BOTTOMRIGHT", 7, -7)
 MainBar:SetBackdrop({
 	bgFile = cfg.bgFile,
 	edgeFile = cfg.GlowTex, edgeSize = 3, 
@@ -74,7 +74,7 @@ end)
 MainBar.Right:SetScript("OnMouseDown",function(self)
 	if MultiBarLeftButton1:GetAlpha() < 0.1 then
 		RightBarFadeIn()
-	else--if MultiBarLeftButton1:GetAlpha() > 0.9 then
+	elseif MultiBarLeftButton1:GetAlpha() > 0.9 then
 		RightBarFadeOut()
 	end
 end)
