@@ -396,8 +396,8 @@ lib.gen_castbar = function(self)
 	if self.mystyle == "player" then
 		if cfg.CastbarAlone then
 			Statusbar:SetHeight(20)
-			Statusbar:SetPoint("BOTTOMLEFT",MultiBarBottomRightButton1,"TOPLEFT",2, 5)
-			Statusbar:SetPoint("BOTTOMRIGHT",MultiBarBottomRightButton12,"TOPRIGHT",-32, 5)			
+			Statusbar:SetPoint("BOTTOMLEFT",MultiBarBottomRightButton1,"TOPLEFT", -3, 10)
+			Statusbar:SetPoint("BOTTOMRIGHT",MultiBarBottomRightButton12,"TOPRIGHT",-25, 10)			
 		else
 			Statusbar:SetWidth(self:GetWidth()-70)
 			Statusbar:SetPoint("TOPRIGHT",self,"BOTTOMRIGHT",0, -15)
@@ -412,7 +412,7 @@ lib.gen_castbar = function(self)
 	
 	Statusbar:SetStatusBarTexture(cfg.statusbar_texture)
 	Statusbar:SetStatusBarColor(95/255, 182/255, 255/255,1)
-	Statusbar:SetFrameLevel(9)
+	Statusbar:SetFrameStrata("HIGH")
 	
 	--color
 	Statusbar.CastingColor = cbColor

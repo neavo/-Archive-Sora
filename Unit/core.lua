@@ -363,7 +363,7 @@ oUF:Factory(function(self)
 		local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
 			"showRaid", cfg.ShowRaid,  
 			'showPlayer', true,
-			'showSolo', true,
+			'showSolo', false,
 			'showParty', true,
 			"xoffset", 7,
 			"yOffset", -10,
@@ -381,7 +381,7 @@ oUF:Factory(function(self)
 			self:SetHeight(%d)
 			]]):format(cfg.RaidUnitWidth, 23))
 		raid:SetScale(cfg.raidScale)
-		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -410, 160)		
+		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -405, 160)		
 	else
 		local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
 			"showRaid", cfg.ShowRaid,  
@@ -404,6 +404,6 @@ oUF:Factory(function(self)
 			self:SetHeight(%d)
 			]]):format(cfg.RaidUnitWidth, 23))
 		raid:SetScale(cfg.raidScale)
-		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -430, 165)
+		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -408, 160)
 	end
 end)
