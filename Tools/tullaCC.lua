@@ -1,4 +1,4 @@
---[[
+﻿--[[
 	Curation settings for tullaCC
 --]]
 

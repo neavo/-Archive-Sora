@@ -1,4 +1,4 @@
-FRIENDSMENU_MAXBUTTONS = 20;
+﻿FRIENDSMENU_MAXBUTTONS = 20;
 FRIENDSMENU_NOW_LINK_PLAYER = nil;
 tinsert(UIMenus, "FriendsMenuXP");
 tinsert(UIMenus, "FriendsMenuXPSecure");

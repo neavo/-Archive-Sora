@@ -1,9 +1,9 @@
-
+ï»¿
 
 
 
 ------------
---  ÉèÖÃ  --
+--  è®¾ç½®  --
 ------------
 
 local cfg = CreateFrame("Frame")
@@ -14,13 +14,13 @@ cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"
 cfg.ArrowLarge = Media.."ArrowLarge"
 cfg.ArrowSmall = Media.."ArrowSmall"
-cfg.Pos = {"TOP","oUF_SoraPlayer", "BOTTOM", 0, -60}	-- ³ğºŞÌõÎ»ÖÃ(ÒÑĞŞÕı,¿ÉÒÔÃªÔÚÈÎÒâ¿òÌåÉÏ,°üÀ¨oUFÍ·Ïñ)
-cfg.NameTextL = 3	-- ĞÕÃû³¤¶È(µ¥Î»:×Ö)
-cfg.ThreatLimited = 2	-- ÏÔÊ¾³ğºŞÈËÊı(²»°üÀ¨Tank)
+cfg.Pos = {"TOP","oUF_SoraPlayer", "BOTTOM", 0, -60}	-- ä»‡æ¨æ¡ä½ç½®(å·²ä¿®æ­£,å¯ä»¥é”šåœ¨ä»»æ„æ¡†ä½“ä¸Š,åŒ…æ‹¬oUFå¤´åƒ)
+cfg.NameTextL = 3	-- å§“åé•¿åº¦(å•ä½:å­—)
+cfg.ThreatLimited = 2	-- æ˜¾ç¤ºä»‡æ¨äººæ•°(ä¸åŒ…æ‹¬Tank)
 
 	
 ----------------
---  ÃüÃû¿Õ¼ä  --
+--  å‘½åç©ºé—´  --
 ----------------
 
 local _, SR = ...

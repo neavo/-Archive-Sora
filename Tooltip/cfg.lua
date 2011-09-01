@@ -1,9 +1,9 @@
-
+ï»¿
 
 
 
 ------------
---  ÉèÖÃ  --
+--  è®¾ç½®  --
 ------------
 
 local cfg = CreateFrame("Frame")
@@ -12,14 +12,14 @@ cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.Fontsize = 11
 cfg.GlowTex = Media.."glowTex"
 
-cfg.colorborderClass = true											-- ±ß¿òÖ°Òµ×ÅÉ«
-cfg.Cursor = true													-- ÌáÊ¾¿òÌå¸úËæÊó±ê
-	cfg.Position = { "BOTTOMRIGHT", nil, "BOTTOMRIGHT", -50, 200 }	-- Èç¹û²»¸úËæÊó±ê,ÄÇÌáÊ¾¿òÌåµÄÎ»ÖÃ
-cfg.HideInCombat = true 											-- ½øÈëÕ½¶·×Ô¶¯Òş²ØÌáÊ¾¿òÌå
+cfg.colorborderClass = true											-- è¾¹æ¡†èŒä¸šç€è‰²
+cfg.Cursor = true													-- æç¤ºæ¡†ä½“è·Ÿéšé¼ æ ‡
+	cfg.Position = { "BOTTOMRIGHT", nil, "BOTTOMRIGHT", -50, 200 }	-- å¦‚æœä¸è·Ÿéšé¼ æ ‡,é‚£æç¤ºæ¡†ä½“çš„ä½ç½®
+cfg.HideInCombat = true 											-- è¿›å…¥æˆ˜æ–—è‡ªåŠ¨éšè—æç¤ºæ¡†ä½“
 
 
 ----------------
---  ÃüÃû¿Õ¼ä  --
+--  å‘½åç©ºé—´  --
 ----------------
 
 local _, SR = ...

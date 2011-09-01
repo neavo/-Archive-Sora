@@ -1,4 +1,4 @@
---[[
+ï»¿--[[
 	
 	Filger
 	Copyright (c) 2009, Nils Ruesch
@@ -9,13 +9,13 @@
 --[[
 	
 	FilgerMod
-	A Mod Based on Filger £º)
+	A Mod Based on Filger ï¼š)
 	By Neavo
 	neavo7@Gmail.com
 ]]
 
 ----------------
---  ÃüÃû¿Õ¼ä  --
+--  å‘½åç©ºé—´  --
 ----------------
 
 local _, SR = ...

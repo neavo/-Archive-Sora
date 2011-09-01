@@ -1,4 +1,4 @@
--- ProfessionTabs v1.07 by Beoko
+﻿-- ProfessionTabs v1.07 by Beoko
 local ProfessionTabs = CreateFrame("Frame", "ProfessionTabs")
 ProfessionTabs:SetScript("OnEvent", function(self, Event, ...) self[Event](self, Event, ...) end)
 ProfessionTabs:RegisterEvent("TRADE_SKILL_SHOW")

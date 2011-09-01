@@ -1,4 +1,4 @@
--- OpenAll modified by imthink and MailTips v1.3 by fmeus
+﻿-- OpenAll modified by imthink and MailTips v1.3 by fmeus
 
 local takingOnlyCash = false
 local onlyCurrentMail = false

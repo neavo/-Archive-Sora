@@ -1,4 +1,4 @@
---[=[
+﻿--[=[
 	Language Localization: enUS
 	Translated by: name <email address>
 	

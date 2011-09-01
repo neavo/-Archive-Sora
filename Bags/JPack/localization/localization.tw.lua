@@ -1,4 +1,4 @@
---[=[
+﻿--[=[
 	Language Localization: zhTW
 	Translated by: name <email address>
 ]=]

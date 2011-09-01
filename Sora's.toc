@@ -1,6 +1,6 @@
-## Interface: 40100
+ï»¿## Interface: 40100
 ## Title: |cff70C0F5Sora's|r
-## Notes: Sora's O(¡É_¡É)O
+## Notes: Sora's O(âˆ©_âˆ©)O
 ## Author: Neavo
 ## Version: 0.01
 

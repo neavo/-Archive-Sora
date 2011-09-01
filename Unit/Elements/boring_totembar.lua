@@ -1,4 +1,4 @@
---[[
+﻿--[[
 	oUF_boring_totembar
 	-tecu
 	

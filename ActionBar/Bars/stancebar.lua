@@ -1,4 +1,4 @@
-local bar = CreateFrame("Frame","rABS_StanceBar",UIParent, "SecureHandlerStateTemplate")
+﻿local bar = CreateFrame("Frame","rABS_StanceBar",UIParent, "SecureHandlerStateTemplate")
 bar:SetWidth(22*NUM_SHAPESHIFT_SLOTS+1*(NUM_SHAPESHIFT_SLOTS-1))
 bar:SetHeight(22)
 bar:SetPoint("BOTTOM", UIParent, "BOTTOM", -92, 111)

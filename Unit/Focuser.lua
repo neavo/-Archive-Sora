@@ -1,4 +1,4 @@
--- Focuser v0.51 by slizen
+﻿-- Focuser v0.51 by slizen
 local modifier = "shift" -- shift, alt or ctrl
 local mouseButton = "1" -- 1 = left, 2 = right, 3 = middle, 4 and 5 = thumb buttons if there are any
 

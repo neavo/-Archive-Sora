@@ -1,4 +1,4 @@
-local bar = CreateFrame("Frame","rABS_VehicleExit",UIParent, "SecureHandlerStateTemplate")
+﻿local bar = CreateFrame("Frame","rABS_VehicleExit",UIParent, "SecureHandlerStateTemplate")
 bar:SetHeight(36)
 bar:SetWidth(36)
 bar:SetPoint("CENTER", ActionButton8, "CENTER", 0, 0)

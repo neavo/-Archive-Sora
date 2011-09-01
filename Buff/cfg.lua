@@ -1,9 +1,9 @@
-
+Ôªø
 
 
 
 ------------
---  …Ë÷√  --
+--  ËÆæÁΩÆ  --
 ------------
 
 local cfg = CreateFrame("Frame")
@@ -11,13 +11,13 @@ local Media = "Interface\\Addons\\Sora's\\Buff\\media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.bgFile = Media.."iconborder"
 cfg.edgeFile = Media.."glowTex"
-cfg.IconSize = 30 											-- Õº±Í¥Û–°
-cfg.Spacing = 4												-- Õº±Íº‰æ‡
-cfg.BUFFpos = {"TOPRIGHT", UIParent, "TOPRIGHT", -5, -5} 	-- BUFFŒª÷√
-cfg.DEUFFpos = {"TOPRIGHT", UIParent, "TOPRIGHT", -5, -130}	-- DEBUFFŒª÷√
+cfg.IconSize = 30 											-- ÂõæÊ†áÂ§ßÂ∞è
+cfg.Spacing = 4												-- ÂõæÊ†áÈó¥Ë∑ù
+cfg.BUFFpos = {"TOPRIGHT", UIParent, "TOPRIGHT", -5, -5} 	-- BUFF‰ΩçÁΩÆ
+cfg.DEUFFpos = {"TOPRIGHT", UIParent, "TOPRIGHT", -5, -130}	-- DEBUFF‰ΩçÁΩÆ
 	
 ----------------
---  √¸√˚ø’º‰  --
+--  ÂëΩÂêçÁ©∫Èó¥  --
 ----------------
 
 local _, SR = ...

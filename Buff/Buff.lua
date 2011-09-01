@@ -1,12 +1,12 @@
-----------------
---  ÃüÃû¿Õ¼ä  --
+ï»¿----------------
+--  å‘½åç©ºé—´  --
 ----------------
 
 local _, SR = ...
 local cfg = SR.BuffConfig
 
 --------------------------
---  Ò»Ð©¹«ÓÃ±äÁ¿ºÍº¯Êý  --
+--  ä¸€äº›å…¬ç”¨å˜é‡å’Œå‡½æ•°  --
 --------------------------
 
 local IconsPerRow = 12
@@ -21,10 +21,10 @@ local MakeBackdrop = function(frame)
 end
 
 ----------------
---  ³ÌÐòÖ÷Ìå  --
+--  ç¨‹åºä¸»ä½“  --
 ----------------
 
--- ÁÙÊ±ÎäÆ÷¸½Ä§ÑùÊ½
+-- ä¸´æ—¶æ­¦å™¨é™„é­”æ ·å¼
 for i = 1, 3 do
 	_G["TempEnchant"..i.."Border"]:Hide()
 	local TempEnchant 	= _G["TempEnchant"..i]
@@ -51,7 +51,7 @@ for i = 1, 3 do
 	MakeBackdrop(Overlay)
 end
 
--- BUFF/DEBUFFÑùÊ½
+-- BUFF/DEBUFFæ ·å¼
 local function Style(buttonName, i)
 
 	local Button	= _G[buttonName..i]
@@ -82,10 +82,10 @@ local function Style(buttonName, i)
 	end
 end
 
--- BUFF¿òÌå
+-- BUFFæ¡†ä½“
 local function MakeBuffFrame()
 
-	-- ÅÅÐòËã·¨
+	-- æŽ’åºç®—æ³•
 	local Temp = {[1]={},[2]={}}
 	for i=1, BUFF_ACTUAL_DISPLAY do	
 		local Duration = select(6,UnitBuff("player", i))
@@ -109,7 +109,7 @@ local function MakeBuffFrame()
 		end
 	end
 	
-	-- Éú³ÉBUFF¿òÌå
+	-- ç”ŸæˆBUFFæ¡†ä½“
 	for i=1, BUFF_ACTUAL_DISPLAY do
 		Style("BuffButton", i)
 		local Buff = BuffSort[i]
@@ -129,7 +129,7 @@ local function MakeBuffFrame()
 end
 hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", MakeBuffFrame)
 
--- DEBUFF¿òÌå
+-- DEBUFFæ¡†ä½“
 local function MakeDebuffFrame(buttonName,i)
 	Style(buttonName, i)
 	local Debuff = _G[buttonName..i]
@@ -146,7 +146,7 @@ local function MakeDebuffFrame(buttonName,i)
 end
 hooksecurefunc("DebuffButton_UpdateAnchors", MakeDebuffFrame)
 
--- BUFF¼´½«½áÊøÊ±µÄÌáÊ¾
+-- BUFFå³å°†ç»“æŸæ—¶çš„æç¤º
 local function FlashOnEnd(self, elapsed)
 	if self.timeLeft > 20 then
 		self.duration:SetTextColor(1,1,1)

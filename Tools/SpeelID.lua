@@ -1,4 +1,4 @@
-hooksecurefunc(GameTooltip, "SetUnitBuff", function(self,...)
+﻿hooksecurefunc(GameTooltip, "SetUnitBuff", function(self,...)
 	local id = select(11,UnitBuff(...))
 	if id then
 		self:AddDoubleLine("SpellID:",id)

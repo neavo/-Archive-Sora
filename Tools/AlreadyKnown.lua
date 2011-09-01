@@ -1,4 +1,4 @@
--- here is your custom color. note:this color acts as a filter applied to the texture image.
+﻿-- here is your custom color. note:this color acts as a filter applied to the texture image.
 
 local COLOR = { r = 0.1, g = 1.0, b = 0.1 }
 

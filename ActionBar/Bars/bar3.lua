@@ -1,4 +1,4 @@
-local bar = CreateFrame("Frame","rABS_MultiBarBottomRight",UIParent, "SecureHandlerStateTemplate")
+﻿local bar = CreateFrame("Frame","rABS_MultiBarBottomRight",UIParent, "SecureHandlerStateTemplate")
 bar:SetWidth(28*12+3*11)
 bar:SetHeight(28)
 bar:SetPoint("BOTTOM", UIParent, "BOTTOM", -20, 73)

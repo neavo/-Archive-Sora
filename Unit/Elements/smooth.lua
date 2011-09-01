@@ -1,4 +1,4 @@
----/Custom smooth update mod/---
+﻿---/Custom smooth update mod/---
 		---/ 100% based on oUF_Smooth/---
 
 local addon, ns = ...

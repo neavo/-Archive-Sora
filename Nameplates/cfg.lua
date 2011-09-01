@@ -1,9 +1,9 @@
-
+ï»¿
 
 
 
 ------------
---  ÉèÖÃ  --
+--  è®¾ç½®  --
 ------------
 
 local cfg = CreateFrame("Frame")
@@ -11,18 +11,18 @@ local MediaPath = "Interface\\AddOns\\Sora's\\Nameplates\\Media\\"
 cfg.statusbar_texture = MediaPath.."Statusbar"
 cfg.backdrop_edge_texture = MediaPath.."glowTex"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
-cfg.Fontsize = 10						-- ×ÖÌå´óĞ¡
-cfg.Fontflag = "THINOUTLINE"			-- ×ÖÌåÃè±ß
-cfg.hpHeight = 5						-- ĞÕÃû°åÑªÌõ¸ß¶È
-cfg.hpWidth = 120						-- ĞÕÃû°åÑªÌõ¿í¶È
-cfg.raidIconSize = 18					-- ÍÅ¶Ó±ê¼Ç´óĞ¡
-cfg.cbIconSize = 20					-- ĞÕÃû°åÊ©·¨ÌõÍ¼±ê´óĞ¡
-cfg.cbHeight = 5						-- ĞÕÃû°åÊ©·¨Ìõ¸ß¶È
-cfg.cbWidth = 100						-- ĞÕÃû°åÊ©·¨Ìõ¿í¶È
-cfg.CombatToggle = true				-- ½øÈë/Àë¿ªÕ½¶·×Ô¶¯¿ªÆô/¹Ø±ÕĞÕÃû°å
+cfg.Fontsize = 10						-- å­—ä½“å¤§å°
+cfg.Fontflag = "THINOUTLINE"			-- å­—ä½“æè¾¹
+cfg.hpHeight = 5						-- å§“åæ¿è¡€æ¡é«˜åº¦
+cfg.hpWidth = 120						-- å§“åæ¿è¡€æ¡å®½åº¦
+cfg.raidIconSize = 18					-- å›¢é˜Ÿæ ‡è®°å¤§å°
+cfg.cbIconSize = 20					-- å§“åæ¿æ–½æ³•æ¡å›¾æ ‡å¤§å°
+cfg.cbHeight = 5						-- å§“åæ¿æ–½æ³•æ¡é«˜åº¦
+cfg.cbWidth = 100						-- å§“åæ¿æ–½æ³•æ¡å®½åº¦
+cfg.CombatToggle = true				-- è¿›å…¥/ç¦»å¼€æˆ˜æ–—è‡ªåŠ¨å¼€å¯/å…³é—­å§“åæ¿
   
 ----------------
---  ÃüÃû¿Õ¼ä  --
+--  å‘½åç©ºé—´  --
 ----------------
 
 local _, SR = ...

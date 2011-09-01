@@ -1,4 +1,4 @@
-for i = 1, 4 do
+﻿for i = 1, 4 do
 	_G["WorldMapParty"..i]:SetWidth(32)
 	_G["WorldMapParty"..i]:SetHeight(32)
 end

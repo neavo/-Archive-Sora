@@ -1,4 +1,4 @@
-local grid
+﻿local grid
 local boxSize = 32
 
 function Grid_Show()

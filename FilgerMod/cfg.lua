@@ -1,9 +1,9 @@
-
+ï»¿
 
 
 
 ------------
---  ÉèÖÃ  --
+--  è®¾ç½®  --
 ------------
 
 local cfg = CreateFrame("Frame")
@@ -14,7 +14,7 @@ cfg.GlowTex = Media.."glowTex"
 cfg.ConfigMode = false
 	
 ----------------
---  ÃüÃû¿Õ¼ä  --
+--  å‘½åç©ºé—´  --
 ----------------
 
 local _, SR = ...

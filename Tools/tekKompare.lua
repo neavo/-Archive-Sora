@@ -1,4 +1,4 @@
-
+﻿
 local orig1, orig2 = {}, {}
 local GameTooltip = GameTooltip
 

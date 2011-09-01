@@ -1,4 +1,4 @@
--- Huge props to Nightcracker for coming up with this version of KeyBound!
+﻿-- Huge props to Nightcracker for coming up with this version of KeyBound!
 if IsAddOnLoaded("Dominos") then return end
 local m_ActionBars = CreateFrame("Frame","m_ActionBars")
 local bind, localmacros = CreateFrame("Frame", "ncHoverBind", UIParent), 0

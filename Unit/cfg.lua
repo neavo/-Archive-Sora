@@ -1,4 +1,4 @@
------------------------------
+ï»¿-----------------------------
 -- INIT
 -----------------------------
 
@@ -11,45 +11,45 @@ local Media = "Interface\\AddOns\\Sora's\\Unit\\media\\"	-- don't touch this ...
 -- CONFIG
 -----------------------------
 
--- µ¥Î»
-cfg.showtot = true				-- ÏÔÊ¾"Ä¿±êµÄÄ¿±ê"¿òÌå
-cfg.showpet = true				-- ÏÔÊ¾"³èÎï"¿òÌå
-cfg.showfocus = true			-- ÏÔÊ¾"½¹µã"¿òÌå
-cfg.showfocustarget = true		-- ÏÔÊ¾"½¹µãÄ¿±ê"¿òÌå
-cfg.showBossFrame = true		-- ÏÔÊ¾"Boss"¿òÌå
+-- å•ä½
+cfg.showtot = true				-- æ˜¾ç¤º"ç›®æ ‡çš„ç›®æ ‡"æ¡†ä½“
+cfg.showpet = true				-- æ˜¾ç¤º"å® ç‰©"æ¡†ä½“
+cfg.showfocus = true			-- æ˜¾ç¤º"ç„¦ç‚¹"æ¡†ä½“
+cfg.showfocustarget = true		-- æ˜¾ç¤º"ç„¦ç‚¹ç›®æ ‡"æ¡†ä½“
+cfg.showBossFrame = true		-- æ˜¾ç¤º"Boss"æ¡†ä½“
 
--- ÍÅ¶Ó&Ğ¡¶Ó
-cfg.ShowRaid = true				-- ÏÔÊ¾ÍÅ¶Ó¿òÌå
-	cfg.RaidUnitWidth = 74		-- ÍÅ¶Ó¿òÌåµ¥Î»¸ß¶È
-	cfg.RaidPartyH = true		-- ÍÅ¶Ó¿òÌåÖĞ¸÷Ğ¡¶ÓºáÏòÅÅÁĞ
-	cfg.showAuraWatch = true	-- ÍÅ¶Ó¿òÌåÖĞÏÔÊ¾±ß½ÇHot/¼¼ÄÜ¼àÊÓ
-	cfg.showRaidDebuffs = true 	-- ÏÔÊ¾RaidDebuff
+-- å›¢é˜Ÿ&å°é˜Ÿ
+cfg.ShowRaid = true				-- æ˜¾ç¤ºå›¢é˜Ÿæ¡†ä½“
+	cfg.RaidUnitWidth = 74		-- å›¢é˜Ÿæ¡†ä½“å•ä½é«˜åº¦
+	cfg.RaidPartyH = true		-- å›¢é˜Ÿæ¡†ä½“ä¸­å„å°é˜Ÿæ¨ªå‘æ’åˆ—
+	cfg.showAuraWatch = true	-- å›¢é˜Ÿæ¡†ä½“ä¸­æ˜¾ç¤ºè¾¹è§’Hot/æŠ€èƒ½ç›‘è§†
+	cfg.showRaidDebuffs = true 	-- æ˜¾ç¤ºRaidDebuff
 	
-cfg.ShowParty = false			-- ÏÔÊ¾Ğ¡¶Ó¿òÌå
-	cfg.showPartyDebuff = true	-- ÏÔÊ¾Ğ¡¶Ó¿òÌåDebuff
+cfg.ShowParty = false			-- æ˜¾ç¤ºå°é˜Ÿæ¡†ä½“
+	cfg.showPartyDebuff = true	-- æ˜¾ç¤ºå°é˜Ÿæ¡†ä½“Debuff
 	
-cfg.raidScale = 1				-- ÍÅ¶Ó&Ğ¡¶ÓËõ·Å
+cfg.raidScale = 1				-- å›¢é˜Ÿ&å°é˜Ÿç¼©æ”¾
 
 -- Buff
-cfg.showTargetBuff = true					-- ÏÔÊ¾Ä¿±ê¿òÌåBuff
-	cfg.BuffOnlyShowPlayer = false			-- Ä¿±ê¿òÌåÉÏÖ»ÏÔÊ¾Íæ¼ÒµÄBuff
-cfg.showTargetDebuff = true					-- ÏÔÊ¾Ä¿±ê¿òÌåDebuff
-	cfg.DebuffOnlyShowPlayer = false		-- Ä¿±ê¿òÌåÉÏÖ»ÏÔÊ¾Íæ¼ÒµÄDebuff
+cfg.showTargetBuff = true					-- æ˜¾ç¤ºç›®æ ‡æ¡†ä½“Buff
+	cfg.BuffOnlyShowPlayer = false			-- ç›®æ ‡æ¡†ä½“ä¸Šåªæ˜¾ç¤ºç©å®¶çš„Buff
+cfg.showTargetDebuff = true					-- æ˜¾ç¤ºç›®æ ‡æ¡†ä½“Debuff
+	cfg.DebuffOnlyShowPlayer = false		-- ç›®æ ‡æ¡†ä½“ä¸Šåªæ˜¾ç¤ºç©å®¶çš„Debuff
 
-cfg.showFocusDebuff = true					-- ÏÔÊ¾½¹µã¿òÌåBuff
-cfg.showFocusBuff = true 					-- ÏÔÊ¾½¹µã¿òÌåDebuff
-cfg.showBossBuff = true 					-- ÏÔÊ¾Boss¿òÌåBuff
-cfg.showBossDebuff = true					-- ÏÔÊ¾Boss¿òÌåDebuff
+cfg.showFocusDebuff = true					-- æ˜¾ç¤ºç„¦ç‚¹æ¡†ä½“Buff
+cfg.showFocusBuff = true 					-- æ˜¾ç¤ºç„¦ç‚¹æ¡†ä½“Debuff
+cfg.showBossBuff = true 					-- æ˜¾ç¤ºBossæ¡†ä½“Buff
+cfg.showBossDebuff = true					-- æ˜¾ç¤ºBossæ¡†ä½“Debuff
 
--- Ê©·¨Ìõ
-cfg.ShowCastbar = true				-- ÏÔÊ¾Ê©·¨Ìõ
-	cfg.CastbarAlone = false		-- true : ¶ÀÁ¢´óÊ©·¨Ìõ false : ÒÀ¸½ÓÚÍæ¼ÒÍ·ÏñÖ®ÏÂµÄĞ¡Ê©·¨Ìõ
+-- æ–½æ³•æ¡
+cfg.ShowCastbar = true				-- æ˜¾ç¤ºæ–½æ³•æ¡
+	cfg.CastbarAlone = false		-- true : ç‹¬ç«‹å¤§æ–½æ³•æ¡ false : ä¾é™„äºç©å®¶å¤´åƒä¹‹ä¸‹çš„å°æ–½æ³•æ¡
 
--- ÆäËû
-cfg.RCheckIcon = true				-- ÏÔÊ¾¾ÍÎ»È·ÈÏÍ¼±ê
-cfg.ShowIncHeals = true				-- ÏÔÊ¾ÖÎÁÆÔ¤¹À
-cfg.showLFDIcons = true				-- ÏÔÊ¾Ëæ»ú¸±±¾½ÇÉ«Í¼±ê
-cfg.scale = 1						-- ÆäËû¿òÌåËõ·Å
+-- å…¶ä»–
+cfg.RCheckIcon = true				-- æ˜¾ç¤ºå°±ä½ç¡®è®¤å›¾æ ‡
+cfg.ShowIncHeals = true				-- æ˜¾ç¤ºæ²»ç–—é¢„ä¼°
+cfg.showLFDIcons = true				-- æ˜¾ç¤ºéšæœºå‰¯æœ¬è§’è‰²å›¾æ ‡
+cfg.scale = 1						-- å…¶ä»–æ¡†ä½“ç¼©æ”¾
 
 
 

@@ -1,4 +1,4 @@
-local myclass = select(2, UnitClass("player"))
+﻿local myclass = select(2, UnitClass("player"))
 
 
 -- styling totembar

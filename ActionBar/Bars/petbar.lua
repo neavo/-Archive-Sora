@@ -1,4 +1,4 @@
-local bar = CreateFrame("Frame","rABS_PetBar",UIParent, "SecureHandlerStateTemplate")
+﻿local bar = CreateFrame("Frame","rABS_PetBar",UIParent, "SecureHandlerStateTemplate")
 bar:SetWidth(22*NUM_PET_ACTION_SLOTS+1*(NUM_PET_ACTION_SLOTS-1))
 bar:SetHeight(22)
 bar:SetPoint("BOTTOM", UIParent, "BOTTOM", 52, 111)

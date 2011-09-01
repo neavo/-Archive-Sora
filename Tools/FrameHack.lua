@@ -1,4 +1,4 @@
--- Òş²ØĞ¡¶Ó¿òÌå
+ï»¿-- éšè—å°é˜Ÿæ¡†ä½“
 function HideParty()
 
 	for i = 1, MAX_PARTY_MEMBERS do
@@ -11,7 +11,7 @@ function HideParty()
 end
 HideParty()
 
--- Òş²ØBOSS¿òÌå --
+-- éšè—BOSSæ¡†ä½“ --
 
 function hideBossFrames()
 	for i = 1, 4 do
@@ -23,7 +23,7 @@ function hideBossFrames()
 end
 hideBossFrames()
 
--- ÒÆ¶¯ÈÎÎñ×·×Ù¿òÌå --
+-- ç§»åŠ¨ä»»åŠ¡è¿½è¸ªæ¡†ä½“ --
 
 local function WatchFrameMove()
 	local Temp = _G['WatchFrame']
@@ -36,7 +36,7 @@ end
 WatchFrameMove() 
 
 
--- ÆÁ±ÎÏµÍ³ºì×ÖÌáÊ¾ --
+-- å±è”½ç³»ç»Ÿçº¢å­—æç¤º --
 
 local event = CreateFrame("Frame")
 local dummy = function() end
