@@ -4,7 +4,7 @@ local myclass = select(2, UnitClass("player"))
 -- styling totembar
 if myclass == "SHAMAN" then
 	local TotemBar = CreateFrame("Frame", "holder_TotemBar", UIParent, "SecureHandlerStateTemplate")
-	TotemBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -101, 113)
+	TotemBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -92, 108)
 	local tN = { 2, 1, 3, 4 }
 	local TotemButtons = {
 		MultiCastActionPage1,
@@ -34,15 +34,15 @@ if myclass == "SHAMAN" then
 		end
 		MultiCastSummonSpellButton:ClearAllPoints();
 		MultiCastSummonSpellButton:SetPoint("BOTTOMLEFT",TotemBar,"BOTTOMLEFT",0,3);
-		MultiCastSummonSpellButton:SetSize(26,26)
+		MultiCastSummonSpellButton:SetSize(22,22)
 		for i = 1, 12 do
 			local b = _G["MultiCastSlotButton"..i]
 			local b2 = _G["MultiCastActionButton"..i]
-			b2:SetSize(26,26)
+			b2:SetSize(22,22)
 			if i <= 4 then
 				local b = _G["MultiCastSlotButton"..i]
 				b:ClearAllPoints()
-				b:SetSize(26,26)
+				b:SetSize(22,22)
 				b:SetPoint("TOPLEFT",b2,"TOPLEFT")
 			end
  			if i == 1 or i == 5 or i == 9 then 
@@ -52,8 +52,8 @@ if myclass == "SHAMAN" then
 			end
 		end
 		MultiCastRecallSpellButton:ClearAllPoints();
-		MultiCastRecallSpellButton:SetPoint("TOPLEFT",MultiCastSummonSpellButton,"TOPRIGHT", 1*5+26*4-2, 0)
-		MultiCastRecallSpellButton:SetSize(26,26)
+		MultiCastRecallSpellButton:SetPoint("TOPLEFT",MultiCastSummonSpellButton,"TOPRIGHT", 1*5+22*4-2, 0)
+		MultiCastRecallSpellButton:SetSize(22,22)
 	end
 	-- right click to destroy totem
 	local function TotemBar_Destroy(self, button)
