@@ -11,7 +11,6 @@ local cfg = SR.ChatConfig
 for i = 1, NUM_CHAT_WINDOWS do
 
 	local parent
-
 	parent = _G["ChatFrame"..i]	
 	local chatframe = CreateFrame("Frame",nil,parent)
 	chatframe:SetPoint("TOPLEFT",parent,"TOPLEFT",-5,8)
