@@ -338,7 +338,7 @@ oUF:Factory(function(self)
 		local party = oUF:SpawnHeader("oUF_Party", nil, 'raid,party,solo',
 		"showParty", cfg.ShowParty, 
 		'showSolo', true,
-		"showPlayer", true,
+		"showPlayer", false,
 		"yoffset", -30,
 		"oUF-initialConfigFunction", ([[
 			self:SetWidth(%d)
