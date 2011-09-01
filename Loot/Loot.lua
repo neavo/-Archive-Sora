@@ -1,4 +1,4 @@
-﻿local bordertex =	"Interface\\AddOns\\NevoUI\\Loot\\Media\\icon_clean"	
+﻿local bordertex =	"Interface\\AddOns\\Sora's\\Loot\\Media\\icon_clean"	
 local fontn =		"Fonts\\ZYKai_T.ttf"	
 local edgetex = 	"Interface\\Tooltips\\UI-Tooltip-Border"
 local bartex =		"Interface\\QuestFrame\\UI-QuestLogTitleHighlight"

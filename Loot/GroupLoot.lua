@@ -1,8 +1,8 @@
 ﻿local RollPosition = { "CENTER", nil, "CENTER", 0, 0}			-- Roll框体位置
 local SuppressLootSpam = false									-- 屏蔽详细Roll点数信息
 
-local bartex =		"Interface\\AddOns\\NevoUI\\Loot\\media\\statusbar"		
-local bordertex =	"Interface\\AddOns\\NevoUI\\Loot\\media\\icon_clean"	
+local bartex =		"Interface\\AddOns\\Sora's\\Loot\\media\\statusbar"		
+local bordertex =	"Interface\\AddOns\\Sora's\\Loot\\media\\icon_clean"	
 
 UIParent:UnregisterEvent("START_LOOT_ROLL");
 UIParent:UnregisterEvent("CANCEL_LOOT_ROLL");
