@@ -5,15 +5,13 @@
 local _, SR = ...
 local cfg = SR.ChatConfig
 
+if not cfg.AutoSet then return end
 
 
-
-local AutoSet = true
-if not AutoSet then return end
-
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_LOGIN")
-f:SetScript("OnEvent", function()
+-- Event 
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function()
 	ChatFrame1:SetFont(cfg.Font, 12, "THINOUTLINE") 
 	ChatFrame1:ClearAllPoints()
 	ChatFrame1:SetPoint("BOTTOMLEFT",UIParent,"BOTTOMLEFT",10,30)
@@ -21,5 +19,5 @@ f:SetScript("OnEvent", function()
 	ChatFrame1:SetHeight(100)
 	ChatFrame1:SetFrameLevel(8)
 	FCF_SetLocked(ChatFrame1, true)
-	f:UnregisterEvent("PLAYER_LOGIN")
+	Event:UnregisterEvent("PLAYER_LOGIN")
 end)

@@ -13,7 +13,7 @@ cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.GlowTex = Media.."glowTex"
 cfg.Statusbar = Media.."statusbar"
 
-cfg.MinimapPos = {"TOPLEFT", UIParent, "TOPLEFT", 10, -40}
+cfg.MinimapPos = {"TOPLEFT", UIParent, "TOPLEFT", 10, -40}	-- 小地图位置
 	
 ----------------
 --  命名空间  --

@@ -2,7 +2,6 @@
 ## Title: |cff70C0F5Sora's|r
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
-## Version: 0.01
 
 ## X-oUF: oUF_Sora
 ## X-Email:neavo7@Gmail.com

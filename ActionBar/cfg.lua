@@ -12,11 +12,11 @@ cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.Texture = Media.."icon"
 cfg.GlowTex = Media.."glowTex"
-cfg.HideHotKey = false		-- remove key binding text from the bars
-cfg.HideMacroName = true	-- remove macro name text from the bars
-cfg.CountFontSize = 10		-- remove count text from the bars
-cfg.HotkeyFontSize = 10		-- font size for the key bindings text
-cfg.NameFontSize = 10		-- font size for the macro name text
+cfg.HideHotKey = false		-- 隐藏快捷键显示
+cfg.HideMacroName = true	-- 隐藏宏名称显示
+cfg.CountFontSize = 10		-- 计数字体大小
+cfg.HotkeyFontSize = 10		-- 快捷键字体大小
+cfg.NameFontSize = 10		-- 宏名称字体大小
 
 cfg.colors = {
 	normal		= {r =    0,	g =    0, 	b =    0	},
