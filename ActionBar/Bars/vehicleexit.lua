@@ -12,6 +12,8 @@ veb:SetHighlightTexture("Interface\\Vehicles\\UI-Vehicles-Button-Exit-Down")
 veb:SetScript("OnClick", function(self)
 	VehicleExit()
 end)
+
+veb:RegisterEvent("PLAYER_REGEN_ENABLED")
 veb:RegisterEvent("UNIT_ENTERING_VEHICLE")
 veb:RegisterEvent("UNIT_ENTERED_VEHICLE")
 veb:RegisterEvent("UNIT_EXITING_VEHICLE")
@@ -21,7 +23,7 @@ veb:SetScript("OnEvent", function(self,event,...)
 	if (event=="UNIT_ENTERING_VEHICLE" or event=="UNIT_ENTERED_VEHICLE") and arg1 == "player" then
 		veb:Show()
 		veb:SetAlpha(1)
-	elseif (event=="UNIT_EXITING_VEHICLE" or event=="UNIT_EXITED_VEHICLE") and arg1 == "player" then
+	elseif (event=="UNIT_EXITING_VEHICLE" or event=="UNIT_EXITED_VEHICLE" or event == "PLAYER_REGEN_ENABLED") and arg1 == "player" then
 		veb:SetAlpha(0)
 		veb:Hide()
 	end
