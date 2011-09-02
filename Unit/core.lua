@@ -320,7 +320,6 @@ end
   -----------------------------
 
 oUF:RegisterStyle('Sora', GlobalStyle)
---oUF:RegisterStyle('SoraGroup', GroupGlobalStyle)
 
 oUF:Factory(function(self)
 
@@ -333,9 +332,21 @@ oUF:Factory(function(self)
 	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 250) end
 	if cfg.showfocustarget then self:Spawn('focustarget'):SetPoint("BOTTOMLEFT",oUF_SoraFocus,"TOPLEFT", 0, 10) end
 
+	if cfg.ShowParty or cfg.ShowRaid then
+		-- Hide the Blizzard raid frames
+		CompactRaidFrameManager:UnregisterAllEvents()
+		CompactRaidFrameManager.Show = function() end
+		CompactRaidFrameManager:Hide()
+		CompactRaidFrameContainer:UnregisterAllEvents()
+		CompactRaidFrameContainer.Show = function() end
+		CompactRaidFrameContainer:Hide()		
+		CompactRaidFrameContainer:SetParent(UIParent)	
+	end
+	
 	-- Party Frames
 	if cfg.ShowParty then
 		local party = oUF:SpawnHeader("oUF_Party", nil, 'raid,party,solo',
+		"showRaid", false,
 		"showParty", cfg.ShowParty, 
 		'showSolo', false,
 		"showPlayer", false,
@@ -350,60 +361,52 @@ oUF:Factory(function(self)
 	
 	-- Raid Frames
 	if cfg.ShowRaid then
-		-- Hide the Blizzard raid frames
-		CompactRaidFrameManager:UnregisterAllEvents()
-		CompactRaidFrameManager.Show = function() end
-		CompactRaidFrameManager:Hide()
-		CompactRaidFrameContainer:UnregisterAllEvents()
-		CompactRaidFrameContainer.Show = function() end
-		CompactRaidFrameContainer:Hide()		
-		CompactRaidFrameContainer:SetParent(UIParent)
-	end		
-	if cfg.RaidPartyH then
-		local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
-			"showRaid", cfg.ShowRaid,  
-			'showPlayer', true,
-			'showSolo', false,
-			'showParty', true,
-			"xoffset", 7,
-			"yOffset", -10,
-			"groupFilter", "1,2,3,4,5",
-			"groupBy", "GROUP",
-			"groupingOrder", "1,2,3,4,5",
-			"sortMethod", "INDEX",
-			"maxColumns", 5,
-			"unitsPerColumn", 5,
-			"columnSpacing", 9,
-			"point", "LEFT",
-			"columnAnchorPoint", "TOP",
-			"oUF-initialConfigFunction", ([[
-			self:SetWidth(%d)
-			self:SetHeight(%d)
-			]]):format(cfg.RaidUnitWidth, 23))
-		raid:SetScale(cfg.raidScale)
-		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -405, 160)		
-	else
-		local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
-			"showRaid", cfg.ShowRaid,  
-			'showPlayer', true,
-			'showSolo', false,
-			'showParty', true,
-			"xoffset", 7,
-			"yOffset", -10,
-			"groupFilter", "1,2,3,4,5",
-			"groupBy", "GROUP",
-			"groupingOrder", "1,2,3,4,5",
-			"sortMethod", "INDEX",
-			"maxColumns", 5,
-			"unitsPerColumn", 5,
-			"columnSpacing", 9,
-			"point", "TOP",
-			"columnAnchorPoint", "LEFT",
-			"oUF-initialConfigFunction", ([[
-			self:SetWidth(%d)
-			self:SetHeight(%d)
-			]]):format(cfg.RaidUnitWidth, 23))
-		raid:SetScale(cfg.raidScale)
-		raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -408, 160)
+		if cfg.RaidPartyH then
+			local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
+				"showRaid", cfg.ShowRaid,  
+				'showPlayer', true,
+				'showSolo', false,
+				'showParty', true,
+				"xoffset", 7,
+				"yOffset", -10,
+				"groupFilter", "1,2,3,4,5",
+				"groupBy", "GROUP",
+				"groupingOrder", "1,2,3,4,5",
+				"sortMethod", "INDEX",
+				"maxColumns", 5,
+				"unitsPerColumn", 5,
+				"columnSpacing", 9,
+				"point", "LEFT",
+				"columnAnchorPoint", "TOP",
+				"oUF-initialConfigFunction", ([[
+				self:SetWidth(%d)
+				self:SetHeight(%d)
+				]]):format(cfg.RaidUnitWidth, 23))
+			raid:SetScale(cfg.raidScale)
+			raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -405, 160)		
+		else
+			local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
+				"showRaid", cfg.ShowRaid,  
+				'showPlayer', true,
+				'showSolo', false,
+				'showParty', true,
+				"xoffset", 7,
+				"yOffset", -10,
+				"groupFilter", "1,2,3,4,5",
+				"groupBy", "GROUP",
+				"groupingOrder", "1,2,3,4,5",
+				"sortMethod", "INDEX",
+				"maxColumns", 5,
+				"unitsPerColumn", 5,
+				"columnSpacing", 9,
+				"point", "TOP",
+				"columnAnchorPoint", "LEFT",
+				"oUF-initialConfigFunction", ([[
+				self:SetWidth(%d)
+				self:SetHeight(%d)
+				]]):format(cfg.RaidUnitWidth, 23))
+			raid:SetScale(cfg.raidScale)
+			raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -408, 160)
+		end
 	end
 end)
