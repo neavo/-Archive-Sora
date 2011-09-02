@@ -17,8 +17,7 @@ MainBar:SetBackdropColor(0,0,0,0.2)
 MainBar:SetBackdropBorderColor(0,0,0,1)
 
 MainBar.Left = CreateFrame("Frame",nil,MainBar)
-MainBar.Left:SetHeight(15)
-MainBar.Left:SetWidth(90)
+MainBar.Left:SetPoint("TOPLEFT", MultiBarRightButton1, "BOTTOMLEFT", -7, -3)
 MainBar.Left:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMLEFT", 0, 0)
 MainBar.Left:SetBackdrop({
 	bgFile = cfg.bgFile,
@@ -29,7 +28,7 @@ MainBar.Left:SetBackdropColor(0,0,0,0.8)
 MainBar.Left:SetBackdropBorderColor(0,0,0,1)
 MainBar.Left.Text = MainBar.Left:CreateFontString(nil,"OVERLAY")
 MainBar.Left.Text:SetPoint("CENTER", MainBar.Left,"CENTER", 0, 0)
-MainBar.Left.Text:SetFont("Fonts\\ZYKai_T.ttf", 16, "THINOUTLINE")
+MainBar.Left.Text:SetFont(cfg.Font, 16, "THINOUTLINE")
 MainBar.Left.Text:SetText("---")
 MainBar.Left.Text:SetAlpha(0.8)
 
@@ -49,8 +48,7 @@ end)
 
 
 MainBar.Right = CreateFrame("Frame",nil,MainBar)
-MainBar.Right:SetHeight(15)
-MainBar.Right:SetWidth(90)
+MainBar.Right:SetPoint("TOPRIGHT", MultiBarLeftButton3, "BOTTOMRIGHT", 7, -3)
 MainBar.Right:SetPoint("BOTTOMLEFT", MainBar, "BOTTOMRIGHT", 0, 0)
 MainBar.Right:SetBackdrop({
 	bgFile = cfg.bgFile,
@@ -61,7 +59,7 @@ MainBar.Right:SetBackdropColor(0,0,0,0.8)
 MainBar.Right:SetBackdropBorderColor(0,0,0,1)
 MainBar.Right.Text = MainBar.Right:CreateFontString(nil,"OVERLAY")
 MainBar.Right.Text:SetPoint("CENTER", MainBar.Right,"CENTER", 0, 0)
-MainBar.Right.Text:SetFont("Fonts\\ZYKai_T.ttf", 16, "THINOUTLINE")
+MainBar.Right.Text:SetFont(cfg.Font, 16, "THINOUTLINE")
 MainBar.Right.Text:SetText("---")
 MainBar.Right.Text:SetAlpha(0.8)
 
