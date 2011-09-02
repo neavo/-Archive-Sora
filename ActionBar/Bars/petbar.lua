@@ -1,7 +1,7 @@
 ﻿local bar = CreateFrame("Frame","rABS_PetBar",UIParent, "SecureHandlerStateTemplate")
 bar:SetWidth(22*NUM_PET_ACTION_SLOTS+1*(NUM_PET_ACTION_SLOTS-1))
 bar:SetHeight(22)
-bar:SetPoint("BOTTOM", UIParent, "BOTTOM", 52, 111)
+bar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", 0, 7)
 PetActionBarFrame:SetParent(bar)
 PetActionBarFrame:EnableMouse(false)
 

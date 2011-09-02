@@ -17,7 +17,7 @@ MainBar:SetBackdropColor(0,0,0,0.2)
 MainBar:SetBackdropBorderColor(0,0,0,1)
 
 MainBar.Left = CreateFrame("Frame",nil,MainBar)
-MainBar.Left:SetPoint("TOPLEFT", MultiBarRightButton1, "BOTTOMLEFT", -7, -3)
+MainBar.Left:SetPoint("TOPLEFT", MultiBarRightButton1, "BOTTOMLEFT", -3, -3)
 MainBar.Left:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMLEFT", 0, 0)
 MainBar.Left:SetBackdrop({
 	bgFile = cfg.bgFile,
@@ -48,7 +48,7 @@ end)
 
 
 MainBar.Right = CreateFrame("Frame",nil,MainBar)
-MainBar.Right:SetPoint("TOPRIGHT", MultiBarLeftButton3, "BOTTOMRIGHT", 7, -3)
+MainBar.Right:SetPoint("TOPRIGHT", MultiBarLeftButton3, "BOTTOMRIGHT", 3, -3)
 MainBar.Right:SetPoint("BOTTOMLEFT", MainBar, "BOTTOMRIGHT", 0, 0)
 MainBar.Right:SetBackdrop({
 	bgFile = cfg.bgFile,

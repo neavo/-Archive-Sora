@@ -1,10 +1,16 @@
-﻿local myclass = select(2, UnitClass("player"))
+﻿----------------
+--  命名空间  --
+----------------
 
+local _, SR = ...
+local cfg = SR.ActionBarConfig
+
+local myclass = select(2, UnitClass("player"))
 
 -- styling totembar
 if myclass == "SHAMAN" then
 	local TotemBar = CreateFrame("Frame", "holder_TotemBar", UIParent, "SecureHandlerStateTemplate")
-	TotemBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -92, 108)
+	TotemBar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 0, 7)
 	local tN = { 2, 1, 3, 4 }
 	local TotemButtons = {
 		MultiCastActionPage1,
@@ -123,8 +129,8 @@ if myclass == "SHAMAN" then
 		h.bg:SetAlpha(0.6)
 		h.t = h:CreateFontString(nil, "OVERLAY")
 		h.t:SetPoint("CENTER", h.bg, "CENTER", 0, 0)
-		h.t:SetWidth(h:GetWidth())
-		h.t:SetFont("Fonts\\ZYKai_T.ttf", 9, "THINOUTLINE")
+		h.t:SetWidth(h:GetWidth()+2)
+		h.t:SetFont(cfg.Font, 8, "THINOUTLINE")
 		h.t:SetTextColor(tcol[i].r,tcol[i].g,tcol[i].b)
 		h:SetScript("OnEvent", TotemBar.OnEvent)
 		h:SetScript("OnUpdate", TotemBar.OnUpdate)
