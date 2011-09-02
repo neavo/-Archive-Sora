@@ -25,6 +25,7 @@
 	<Include file="Threat\Load_Threat.xml"/>
 	<Include file="Tools\Load_Tools.xml"/>
 	<Include file="Tooltip\Load_Tooltip.xml"/>
+	<Include file="Topbar\Load_Topbar.xml"/>
 
 </Ui>
 
