@@ -400,7 +400,7 @@ Filger_Spells = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			setPoint = { "BOTTOM","oUF_SoraPlayer", "TOP", -95, 15 },
+			setPoint = { "BOTTOM","oUF_SoraPlayer", "TOP", -95, 30 },
 			
 			--嗜血
 			{ spellID =  2825, size = 32, unitId = "player", caster = 	"all", filter = "BUFF" },
