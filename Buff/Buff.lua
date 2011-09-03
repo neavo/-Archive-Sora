@@ -10,6 +10,7 @@ local cfg = SR.BuffConfig
 --------------------------
 
 local IconsPerRow = 12
+local i = 0
 
 local MakeBackdrop = function(frame)
 	frame:SetPoint("TOPLEFT",-2,2)
@@ -31,11 +32,17 @@ for i = 1, 3 do
 	local Icon 			= _G["TempEnchant"..i.."Icon"]
 	local Duration 		= _G["TempEnchant"..i.."Duration"]
 	
+	TempEnchant:ClearAllPoints()
 	TempEnchant:SetSize(cfg.IconSize,cfg.IconSize)
+
 	if i == 1 then
 		TempEnchant:SetPoint(unpack(cfg.BUFFpos))
-	else
-		TempEnchant:SetPoint("RIGHT", _G["TempEnchant"..i-1], "LEFT", -cfg.Spacing, 0)
+	elseif cfg.Direction == 1 then
+		local Pre = _G["TempEnchant"..i-1]
+		TempEnchant:SetPoint("RIGHT", Pre, "LEFT", -cfg.Spacing, 0)
+	elseif cfg.Direction == 2 then
+		local Pre = _G["TempEnchant"..i-1]
+		TempEnchant:SetPoint("LEFT", Pre, "RIGHT", cfg.Spacing, 0)
 	end
 	
 	Icon:ClearAllPoints()
@@ -114,16 +121,31 @@ local function MakeBuffFrame()
 		Style("BuffButton", i)
 		local Buff = BuffSort[i]
 		Buff:ClearAllPoints()
-		if BuffFrame.numEnchants ~= 0 and i == 1 then
-			Buff:SetPoint("RIGHT", _G["TempEnchant"..BuffFrame.numEnchants], "LEFT", -cfg.Spacing, 0)
-		elseif i + BuffFrame.numEnchants == 1 then
-			Buff:SetPoint(unpack(cfg.BUFFpos))
-		elseif i == IconsPerRow + 1 then
-			Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -10)
-		elseif i == IconsPerRow*2 + 1 then
-			Buff:SetPoint("TOP", BuffSort[IconsPerRow + 1], "BOTTOM", 0, -10)		
-		elseif i < IconsPerRow*3 + 1 then
-			Buff:SetPoint("RIGHT", BuffSort[i-1], "LEFT", -cfg.Spacing, 0)
+		local TempEnchant = _G["TempEnchant"..BuffFrame.numEnchants]
+		if cfg.Direction == 1 then
+			if BuffFrame.numEnchants ~= 0 and i == 1 then
+				Buff:SetPoint("RIGHT", TempEnchant, "LEFT", -cfg.Spacing, 0)
+			elseif i + BuffFrame.numEnchants == 1 then
+				Buff:SetPoint(unpack(cfg.BUFFpos))
+			elseif i == IconsPerRow + 1 then
+				Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -10)
+			elseif i == IconsPerRow*2 + 1 then
+				Buff:SetPoint("TOP", BuffSort[IconsPerRow + 1], "BOTTOM", 0, -10)		
+			elseif i < IconsPerRow*3 + 1 then
+				Buff:SetPoint("RIGHT", BuffSort[i-1], "LEFT", -cfg.Spacing, 0)
+			end
+		elseif cfg.Direction == 2 then
+			if BuffFrame.numEnchants ~= 0 and i == 1 then
+				Buff:SetPoint("LEFT", TempEnchant, "RIGHT", cfg.Spacing, 0)
+			elseif i + BuffFrame.numEnchants == 1 then
+				Buff:SetPoint(unpack(cfg.BUFFpos))
+			elseif i == IconsPerRow + 1 then
+				Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -10)
+			elseif i == IconsPerRow*2 + 1 then
+				Buff:SetPoint("TOP", BuffSort[IconsPerRow + 1], "BOTTOM", 0, -10)		
+			elseif i < IconsPerRow*3 + 1 then
+				Buff:SetPoint("LEFT", BuffSort[i-1], "RIGHT", cfg.Spacing, 0)
+			end
 		end
 	end
 end
@@ -134,14 +156,25 @@ local function MakeDebuffFrame(buttonName,i)
 	Style(buttonName, i)
 	local Debuff = _G[buttonName..i]
 	local Border = _G[buttonName..i.."Border"]
+	local Pre = _G[buttonName..(i-1)]
 	Debuff:ClearAllPoints()
 	Border:Hide()
-	if i == 1 then
-		Debuff:SetPoint(unpack(cfg.DEUFFpos))
-	elseif i == IconsPerRow + 1 then
-		Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -10)
-	elseif i < IconsPerRow*2 + 1 then
-		Debuff:SetPoint("RIGHT", _G[buttonName..(i-1)], "LEFT", -cfg.Spacing, 0)
+	if cfg.Direction == 1 then
+		if i == 1 then
+			Debuff:SetPoint(unpack(cfg.DEUFFpos))
+		elseif i == IconsPerRow + 1 then
+			Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -10)
+		elseif i < IconsPerRow*2 + 1 then
+			Debuff:SetPoint("RIGHT", Pre, "LEFT", -cfg.Spacing, 0)
+		end
+	elseif cfg.Direction == 2 then
+		if i == 1 then
+			Debuff:SetPoint(unpack(cfg.DEUFFpos))
+		elseif i == IconsPerRow + 1 then
+			Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -10)
+		elseif i < IconsPerRow*2 + 1 then
+			Debuff:SetPoint("LEFT", Pre, "RIGHT", cfg.Spacing, 0)
+		end
 	end
 end
 hooksecurefunc("DebuffButton_UpdateAnchors", MakeDebuffFrame)
@@ -167,27 +200,4 @@ Event:SetScript("OnEvent",function(slef)
 	SetCVar("consolidateBuffs",0)
 	SetCVar("buffDurations",1)
 end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
