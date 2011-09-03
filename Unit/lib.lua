@@ -344,8 +344,8 @@ function lib.CreateThreatBorder(self)
 	
 	local glowBorder = {edgeFile = cfg.backdrop_edge_texture, edgeSize = 3}
 	self.Thtborder = CreateFrame("Frame", nil, self)
-	self.Thtborder:SetPoint("TOPLEFT", self, "TOPLEFT", -3, 3)
-	self.Thtborder:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 3, -6)
+	self.Thtborder:SetPoint("TOPLEFT", self, "TOPLEFT", -5, 5)
+	self.Thtborder:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 5, -5)
 	self.Thtborder:SetBackdrop(glowBorder)
 	self.Thtborder:SetFrameLevel(1)
 	self.Thtborder:Hide()
