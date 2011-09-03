@@ -8,5 +8,7 @@
 	<Script file="cfg.lua"/>
 	<Script file="Tooltip.lua"/>
 	<Script file="Extra.lua"/>
+	<Script file="SpeellID.lua"/>
+	<Script file="CastBy.lua"/>
 	
 </Ui>
