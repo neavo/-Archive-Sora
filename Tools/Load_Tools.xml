@@ -20,7 +20,6 @@
 	<Script file="Mail.lua"/>
 	<Script file="Quest.lua"/>
 	<Script file="Roster.lua"/>
-	<Script file="SpeelID.lua"/>
 	<Script file="tekKompare.lua"/>
 	<Script file="TradeTab.lua"/>
 	<Script file="tullaCC.lua"/>
