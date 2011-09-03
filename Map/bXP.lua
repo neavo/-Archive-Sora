@@ -30,13 +30,14 @@ local function setup(frame, level)
     frame:Show()
 end
 
-local bar = CreateFrame("StatusBar", "bXP", UIParent)
+local bar = CreateFrame("StatusBar", "bXP", BMFrame)
 setup(bar, 2)
-bar:SetPoint("TOP", Minimap, "BOTTOM", 0, -35)
+bar:SetPoint("TOP", "BMFrame", "BOTTOM", 0, 0)
         
 xptext = bar:CreateFontString("XP Text")
 xptext:SetPoint("CENTER", bar,"CENTER", 0,-18)
 xptext:SetFont(cfg.Font, 11, "THINOUTLINE")
+xptext:SetParent(UIParent)
 xptext:SetAlpha(0)
 
 bar:RegisterEvent("PLAYER_XP_UPDATE")
@@ -45,7 +46,7 @@ bar:RegisterEvent("PLAYER_ENTERING_WORLD")
 bar:RegisterEvent("UPDATE_EXHAUSTION");
 bar:RegisterEvent("UPDATE_FACTION")
 
-local rbar = CreateFrame("StatusBar", nil, UIParent)
+local rbar = CreateFrame("StatusBar", nil, BMFrame)
 setup(rbar, 1)
 rbar:SetBackdrop({
 	bgFile= cfg.Statusbar,
@@ -112,8 +113,30 @@ bar:SetScript("OnEvent", function()
         XP()
     end
 
-rbar:SetScript("OnEnter", function() xptext:SetAlpha(1) end)
-rbar:SetScript("OnLeave", function() xptext:SetAlpha(0) end)
-bar:SetScript("OnEnter", function() xptext:SetAlpha(1) end)
-bar:SetScript("OnLeave", function() xptext:SetAlpha(0) end)
+	local BMFrame = _G["BMFrame"]
+	rbar:SetScript("OnEnter", function()
+		BMFrame:SetAlpha(1)
+		xptext:SetAlpha(1)
+	end)
+	rbar:SetScript("OnLeave", function()
+		BMFrame:SetAlpha(0.2)
+		xptext:SetAlpha(0)
+	end)
+	bar:SetScript("OnEnter", function()
+		BMFrame:SetAlpha(1)
+		xptext:SetAlpha(1)
+	end)
+	bar:SetScript("OnLeave", function()
+		BMFrame:SetAlpha(0.2)
+		xptext:SetAlpha(0)
+	end)
 end)
+
+
+
+
+
+
+
+
+

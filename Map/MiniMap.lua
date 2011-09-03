@@ -51,15 +51,6 @@ MinimapNorthTag:SetAlpha(0)
 -- move some stuff --
 ---------------------
 
--- Tracking
-MiniMapTrackingBackground:SetAlpha(0)
-MiniMapTrackingButton:SetAlpha(0)
-MiniMapTracking:ClearAllPoints()
-MiniMapTracking:SetFrameStrata("HIGH")
-MiniMapTracking:SetFrameLevel("0")
-MiniMapTracking:SetPoint("BOTTOMLEFT", Minimap,"TOPLEFT" ,-6, 5)
-MiniMapTracking:SetScale(0.7)
-
 -- BG icon
 MiniMapBattlefieldFrame:ClearAllPoints()
 MiniMapBattlefieldFrame:SetPoint("TOP", Minimap, "TOP", 2, 8)
