@@ -3,6 +3,9 @@
 
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
+	<!--  oUF核心,勿动  -->
+	<Include file="oUF\oUF.xml" />
+
 	<Script file="cfg.lua" />
 	<Script file="tags.lua" />
 	<Script file="castbar.lua" />

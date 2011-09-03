@@ -6,12 +6,6 @@
 
 
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-
-	<!-- 核心！勿动！-->
-	<Include file="!Core\Load_Core.xml"/>
-	
-	<!-- 基于oUF -->
-	<Include file="Unit\Load_Unit.xml"/>
 	
 	<Include file="ActionBar\Load_ActionBar.xml"/>
 	<Include file="Bags\Load_Bags.xml"/>
@@ -26,6 +20,7 @@
 	<Include file="Tools\Load_Tools.xml"/>
 	<Include file="Tooltip\Load_Tooltip.xml"/>
 	<Include file="Topbar\Load_Topbar.xml"/>
+	<Include file="Unit\Load_Unit.xml"/>
 
 </Ui>
 
