@@ -1,0 +1,11 @@
+﻿## Interface: 40100
+## Title: oUF_|cff70C0F5Sora's|r
+## Notes: Sora's O(∩_∩)O
+## Author: Neavo
+
+## X-oUF: oUF_Sora
+## X-Email:neavo7@Gmail.com
+
+## SavedVariables: bb08df87101dd7f2161e5b77cf750f753c58ef1b
+
+Load_Unit.xml

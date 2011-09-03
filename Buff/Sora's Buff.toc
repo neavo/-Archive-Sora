@@ -1,0 +1,8 @@
+﻿## Interface: 40100
+## Title: oUF_|cff70C0F5Sora's|r Buff
+## Notes: Sora's O(∩_∩)O
+## Author: Neavo
+
+## X-Email:neavo7@Gmail.com
+
+Load_Buff.xml
