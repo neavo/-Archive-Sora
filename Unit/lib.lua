@@ -654,7 +654,7 @@ lib.createDebuffs = function(self)
 	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
 	Debuff:SetWidth(self:GetWidth())
 	if self.mystyle == "target" then
-		Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -25)
+		Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -30)
 	elseif self.mystyle == "focus" then
 		Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -10)
 	elseif self.mystyle == "party" then
