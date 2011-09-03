@@ -21,14 +21,23 @@ Minimap:SetHeight(112)
 
 LFDSearchStatus:SetClampedToScreen(true)
 
-local BorderFrame = CreateFrame("Frame", nil, Minimap)
-BorderFrame:SetPoint("TOPLEFT", Minimap, "TOPLEFT", -5, 5)
-BorderFrame:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", 5, -5)	
-BorderFrame:SetFrameLevel(0)
-BorderFrame:SetBackdrop({ 
-	edgeFile = cfg.GlowTex, edgeSize = 5, 
+Minimap.Overlay = CreateFrame("Frame", nil, Minimap)
+Minimap.Overlay:SetAllPoints()
+Minimap.Overlay:SetFrameLevel(3)
+Minimap.Overlay:SetBackdrop({ 
+	edgeFile = cfg.Solid, edgeSize = 1
 })
-BorderFrame:SetBackdropBorderColor(0,0,0,1)		
+Minimap.Overlay:SetBackdropBorderColor(0,0,0,1)
+
+Minimap.Shadow = CreateFrame("Frame", nil, Minimap)
+Minimap.Shadow:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 6, -6)
+Minimap.Shadow:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", 6, -6)	
+Minimap.Shadow:SetFrameLevel(1)
+Minimap.Shadow:SetFrameLevel(1)
+Minimap.Shadow:SetBackdrop({ 
+	edgeFile = cfg.GlowTex, edgeSize = 6, 
+})
+Minimap.Shadow:SetBackdropBorderColor(0,0,0,1)		
 
 ---------------------
 -- hide some stuff --
