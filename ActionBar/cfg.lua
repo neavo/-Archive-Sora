@@ -12,11 +12,13 @@ cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.Texture = Media.."icon"
 cfg.GlowTex = Media.."glowTex"
+
 cfg.HideHotKey = false		-- 隐藏快捷键显示
 cfg.HideMacroName = true	-- 隐藏宏名称显示
 cfg.CountFontSize = 10		-- 计数字体大小
 cfg.HotkeyFontSize = 10		-- 快捷键字体大小
 cfg.NameFontSize = 10		-- 宏名称字体大小
+cfg.ShowExtraBar = true		-- 显示侧边栏
 
 cfg.colors = {
 	normal		= {r =    0,	g =    0, 	b =    0	},
