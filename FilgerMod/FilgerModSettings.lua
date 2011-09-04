@@ -66,6 +66,8 @@ Filger_Spells = {
 			{ spellID = 50334, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--野蛮咆哮(猫)
 			{ spellID = 52610, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--粉碎
 			{ spellID = 80951, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--月光淋漓
@@ -163,6 +165,8 @@ Filger_Spells = {
 			{ spellID = 56453, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--攻击弱点
 			{ spellID = 70728, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--准备,端枪,瞄准... ...
 			{ spellID = 82925, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--开火!
@@ -246,6 +250,8 @@ Filger_Spells = {
 			{ spellID = 64343, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--奥术飞弹!
 			{ spellID = 79683, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--灸灼
 			{ spellID = 87023, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 		},
@@ -341,6 +347,8 @@ Filger_Spells = {
 			{ spellID = 60503, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--主宰
 			{ spellID = 65156, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--胜利
 			{ spellID = 82368, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--屠夫(等级3)
@@ -414,6 +422,8 @@ Filger_Spells = {
 			{ spellID = 53390, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--5层漩涡武器
 			{ spellID = 53817, size = 32, unitId = "player", caster = "player", filter = "BUFF", stack=5},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 		},
 
 		{
@@ -485,6 +495,8 @@ Filger_Spells = {
 			{ spellID = 54428, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--战争艺术
 			{ spellID = 59578, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--异端裁决
 			{ spellID = 84963, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--黎明圣光
@@ -563,6 +575,8 @@ Filger_Spells = {
 			--心灵融化
 			{ spellID = 73510, size = 32, unitId = "player", caster = "player", filter = "BUFF"},			--暗影宝珠
 			{ spellID = 77487, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--脉轮:佑
 			--{ spellID = 81206, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--脉轮:静
@@ -652,6 +666,8 @@ Filger_Spells = {
 			{ spellID = 63167, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--熔火之心
 			{ spellID = 71165, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--强化灵魂之火
 			{ spellID = 85383, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--魔能火花
@@ -739,6 +755,8 @@ Filger_Spells = {
 			{ spellID = 58427, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--嫁祸诀窍
 			{ spellID = 59628, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--致命冲动
 			{ spellID = 84590, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 		},
@@ -813,6 +831,8 @@ Filger_Spells = {
 			{ spellID = 55233, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--冰冻之雾
 			{ spellID = 59052, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
+			--时间扭曲
+			{ spellID = 80353, size = 32, unitId = "player", caster =	 "all", filter = "BUFF"},
 			--赤色天灾
 			{ spellID = 81141, size = 32, unitId = "player", caster = "player", filter = "BUFF"},
 			--大墓地的意志
