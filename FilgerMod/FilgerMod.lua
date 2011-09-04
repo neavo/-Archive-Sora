@@ -116,15 +116,23 @@ function Update(self)
 				bar.icon:SetPoint("BOTTOMRIGHT", -2, 2)
 				bar.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92) 
 				
-				bar.icon.Overlay = CreateFrame("Frame", nil, bar)
-				bar.icon.Overlay:SetPoint("TOPLEFT",-3,3)
-				bar.icon.Overlay:SetPoint("BOTTOMRIGHT",3,-3)
-				bar.icon.Overlay:SetBackdrop({ 
+				bar.icon.Shadow = CreateFrame("Frame", nil, bar)
+				bar.icon.Shadow:SetPoint("TOPLEFT", 3, -3)
+				bar.icon.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
+				bar.icon.Shadow:SetBackdrop({ 
 					edgeFile = cfg.GlowTex , edgeSize = 5,
 				})
-				bar.icon.Overlay:SetBackdropBorderColor(0,0,0,1)
+				bar.icon.Shadow:SetBackdropBorderColor(0,0,0,1)
 				
-				bar.count = bar.icon.Overlay:CreateFontString(nil, "OVERLAY") 
+				bar.icon.Shadow = CreateFrame("Frame", nil, bar)
+				bar.icon.Shadow:SetPoint("TOPLEFT", 1, -1)
+				bar.icon.Shadow:SetPoint("BOTTOMRIGHT", -1, 1)
+				bar.icon.Shadow:SetBackdrop({ 
+					edgeFile = cfg.Solid , edgeSize = 1,
+				})
+				bar.icon.Shadow:SetBackdropBorderColor(0,0,0,1)
+				
+				bar.count = bar.icon.Shadow:CreateFontString(nil, "OVERLAY") 
 				bar.count:SetFont(cfg.Font, value.data.size/30*10, "THINOUTLINE") 
 				bar.count:SetPoint("BOTTOMRIGHT", 1, 1) 
 				

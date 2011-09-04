@@ -12,13 +12,24 @@ local cfg = SR.BuffConfig
 local IconsPerRow = 12
 local i = 0
 
-local MakeBackdrop = function(frame)
-	frame:SetPoint("TOPLEFT",-2,2)
-	frame:SetPoint("BOTTOMRIGHT",2,-2)
-	frame:SetBackdrop({ 
-		edgeFile = cfg.edgeFile , edgeSize = 5,
+local MakeShadow = function(Frame)
+	Frame:SetFrameLevel(0)
+	Frame:SetPoint("TOPLEFT", 3, -3)
+	Frame:SetPoint("BOTTOMRIGHT", 3, -3)
+	Frame:SetBackdrop({ 
+		edgeFile = cfg.GlowTex , edgeSize = 5,
 	})
-	frame:SetBackdropBorderColor(0,0,0,0.8)
+	Frame:SetBackdropBorderColor(0,0,0,1)
+end
+
+local MakeOverlay = function(Frame)
+	Frame:SetFrameLevel(4)
+	Frame:SetPoint("TOPLEFT", 1, -1)
+	Frame:SetPoint("BOTTOMRIGHT", -1, 1)
+	Frame:SetBackdrop({ 
+		edgeFile = cfg.Solid, edgeSize = 1
+	})
+	Frame:SetBackdropBorderColor(0,0,0,1)
 end
 
 ----------------
@@ -48,14 +59,17 @@ for i = 1, 3 do
 	Icon:ClearAllPoints()
 	Icon:SetPoint("TOPLEFT", TempEnchant, 2, -2)
 	Icon:SetPoint("BOTTOMRIGHT", TempEnchant, -2, 2)
+	Icon:SetTexCoord(.08, .92, .08, .92)
 	
 	Duration:ClearAllPoints()
 	Duration:SetParent(TempEnchant)
 	Duration:SetPoint("TOP", TempEnchant, "BOTTOM", 1, -1)
 	Duration:SetFont(cfg.Font, 9, "THINOUTLINE")
 	
-	local Overlay = CreateFrame("Frame",nil,TempEnchant)
-	MakeBackdrop(Overlay)
+	local Shadow = CreateFrame("Frame",nil,TempEnchant)
+	MakeShadow(Shadow)
+	local Overlay = CreateFrame("Frame", nil, TempEnchant)
+	MakeOverlay(Overlay)
 end
 
 -- BUFF/DEBUFF样式
@@ -66,13 +80,14 @@ local function Style(buttonName, i)
 	local Duration	= _G[buttonName..i.."Duration"]
 	local Count 	= _G[buttonName..i.."Count"]
 	
-	if Button and not _G[buttonName..i.."Overlay"] then
+	if Button then
 	
 		Button:SetSize(cfg.IconSize,cfg.IconSize)
 		
 		Icon:SetPoint("TOPLEFT", Button, 2, -2)
 		Icon:SetPoint("BOTTOMRIGHT", Button, -2, 2)
-
+		Icon:SetTexCoord(.08, .92, .08, .92)
+		
 		Duration:ClearAllPoints()
 		Duration:SetParent(Button)
 		Duration:SetPoint("TOP", Button, "BOTTOM", 1, -1)
@@ -83,9 +98,12 @@ local function Style(buttonName, i)
 		Count:SetPoint("BOTTOMRIGHT", Button, 1, 2)
 		Count:SetFont(cfg.Font, 10, "THINOUTLINE")
 		
-		local Overlay = CreateFrame("Frame", buttonName..i.."Overlay", Button)
-		MakeBackdrop(Overlay)
-
+		if not _G[buttonName..i.."Shadow"] then
+			local Shadow = CreateFrame("Frame", buttonName..i.."Shadow", Button)
+			MakeShadow(Shadow)
+			local Overlay = CreateFrame("Frame", buttonName..i.."Overlay", Button)
+			MakeOverlay(Overlay)
+		end
 	end
 end
 

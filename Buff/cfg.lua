@@ -9,8 +9,8 @@
 local cfg = CreateFrame("Frame")
 local Media = "Interface\\Addons\\Sora's\\Buff\\media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
-cfg.bgFile = Media.."iconborder"
-cfg.edgeFile = Media.."glowTex"
+cfg.GlowTex = Media.."glowTex"
+cfg.Solid = Media.."solid"
 cfg.IconSize = 30 											-- 图标大小
 cfg.Spacing = 4												-- 图标间距
 cfg.BUFFpos = {"TOPRIGHT", UIParent, "TOPRIGHT", -5, -5} 	-- BUFF位置

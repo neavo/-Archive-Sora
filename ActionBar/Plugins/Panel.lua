@@ -13,8 +13,8 @@ MainBar:SetBackdrop({
 	edgeFile = cfg.GlowTex, edgeSize = 3, 
 	insets = { left = 4, right = 4, top = 4, bottom = 4 }
 })
-MainBar:SetBackdropColor(0,0,0,0.2)
-MainBar:SetBackdropBorderColor(0,0,0,1)
+MainBar:SetBackdropColor(0, 0, 0, 0.2)
+MainBar:SetBackdropBorderColor(0, 0, 0, 1)
 
 if cfg.ShowExtraBar then
 	MainBar.Left = CreateFrame("Frame",nil,MainBar)
@@ -25,8 +25,8 @@ if cfg.ShowExtraBar then
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
-	MainBar.Left:SetBackdropColor(0, 0, 0, 0.8)
-	MainBar.Left:SetBackdropBorderColor(0,0,0,1)
+	MainBar.Left:SetBackdropColor(0, 0, 0, 0.6)
+	MainBar.Left:SetBackdropBorderColor(0, 0, 0, 1)
 
 	MainBar.Left:SetScript("OnMouseDown",function(self)
 		if MultiBarLeftButton1:GetAlpha() < 0.1 then
@@ -44,8 +44,8 @@ if cfg.ShowExtraBar then
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
-	MainBar.Right:SetBackdropColor(0,0,0,0.8)
-	MainBar.Right:SetBackdropBorderColor(0,0,0,1)
+	MainBar.Right:SetBackdropColor(0, 0, 0, 0.6)
+	MainBar.Right:SetBackdropBorderColor(0, 0, 0, 1)
 
 	MainBar.Right:SetScript("OnMouseDown",function(self)
 		if MultiBarRightButton1:GetAlpha() < 0.1 then
