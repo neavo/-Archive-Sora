@@ -145,8 +145,6 @@ local menuList = {
     func = function() ToggleFrame(LFDParentFrame) end},
 	{text = "系统菜单",
 	func = function() ToggleFrame(GameMenuFrame) end},
-	{text = "宏命令设置",
-    func = function() ToggleFrame(MacroFrame) end},
 }
 
 Minimap:SetScript("OnMouseUp", function(self, btn)
