@@ -69,6 +69,7 @@ local UnitSpecific = {
 		lib.gen_InfoIcons(self)
 		lib.HealPred(self)
 		lib.gen_castbar(self)
+		lib.gen_mirrorcb(self)
 		lib.RogueComboPoints(self)
 
 		self.Health.frequentUpdates = true
