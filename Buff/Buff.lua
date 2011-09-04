@@ -181,10 +181,10 @@ hooksecurefunc("DebuffButton_UpdateAnchors", MakeDebuffFrame)
 
 -- BUFF即将结束时的提示
 local function FlashOnEnd(self, elapsed)
-	if self.timeLeft > 20 then
+	if self.timeLeft > cfg.WarningTime then
 		self.duration:SetTextColor(1,1,1)
 		self:SetAlpha(1)
-	elseif self.timeLeft < 20 then
+	elseif self.timeLeft < cfg.WarningTime then
 		self.duration:SetTextColor(1,0,0)
 		self:SetAlpha(BuffFrame.BuffAlphaValue)
 	else
