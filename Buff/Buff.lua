@@ -37,10 +37,10 @@ for i = 1, 3 do
 
 	if i == 1 then
 		TempEnchant:SetPoint(unpack(cfg.BUFFpos))
-	elseif cfg.Direction == 1 then
+	elseif cfg.BuffDirection == 1 then
 		local Pre = _G["TempEnchant"..i-1]
 		TempEnchant:SetPoint("RIGHT", Pre, "LEFT", -cfg.Spacing, 0)
-	elseif cfg.Direction == 2 then
+	elseif cfg.BuffDirection == 2 then
 		local Pre = _G["TempEnchant"..i-1]
 		TempEnchant:SetPoint("LEFT", Pre, "RIGHT", cfg.Spacing, 0)
 	end
@@ -122,7 +122,7 @@ local function MakeBuffFrame()
 		local Buff = BuffSort[i]
 		Buff:ClearAllPoints()
 		local TempEnchant = _G["TempEnchant"..BuffFrame.numEnchants]
-		if cfg.Direction == 1 then
+		if cfg.BuffDirection == 1 then
 			if BuffFrame.numEnchants ~= 0 and i == 1 then
 				Buff:SetPoint("RIGHT", TempEnchant, "LEFT", -cfg.Spacing, 0)
 			elseif i + BuffFrame.numEnchants == 1 then
@@ -134,7 +134,7 @@ local function MakeBuffFrame()
 			elseif i < IconsPerRow*3 + 1 then
 				Buff:SetPoint("RIGHT", BuffSort[i-1], "LEFT", -cfg.Spacing, 0)
 			end
-		elseif cfg.Direction == 2 then
+		elseif cfg.BuffDirection == 2 then
 			if BuffFrame.numEnchants ~= 0 and i == 1 then
 				Buff:SetPoint("LEFT", TempEnchant, "RIGHT", cfg.Spacing, 0)
 			elseif i + BuffFrame.numEnchants == 1 then
@@ -159,7 +159,7 @@ local function MakeDebuffFrame(buttonName,i)
 	local Pre = _G[buttonName..(i-1)]
 	Debuff:ClearAllPoints()
 	Border:Hide()
-	if cfg.Direction == 1 then
+	if cfg.DebuffDirection == 1 then
 		if i == 1 then
 			Debuff:SetPoint(unpack(cfg.DEUFFpos))
 		elseif i == IconsPerRow + 1 then
@@ -167,7 +167,7 @@ local function MakeDebuffFrame(buttonName,i)
 		elseif i < IconsPerRow*2 + 1 then
 			Debuff:SetPoint("RIGHT", Pre, "LEFT", -cfg.Spacing, 0)
 		end
-	elseif cfg.Direction == 2 then
+	elseif cfg.DebuffDirection == 2 then
 		if i == 1 then
 			Debuff:SetPoint(unpack(cfg.DEUFFpos))
 		elseif i == IconsPerRow + 1 then
