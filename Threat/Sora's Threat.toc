@@ -1,5 +1,5 @@
 ﻿## Interface: 40100
-## Title: oUF_|cff70C0F5Sora's|r Threat
+## Title: |cff70C0F5Sora's|r Threat
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
 
