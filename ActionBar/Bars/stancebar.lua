@@ -1,7 +1,7 @@
 ﻿local bar = CreateFrame("Frame","rABS_StanceBar",UIParent, "SecureHandlerStateTemplate")
 bar:SetWidth(22*6+1*(6-1))
 bar:SetHeight(22)
-bar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 0, 7)
+bar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 0, 3)
 ShapeshiftBarFrame:SetParent(bar)
 ShapeshiftBarFrame:EnableMouse(false)
 
