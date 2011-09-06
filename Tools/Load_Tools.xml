@@ -13,6 +13,7 @@
 	<Script file="AutoRepair.lua"/>
 	<Script file="ClearFont.lua"/>
 	<Script file="CombatAlert.lua"/>
+	<Script file="Doom_CooldownPulse"/>
 	<Script file="DragEmAll.lua"/>
 	<Script file="Durability.lua"/>
 	<Script file="FrameHack.lua"/>
