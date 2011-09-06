@@ -31,6 +31,18 @@ lib.gen_castbackdrop = function(self)
 	self:SetBackdropBorderColor(0,0,0,1)
 end
 
+local function MakeShadow(Frame)
+	local Shadow = CreateFrame("Frame", nil, Frame)
+	Shadow:SetFrameLevel(0)
+	Shadow:SetPoint("TOPLEFT", 5, 0)
+	Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	Shadow:SetBackdrop({ 
+		edgeFile = cfg.GlowTex, edgeSize = 5, 
+	})
+	Shadow:SetBackdropBorderColor(0,0,0,1)
+	return Shadow
+end
+
 -- Right Click Menu
 lib.spawnMenu = function(self)
 	local unit = self.unit:sub(1, -2)
@@ -78,12 +90,7 @@ lib.gen_hpbar = function(self)
 	Statusbar.colorClass = true
 	Statusbar.colorReaction = true
 
-	-- Border
-	local Border = CreateFrame("Frame", nil, Statusbar)
-	Border:SetFrameLevel(3)
-	Border:SetPoint("TOPLEFT", -5, 5)
-	Border:SetPoint("BOTTOMRIGHT", 5, -5)
-	lib.gen_backdrop(Border)
+	local Shadow = MakeShadow(Statusbar)
 
 	-- BG
 	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
@@ -138,13 +145,8 @@ lib.gen_ppbar = function(self)
 		Statusbar:SetPoint("BOTTOM",self,"BOTTOM",0,0)	
 	end
 	Statusbar:SetFrameLevel(1)
-	
-	-- Border
-	local Border = CreateFrame("Frame", nil, Statusbar)
-	Border:SetFrameLevel(0)
-	Border:SetPoint("TOPLEFT",-5,5)
-	Border:SetPoint("BOTTOMRIGHT",5,-5)
-	lib.gen_backdrop(Border)
+
+	local Shadow = MakeShadow(Statusbar)
 	
 	-- BG
 	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
@@ -548,15 +550,10 @@ local myPostCreateIcon = function(self, button)
 	button.count:SetJustifyH('RIGHT')
 	button.count:SetVertexColor(1,1,1)	
 	
-	--Border
-	local Border = CreateFrame("Frame", nil, button)
-	Border:SetFrameLevel(0)
-	Border:SetPoint("TOPLEFT",-5,5)
-	Border:SetPoint("BOTTOMRIGHT",5,-5)
-	Border:SetBackdrop{
-		edgeFile = cfg.backdrop_edge_texture, edgeSize = 5 
-	}
-	Border:SetBackdropBorderColor(0,0,0,0.8)
+	local Shadow = MakeShadow(button)
+	Shadow:ClearAllPoints()
+	Shadow:SetPoint("TOPLEFT", 1, 0)
+	Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
 end
   
 -- Post Update Icon Function
@@ -745,12 +742,8 @@ lib.addEclipseBar = function(self)
 	eclipseBar:SetWidth(self.Health:GetWidth())
 	eclipseBar:SetFrameLevel(4)
 	
-	local Border = CreateFrame("Frame", nil, eclipseBar)
-	Border:SetFrameLevel(1)
-	Border:SetPoint("TOPLEFT",-5,5)
-	Border:SetPoint("BOTTOMRIGHT",5,-5)
-	lib.gen_backdrop(Border)
-	eclipseBar.eBarBG = Border
+	local Shadow = MakeShadow(eclipseBar)
+	eclipseBar.eBarBG = Shadow
 
 	local lunarBar = CreateFrame('StatusBar', nil, eclipseBar)
 	lunarBar:SetPoint('LEFT', eclipseBar, 'LEFT', 0, 0)
@@ -766,8 +759,8 @@ lib.addEclipseBar = function(self)
 	solarBar:SetStatusBarColor(1,1,.13)
 	solarBar:SetFrameLevel(5)
 
-    local EBText = lib.gen_fontstring(solarBar, cfg.font, 10, "OUTLINE")
-	EBText:SetPoint('CENTER', eclipseBar, 'CENTER', 0, 0)
+    local EBText = lib.gen_fontstring(solarBar, cfg.font, 9, "THINOUTLINE")
+	EBText:SetPoint("CENTER", eclipseBar, "CENTER", 0, 0)
 	self:Tag(EBText, '[pereclipse]')
 	
 	eclipseBar.SolarBar = solarBar
@@ -797,24 +790,20 @@ lib.genShards = function(self)
 		barFrame:SetHeight(6)
 		barFrame:SetWidth(self:GetWidth())
 		barFrame:SetFrameLevel(4)
-		
-		local Border = CreateFrame("Frame", nil, barFrame)
-		Border:SetFrameLevel(1)
-		Border:SetPoint("TOPLEFT",-5,5)
-		Border:SetPoint("BOTTOMRIGHT",5,-5)
-		lib.gen_backdrop(Border)
 
 		for i= 1, 3 do
 			local shard = CreateFrame("StatusBar", nil, barFrame)
-			shard:SetSize((self.Health:GetWidth()-7)/3, barFrame:GetHeight())
+			shard:SetSize((self.Health:GetWidth()-10)/3, barFrame:GetHeight())
 			shard:SetStatusBarTexture(cfg.statusbar_texture)
 			shard:SetStatusBarColor(.86,.44, 1)
 			shard:SetFrameLevel(4)
+		
+			local Shadow = MakeShadow(shard)
 
 			if i == 1 then
-				shard:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
+				shard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 3)
 			else
-				shard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 3, 0)
+				shard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 5, 0)
 			end
 			barFrame[i] = shard
 		end
@@ -839,7 +828,7 @@ lib.genHolyPower = function(self)
 					if i <= num then
 						hp[i]:SetAlpha(1)
 					else
-						hp[i]:SetAlpha(0.3)
+						hp[i]:SetAlpha(0.2)
 					end
 				end
 			end
@@ -849,25 +838,21 @@ lib.genHolyPower = function(self)
 		barFrame:SetHeight(6)
 		barFrame:SetWidth(self:GetWidth())
 		barFrame:SetFrameLevel(4)
-		
-		local Border = CreateFrame("Frame", nil, barFrame)
-		Border:SetFrameLevel(1)
-		Border:SetPoint("TOPLEFT",-5,5)
-		Border:SetPoint("BOTTOMRIGHT",5,-5)
-		lib.gen_backdrop(Border)
 
 		for i = 1, 3 do
 			local holyShard = CreateFrame("StatusBar", self:GetName().."_Holypower"..i, self)
 			holyShard:SetHeight(6)
-			holyShard:SetWidth((self.Health:GetWidth()-7)/3, 6)
+			holyShard:SetWidth((self.Health:GetWidth()-10)/3, 6)
 			holyShard:SetStatusBarTexture(cfg.statusbar_texture)
 			holyShard:SetStatusBarColor(.9,.95,.33)
 			holyShard:SetFrameLevel(4)
 			
+			local Shadow = MakeShadow(holyShard)
+
 			if i == 1 then
-				holyShard:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
+				holyShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 3)
 			else
-				holyShard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 3, 0)
+				holyShard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 5, 0)
 			end
 			barFrame[i] = holyShard
 	end
@@ -885,20 +870,23 @@ lib.genRunes = function(self)
 	runeFrame:SetWidth(self:GetWidth())
 	runeFrame:SetFrameLevel(4)
 	
-	local Border = CreateFrame("Frame", nil, runeFrame)
-	Border:SetFrameLevel(1)
-	Border:SetPoint("TOPLEFT",-5,5)
-	Border:SetPoint("BOTTOMRIGHT",5,-5)
-	lib.gen_backdrop(Border)
-	
 	for i= 1, 6 do
 		local rune = CreateFrame("StatusBar", nil, runeFrame)
 		rune:SetSize((self.Health:GetWidth()-15)/6, 6)
 		rune:SetStatusBarTexture(cfg.statusbar_texture)
 		rune:SetFrameLevel(8)
 		
+		local BG = rune:CreateTexture(nil, "BACKGROUND")
+		BG:SetAllPoints()
+		BG:SetTexture(cfg.statusbar_texture)
+		BG:SetVertexColor(0.2, 0.2, 0.2, 0.8)
+		
+		local Shadow = MakeShadow(rune)
+		Shadow:SetPoint("TOPLEFT", 5, 1)
+		Shadow:SetPoint("BOTTOMRIGHT", 5, -4)
+		
 		if i == 1 then
-			rune:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 5)
+			rune:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 		else
 			rune:SetPoint("LEFT", runeFrame[i-1], "RIGHT", 3, 0)
 		end
@@ -913,7 +901,7 @@ lib.ReadyCheck = function(self)
 	if cfg.RCheckIcon then
 		rCheck = self.Health:CreateTexture(nil, "OVERLAY")
 		rCheck:SetSize(14, 14)
-		rCheck:SetPoint("BOTTOMLEFT", self.Health, "TOPRIGHT", -13, -12)
+		rCheck:SetPoint("CENTER", self.Health, "CENTER", 0, 0)
 		self.ReadyCheck = rCheck
 	end
 end
@@ -995,18 +983,14 @@ lib.RogueComboPoints = function(self)
 			point:SetStatusBarTexture(cfg.statusbar_texture)
 			point:SetStatusBarColor(1.0, 0.9, 0)
 							
-			local Border = CreateFrame("Frame", nil, point)
-			Border:SetFrameLevel(1)
-			Border:SetPoint("TOPLEFT",-5,5)
-			Border:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_backdrop(Border)
+			local Shadow = MakeShadow(point)
 
-		if i == 1 then
-			point:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
-		else
-			point:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 6, 0)
-		end
-		barFrame[i] = point
+			if i == 1 then
+				point:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
+			else
+				point:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 6, 0)
+			end
+			barFrame[i] = point
 		end
 		self.CPoints = barFrame
 		self.CPoints.unit = "player"
@@ -1036,23 +1020,24 @@ lib.gen_TotemBar = function(self)
 		for i = 1, 4 do
 		local t = CreateFrame("Frame", nil, TotemBar)
 			t:SetHeight(6)
-			t:SetWidth(self.Health:GetWidth()/4 - 6)
+			t:SetWidth((self.Health:GetWidth()-15)/4)
 
 			local bar = CreateFrame("StatusBar", nil, t)
 			bar:SetAllPoints(t)
 			bar:SetStatusBarTexture(cfg.statusbar_texture)
 			t.StatusBar = bar
+			
+			local BG = t:CreateTexture(nil, "BACKGROUND")
+			BG:SetAllPoints()
+			BG:SetTexture(cfg.statusbar_texture)
+			BG:SetVertexColor(0.2, 0.2, 0.2, 0.8)
 
-			local Border = CreateFrame("Frame", nil, t)
-			Border:SetFrameLevel(1)
-			Border:SetPoint("TOPLEFT",-5,5)
-			Border:SetPoint("BOTTOMRIGHT",5,-5)
-			lib.gen_backdrop(Border)
+			local Shadow = MakeShadow(t)
 			
 			if i == 1 then
-				t:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 3, 6)
+				t:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 6)
 			else
-				t:SetPoint('TOPLEFT', TotemBar[i-1], "TOPRIGHT", 6, 0)
+				t:SetPoint('TOPLEFT', TotemBar[i-1], "TOPRIGHT", 5, 0)
 			end
 			
 			local text = lib.gen_fontstring(t, cfg.smallfont, 8, "THINOUTLINE")

@@ -52,7 +52,8 @@ cfg.showLFDIcons = true				-- 显示随机副本角色图标
 cfg.scale = 1						-- 其他框体缩放
 
 
-
+cfg.Solid = Media.."solid"
+cfg.GlowTex = Media.."glowTex"
 
 cfg.statusbar_texture = Media.."Statusbar"
 cfg.powerbar_texture = Media.."Minimalist"
