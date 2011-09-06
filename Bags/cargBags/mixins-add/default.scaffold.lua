@@ -49,7 +49,7 @@ end
 local function ItemButton_Update(self, item)
 	self.Icon:SetTexture(item.texture or self.bgTex)
 
-	if(item.count and item.count > 1) then
+	if item.count and item.count > 1 then
 		self.Count:SetText(item.count >= 1e3 and "*" or item.count)
 		self.Count:Show()
 	else
@@ -70,7 +70,7 @@ end
 	@callback OnUpdateCooldown(item)
 ]]
 local function ItemButton_UpdateCooldown(self, item)
-	if(item.cdEnable == 1 and item.cdStart and item.cdStart > 0) then
+	if item.cdEnable == 1 and item.cdStart and item.cdStart > 0 then
 		self.Cooldown:SetCooldown(item.cdStart, item.cdFinish)
 		self.Cooldown:Show()
 	else
@@ -113,7 +113,7 @@ local function ItemButton_UpdateQuest(self, item)
 		tL,tR,tT,tB = unpack(self.glowCoords)
 	end
 
-	if(texture) then
+	if texture then
 		self.Quest:SetTexture(texture)
 		self.Quest:SetTexCoord(tL,tR,tT,tB)
 		self.Quest:SetBlendMode(blend)
@@ -128,7 +128,7 @@ end
 
 cargBags:RegisterScaffold("Default", function(self)
 	self.glowTex = "Interface\\Buttons\\UI-ActionButton-Border" --! @property glowTex <string> The textures used for the glow
-	self.glowAlpha = 0.8 --! @property glowAlpha <number> The alpha of the glow texture
+	self.glowAlpha = 1 --! @property glowAlpha <number> The alpha of the glow texture
 	self.glowBlend = "ADD" --! @property glowBlend <string> The blendMode of the glow texture
 	self.glowCoords = { 14/64, 50/64, 14/64, 50/64 } --! @property glowCoords <table> Indexed table of texCoords for the glow texture
 	self.bgTex = nil --! @property bgTex <string> Texture used as a background if no item is in the slot
