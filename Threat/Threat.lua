@@ -26,7 +26,7 @@ ThreatFrame.Overlay:SetBackdropBorderColor(0,0,0,1)
 
 ThreatFrame.Shadow = CreateFrame("Frame", nil, ThreatFrame.Overlay)
 ThreatFrame.Shadow:SetFrameLevel(0)
-ThreatFrame.Shadow:SetPoint("TOPLEFT", 5, -5)
+ThreatFrame.Shadow:SetPoint("TOPLEFT", 5, 1)
 ThreatFrame.Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
 ThreatFrame.Shadow:SetBackdrop({ 
 	edgeFile = cfg.GlowTex, edgeSize = 5
@@ -119,14 +119,14 @@ local function UpdateThreatFlag()
 				FlagT:SetFrameLevel(2)
 				
 				FlagT.Name = FlagT:CreateTexture(nil,"OVERLAY")
-				FlagT.Name:SetHeight(22)
-				FlagT.Name:SetWidth(22)
+				FlagT.Name:SetHeight(16)
+				FlagT.Name:SetWidth(32)
 				FlagT.Name:SetTexture(cfg.ArrowLarge)
-				FlagT.Name:SetPoint("BOTTOM", FlagT, "TOP", 0, 2)
+				FlagT.Name:SetPoint("BOTTOM", FlagT, "TOP", 0, 0)
 				
 				FlagT.Text = FlagT:CreateFontString(nil,"OVERLAY")
 				FlagT.Text:SetFont(cfg.Font,9,"THINOUTLINE")
-				FlagT.Text:SetPoint("BOTTOM", FlagT.Name, "TOP", 1, -8)
+				FlagT.Text:SetPoint("BOTTOM", FlagT.Name, "TOP", 1, -1)
 				
 			end
 		
@@ -157,14 +157,14 @@ local function UpdateThreatFlag()
 			Flag:SetFrameLevel(2)
 			
 			Flag.Name = Flag:CreateTexture(nil,"OVERLAY")
-			Flag.Name:SetHeight(16)
+			Flag.Name:SetHeight(8)
 			Flag.Name:SetWidth(16)
 			Flag.Name:SetTexture(cfg.ArrowSmall)
-			Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, -2)
+			Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, -1)
 			
 			Flag.Text = Flag:CreateFontString(nil,"OVERLAY")
 			Flag.Text:SetFont(cfg.Font,9,"THINOUTLINE")
-			Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, 3)
+			Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, -1)
 			
 			tinsert(ThreatFlag, Flag)
 		end
@@ -217,12 +217,9 @@ Event:SetScript("OnEvent",function(self, event, unit)
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		if UnitExists("target") and not UnitIsDead("target") and not UnitIsPlayer("target") then
 			ThreatGuid = UnitGUID("target")
-			local TargetSwitch = function()
-				if UnitAffectingCombat("player") then
-					UIFrameFadeIn(ThreatFrame, 0.5, 0, 1)
-				end
+			if UnitAffectingCombat("player") then
+				UIFrameFadeIn(ThreatFrame, 0.5, 0, 1)
 			end
-			TargetSwitch()
 		else
 			ThreatGuid = ""
 		end
