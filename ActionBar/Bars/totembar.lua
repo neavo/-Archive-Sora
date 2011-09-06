@@ -10,7 +10,7 @@ local myclass = select(2, UnitClass("player"))
 -- styling totembar
 if myclass == "SHAMAN" then
 	local TotemBar = CreateFrame("Frame", "holder_TotemBar", UIParent, "SecureHandlerStateTemplate")
-	TotemBar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 0, 7)
+	TotemBar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 0, 3)
 	local tN = { 2, 1, 3, 4 }
 	local TotemButtons = {
 		MultiCastActionPage1,
