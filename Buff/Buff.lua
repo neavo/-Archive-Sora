@@ -107,7 +107,6 @@ local function MakeBuffFrame()
 	if hasThrownEnchant then
 		Num = Num + 1
 	end
-	print(Num)
 	for i = 1, Num do
 		Style("TempEnchant", i)
 		table.insert(BuffSort, _G["TempEnchant"..i])

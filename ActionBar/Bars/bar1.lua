@@ -1,6 +1,6 @@
 ﻿local bar = CreateFrame("Frame","rABS_MainMenuBar",UIParent, "SecureHandlerStateTemplate") 
-bar:SetWidth(28*12+3*11)
-bar:SetHeight(28)
+bar:SetWidth(26*12+3*11)
+bar:SetHeight(26)
 bar:SetPoint("BOTTOM", UIParent, "BOTTOM", -20, 7)
   
 local Page = {
@@ -53,7 +53,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 		local button
 		for i = 1, 12 do
 			button = _G["ActionButton"..i]
-			button:SetSize(28, 28)
+			button:SetSize(26, 26)
 			button:ClearAllPoints()
 			button:SetParent(self)
 			if i == 1 then

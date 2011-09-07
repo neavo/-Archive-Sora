@@ -16,8 +16,8 @@ Minimap:SetMaskTexture("Interface\\Buttons\\WHITE8x8")
 Minimap:SetFrameStrata("BACKGROUND")
 Minimap:ClearAllPoints()
 Minimap:SetPoint(unpack(cfg.MinimapPos))
-Minimap:SetWidth(112)
-Minimap:SetHeight(112)
+Minimap:SetWidth(105)
+Minimap:SetHeight(105)
 
 LFDSearchStatus:SetClampedToScreen(true)
 
@@ -62,30 +62,31 @@ MinimapNorthTag:SetAlpha(0)
 
 -- BG icon
 MiniMapBattlefieldFrame:ClearAllPoints()
-MiniMapBattlefieldFrame:SetPoint("TOP", Minimap, "TOP", 2, 8)
+MiniMapBattlefieldFrame:SetScale(0.8)
+MiniMapBattlefieldFrame:SetPoint("TOP", Minimap, "TOP", 0, 4)
 
 -- Random Group icon
 MiniMapLFGFrame:ClearAllPoints()
 MiniMapLFGFrameBorder:SetAlpha(0)
-MiniMapLFGFrame:SetPoint("TOP", Minimap, "TOP", 1, 8)
+MiniMapLFGFrame:SetPoint("TOP", Minimap, "TOP", 0, 4)
 MiniMapLFGFrame:SetFrameStrata("MEDIUM")
 
 -- Instance Difficulty flag
 MiniMapInstanceDifficulty:ClearAllPoints()
-MiniMapInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 2, 2)
-MiniMapInstanceDifficulty:SetScale(0.75)
+MiniMapInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
+MiniMapInstanceDifficulty:SetScale(0.8)
 MiniMapInstanceDifficulty:SetFrameStrata("LOW")
 
 -- Guild Instance Difficulty flag
 GuildInstanceDifficulty:ClearAllPoints()
-GuildInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 2, 2)
-GuildInstanceDifficulty:SetScale(0.75)
+GuildInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
+GuildInstanceDifficulty:SetScale(0.8)
 GuildInstanceDifficulty:SetFrameStrata("LOW")
 
 -- Invites Icon
 GameTimeCalendarInvitesTexture:ClearAllPoints()
 GameTimeCalendarInvitesTexture:SetParent("Minimap")
-GameTimeCalendarInvitesTexture:SetPoint("TOPRIGHT")
+GameTimeCalendarInvitesTexture:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
 
 if FeedbackUIButton then
 	FeedbackUIButton:ClearAllPoints()
@@ -105,9 +106,9 @@ end
 Minimap:EnableMouseWheel(true)
 Minimap:SetScript("OnMouseWheel", function(self, z)
 	local c = Minimap:GetZoom()
-	if(z > 0 and c < 5) then
+	if z > 0 and c < 5 then
 		Minimap:SetZoom(c + 1)
-	elseif(z < 0 and c > 0) then
+	elseif z < 0 and c > 0 then
 		Minimap:SetZoom(c - 1)
 	end
 end)
@@ -138,7 +139,7 @@ local menuList = {
     func = function() ToggleHelpFrame() end},
     {text = "日历",
     func = function()
-    if(not CalendarFrame) then LoadAddOn("Blizzard_Calendar") end
+    if not CalendarFrame then LoadAddOn("Blizzard_Calendar") end
         Calendar_Toggle()
     end},
     {text = "寻求组队",
@@ -186,11 +187,10 @@ local notbuttons = {
 	['MiniMapMailFrame'] = true,
 	['MiniMapMailIcon'] = true,
 	['GameTimeCalendarInvitesTexture'] = true,
-	['FeedbackUIButton'] = true,
-	['StreamingIcon'] = true,
 }
 
 local addon = CreateFrame('Frame', 'NBB', UIParent)
+addon:SetScale(0.8)
 
 local isMinimapButton = function(frame)
 	if frame and frame:GetObjectType() == 'Button' and frame:GetNumRegions() >= 3 then

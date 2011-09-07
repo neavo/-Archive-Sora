@@ -43,6 +43,18 @@ local function MakeShadow(Frame)
 	return Shadow
 end
 
+local function MakeBorder(Frame)
+	local Border = CreateFrame("Frame", nil, Frame)
+	Border:SetFrameLevel(1)
+	Border:SetPoint("TOPLEFT", -1, 1)
+	Border:SetPoint("BOTTOMRIGHT", 1, -1)
+	Border:SetBackdrop({ 
+		edgeFile = cfg.Solid, edgeSize = 1, 
+	})
+	Border:SetBackdropBorderColor(0,0,0,1)
+	return Border
+end
+
 -- Right Click Menu
 lib.spawnMenu = function(self)
 	local unit = self.unit:sub(1, -2)
@@ -82,7 +94,7 @@ lib.gen_hpbar = function(self)
 	elseif self.mystyle == "tot"  or self.mystyle == "pet" or self.mystyle =="focustarget" then
 		Statusbar:SetHeight(14)
 	elseif self.mystyle == "party" or self.mystyle == "raid" then
-		Statusbar:SetHeight(18)	
+		Statusbar:SetHeight(16)	
 	end
 	Statusbar:SetWidth(self:GetWidth())
 	Statusbar:SetPoint("TOP",0,0)
@@ -91,6 +103,7 @@ lib.gen_hpbar = function(self)
 	Statusbar.colorReaction = true
 
 	local Shadow = MakeShadow(Statusbar)
+	local Border = MakeBorder(Statusbar)
 
 	-- BG
 	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
@@ -141,12 +154,13 @@ lib.gen_ppbar = function(self)
 		Statusbar:SetHeight(6)
 		Statusbar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
 	elseif self.mystyle == "party" or self.mystyle == "raid" then
-		Statusbar:SetHeight(3)
+		Statusbar:SetHeight(2)
 		Statusbar:SetPoint("BOTTOM",self,"BOTTOM",0,0)	
 	end
 	Statusbar:SetFrameLevel(1)
 
 	local Shadow = MakeShadow(Statusbar)
+	local Border = MakeBorder(Statusbar)
 	
 	-- BG
 	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
@@ -160,43 +174,39 @@ end
 
 --gen hp strings func
 lib.gen_hpstrings = function(self, unit)
-    --creating Border frame here so our font strings don't inherit healthbar parameters
-    local Border = CreateFrame("Frame", nil, self)
-    Border:SetAllPoints(self.Health)
-    Border:SetFrameLevel(15)
 	
 	local level , hpval , ppval , DeadInfo
 	if self.mystyle == "player" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		level = lib.gen_fontstring(self.Health, cfg.font, 11, "THINOUTLINE")
 		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
 		self:Tag(level, "[Sora:color][name]")
 		level:SetAlpha(0)
 	elseif self.mystyle == "target" or self.mystyle =="focus" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		level = lib.gen_fontstring(self.Health, cfg.font, 11, "THINOUTLINE")
 		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
 		self:Tag(level, "[Sora:level] [Sora:color][name]")
 		level:SetAlpha(0)
 	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		level = lib.gen_fontstring(self.Health, cfg.font, 9, "THINOUTLINE")
 		level:SetPoint("LEFT", self.Health, "LEFT", 0, 5)
 		self:Tag(level, "[name]")
 	elseif self.mystyle=="raid" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		level = lib.gen_fontstring(self.Health, cfg.font, 9, "THINOUTLINE")
 		level:SetPoint("CENTER", self.Health, "CENTER", 0, 0)
 		self:Tag(level, "[Sora:color][name]")
 	elseif self.mystyle=="party" then
-		level = lib.gen_fontstring(self.Health, cfg.font, 10, "THINOUTLINE")
+		level = lib.gen_fontstring(self.Health, cfg.font, 9, "THINOUTLINE")
 		level:SetPoint("LEFT", self.Health, "LEFT", 5, 0)
 		self:Tag(level, "[Sora:level] [Sora:color][name]")
 	end
 
 	if self.mystyle == "player" or self.mystyle == "target" or self.mystyle == "focus" then
-		hpval = lib.gen_fontstring(self.Health, cfg.font, 12, "THINOUTLINE")
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 11, "THINOUTLINE")
 		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
 		self:Tag(hpval, "[Sora:color][Sora:hp]")
 		hpval:SetAlpha(0)	
 	elseif self.mystyle == "pet" or self.mystyle == "tot" or self.mystyle == "focustarget" then
-		hpval = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
+		hpval = lib.gen_fontstring(self.Health, cfg.font, 7, "THINOUTLINE")
 		hpval:SetPoint("RIGHT", self.Health, "RIGHT", 7, -5)
 		self:Tag(hpval, "[Sora:hp]")
 	elseif self.mystyle == "party" then
@@ -206,22 +216,22 @@ lib.gen_hpstrings = function(self, unit)
 	end
 	
 	if self.mystyle == "player" or self.mystyle == "target" or self.mystyle == "focus" then 
-		ppval = lib.gen_fontstring(self.Power, cfg.font, 10, "THINOUTLINE")
+		ppval = lib.gen_fontstring(self.Power, cfg.font, 9, "THINOUTLINE")
 		ppval:SetPoint("RIGHT", self.Power, "RIGHT", 0, 0)
 		self:Tag(ppval, "[Sora:pp]")
 		ppval:SetAlpha(0)
 	elseif self.mystyle == "party" then
-		ppval = lib.gen_fontstring(self.Power, cfg.font, 8, "THINOUTLINE")
+		ppval = lib.gen_fontstring(self.Power, cfg.font, 7, "THINOUTLINE")
 		ppval:SetPoint("RIGHT", self.Power, "RIGHT", 0, 0)
 		self:Tag(ppval, "[Sora:pp]")	
 	end
 	
 	if self.mystyle == "raid" then
-		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
+		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 7, "THINOUTLINE")
 		DeadInfo:SetPoint("CENTER", self.Health, "CENTER", 0, -10)
 		self:Tag(DeadInfo, "[Sora:info]")
 	elseif self.mystyle == "party" then
-		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 8, "THINOUTLINE")
+		DeadInfo = lib.gen_fontstring(self.Health, cfg.font, 7, "THINOUTLINE")
 		DeadInfo:SetPoint("CENTER", self.Health, "CENTER", 0, -10)
 		self:Tag(DeadInfo, "[Sora:info]")
 	end
@@ -554,6 +564,7 @@ local myPostCreateIcon = function(self, button)
 	Shadow:ClearAllPoints()
 	Shadow:SetPoint("TOPLEFT", 1, 0)
 	Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	local Border = MakeBorder(button)
 end
   
 -- Post Update Icon Function
@@ -799,6 +810,7 @@ lib.genShards = function(self)
 			shard:SetFrameLevel(4)
 		
 			local Shadow = MakeShadow(shard)
+			local Border = MakeBorder(shard)
 
 			if i == 1 then
 				shard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
@@ -848,6 +860,7 @@ lib.genHolyPower = function(self)
 			holyShard:SetFrameLevel(4)
 			
 			local Shadow = MakeShadow(holyShard)
+			local Border = MakeBorder(holyShard)
 
 			if i == 1 then
 				holyShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
@@ -884,6 +897,7 @@ lib.genRunes = function(self)
 		local Shadow = MakeShadow(rune)
 		Shadow:SetPoint("TOPLEFT", 5, 1)
 		Shadow:SetPoint("BOTTOMRIGHT", 5, -4)
+		local Border = MakeBorder(rune)
 		
 		if i == 1 then
 			rune:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)

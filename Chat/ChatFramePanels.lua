@@ -22,7 +22,7 @@ for i = 1, NUM_CHAT_WINDOWS do
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
 	chatframe:SetBackdropColor(1,1,1,0.6)
-	chatframe:SetBackdropBorderColor(0,0,0,0.8)
+	chatframe:SetBackdropBorderColor(0,0,0,1)
 	local editbox = CreateFrame("Frame",nil,chatframe)
 	editbox:SetHeight(23)
 	editbox:SetPoint("TOPLEFT",chatframe,"BOTTOMLEFT",0,2)
@@ -34,7 +34,7 @@ for i = 1, NUM_CHAT_WINDOWS do
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
 	editbox:SetBackdropColor(1,1,1,0.6)
-	editbox:SetBackdropBorderColor(0,0,0,0.8)
+	editbox:SetBackdropBorderColor(0,0,0,1)
 	
 end
 

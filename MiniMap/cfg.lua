@@ -14,7 +14,7 @@ cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"
 cfg.Statusbar = Media.."statusbar"
 
-cfg.MinimapPos = {"TOPLEFT", UIParent, "TOPLEFT", 10, -40}	-- 小地图位置
+cfg.MinimapPos = {"TOPLEFT", UIParent, "TOPLEFT", 10, -30}	-- 小地图位置
 	
 ----------------
 --  命名空间  --

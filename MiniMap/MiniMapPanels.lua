@@ -13,15 +13,15 @@ local NBBVisible
 
 -- 顶部(区域信息)
 local TMFrame = CreateFrame("Frame",nil,Minimap)
-TMFrame:SetHeight(24)
-TMFrame:SetWidth(Minimap:GetWidth()+10)
+TMFrame:SetHeight(18)
+TMFrame:SetWidth(Minimap:GetWidth())
 TMFrame:SetPoint("BOTTOM",Minimap,"TOP",0,3)
 TMFrame:SetBackdrop( { 
 	bgFile = cfg.bgFile,
-	insets = { left = 5, right = 5, top = 5, bottom = 5 },
-	edgeFile = cfg.GlowTex, edgeSize = 5, 
+	insets = { left = 2, right = 2, top = 2, bottom = 2 },
+	edgeFile = cfg.Solid, edgeSize = 1, 
 })
-TMFrame:SetBackdropColor(0,0,0,0.3)
+TMFrame:SetBackdropColor(0.2, 0.2, 0.2, 0.6)
 TMFrame:SetBackdropBorderColor(0,0,0,1)
 TMFrame:SetAlpha(0.2)
 TMFrame:SetScript("OnEnter",function(self)
@@ -45,15 +45,15 @@ MiniMapTracking:SetScale(0.7)
 
 -- 底部中央(坐标)
 local BMFrame = CreateFrame("Frame", "BMFrame", Minimap)
-BMFrame:SetHeight(24)
-BMFrame:SetWidth(Minimap:GetWidth()+10)
+BMFrame:SetHeight(18)
+BMFrame:SetWidth(Minimap:GetWidth())
 BMFrame:SetPoint("TOP", Minimap, "BOTTOM", 0, -3)
 BMFrame:SetBackdrop( { 
 	bgFile = cfg.bgFile,
-	insets = { left = 5, right = 5, top = 5, bottom = 5 },
-	edgeFile = cfg.GlowTex, edgeSize = 5, 
+	insets = { left = 2, right = 2, top = 2, bottom = 2 },
+	edgeFile = cfg.Solid, edgeSize = 1, 
 })
-BMFrame:SetBackdropColor(0,0,0,0.3)
+BMFrame:SetBackdropColor(0.2, 0.2, 0.2, 0.6)
 BMFrame:SetBackdropBorderColor(0,0,0,1)
 BMFrame:SetAlpha(0.2)
 BMFrame:SetScript("OnEnter",function(self)
@@ -66,14 +66,14 @@ BMFrame.Text = BMFrame:CreateFontString(nil, "OVERLAY")
 BMFrame.Text:SetPoint("CENTER", BMFrame,"CENTER", 0, 0)
 BMFrame.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 
--- 底部左边(动作条开关)
+-- 底部左边
 local BLFrame = CreateFrame("Frame", nil,BMFrame)
-BLFrame:SetHeight(24)
-BLFrame:SetWidth(24)
+BLFrame:SetHeight(18)
+BLFrame:SetWidth(18)
 BLFrame:SetPoint("LEFT", BMFrame, "LEFT", 0, 0)
 BLFrame.Text = BLFrame:CreateFontString(nil, "OVERLAY")
-BLFrame.Text:SetPoint("CENTER", BLFrame,"CENTER", 1, 0)
-BLFrame.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+BLFrame.Text:SetPoint("CENTER", BLFrame,"CENTER", 0, 0)
+BLFrame.Text:SetFont(cfg.Font, 9, "THINOUTLINE")
 BLFrame.Text:SetText("I")
 BLFrame:SetScript("OnEnter",function(self)
 	BMFrame:SetAlpha(1)
@@ -89,12 +89,12 @@ end)
 
 -- 底部右边(NBB)
 local BRFrame = CreateFrame("Frame",nil,BMFrame)
-BRFrame:SetHeight(24)
-BRFrame:SetWidth(24)
+BRFrame:SetHeight(18)
+BRFrame:SetWidth(18)
 BRFrame:SetPoint("RIGHT", BMFrame, "RIGHT", 0, 0)
 BRFrame:SetScript("OnEnter",function(self)
 	BMFrame:SetAlpha(1)
-	BRFrame.Text:SetTextColor(01, 0, 0)
+	BRFrame.Text:SetTextColor(1, 0, 0)
 end)
 BRFrame:SetScript("OnLeave",function(self)
 	BMFrame:SetAlpha(0.2)
@@ -111,7 +111,7 @@ BRFrame:SetScript("OnMouseDown",function(self)
 end)
 BRFrame.Text = BRFrame:CreateFontString(nil, "OVERLAY")
 BRFrame.Text:SetPoint("CENTER", BRFrame,"CENTER", 0, 0)
-BRFrame.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+BRFrame.Text:SetFont(cfg.Font, 9, "THINOUTLINE")
 BRFrame.Text:SetText("B")
 
 -- Updater

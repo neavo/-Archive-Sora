@@ -40,15 +40,15 @@ if myclass == "SHAMAN" then
 		end
 		MultiCastSummonSpellButton:ClearAllPoints();
 		MultiCastSummonSpellButton:SetPoint("BOTTOMLEFT",TotemBar,"BOTTOMLEFT",0,3);
-		MultiCastSummonSpellButton:SetSize(22,22)
+		MultiCastSummonSpellButton:SetSize(20,20)
 		for i = 1, 12 do
 			local b = _G["MultiCastSlotButton"..i]
 			local b2 = _G["MultiCastActionButton"..i]
-			b2:SetSize(22,22)
+			b2:SetSize(20,20)
 			if i <= 4 then
 				local b = _G["MultiCastSlotButton"..i]
 				b:ClearAllPoints()
-				b:SetSize(22,22)
+				b:SetSize(20,20)
 				b:SetPoint("TOPLEFT",b2,"TOPLEFT")
 			end
  			if i == 1 or i == 5 or i == 9 then 
@@ -58,8 +58,8 @@ if myclass == "SHAMAN" then
 			end
 		end
 		MultiCastRecallSpellButton:ClearAllPoints();
-		MultiCastRecallSpellButton:SetPoint("TOPLEFT",MultiCastSummonSpellButton,"TOPRIGHT", 1*5+22*4-2, 0)
-		MultiCastRecallSpellButton:SetSize(22,22)
+		MultiCastRecallSpellButton:SetPoint("TOPLEFT",MultiCastSummonSpellButton,"TOPRIGHT", 1*5+20*4-2, 0)
+		MultiCastRecallSpellButton:SetSize(20,20)
 	end
 	-- right click to destroy totem
 	local function TotemBar_Destroy(self, button)

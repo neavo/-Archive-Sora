@@ -369,45 +369,43 @@ oUF:Factory(function(self)
 				'showSolo', false,
 				'showParty', true,
 				"xoffset", 7,
-				"yOffset", -10,
 				"groupFilter", "1,2,3,4,5",
 				"groupBy", "GROUP",
 				"groupingOrder", "1,2,3,4,5",
 				"sortMethod", "INDEX",
 				"maxColumns", 5,
 				"unitsPerColumn", 5,
-				"columnSpacing", 9,
+				"columnSpacing", 7,
 				"point", "LEFT",
 				"columnAnchorPoint", "TOP",
 				"oUF-initialConfigFunction", ([[
 				self:SetWidth(%d)
 				self:SetHeight(%d)
-				]]):format(cfg.RaidUnitWidth, 23))
+				]]):format(cfg.RaidUnitWidth, 20))
 			raid:SetScale(cfg.raidScale)
-			raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -405, 160)		
+			raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -370, 135)		
 		else
 			local raid = oUF:SpawnHeader("oUF_Raid", nil, 'raid,party,solo',
 				"showRaid", cfg.ShowRaid,  
 				'showPlayer', true,
 				'showSolo', false,
 				'showParty', true,
-				"xoffset", 7,
-				"yOffset", -10,
+				"yoffset", -7,
 				"groupFilter", "1,2,3,4,5",
 				"groupBy", "GROUP",
 				"groupingOrder", "1,2,3,4,5",
 				"sortMethod", "INDEX",
 				"maxColumns", 5,
 				"unitsPerColumn", 5,
-				"columnSpacing", 9,
+				"columnSpacing", 7,
 				"point", "TOP",
 				"columnAnchorPoint", "LEFT",
 				"oUF-initialConfigFunction", ([[
 				self:SetWidth(%d)
 				self:SetHeight(%d)
-				]]):format(cfg.RaidUnitWidth, 23))
+				]]):format(cfg.RaidUnitWidth, 20))
 			raid:SetScale(cfg.raidScale)
-			raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -408, 160)
+			raid:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -370, 135)
 		end
 	end
 end)

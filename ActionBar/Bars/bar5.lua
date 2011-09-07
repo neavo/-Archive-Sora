@@ -1,12 +1,12 @@
 ﻿local bar = CreateFrame("Frame","rABS_MultiBarRight",UIParent, "SecureHandlerStateTemplate")
-bar:SetWidth(23*3+2*3)
-bar:SetHeight(23*1+2*1)
+bar:SetWidth(22*3+2*3)
+bar:SetHeight(22*1+2*1)
 bar:SetPoint("TOPLEFT", MultiBarBottomRightButton12, "TOPRIGHT", 5, 0)
 MultiBarRight:SetParent(bar)
 
 for i=1, 11 do
 	local Button = _G["MultiBarRightButton"..i]
-	Button:SetSize(23, 23)
+	Button:SetSize(22, 22)
 	Button:ClearAllPoints()
 	if i == 1 then
 		Button:SetPoint("TOPRIGHT", bar, 0,0)
