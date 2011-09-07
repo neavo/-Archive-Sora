@@ -36,42 +36,6 @@ end
 --  程序主体  --
 ----------------
 
--- 临时武器附魔样式
-for i = 1, 3 do
-	_G["TempEnchant"..i.."Border"]:Hide()
-	local TempEnchant 	= _G["TempEnchant"..i]
-	local Icon 			= _G["TempEnchant"..i.."Icon"]
-	local Duration 		= _G["TempEnchant"..i.."Duration"]
-	
-	TempEnchant:ClearAllPoints()
-	TempEnchant:SetSize(cfg.IconSize,cfg.IconSize)
-
-	if i == 1 then
-		TempEnchant:SetPoint(unpack(cfg.BUFFpos))
-	elseif cfg.BuffDirection == 1 then
-		local Pre = _G["TempEnchant"..i-1]
-		TempEnchant:SetPoint("RIGHT", Pre, "LEFT", -cfg.Spacing, 0)
-	elseif cfg.BuffDirection == 2 then
-		local Pre = _G["TempEnchant"..i-1]
-		TempEnchant:SetPoint("LEFT", Pre, "RIGHT", cfg.Spacing, 0)
-	end
-	
-	Icon:ClearAllPoints()
-	Icon:SetPoint("TOPLEFT", TempEnchant, 2, -2)
-	Icon:SetPoint("BOTTOMRIGHT", TempEnchant, -2, 2)
-	Icon:SetTexCoord(.08, .92, .08, .92)
-	
-	Duration:ClearAllPoints()
-	Duration:SetParent(TempEnchant)
-	Duration:SetPoint("TOP", TempEnchant, "BOTTOM", 1, -1)
-	Duration:SetFont(cfg.Font, 9, "THINOUTLINE")
-	
-	local Shadow = CreateFrame("Frame",nil,TempEnchant)
-	MakeShadow(Shadow)
-	local Overlay = CreateFrame("Frame", nil, TempEnchant)
-	MakeOverlay(Overlay)
-end
-
 -- BUFF/DEBUFF样式
 local function Style(buttonName, i)
 
@@ -79,6 +43,10 @@ local function Style(buttonName, i)
 	local Icon		= _G[buttonName..i.."Icon"]
 	local Duration	= _G[buttonName..i.."Duration"]
 	local Count 	= _G[buttonName..i.."Count"]
+	
+	if _G[buttonName..i.."Border"] then
+		_G[buttonName..i.."Border"]:Hide()
+	end
 	
 	if Button then
 	
@@ -91,12 +59,12 @@ local function Style(buttonName, i)
 		Duration:ClearAllPoints()
 		Duration:SetParent(Button)
 		Duration:SetPoint("TOP", Button, "BOTTOM", 1, -1)
-		Duration:SetFont(cfg.Font, 10, "THINOUTLINE")
+		Duration:SetFont(cfg.Font, 8, "THINOUTLINE")
 		
 		Count:ClearAllPoints()
 		Count:SetParent(Button)
 		Count:SetPoint("BOTTOMRIGHT", Button, 1, 2)
-		Count:SetFont(cfg.Font, 10, "THINOUTLINE")
+		Count:SetFont(cfg.Font, 8, "THINOUTLINE")
 		
 		if not _G[buttonName..i.."Shadow"] then
 			local Shadow = CreateFrame("Frame", buttonName..i.."Shadow", Button)
@@ -128,6 +96,22 @@ local function MakeBuffFrame()
 		end
 	end	
 	local BuffSort = {}
+	local Num = 0
+	hasMainHandEnchant, _, _, hasOffHandEnchant, _, _, hasThrownEnchant = GetWeaponEnchantInfo()
+	if hasMainHandEnchant then
+		Num = Num + 1
+	end
+	if hasOffHandEnchant then
+		Num = Num + 1
+	end
+	if hasThrownEnchant then
+		Num = Num + 1
+	end
+	print(Num)
+	for i = 1, Num do
+		Style("TempEnchant", i)
+		table.insert(BuffSort, _G["TempEnchant"..i])
+	end
 	for i=1,2 do
 		for t=1,#Temp[i] do
 			table.insert(BuffSort,Temp[i][t])
@@ -135,15 +119,12 @@ local function MakeBuffFrame()
 	end
 	
 	-- 生成BUFF框体
-	for i=1, BUFF_ACTUAL_DISPLAY do
+	for i=1, BUFF_ACTUAL_DISPLAY + Num do
 		Style("BuffButton", i)
 		local Buff = BuffSort[i]
 		Buff:ClearAllPoints()
-		local TempEnchant = _G["TempEnchant"..BuffFrame.numEnchants]
 		if cfg.BuffDirection == 1 then
-			if BuffFrame.numEnchants ~= 0 and i == 1 then
-				Buff:SetPoint("RIGHT", TempEnchant, "LEFT", -cfg.Spacing, 0)
-			elseif i + BuffFrame.numEnchants == 1 then
+			if i == 1 then
 				Buff:SetPoint(unpack(cfg.BUFFpos))
 			elseif i == IconsPerRow + 1 then
 				Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -10)
