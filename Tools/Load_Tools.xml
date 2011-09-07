@@ -24,5 +24,6 @@
 	<Script file="tekKompare.lua"/>
 	<Script file="TradeTab.lua"/>
 	<Script file="tullaCC.lua"/>
+	<Script file="UIScaleFix.lua"/>
 
 </Ui>
