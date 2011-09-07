@@ -1,0 +1,28 @@
+﻿<!-- 
+-->
+
+
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Include file="BlizzBugsSuck\BlizzBugsSuck.xml"/>
+	
+	<Script file="Align.lua"/>
+	<Script file="AlreadyKnown.lua"/>
+	<Script file="AutoRepair.lua"/>
+	<Script file="ClearFont.lua"/>
+	<Script file="CombatAlert.lua"/>
+	<Script file="Doom_CooldownPulse.lua"/>
+	<Script file="DragEmAll.lua"/>
+	<Script file="Durability.lua"/>
+	<Script file="FrameHack.lua"/>
+	<Script file="Glow.lua"/>
+	<Script file="Mail.lua"/>
+	<Script file="Quest.lua"/>
+	<Script file="Roster.lua"/>
+	<Script file="tekKompare.lua"/>
+	<Script file="TradeTab.lua"/>
+	<Script file="tullaCC.lua"/>
+
+</Ui>
