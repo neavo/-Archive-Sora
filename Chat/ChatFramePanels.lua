@@ -19,7 +19,7 @@ for i = 1, NUM_CHAT_WINDOWS do
 	chatframe:SetBackdrop( { 
 		bgFile = cfg.bgFile,
 		edgeFile = cfg.edgeFile, edgeSize = 3, 
-		insets = { left = 4, right = 4, top = 4, bottom = 5 }
+		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
 	chatframe:SetBackdropColor(1,1,1,0.6)
 	chatframe:SetBackdropBorderColor(0,0,0,0.8)
