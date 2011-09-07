@@ -1,0 +1,13 @@
+﻿<!-- 
+-->
+
+
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Script file="BlizzBugsSuck.lua"/>
+	<Script file="GuildRosterSelectedFix.lua"/>
+	<Script file="InspectFix.lua"/>
+
+</Ui>
