@@ -13,7 +13,7 @@ local NBBVisible
 
 -- 顶部(区域信息)
 local TMFrame = CreateFrame("Frame",nil,Minimap)
-TMFrame:SetHeight(18)
+TMFrame:SetHeight(16)
 TMFrame:SetWidth(Minimap:GetWidth())
 TMFrame:SetPoint("BOTTOM",Minimap,"TOP",0,3)
 TMFrame:SetBackdrop( { 
@@ -45,7 +45,7 @@ MiniMapTracking:SetScale(0.7)
 
 -- 底部中央(坐标)
 local BMFrame = CreateFrame("Frame", "BMFrame", Minimap)
-BMFrame:SetHeight(18)
+BMFrame:SetHeight(16)
 BMFrame:SetWidth(Minimap:GetWidth())
 BMFrame:SetPoint("TOP", Minimap, "BOTTOM", 0, -3)
 BMFrame:SetBackdrop( { 
@@ -68,8 +68,8 @@ BMFrame.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 
 -- 底部左边
 local BLFrame = CreateFrame("Frame", nil,BMFrame)
-BLFrame:SetHeight(18)
-BLFrame:SetWidth(18)
+BLFrame:SetHeight(16)
+BLFrame:SetWidth(16)
 BLFrame:SetPoint("LEFT", BMFrame, "LEFT", 0, 0)
 BLFrame.Text = BLFrame:CreateFontString(nil, "OVERLAY")
 BLFrame.Text:SetPoint("CENTER", BLFrame,"CENTER", 0, 0)
@@ -89,8 +89,8 @@ end)
 
 -- 底部右边(NBB)
 local BRFrame = CreateFrame("Frame",nil,BMFrame)
-BRFrame:SetHeight(18)
-BRFrame:SetWidth(18)
+BRFrame:SetHeight(16)
+BRFrame:SetWidth(16)
 BRFrame:SetPoint("RIGHT", BMFrame, "RIGHT", 0, 0)
 BRFrame:SetScript("OnEnter",function(self)
 	BMFrame:SetAlpha(1)
