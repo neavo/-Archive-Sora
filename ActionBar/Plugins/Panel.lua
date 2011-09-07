@@ -21,11 +21,8 @@ if cfg.ShowExtraBar then
 	MainBar.Left:SetPoint("TOPLEFT",MainBar,"TOPLEFT", -11, 0)
 	MainBar.Left:SetPoint("BOTTOMRIGHT",MainBar,"BOTTOMLEFT", 2, 0)
 	MainBar.Left:SetBackdrop({
-		bgFile = cfg.bgFile,
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
-		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
-	MainBar.Left:SetBackdropColor(0, 0, 0, 0.6)
 	MainBar.Left:SetBackdropBorderColor(0, 0, 0, 1)
 
 	MainBar.Left:SetScript("OnMouseDown",function(self)
@@ -40,11 +37,8 @@ if cfg.ShowExtraBar then
 	MainBar.Right:SetPoint("TOPRIGHT",MainBar,"TOPRIGHT", 11, 0)
 	MainBar.Right:SetPoint("BOTTOMLEFT",MainBar,"BOTTOMRIGHT", -2, 0)
 	MainBar.Right:SetBackdrop({
-		bgFile = cfg.bgFile,
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
-		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
-	MainBar.Right:SetBackdropColor(0, 0, 0, 0.6)
 	MainBar.Right:SetBackdropBorderColor(0, 0, 0, 1)
 
 	MainBar.Right:SetScript("OnMouseDown",function(self)

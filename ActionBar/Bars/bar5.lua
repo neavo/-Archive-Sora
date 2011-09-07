@@ -12,7 +12,7 @@ for i=1, 11 do
 		Button:SetPoint("TOPRIGHT", bar, 0,0)
 	elseif i == 4 or i == 7 or i == 10 then
 		local Pre = _G["MultiBarRightButton"..i-3]
-		Button:SetPoint("TOP", Pre, "BOTTOM", 0, -1)
+		Button:SetPoint("TOP", Pre, "BOTTOM", 0, -2)
 	else
 		local Pre = _G["MultiBarRightButton"..i-1]      
 		Button:SetPoint("RIGHT", Pre, "LEFT", -3, 0)

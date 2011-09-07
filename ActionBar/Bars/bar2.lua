@@ -1,7 +1,7 @@
 ﻿local bar = CreateFrame("Frame","rABS_MultiBarBottomLeft",UIParent, "SecureHandlerStateTemplate")
 bar:SetWidth(28*12+3*11)
 bar:SetHeight(28)
-bar:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 3)
+bar:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 5)
 MultiBarBottomLeft:SetParent(bar)
 
 for i=1, 12 do

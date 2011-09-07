@@ -12,6 +12,7 @@ cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.Texture = Media.."icon"
 cfg.GlowTex = Media.."glowTex"
+cfg.Solid = Media.."solid"
 
 cfg.HideHotKey = false		-- 隐藏快捷键显示
 cfg.HideMacroName = true	-- 隐藏宏名称显示
