@@ -737,7 +737,7 @@ lib.addEclipseBar = function(self)
 	if playerClass ~= "DRUID" then return end
 	
 	local eclipseBar = CreateFrame('Frame', nil, self)
-	eclipseBar:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
+	eclipseBar:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 4)
 	eclipseBar:SetHeight(6)
 	eclipseBar:SetWidth(self.Health:GetWidth())
 	eclipseBar:SetFrameLevel(4)
@@ -801,7 +801,7 @@ lib.genShards = function(self)
 			local Shadow = MakeShadow(shard)
 
 			if i == 1 then
-				shard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 3)
+				shard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 			else
 				shard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 5, 0)
 			end
@@ -850,7 +850,7 @@ lib.genHolyPower = function(self)
 			local Shadow = MakeShadow(holyShard)
 
 			if i == 1 then
-				holyShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 3)
+				holyShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 			else
 				holyShard:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 5, 0)
 			end
@@ -986,7 +986,7 @@ lib.RogueComboPoints = function(self)
 			local Shadow = MakeShadow(point)
 
 			if i == 1 then
-				point:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 5)
+				point:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 4)
 			else
 				point:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", 6, 0)
 			end
@@ -1035,7 +1035,7 @@ lib.gen_TotemBar = function(self)
 			local Shadow = MakeShadow(t)
 			
 			if i == 1 then
-				t:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 6)
+				t:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 4)
 			else
 				t:SetPoint('TOPLEFT', TotemBar[i-1], "TOPRIGHT", 5, 0)
 			end
