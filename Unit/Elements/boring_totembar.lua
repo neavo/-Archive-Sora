@@ -207,9 +207,17 @@ local PLAYER_TOTEM_UPDATE = function(self, event, slot)
 		
 		if totem.Text then
 			if tb.AbbreviateNames then
-				totem.Text:SetText(abbrev[name])
+				if strlen(abbrev[name]) > 12 then
+					totem.Text:SetText(strsub (abbrev[name], 1, -7))
+				else
+					totem.Text:SetText(abbrev[name])
+				end
 			else
-				totem.Text:SetText(name)
+				if strlen(name) > 12 then
+					totem.Text:SetText(strsub (name, 1, -7))
+				else
+					totem.Text:SetText(name)
+				end
 			end
 		end
 		

@@ -104,6 +104,10 @@ lib.gen_hpbar = function(self)
 
 	local Shadow = MakeShadow(Statusbar)
 	local Border = MakeBorder(Statusbar)
+	if self.mystyle == "raid" then
+		Shadow:SetPoint("TOPLEFT", -5, 5)
+		Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	end
 
 	-- BG
 	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
@@ -161,6 +165,11 @@ lib.gen_ppbar = function(self)
 
 	local Shadow = MakeShadow(Statusbar)
 	local Border = MakeBorder(Statusbar)
+	
+	if self.mystyle == "raid" then
+		Shadow:SetPoint("TOPLEFT", -5, 5)
+		Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	end
 	
 	-- BG
 	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
@@ -419,7 +428,7 @@ lib.gen_castbar = function(self)
 		Statusbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -15)
 	elseif self.mystyle == "focus" then
 		Statusbar:SetWidth(self:GetWidth()-70)
-		Statusbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 15)
+		Statusbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 13)
 	end
 	
 	Statusbar:SetStatusBarTexture(cfg.statusbar_texture)
@@ -998,6 +1007,7 @@ lib.RogueComboPoints = function(self)
 			point:SetStatusBarColor(1.0, 0.9, 0)
 							
 			local Shadow = MakeShadow(point)
+			local Border = MakeBorder(point)
 
 			if i == 1 then
 				point:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 4)
@@ -1025,14 +1035,14 @@ lib.gen_TotemBar = function(self)
 		TotemBar.UpdateColors = true
 		
 		oUF.colors.totems = {
-			{ 233/255, 46/255, 16/255 }, -- fire
-			{ 173/255, 217/255, 25/255 }, -- earth
-			{ 35/255, 127/255, 255/255 }, -- water
-			{ 178/255, 53/255, 240/255 }  -- air
+			{ 233/255, 46/255,   16/255 },	-- fire
+			{ 173/255, 217/255,  25/255 },	-- earth
+			{  35/255, 127/255, 255/255 },	-- water
+			{ 178/255,  53/255, 240/255 },	-- air
 		}
 
 		for i = 1, 4 do
-		local t = CreateFrame("Frame", nil, TotemBar)
+			local t = CreateFrame("Frame", nil, TotemBar)
 			t:SetHeight(6)
 			t:SetWidth((self.Health:GetWidth()-15)/4)
 
@@ -1047,20 +1057,29 @@ lib.gen_TotemBar = function(self)
 			BG:SetVertexColor(0.2, 0.2, 0.2, 0.8)
 
 			local Shadow = MakeShadow(t)
+			local Border = MakeBorder(t)
 			
 			if i == 1 then
 				t:SetPoint('BOTTOMLEFT', self.Health, 'TOPLEFT', 0, 4)
 			else
 				t:SetPoint('TOPLEFT', TotemBar[i-1], "TOPRIGHT", 5, 0)
 			end
+
 			
 			local text = lib.gen_fontstring(t, cfg.smallfont, 8, "THINOUTLINE")
-			text:SetPoint("CENTER",t,"CENTER",1,12)
-			text:SetFontObject"GameFontNormal"
+			text.colors = {
+				{ 173/255, 217/255,  25/255 },	-- earth
+				{ 233/255, 46/255,   16/255 },	-- fire
+				{  35/255, 127/255, 255/255 },	-- water
+				{ 178/255,  53/255, 240/255 },	-- air
+			}
+			text:SetPoint("CENTER", t, "CENTER", 0, 10)
+			text:SetTextColor(unpack(text.colors[i]))
 			t.Text = text
 
 			TotemBar[i] = t
 		end
+		
 	self.TotemBar = TotemBar
 	end
 end

@@ -107,6 +107,7 @@ local function MakeBuffFrame()
 	if hasThrownEnchant then
 		Num = Num + 1
 	end
+	
 	for i = 1, Num do
 		Style("TempEnchant", i)
 		table.insert(BuffSort, _G["TempEnchant"..i])
@@ -133,9 +134,7 @@ local function MakeBuffFrame()
 				Buff:SetPoint("RIGHT", BuffSort[i-1], "LEFT", -cfg.Spacing, 0)
 			end
 		elseif cfg.BuffDirection == 2 then
-			if BuffFrame.numEnchants ~= 0 and i == 1 then
-				Buff:SetPoint("LEFT", TempEnchant, "RIGHT", cfg.Spacing, 0)
-			elseif i + BuffFrame.numEnchants == 1 then
+			if i == 1 then
 				Buff:SetPoint(unpack(cfg.BUFFpos))
 			elseif i == IconsPerRow + 1 then
 				Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -10)

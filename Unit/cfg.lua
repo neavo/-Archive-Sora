@@ -21,7 +21,7 @@ cfg.showBossFrame = true		-- 显示"Boss"框体
 -- 团队&小队
 cfg.ShowRaid = true				-- 显示团队框体
 	cfg.RaidUnitWidth = 67		-- 团队框体单位宽度
-	cfg.RaidPartyH = false		-- 团队框体中各小队横向排列
+	cfg.RaidPartyH = true		-- 团队框体中各小队横向排列
 	cfg.showAuraWatch = true	-- 团队框体中显示边角Hot/技能监视
 	cfg.showRaidDebuffs = true 	-- 显示RaidDebuff
 	
