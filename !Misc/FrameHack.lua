@@ -52,6 +52,7 @@ event:RegisterEvent"UI_ERROR_MESSAGE"
 --  UI缩放修正  --
 SlashCmdList["AutoSet"] = function()
 	if not InCombatLockdown() then
+		SetCVar("useUiScale", 1)
 		local scale = 768/string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)")
 		if scale < .64 then
 			UIParent:SetScale(scale)
