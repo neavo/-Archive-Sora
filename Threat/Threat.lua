@@ -112,7 +112,7 @@ local function UpdateThreatFlag()
 			if not FlagT then
 				
 				FlagT = CreateFrame("Frame","ThreatFlagTank",ThreatFrame)
-				FlagT:SetWidth(2)
+				FlagT:SetWidth(1)
 				FlagT:SetHeight(ThreatFrame:GetHeight())
 				FlagT:SetBackdrop({ bgFile = cfg.Solid })
 				FlagT:SetBackdropColor(0,0,0)
@@ -150,7 +150,7 @@ local function UpdateThreatFlag()
 		Flag = ThreatFlag[key]
 		if not Flag then
 			Flag = CreateFrame("Frame","ThreatFlag"..key,ThreatFrame)
-			Flag:SetWidth(2)
+			Flag:SetWidth(1)
 			Flag:SetHeight(ThreatFrame:GetHeight())
 			Flag:SetBackdrop({ bgFile = cfg.Solid })
 			Flag:SetBackdropColor(0,0,0)
