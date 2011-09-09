@@ -21,7 +21,7 @@ end
 
 local function setup(frame, level)
     frame:SetStatusBarTexture(cfg.Statusbar)
-    frame:SetFrameStrata("LOW")
+    frame:SetFrameStrata("HIGH")
     frame:SetFrameLevel(level)
     frame:SetPoint("LEFT", Minimap, "LEFT", 1, 0)
     frame:SetPoint("RIGHT", Minimap, "RIGHT", -1, 0)
@@ -37,7 +37,6 @@ bar:SetPoint("TOP", "BMFrame", "BOTTOM", 0, -3)
 xptext = bar:CreateFontString("XP Text")
 xptext:SetPoint("CENTER", bar,"CENTER", 0,-18)
 xptext:SetFont(cfg.Font, 9, "THINOUTLINE")
-xptext:SetParent(UIParent)
 xptext:SetAlpha(0)
 
 bar:RegisterEvent("PLAYER_XP_UPDATE")

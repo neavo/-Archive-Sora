@@ -1,0 +1,11 @@
+﻿<!-- -->
+
+
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Include file = "FriendsMenuXP\Load_FriendsMenuXP.xml"/>
+	<Include file = "Reminder\Load_Reminder.xml"/>
+	
+</Ui>
