@@ -33,11 +33,10 @@ Minimap.Shadow = CreateFrame("Frame", nil, Minimap)
 Minimap.Shadow:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 6, -6)
 Minimap.Shadow:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", 6, -6)	
 Minimap.Shadow:SetFrameLevel(1)
-Minimap.Shadow:SetFrameLevel(1)
 Minimap.Shadow:SetBackdrop({ 
 	edgeFile = cfg.GlowTex, edgeSize = 6, 
 })
-Minimap.Shadow:SetBackdropBorderColor(0,0,0,1)		
+Minimap.Shadow:SetBackdropBorderColor(0,0,0,1)
 
 ---------------------
 -- hide some stuff --
