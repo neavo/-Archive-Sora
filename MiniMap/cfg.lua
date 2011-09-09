@@ -9,7 +9,6 @@
 local cfg = CreateFrame("Frame")
 local Media = "Interface\\Addons\\Sora's\\MiniMap\\media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
-cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"
 cfg.Statusbar = Media.."statusbar"

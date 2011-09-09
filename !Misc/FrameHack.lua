@@ -29,7 +29,7 @@ local function WatchFrameMove()
 	local Temp = _G['WatchFrame']
     Temp:ClearAllPoints()	
     Temp.ClearAllPoints = function() end
-    Temp:SetPoint("RIGHT","UIParent","RIGHT",-5,30)
+    Temp:SetPoint("RIGHT", UIParent, "RIGHT", -5, -10)
     Temp.SetPoint = function() end
 	Temp:SetHeight(400)  
 end

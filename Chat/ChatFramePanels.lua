@@ -21,7 +21,7 @@ for i = 1, NUM_CHAT_WINDOWS do
 		edgeFile = cfg.edgeFile, edgeSize = 3, 
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
-	chatframe:SetBackdropColor(1,1,1,0.6)
+	chatframe:SetBackdropColor(0,0,0,0.6)
 	chatframe:SetBackdropBorderColor(0,0,0,1)
 	local editbox = CreateFrame("Frame",nil,chatframe)
 	editbox:SetHeight(23)
@@ -33,7 +33,7 @@ for i = 1, NUM_CHAT_WINDOWS do
 		edgeFile = cfg.edgeFile, edgeSize = 3, 
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
-	editbox:SetBackdropColor(1,1,1,0.6)
+	editbox:SetBackdropColor(0,0,0,0.6)
 	editbox:SetBackdropBorderColor(0,0,0,1)
 	
 end

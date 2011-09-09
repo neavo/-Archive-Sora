@@ -21,7 +21,6 @@ end
 
 local function setup(frame, level)
     frame:SetStatusBarTexture(cfg.Statusbar)
-    frame:SetFrameStrata("HIGH")
     frame:SetFrameLevel(level)
     frame:SetPoint("LEFT", Minimap, "LEFT", 1, 0)
     frame:SetPoint("RIGHT", Minimap, "RIGHT", -1, 0)

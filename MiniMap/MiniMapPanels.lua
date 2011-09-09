@@ -17,11 +17,8 @@ TMFrame:SetHeight(16)
 TMFrame:SetWidth(Minimap:GetWidth())
 TMFrame:SetPoint("BOTTOM",Minimap,"TOP",0,3)
 TMFrame:SetBackdrop( { 
-	bgFile = cfg.bgFile,
-	insets = { left = 2, right = 2, top = 2, bottom = 2 },
 	edgeFile = cfg.Solid, edgeSize = 1, 
 })
-TMFrame:SetBackdropColor(0.2, 0.2, 0.2, 0.6)
 TMFrame:SetBackdropBorderColor(0,0,0,1)
 TMFrame:SetAlpha(0.2)
 TMFrame:SetScript("OnEnter",function(self)
@@ -49,11 +46,8 @@ BMFrame:SetHeight(16)
 BMFrame:SetWidth(Minimap:GetWidth())
 BMFrame:SetPoint("TOP", Minimap, "BOTTOM", 0, -3)
 BMFrame:SetBackdrop( { 
-	bgFile = cfg.bgFile,
-	insets = { left = 2, right = 2, top = 2, bottom = 2 },
 	edgeFile = cfg.Solid, edgeSize = 1, 
 })
-BMFrame:SetBackdropColor(0.2, 0.2, 0.2, 0.6)
 BMFrame:SetBackdropBorderColor(0,0,0,1)
 BMFrame:SetAlpha(0.2)
 BMFrame:SetScript("OnEnter",function(self)
