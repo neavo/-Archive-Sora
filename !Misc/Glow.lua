@@ -1,8 +1,11 @@
-﻿--------------------------
--- SyDurGlow.lua
--- Author: Sayoc
--- Date: 10.01.23
---------------------------
+﻿----------------
+--  命名空间  --
+----------------
+
+local _, SR = ...
+local cfg = SR.MiscConfig
+
+
 local  q, vl
 local G = getfenv(0)
 local items = {
@@ -28,59 +31,42 @@ local items = {
 
 ----------------------------------- Quality Glow --------------------------------------
 
-local function colorTable(val)
-	if val == 100 then
-		return 0.9, 0, 0
-	elseif val == 99 then
-		return 1, 1, 0
-	else
-		return GetItemQualityColor(val)
-	end
+local function createBorder(Frame)
+	local Border = CreateFrame("Frame", nil, Frame)
+	Border:SetPoint("TOPLEFT", Frame, "TOPLEFT", 0, 0)
+	Border:SetPoint("BOTTOMRIGHT", Frame, "BOTTOMRIGHT", 0, 0)
+	Border:SetBackdrop({
+		edgeFile = cfg.Solid, edgeSize = 1,
+	})
+	Frame.Border = Border
 end
 
-local function createBorder(self)
-	local bc = self:CreateTexture(nil, "OVERLAY")
-	bc:SetTexture("Interface\\Buttons\\UI-ActionButton-Border")
-	bc:SetBlendMode("ADD")
-	bc:SetAlpha(0.6)
-
-	bc:SetWidth(73)
-	bc:SetHeight(73)
-
-	bc:SetPoint("CENTER", self)
-	self.bc = bc
-end
-
-local function QualityGlow(frame, quality)
-	if quality and quality > 1 then
-		if not frame.bc then
-			createBorder(frame)
+local function QualityGlow(Frame, Quality)
+	if Quality and Quality > 1 then
+		local r, g, b = GetItemQualityColor(Quality)
+		if not Frame.Border then
+			Frame.Border = CreateFrame("Frame", nil, Frame)
+			Frame.Border:SetPoint("TOPLEFT", Frame, "TOPLEFT", 0, 0)
+			Frame.Border:SetPoint("BOTTOMRIGHT", Frame, "BOTTOMRIGHT", 0, 0)
+			Frame.Border:SetBackdrop({
+				edgeFile = cfg.Solid, edgeSize = 1,
+			})
+			Frame.Border:SetBackdropBorderColor(r, g, b)
+		else
+			Frame.Border:SetBackdropBorderColor(r, g, b)
 		end
-		local border = frame.bc
-		if border then
-			local r, g, b = colorTable(quality)
-			border:SetVertexColor(r, g, b)
-			border:Show()
-		end
-	elseif frame.bc then
-		frame.bc:Hide()
+	elseif Frame.Border then
+		Frame.Border:Hide()
 	end
 end
 
 local function UpdataCharacterGlow()
-	if not CharacterFrame:IsVisible()then return end
+	if not CharacterFrame:IsVisible() then return end
 	for i, vl in pairs(items) do
 		local key, index = string.split(" ", vl)
-		q = GetInventoryItemQuality("player", i)
-		local self = G["Character"..key.."Slot"]
-
-		if GetInventoryItemBroken("player", i) then
-			q = 100
-		elseif index and GetInventoryAlertStatus(index) == 3 then
-			q = 99
-		end
-
-		QualityGlow(self, q)
+		Quality = GetInventoryItemQuality("player", i)
+		local Frame = G["Character"..key.."Slot"]
+		QualityGlow(Frame, Quality)
 	end
 end
 
@@ -88,14 +74,14 @@ local function UpdataInspectGlow()
 	if not InspectFrame:IsVisible() then return end	
 	for i, value in pairs(items) do
 		local key, index = string.split(" ", value)
-		local link = GetInventoryItemLink("target", i)
-		local self = G["Inspect"..key.."Slot"]
+		local Item = GetInventoryItemLink("target", i)
+		local Frame = G["Inspect"..key.."Slot"]
 
-		if link then
-			q = select(3, GetItemInfo(link))
-			QualityGlow(self, q)
-		elseif(self.bc) then
-			self.bc:Hide()
+		if Item then
+			Quality = select(3, GetItemInfo(Item))
+			QualityGlow(Frame, Quality)
+		elseif Frame.Border then
+			Frame.Border:Hide()
 		end
 	end
 end
@@ -107,14 +93,11 @@ hookCF:SetScript("OnShow", UpdataCharacterGlow)
 InspectFrame_LoadUI()
 hooksecurefunc("InspectUnit", UpdataInspectGlow)
 
------------------------------------ Event --------------------------------------
-
-local f = CreateFrame("Frame")
-f:Hide()
-f:RegisterEvent("UNIT_INVENTORY_CHANGED")
-f:RegisterEvent("PLAYER_TARGET_CHANGED")
-
-f:SetScript("OnEvent", function(self, event, ...)
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("UNIT_INVENTORY_CHANGED")
+Event:RegisterEvent("PLAYER_TARGET_CHANGED")
+Event:SetScript("OnEvent", function(self, event, ...)
 	if event == "UNIT_INVENTORY_CHANGED" then
 		UpdataCharacterGlow()
 		UpdataInspectGlow()
