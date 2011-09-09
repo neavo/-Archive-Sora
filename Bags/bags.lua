@@ -62,9 +62,6 @@ end
 
 local MyButton = Bags:GetItemButtonClass()
 MyButton:Scaffold("Default")
-function MyButton:OnUpdate(item)
-	self.Border:SetVertexColor(.7, .7, .7, .9);
-end
 
 --	背包图标模板
 local BagButton = Bags:GetClass("BagButton", true, "BagButton")

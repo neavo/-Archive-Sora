@@ -11,6 +11,7 @@ local Media = "Interface\\Addons\\Sora's\\Bags\\media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.edgeFile = Media.."glowTex"
+cfg.Solid = Media.."Solid"
 cfg.Scale = 1 												-- 背包缩放
 	
 ----------------

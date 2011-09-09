@@ -46,8 +46,7 @@ local function QualityGlow(Frame, Quality)
 		local r, g, b = GetItemQualityColor(Quality)
 		if not Frame.Border then
 			Frame.Border = CreateFrame("Frame", nil, Frame)
-			Frame.Border:SetPoint("TOPLEFT", Frame, "TOPLEFT", 0, 0)
-			Frame.Border:SetPoint("BOTTOMRIGHT", Frame, "BOTTOMRIGHT", 0, 0)
+			Frame.Border:SetAllPoints()
 			Frame.Border:SetBackdrop({
 				edgeFile = cfg.Solid, edgeSize = 1,
 			})

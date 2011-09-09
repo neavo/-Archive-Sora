@@ -25,6 +25,13 @@ DEPENDENCIES
 	mixins/api-common.lua
 ]]
 
+----------------
+--  ÃüÃû¿Õ¼ä  --
+----------------
+
+local _, SR = ...
+local cfg = SR.BagConfig
+
 local addon, ns = ...
 local cargBags = ns.cargBags
 
@@ -38,7 +45,6 @@ local function ItemButton_Scaffold(self)
 	self.Count = _G[name.."Count"]
 	self.Cooldown = _G[name.."Cooldown"]
 	self.Quest = _G[name.."IconQuestTexture"]
-	self.Border = _G[name.."NormalTexture"]
 end
 
 --[[!
@@ -61,7 +67,7 @@ local function ItemButton_Update(self, item)
 	self:UpdateLock(item)
 	self:UpdateQuest(item)
 
-	if(self.OnUpdate) then self:OnUpdate(item) end
+	if self.OnUpdate then self:OnUpdate(item) end
 end
 
 --[[!
@@ -77,7 +83,7 @@ local function ItemButton_UpdateCooldown(self, item)
 		self.Cooldown:Hide()
 	end
 
-	if(self.OnUpdateCooldown) then self:OnUpdateCooldown(item) end
+	if self.OnUpdateCooldown then self:OnUpdateCooldown(item) end
 end
 
 --[[!
@@ -88,7 +94,7 @@ end
 local function ItemButton_UpdateLock(self, item)
 	self.Icon:SetDesaturated(item.locked)
 
-	if(self.OnUpdateLock) then self:OnUpdateLock(item) end
+	if self.OnUpdateLock  then self:OnUpdateLock(item) end
 end
 
 --[[!
@@ -98,39 +104,31 @@ end
 ]]
 local function ItemButton_UpdateQuest(self, item)
 	local r,g,b,a = 1,1,1,1
-	local tL,tR,tT,tB = 0,1, 0,1
-	local blend = "BLEND"
 	local texture
 
-	if(item.questID and not item.questActive) then
+	if item.questID and not item.questActive then
 		texture = TEXTURE_ITEM_QUEST_BANG
-	elseif(item.questID or item.isQuestItem) then
+	elseif item.questID or item.isQuestItem then
 		texture = TEXTURE_ITEM_QUEST_BORDER
-	elseif(item.rarity and item.rarity > 1 and self.glowTex) then
-		a, r,g,b = self.glowAlpha, GetItemQualityColor(item.rarity)
+	elseif item.rarity and item.rarity > 1 and self.glowTex then
+		r,g,b = GetItemQualityColor(item.rarity)
 		texture = self.glowTex
-		blend = self.glowBlend
-		tL,tR,tT,tB = unpack(self.glowCoords)
 	end
 
 	if texture then
-		self.Quest:SetTexture(texture)
-		self.Quest:SetTexCoord(tL,tR,tT,tB)
-		self.Quest:SetBlendMode(blend)
-		self.Quest:SetVertexColor(r,g,b,a)
-		self.Quest:Show()
-	else
-		self.Quest:Hide()
+		self.Border = CreateFrame("Frame", nil, self)
+		self.Border:SetAllPoints()
+		self.Border:SetBackdrop({
+			edgeFile = cfg.Solid, edgeSize = 1,
+		})
+		self.Border:SetBackdropBorderColor(r,g,b)
 	end
 
-	if(self.OnUpdateQuest) then self:OnUpdateQuest(item) end
+	if self.OnUpdateQuest then self:OnUpdateQuest(item) end
 end
 
 cargBags:RegisterScaffold("Default", function(self)
 	self.glowTex = "Interface\\Buttons\\UI-ActionButton-Border" --! @property glowTex <string> The textures used for the glow
-	self.glowAlpha = 1 --! @property glowAlpha <number> The alpha of the glow texture
-	self.glowBlend = "ADD" --! @property glowBlend <string> The blendMode of the glow texture
-	self.glowCoords = { 14/64, 50/64, 14/64, 50/64 } --! @property glowCoords <table> Indexed table of texCoords for the glow texture
 	self.bgTex = nil --! @property bgTex <string> Texture used as a background if no item is in the slot
 
 	self.CreateFrame = ItemButton_CreateFrame
