@@ -124,7 +124,6 @@ end
 local MyContainer = Bags:GetContainerClass()
 function MyContainer:OnContentsChanged()
 	self:SortButtons("bagSlot")
-	-- ("grid", columns, spacing, xOffset, yOffset) or ("circle", radius (optional), xOffset, yOffset)
 	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 6, 10, -10)
 	self:SetSize(width + 20, height + 10)
 	if self.UpdateDimensions then
@@ -139,8 +138,8 @@ function MyContainer:OnCreate(name, settings)
 
 	self:SetBackdrop({ 
 		bgFile = cfg.bgFile,
-		edgeFile = cfg.edgeFile, edgeSize = 4, 
-		insets = { left = 5, right = 5, top = 5, bottom = 5 }
+		edgeFile = cfg.edgeFile, edgeSize = 3, 
+		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
 	self:SetBackdropColor(0,0,0,0.8)
 	self:SetBackdropBorderColor(0,0,0,1)
