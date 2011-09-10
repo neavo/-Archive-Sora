@@ -112,6 +112,18 @@ tagPool["item"] = function(self, item)
 		return bags .. (bank and " ("..bank..")") .. createIcon(GetItemIcon(item), self.iconValues)
 	end
 end
+tagPool["shards"] = function(self) return self.tags["item"](self, 6265) end
+
+tagPool["ammo"] = function(self)
+	local slot = GetInventorySlotInfo("AmmoSlot")
+	local count = GetInventoryItemCount("player", slot)
+	local icon = GetInventoryItemTexture("player", slot)
+
+	if(icon and count > 0) then
+		return count .. createIcon(icon, self.iconValues)
+	end
+end
+tagEvents["ammo"] = { "UNIT_INVENTORY_CHANGED" }
 
 tagPool["currency"] = function(self, id)
 	local name, count, type, icon = GetBackpackCurrencyInfo(id)
@@ -146,9 +158,9 @@ tagPool["money"] = function(self)
 
 	local g,s,c = floor(money/1e4), floor(money/100) % 100, money % 100
 
-	if(g > 0) then str = (str and str.." " or "") .. g .." ".. createIcon("Interface\\MoneyFrame\\UI-GoldIcon", self.iconValues) end
-	if(s > 0) then str = (str and str.." " or "") .. s .." ".. createIcon("Interface\\MoneyFrame\\UI-SilverIcon", self.iconValues) end
-	if(c > 0) then str = (str and str.." " or "") .. c .." ".. createIcon("Interface\\MoneyFrame\\UI-CopperIcon", self.iconValues) end
+	if(g > 0) then str = (str and str.." " or "") .. g .. createIcon("Interface\\MoneyFrame\\UI-GoldIcon", self.iconValues) end
+	if(s > 0) then str = (str and str.." " or "") .. s .. createIcon("Interface\\MoneyFrame\\UI-SilverIcon", self.iconValues) end
+	if(c > 0) then str = (str and str.." " or "") .. c .. createIcon("Interface\\MoneyFrame\\UI-CopperIcon", self.iconValues) end
 	return str
 end
 tagEvents["money"] = { "PLAYER_MONEY" }

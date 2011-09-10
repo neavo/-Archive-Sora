@@ -63,6 +63,48 @@ end
 local MyButton = Bags:GetItemButtonClass()
 MyButton:Scaffold("Default")
 
+function MyButton:OnCreate()
+	self:SetNormalTexture(nil)
+	self:SetSize(32, 32)
+	
+	self.Icon:SetPoint("TOPLEFT", self, 0, 0)
+	self.Icon:SetPoint("BOTTOMRIGHT", self, 0, 0)
+	
+	self.Count:SetPoint("BOTTOMRIGHT", -1, 3)
+	self.Count:SetFont( cfg.Font, 10, "THINOUTLINE")
+	
+	self.Border = CreateFrame("Frame", nil, self)
+	self.Border:SetPoint("TOPLEFT", self.Icon, 0, 0)
+	self.Border:SetPoint("BOTTOMRIGHT", self.Icon, 0, 0)
+	self.Border:SetBackdrop({
+		edgeFile = cfg.Solid, edgeSize = 1,
+	})
+	self.Border:SetBackdropBorderColor(0, 0, 0, 0)	
+	
+	self.BG = CreateFrame("Frame", nil, self)
+	self.BG:SetPoint("TOPLEFT", self.Icon, 0, 0)
+	self.BG:SetPoint("BOTTOMRIGHT", self.Icon, 0, 0)
+	self.BG:SetBackdrop({
+		bgFile = cfg.Solid,
+		insets = { left = 1, right = 1, top = 1, bottom = 1 },
+	})
+	self.BG:SetBackdropColor(0.2, 0.2, 0.2, 0.7)
+	self.BG:SetFrameLevel(0)
+
+	_G[self:GetName().."IconQuestTexture"]:SetSize(0.01, 0.01)
+end
+
+function MyButton:OnUpdate(item)
+	if item.questID or item.isQuestItem then
+		self.Border:SetBackdropBorderColor(1, 1, 0, 1)
+	elseif item.rarity and item.rarity > 1 then
+		local r, g, b = GetItemQualityColor(item.rarity)
+		self.Border:SetBackdropBorderColor(r, g, b, 1)
+	else
+		self.Border:SetBackdropBorderColor(0, 0, 0, 1)
+	end
+end
+
 --	背包图标模板
 local BagButton = Bags:GetClass("BagButton", true, "BagButton")
 function BagButton:OnCreate()
@@ -71,7 +113,7 @@ end
 
 -- 更新背包栏
 local UpdateDimensions = function(self)
-	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 5, 10, -10)
+	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 6, 10, -10)
 	local margin = 40
 	if self.BagBar and self.BagBar:IsShown() then
 		margin = margin + 45
@@ -83,7 +125,7 @@ local MyContainer = Bags:GetContainerClass()
 function MyContainer:OnContentsChanged()
 	self:SortButtons("bagSlot")
 	-- ("grid", columns, spacing, xOffset, yOffset) or ("circle", radius (optional), xOffset, yOffset)
-	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 5, 10, -10)
+	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 6, 10, -10)
 	self:SetSize(width + 20, height + 10)
 	if self.UpdateDimensions then
 		self:UpdateDimensions()

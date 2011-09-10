@@ -29,6 +29,7 @@
 		They provide different approaches of sorting items into the right container
 		You need to choose one
 	-->
+	<!--<Script file='base-add\bags.sieve.lua' />-->
 	<Script file='base-add\filters.sieve.lua' />
 
 	<!--
@@ -46,6 +47,14 @@
 	-->
 	<Script file='mixins-add\layouts.lua' />
 	<Script file='mixins-add\sorts.lua' />
+
+	<!--
+		Item keys, providing additional data in the ItemTable
+		All optional
+	-->
+	<Script file='mixins-add\itemkeys\basic.lua' />
+	<Script file='mixins-add\itemkeys\equipSets.lua' />
+	<Script file='mixins-add\itemkeys\tooltip.lua' />
 
 	<!--
 		Plugins for your containers
