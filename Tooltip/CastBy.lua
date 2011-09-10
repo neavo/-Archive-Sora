@@ -1,7 +1,6 @@
 ﻿local function addAuraSource(self, func, unit, index, filter)
    local caster = select(8, func(unit, index, filter))
    if caster then
-      self:AddLine(" ")
       local colors = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
       local castername = UnitName(caster)
       local partypet, raidpet, color
