@@ -38,13 +38,13 @@ local cargBags = ns.cargBags
 local function noop() end
 
 local function ItemButton_Scaffold(self)
-	self:SetSize(37, 37)
+	self:SetSize(32, 32)
 
 	local name = self:GetName()
 	self.Icon = _G[name.."IconTexture"]
 	self.Count = _G[name.."Count"]
 	self.Cooldown = _G[name.."Cooldown"]
-	self.Quest = _G[name.."IconQuestTexture"]
+	
 end
 
 --[[!
@@ -53,7 +53,9 @@ end
 	@callback OnUpdate(item)
 ]]
 local function ItemButton_Update(self, item)
-	self.Icon:SetTexture(item.texture or self.bgTex)
+	self.Icon:SetTexture(item.texture or 0.1,0.1,0.1,0.6)
+	_G[self:GetName().."NormalTexture"]:Hide()
+	_G[self:GetName().."IconQuestTexture"]:Hide()
 
 	if item.count and item.count > 1 then
 		self.Count:SetText(item.count >= 1e3 and "*" or item.count)
@@ -103,33 +105,27 @@ end
 	@callback OnUpdateQuest(item)
 ]]
 local function ItemButton_UpdateQuest(self, item)
-	local r,g,b,a = 1,1,1,1
-	local texture
+	local r,g,b = 0,0,0
 
 	if item.questID and not item.questActive then
 		texture = TEXTURE_ITEM_QUEST_BANG
 	elseif item.questID or item.isQuestItem then
 		texture = TEXTURE_ITEM_QUEST_BORDER
-	elseif item.rarity and item.rarity > 1 and self.glowTex then
+	elseif item.rarity and item.rarity > 1 then
 		r,g,b = GetItemQualityColor(item.rarity)
-		texture = self.glowTex
 	end
-
-	if texture then
-		self.Border = CreateFrame("Frame", nil, self)
-		self.Border:SetAllPoints()
-		self.Border:SetBackdrop({
-			edgeFile = cfg.Solid, edgeSize = 1,
-		})
-		self.Border:SetBackdropBorderColor(r,g,b)
-	end
-
+	
+	self.Border = CreateFrame("Frame", nil, self)
+	self.Border:SetAllPoints(self.Icon)
+	self.Border:SetBackdrop({
+		edgeFile = cfg.Solid, edgeSize = 1,
+	})
+	self.Border:SetBackdropBorderColor(r,g,b)
+	
 	if self.OnUpdateQuest then self:OnUpdateQuest(item) end
 end
 
 cargBags:RegisterScaffold("Default", function(self)
-	self.glowTex = "Interface\\Buttons\\UI-ActionButton-Border" --! @property glowTex <string> The textures used for the glow
-	self.bgTex = nil --! @property bgTex <string> Texture used as a background if no item is in the slot
 
 	self.CreateFrame = ItemButton_CreateFrame
 	self.Scaffold = ItemButton_Scaffold
@@ -141,4 +137,5 @@ cargBags:RegisterScaffold("Default", function(self)
 
 	self.OnEnter = ItemButton_OnEnter
 	self.OnLeave = ItemButton_OnLeave
+	
 end)
