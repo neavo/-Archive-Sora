@@ -5,102 +5,93 @@
 local _, SR = ...
 local cfg = SR.MiscConfig
 
+local function UpdateGlow(button, id)
+	local quality, texture
+	local quest = _G[button:GetName().."IconQuestTexture"]
+	if id then
+		quality, _, _, _, _, _, _, texture = select(3, GetItemInfo(id))
+	end
 
-local  q, vl
-local G = getfenv(0)
-local items = {
-	"Head 1",
-	"Neck",
-	"Shoulder 2",
-	"Shirt",
-	"Chest 3",
-	"Waist 4",
-	"Legs 5",
-	"Feet 6",
-	"Wrist 7",
-	"Hands 8",
-	"Finger0",
-	"Finger1",
-	"Trinket0",
-	"Trinket1",
-	"Back",
-	"MainHand 9",
-	"SecondaryHand 10",
-	"Ranged 11",
-	"Tabard",}
+	if not button.Border then
+		button.Border = CreateFrame("Frame", nil, button)
+		button.Border:SetPoint("TOPLEFT", button, "TOPLEFT", 0, 0)
+		button.Border:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 0, 0)
+		button.Border:SetBackdrop({
+			edgeFile = cfg.Solid, edgeSize = 1,
+		})
+	end
 
------------------------------------ Quality Glow --------------------------------------
-
-local function createBorder(Frame)
-	local Border = CreateFrame("Frame", nil, Frame)
-	Border:SetPoint("TOPLEFT", Frame, "TOPLEFT", 0, 0)
-	Border:SetPoint("BOTTOMRIGHT", Frame, "BOTTOMRIGHT", 0, 0)
-	Border:SetBackdrop({
-		edgeFile = cfg.Solid, edgeSize = 1,
-	})
-	Frame.Border = Border
-end
-
-local function QualityGlow(Frame, Quality)
-	if Quality and Quality > 1 then
-		local r, g, b = GetItemQualityColor(Quality)
-		if not Frame.Border then
-			Frame.Border = CreateFrame("Frame", nil, Frame)
-			Frame.Border:SetAllPoints()
-			Frame.Border:SetBackdrop({
-				edgeFile = cfg.Solid, edgeSize = 1,
-			})
-			Frame.Border:SetBackdropBorderColor(r, g, b)
+	if texture then
+		local r, g, b
+		if quest and quest:IsShown() then
+			r, g, b = 1, 0, 0
 		else
-			Frame.Border:SetBackdropBorderColor(r, g, b)
+			r, g, b = GetItemQualityColor(quality)
+			if r==1 then
+				r, g, b = 0, 0, 0
+			end
 		end
-	elseif Frame.Border then
-		Frame.Border:Hide()
+		button.Border:SetBackdropBorderColor(r, g, b)
+		button.Border:Show()
+	else
+		button.Border:Hide()
 	end
 end
 
-local function UpdataCharacterGlow()
-	if not CharacterFrame:IsVisible() then return end
-	for i, vl in pairs(items) do
-		local key, index = string.split(" ", vl)
-		Quality = GetInventoryItemQuality("player", i)
-		local Frame = G["Character"..key.."Slot"]
-		QualityGlow(Frame, Quality)
-	end
-end
 
-local function UpdataInspectGlow()
-	if not InspectFrame:IsVisible() then return end	
-	for i, value in pairs(items) do
-		local key, index = string.split(" ", value)
-		local Item = GetInventoryItemLink("target", i)
-		local Frame = G["Inspect"..key.."Slot"]
+local slots = {
+	"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
+	"Hands", "Finger0", "Finger1", "Trinket0", "Trinket1", "Back", "MainHand",
+	"SecondaryHand", "Ranged", "Tabard",
+}
 
-		if Item then
-			Quality = select(3, GetItemInfo(Item))
-			QualityGlow(Frame, Quality)
-		elseif Frame.Border then
-			Frame.Border:Hide()
+local updatechar = function(self)
+	if CharacterFrame:IsShown() then
+		for key, slotName in ipairs(slots) do
+			local slotID = key % 20
+			local slotFrame = _G["Character"..slotName.."Slot"]
+			local slotLink = GetInventoryItemLink("player", slotID)
+
+			UpdateGlow(slotFrame, slotLink)
 		end
 	end
 end
 
-local hookCF = CreateFrame("Frame")
-hookCF:SetParent("CharacterFrame")
-hookCF:SetScript("OnShow", UpdataCharacterGlow)
+local updateinspect = function(self)
+	local unit = InspectFrame.unit
+	if InspectFrame:IsShown() and unit then
+		for key, slotName in ipairs(slots) do
+			local slotID = key % 20
+			local slotFrame = _G["Inspect"..slotName.."Slot"]
+			local slotLink = GetInventoryItemLink(unit, slotID)
+			UpdateGlow(slotFrame, slotLink)
+		end
+	end	
+end
 
-InspectFrame_LoadUI()
-hooksecurefunc("InspectUnit", UpdataInspectGlow)
 
 -- Event
 local Event = CreateFrame("Frame")
+Event:RegisterEvent("ADDON_LOADED")
 Event:RegisterEvent("UNIT_INVENTORY_CHANGED")
-Event:RegisterEvent("PLAYER_TARGET_CHANGED")
-Event:SetScript("OnEvent", function(self, event, ...)
+Event:SetScript("OnEvent", function(self, event, addon)
 	if event == "UNIT_INVENTORY_CHANGED" then
-		UpdataCharacterGlow()
-		UpdataInspectGlow()
-	elseif event == "PLAYER_TARGET_CHANGED" then
-		UpdataInspectGlow()
-	end	
+		updatechar()
+	elseif event == "ADDON_LOADED" then
+		if addon == "Blizzard_InspectUI" then
+			InspectFrame:HookScript("OnShow", function()
+				Event:RegisterEvent("PLAYER_TARGET_CHANGED")
+				Event:RegisterEvent("INSPECT_READY")
+				Event:SetScript("OnEvent", updateinspect)
+				updateinspect()
+			end)
+			InspectFrame:HookScript("OnHide", function()
+				Event:UnregisterEvent("PLAYER_TARGET_CHANGED")
+				Event:UnregisterEvent("INSPECT_READY")
+				Event:SetScript("OnEvent", nil)
+			end)
+			Event:UnregisterEvent("ADDON_LOADED")
+		end
+	end
 end)
+CharacterFrame:HookScript("OnShow", updatechar)
