@@ -459,7 +459,7 @@ Filger_Spells = {
 			setPoint = { "BOTTOM", "oUF_SoraTarget", "TOP", -90, 5 },
 			
 			--灼热烈焰
-			{ spellID = 77661, size = 54, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
+			{ spellID = 77661, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
 			--烈焰震击
 			{ spellID =  8050, size = 20, barWidth = 175 ,unitId = "target", caster = "player", filter = "DEBUFF"},
 		},
