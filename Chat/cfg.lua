@@ -15,7 +15,7 @@ cfg.edgeFile = Media.."glowTex"
 cfg.Statusbar = Media.."Statusbar"
 cfg.Icon = "Interface\\Addons\\Sora's\\Chat\\icon\\"
 
-cfg.AutoSet = true
+cfg.AutoSet = true	-- 关闭自动设置(关闭后才能手动设置聊天框体)
 	
 ----------------
 --  命名空间  --
