@@ -1,6 +1,12 @@
-﻿local bordertex =	"Interface\\AddOns\\Sora's\\Loot\\Media\\icon_clean"	
-local fontn =		"Fonts\\ZYKai_T.ttf"	
-local edgetex = 	"Interface\\Tooltips\\UI-Tooltip-Border"
+﻿----------------
+--  命名空间  --
+----------------
+
+local _, SR = ...
+local cfg = SR.LootConfig
+
+
+local bordertex =	"Interface\\AddOns\\Sora's\\Loot\\Media\\icon_clean"	
 local bartex =		"Interface\\QuestFrame\\UI-QuestLogTitleHighlight"
 
 local L = {
@@ -147,12 +153,14 @@ local createSlot = function(id)
 	icon:SetAllPoints(iconFrame)
 	frame.icon = icon
     
-	local overlay = iconFrame:CreateTexture(nil, "OVERLAY")
-    overlay:SetTexture(bordertex)
-	overlay:SetPoint("TOPLEFT",iconFrame,"TOPLEFT",-3,3)
-	overlay:SetPoint("BOTTOMRIGHT",iconFrame,"BOTTOMRIGHT",3,-3)
-	overlay:SetVertexColor(0.35, 0.35, 0.35, 1);
-	frame.overlay = overlay
+	local Overlay = CreateFrame("Frame", nil, iconFrame)
+	Overlay:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -1, 1)
+	Overlay:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 1, -1)
+	Overlay:SetBackdrop({
+		edgeFile = cfg.Solid, edgeSize = 1,
+	})
+	Overlay:SetBackdropBorderColor(0, 0, 0, 1)
+	frame.overlay = Overlay
 	
 	local count = iconFrame:CreateFontString(nil, "OVERLAY")
 	count:ClearAllPoints()
@@ -170,7 +178,7 @@ local createSlot = function(id)
 	name:SetPoint("RIGHT", frame)
 	name:SetPoint("LEFT", icon, "RIGHT",8,0)
 	name:SetNonSpaceWrap(true)
-	name:SetFont(fontn, 11, "OUTLINE")
+	name:SetFont(cfg.Font, 11, "OUTLINE")
 
 	name:SetWidth(120)
 	frame.name = name
@@ -190,7 +198,7 @@ local createSlot = function(id)
 
 end
 
-title:SetFont(fontn, 11, "OUTLINE")
+title:SetFont(cfg.Font, 11, "OUTLINE")
 title:SetJustifyH"LEFT"
 title:SetPoint("TOPLEFT", addon, "TOPLEFT", 6, -4)
 
@@ -207,9 +215,9 @@ addon:SetParent(UIParent)
 addon:SetUserPlaced(true)
 addon:SetPoint("TOPLEFT", 0, -104)
 addon:SetBackdrop( { 
-	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-	edgeFile = "Interface\\AddOns\\NevoUI\\Loot\\media\\glowTex", edgeSize = 3, 
-	insets = { left = 2, right = 2, top = 2, bottom = 2 }
+	bgFile = cfg.bgFile,
+	insets = { left = 2, right = 2, top = 2, bottom = 2 },
+	edgeFile = cfg.Solid, edgeSize = 1, 
 })
 addon:SetBackdropColor(0,0,0,0.8)
 addon:SetBackdropBorderColor(0,0,0,1)
@@ -281,24 +289,24 @@ addon.LOOT_OPENED = function(self, event, autoloot)
 	end
 
 	local m = 0
-	if(items > 0) then
+	if items > 0 then
 		for i=1, items do
 			local slot = addon.slots[i] or createSlot(i)
 			local texture, item, quantity, quality, locked = GetLootSlotInfo(i)
 			local color = ITEM_QUALITY_COLORS[quality]
 
-			if(LootSlotIsCoin(i)) then
+			if LootSlotIsCoin(i) then
 				item = item:gsub("\n", ", ")
 			end
 
-			if(quantity and quantity > 1) then
+			if quantity and quantity > 1 then
 				slot.count:SetText(quantity)
 				slot.count:Show()
 			else
 				slot.count:Hide()
 			end
 
-			slot.overlay:SetVertexColor(color.r, color.g, color.b)
+			slot.overlay:SetBackdropBorderColor(color.r, color.g, color.b)
 			slot:SetBackdropBorderColor(color.r, color.g, color.b)
 			slot.drop:SetVertexColor(color.r, color.g, color.b)
 			slot.drop:Show()
