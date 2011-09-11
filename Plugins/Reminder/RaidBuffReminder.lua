@@ -130,7 +130,7 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 		end
 	else
 		if cfg.BuffList[7] and cfg.BuffList[7][1] then
-			BuffFrame[7]:SetAlpha(1)
+			BuffFrame[6]:SetAlpha(1)
 			BuffFrame[6].Texture:SetTexture(select(3, GetSpellInfo(cfg.BuffList[7][1])))
 			BuffFrame[6].Overlay:SetAlpha(0.7)
 			BuffFrame[6].Flag:SetAlpha(0)
