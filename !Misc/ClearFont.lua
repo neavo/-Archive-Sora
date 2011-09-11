@@ -388,32 +388,7 @@
 -- -----------------------------------------------------------------------------
 
 -- 聊天输入框字体
-	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 14 * CF_SCALE, "THINOUTLINE"); end	-- 默认值：14
-
--- 可选聊天框字体
-	CHAT_FONT_HEIGHTS = {
-		[1] = 7,
-		[2] = 8,
-		[3] = 9,
-		[4] = 10,
-		[5] = 11,
-		[6] = 12,
-		[7] = 13,
-		[8] = 14,
-		[9] = 15,
-		[10] = 16,
-		[11] = 17,
-		[12] = 18,
-		[13] = 19,
-		[14] = 20,
-		[15] = 21,
-		[16] = 22,
-		[17] = 23,
-		[18] = 24
-	};
-
--- 聊天窗口默认字体
-	if (CanSetFont(ChatFontSmall)) then 				ChatFontSmall:SetFont(CLEAR_FONT_CHAT, 12 * CF_SCALE,"THINOUTLINE"); end	-- 默认值：12
+	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE, "THINOUTLINE"); end	-- 默认值：14
 
 
 -- -----------------------------------------------------------------------------
