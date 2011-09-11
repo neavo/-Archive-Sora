@@ -1,10 +1,4 @@
-﻿local RollPosition = { "CENTER", nil, "CENTER", 0, 0}			-- Roll框体位置
-local SuppressLootSpam = false									-- 屏蔽详细Roll点数信息
-
-local bartex =		"Interface\\AddOns\\Sora's\\Loot\\media\\statusbar"		
-local bordertex =	"Interface\\AddOns\\Sora's\\Loot\\media\\icon_clean"	
-
-UIParent:UnregisterEvent("START_LOOT_ROLL");
+﻿UIParent:UnregisterEvent("START_LOOT_ROLL");
 UIParent:UnregisterEvent("CANCEL_LOOT_ROLL");
 
 local GFHCName, GFHCHeight = GameFontHighlightCenter:GetFont();
@@ -162,9 +156,9 @@ function frame:UpdateGroupLoot()
 			bar:EnableMouse(1);
 			bar:SetWidth(250);
 			bar:SetHeight(25);
-			bar:SetStatusBarTexture(bartex);
+			bar:SetStatusBarTexture(cfg.Statusbar);
 			if ( index == 1 ) then
-				bar:SetPoint(unpack(RollPosition));
+				bar:SetPoint(unpack(cfg.RollPos));
 			else
 				bar:SetPoint("TOP", grouplootbars[index-1], "BOTTOM", 0, -17);
 			end
@@ -177,7 +171,7 @@ function frame:UpdateGroupLoot()
 			
 			bar.background = bar:CreateTexture(nil, "BORDER");
 			bar.background:SetAllPoints();
-			bar.background:SetTexture(bartex);
+			bar.background:SetTexture(cfg.Statusbar);
 			bar.background:SetVertexColor(0.5, 0.5, 0.5, 0.7);
 			
 			bar.pass = CreateFrame("Button", "$perentPassButton", bar);
@@ -253,49 +247,49 @@ function frame:UpdateGroupLoot()
 			
 			bar.border = {};
 			bar.border.topleft = bar:CreateTexture(nil, "OVERLAY");
-			bar.border.topleft:SetTexture(bordertex);
+			bar.border.topleft:SetTexture(cfg.Solid);
 			bar.border.topleft:SetPoint("TOPLEFT", -3, 3);
 			bar.border.topleft:SetWidth(12);
 			bar.border.topleft:SetHeight(12);
 			bar.border.topleft:SetTexCoord(0, 1/3, 0, 1/3);
 			bar.border.bottomleft = bar:CreateTexture(nil, "OVERLAY");
-			bar.border.bottomleft:SetTexture(bordertex);
+			bar.border.bottomleft:SetTexture(cfg.Solid);
 			bar.border.bottomleft:SetPoint("BOTTOMLEFT", -3, -3);
 			bar.border.bottomleft:SetWidth(12);
 			bar.border.bottomleft:SetHeight(12);
 			bar.border.bottomleft:SetTexCoord(0, 1/3, 2/3, 1);
 			bar.border.topright = bar:CreateTexture(nil, "OVERLAY");
-			bar.border.topright:SetTexture(bordertex);
+			bar.border.topright:SetTexture(cfg.Solid);
 			bar.border.topright:SetPoint("TOPRIGHT", 3, 3);
 			bar.border.topright:SetWidth(12);
 			bar.border.topright:SetHeight(12);
 			bar.border.topright:SetTexCoord(2/3, 1, 0, 1/3);
 			bar.border.bottomright = bar:CreateTexture(nil, "OVERLAY");
-			bar.border.bottomright:SetTexture(bordertex);
+			bar.border.bottomright:SetTexture(cfg.Solid);
 			bar.border.bottomright:SetPoint("BOTTOMRIGHT", 3, -3);
 			bar.border.bottomright:SetWidth(12);
 			bar.border.bottomright:SetHeight(12);
 			bar.border.bottomright:SetTexCoord(2/3, 1, 2/3, 1);
 			bar.border.top = bar:CreateTexture(nil, "OVERLAY");
-			bar.border.top:SetTexture(bordertex);
+			bar.border.top:SetTexture(cfg.Solid);
 			bar.border.top:SetPoint("TOPLEFT", bar.border.topleft, "TOPRIGHT");
 			bar.border.top:SetPoint("TOPRIGHT", bar.border.topright, "TOPLEFT");
 			bar.border.top:SetHeight(12);
 			bar.border.top:SetTexCoord(1/3, 2/3, 0, 1/3);
 			bar.border.bottom = bar:CreateTexture(nil, "OVERLAY");
-			bar.border.bottom:SetTexture(bordertex);
+			bar.border.bottom:SetTexture(cfg.Solid);
 			bar.border.bottom:SetPoint("BOTTOMLEFT", bar.border.bottomleft, "BOTTOMRIGHT");
 			bar.border.bottom:SetPoint("BOTTOMRIGHT", bar.border.bottomright, "BOTTOMLEFT");
 			bar.border.bottom:SetHeight(12);
 			bar.border.bottom:SetTexCoord(1/3, 2/3, 2/3, 1);
 			bar.border.left = bar:CreateTexture(nil, "OVERLAY");
-			bar.border.left:SetTexture(bordertex);
+			bar.border.left:SetTexture(cfg.Solid);
 			bar.border.left:SetPoint("TOPLEFT", bar.border.topleft, "BOTTOMLEFT");
 			bar.border.left:SetPoint("BOTTOMLEFT", bar.border.bottomleft, "TOPLEFT");
 			bar.border.left:SetWidth(12);
 			bar.border.left:SetTexCoord(0, 1/3, 1/3, 2/3);
 			bar.border.right = bar:CreateTexture(nil, "OVERLAY");
-			bar.border.right:SetTexture(bordertex);
+			bar.border.right:SetTexture(cfg.Solid);
 			bar.border.right:SetPoint("TOPRIGHT", bar.border.topright, "BOTTOMRIGHT");
 			bar.border.right:SetPoint("BOTTOMRIGHT", bar.border.bottomright, "TOPRIGHT");
 			bar.border.right:SetWidth(12);
@@ -312,49 +306,49 @@ function frame:UpdateGroupLoot()
     
             bar.iborder = {};
             bar.iborder.topleft = bar:CreateTexture(nil, "OVERLAY");
-            bar.iborder.topleft:SetTexture(bordertex);
+            bar.iborder.topleft:SetTexture(cfg.Solid);
             bar.iborder.topleft:SetPoint("TOPLEFT", bar.icon, "TOPLEFT", -4, 4);
             bar.iborder.topleft:SetWidth(12);
             bar.iborder.topleft:SetHeight(12);
             bar.iborder.topleft:SetTexCoord(0, 1/3, 0, 1/3);
             bar.iborder.bottomleft = bar:CreateTexture(nil, "OVERLAY");
-            bar.iborder.bottomleft:SetTexture(bordertex);
+            bar.iborder.bottomleft:SetTexture(cfg.Solid);
             bar.iborder.bottomleft:SetPoint("BOTTOMLEFT", bar.icon, "BOTTOMLEFT",-4, -4);
             bar.iborder.bottomleft:SetWidth(12);
             bar.iborder.bottomleft:SetHeight(12);
             bar.iborder.bottomleft:SetTexCoord(0, 1/3, 2/3, 1);
             bar.iborder.topright = bar:CreateTexture(nil, "OVERLAY");
-            bar.iborder.topright:SetTexture(bordertex);
+            bar.iborder.topright:SetTexture(cfg.Solid);
             bar.iborder.topright:SetPoint("TOPRIGHT",bar.icon, "TOPRIGHT", 4, 4);
             bar.iborder.topright:SetWidth(12);
             bar.iborder.topright:SetHeight(12);
             bar.iborder.topright:SetTexCoord(2/3, 1, 0, 1/3);
             bar.iborder.bottomright = bar:CreateTexture(nil, "OVERLAY");
-            bar.iborder.bottomright:SetTexture(bordertex);
+            bar.iborder.bottomright:SetTexture(cfg.Solid);
             bar.iborder.bottomright:SetPoint("BOTTOMRIGHT", bar.icon, "BOTTOMRIGHT", 4, -4);
             bar.iborder.bottomright:SetWidth(12);
             bar.iborder.bottomright:SetHeight(12);
             bar.iborder.bottomright:SetTexCoord(2/3, 1, 2/3, 1);
             bar.iborder.top = bar:CreateTexture(nil, "OVERLAY");
-            bar.iborder.top:SetTexture(bordertex);
+            bar.iborder.top:SetTexture(cfg.Solid);
             bar.iborder.top:SetPoint("TOPLEFT", bar.iborder.topleft, "TOPRIGHT");
             bar.iborder.top:SetPoint("TOPRIGHT", bar.iborder.topright, "TOPLEFT");
             bar.iborder.top:SetHeight(12);
             bar.iborder.top:SetTexCoord(1/3, 2/3, 0, 1/3);
             bar.iborder.bottom = bar:CreateTexture(nil, "OVERLAY");
-            bar.iborder.bottom:SetTexture(bordertex);
+            bar.iborder.bottom:SetTexture(cfg.Solid);
             bar.iborder.bottom:SetPoint("BOTTOMLEFT", bar.iborder.bottomleft, "BOTTOMRIGHT");
             bar.iborder.bottom:SetPoint("BOTTOMRIGHT", bar.iborder.bottomright, "BOTTOMLEFT");
             bar.iborder.bottom:SetHeight(12);
             bar.iborder.bottom:SetTexCoord(1/3, 2/3, 2/3, 1);
             bar.iborder.left = bar:CreateTexture(nil, "OVERLAY");
-            bar.iborder.left:SetTexture(bordertex);
+            bar.iborder.left:SetTexture(cfg.Solid);
             bar.iborder.left:SetPoint("TOPLEFT", bar.iborder.topleft, "BOTTOMLEFT");
             bar.iborder.left:SetPoint("BOTTOMLEFT", bar.iborder.bottomleft, "TOPLEFT");
             bar.iborder.left:SetWidth(12);
             bar.iborder.left:SetTexCoord(0, 1/3, 1/3, 2/3);
             bar.iborder.right = bar:CreateTexture(nil, "OVERLAY");
-            bar.iborder.right:SetTexture(bordertex);
+            bar.iborder.right:SetTexture(cfg.Solid);
             bar.iborder.right:SetPoint("TOPRIGHT", bar.iborder.topright, "BOTTOMRIGHT");
             bar.iborder.right:SetPoint("BOTTOMRIGHT", bar.iborder.bottomright, "TOPRIGHT");
             bar.iborder.right:SetWidth(12);
@@ -446,7 +440,7 @@ if not (GetLocale=="enGB" or GetLocale=="enUS") then
 	LOOT_ROLL_ROLLED_GREED = "贪婪 -- %d for %s by %s";
 	LOOT_ROLL_ROLLED_NEED = "需求 -- %d for %s by %s";
 end
-if SuppressLootSpam then
+if cfg.SuppressLootSpam then
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", function(self, event, msg)
 		if msg:match("(.*) has?v?e? selected (.+) for: (.+)") or msg:match("(.+) Roll . (%d+) for (.+) by (.+)")
 			or msg:match("You passed on: ") or msg:match(" automatically passed on: ") or (msg:match(" passed on: ") and not msg:match("Everyone passed on: ")) then
