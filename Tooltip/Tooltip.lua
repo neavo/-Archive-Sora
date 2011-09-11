@@ -106,10 +106,6 @@ end
 		local unit = (select(2, self:GetUnit())) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover") or nil
 
 		if unit then
-		
-			if cfg.HideInCombat and InCombatLockdown() then
-				return self:Hide()
-			end
 			
 			local name = UnitName(unit)
 			local ricon = GetRaidTargetIndex(unit)
@@ -341,30 +337,44 @@ end
 		end)
 	end
 	
-	local function TooltipAnchorToCursor(tooltip)
-		local x, y
-		tooltip:ClearAllPoints()
+	local function SetTooltipPosition(tooltip)
+		local X, Y= 0, 0
 		if cfg.Cursor then
 			local CurrentX, CurrentY = GetCursorPosition()
 			local Scale = UIParent:GetEffectiveScale()
-			x, y = CurrentX / Scale, CurrentY / Scale
-			tooltip:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", x, y + 40)
+			X, Y = (CurrentX / Scale), (CurrentY / Scale)
+			tooltip:ClearAllPoints()
+			tooltip:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", X+10, Y+40)
 		else
 			tooltip:SetPoint(unpack(cfg.Position))
 		end
+
 	end
 
 	hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-		if TooltipAnchorCursor then
-			tooltip:SetOwner(parent,"ANCHOR_CURSOR")
+		if cfg.HideInCombat and InCombatLockdown() then
+			tooltip:Hide()
 		else
-			tooltip:SetOwner(parent)
-		end
-			TooltipAnchorToCursor(tooltip)
+			if cfg.Cursor then
+				tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+			else
+				tooltip:SetOwner(parent,"ANCHOR_NONE")
+			end
+			SetTooltipPosition(tooltip)
 			tooltip.default = 1
-			tooltip:HookScript("OnUpdate", function(self, ...)
-			TooltipAnchorToCursor(self)
-		end)
+			if not tooltip[tostring(tooltip)] then
+				tooltip[tostring(tooltip)] = 1
+				tooltip:HookScript("OnUpdate", function(self, ...)
+					if self.default then
+						SetTooltipPosition(self)
+					end
+				end)
+				tooltip:HookScript("OnHide", function(self, unit)
+					tooltip.default = nil
+					tooltip.unit = nil
+				end)
+			end
+		end
 	end)
 
 	hooksecurefunc("SetItemRef", function(link, text, button)
