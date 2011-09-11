@@ -6,11 +6,28 @@ local _, SR = ...
 local cfg = SR.RDConfig
 
 local ClassBuff, BuffFrame = {}, {}
+local function UpdateBuffFrame()
+	for _,value in pairs(BuffFrame) do
+		value:SetAlpha(0)
+	end
+	local i = 0
+	for _,value in pairs(ClassBuff) do
+		local Name, _, Icon = select(1, GetSpellInfo(value))
+		if not UnitAura("player", Name) then
+			i = i + 1
+			BuffFrame[i].Texture:SetTexture(Icon)
+			BuffFrame[i].Texture:SetTexCoord(0.05, 0.95, 0.05, 0.95)
+			BuffFrame[i].Text:SetText(format("缺少：%s",Name))
+			BuffFrame[i]:SetAlpha(1)			
+		end
+	end
+end
 
 -- Event
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("UNIT_AURA")
 Event:RegisterEvent("PLAYER_LOGIN")
+Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 Event:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 Event:SetScript("OnEvent",function(self, event, unit, ...)
 	
@@ -62,20 +79,12 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 	
 	-- 生成Buff缺失提示
 	if event == "PLAYER_LOGIN" or (event == "UNIT_AURA" and unit == "player") then
-		for _,value in pairs(BuffFrame) do
-			value:SetAlpha(0)
-		end
-		local i = 0
-		for _,value in pairs(ClassBuff) do
-			local Name, _, Icon = select(1, GetSpellInfo(value))
-			if not UnitAura("player", Name) then
-				i = i + 1
-				BuffFrame[i].Texture:SetTexture(Icon)
-				BuffFrame[i].Texture:SetTexCoord(0.05, 0.95, 0.05, 0.95)
-				BuffFrame[i].Text:SetText(format("缺少：%s",Name))
-				BuffFrame[i]:SetAlpha(1)			
-			end
-		end
+		UpdateBuffFrame()
+	end
+	
+	-- 声音提示
+	if event == "PLAYER_REGEN_DISABLED" then
+		UpdateBuffFrame()
 		if i ~= 0 and cfg.ClassBuffSound then
 			PlaySoundFile(cfg.Warning)			
 		end
