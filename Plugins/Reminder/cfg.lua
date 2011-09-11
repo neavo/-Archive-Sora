@@ -11,11 +11,173 @@ local Media = "Interface\\AddOns\\Sora's\\Plugins\\Reminder\\Media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.Solid = Media.."solid"
 cfg.GlowTex = Media.."glowTex"
+cfg.Warning = Media.."Warning.mp3"
+
+
 cfg.RaidBuffSize = 18											-- RaidBuff图标大小
 cfg.RaidBuffSpace = 4											-- RaidBuff图标间距
 cfg.RaidBuffDirection = 1										-- RaidBuff图标排列方向 1-横排 2-竖排
 cfg.RaidBuffPos = {"TOPLEFT", Minimap, "BOTTOMLEFT", -5, -35}	-- RaidBuff图标位置
 cfg.ShowOnlyInParty = true										-- 只在队伍中显示RaidBuff图标
+
+cfg.ClassBuffSize = 48											-- ClassBuff图标大小
+cfg.ClassBuffSpace = 40											-- ClassBuff图标间距
+cfg.ClassBuffPos = {"CENTER", UIParent, "CENTER", -150, 150}	-- ClassBuff图标位置
+cfg.ClassBuffSound = true										-- 开启缺失ClassBuf声音警报
+
+cfg.ClassBuffList = {
+	["DRUID"] = {
+		-- 平衡
+		[1] = {
+			
+		},
+		-- 野性战斗
+		[2] = {
+			
+		},
+		-- 恢复
+		[3] = {
+			
+		},
+	},
+	
+	["MAGE"] = {
+		-- 奥术
+		[1] = {
+
+		},
+		-- 火焰
+		[2] = {
+			
+		},
+		-- 冰霜
+		[3] = {
+			
+		},
+	},
+	
+	["HUNTER"] = {
+		-- 野兽控制
+		[1] = {
+			
+		},
+		-- 射击
+		[2] = {
+			
+		},
+		-- 生存
+		[3] = {
+			
+		},
+	},
+	
+	["PRIEST"] = {
+		-- 戒律
+		[1] = {
+
+		},
+		-- 神圣
+		[2] = {
+			
+		},
+		-- 暗影
+		[3] = {
+			
+		},
+	},
+	
+	["ROGUE"] = {
+		-- 刺杀
+		[1] = {
+
+		},
+		-- 战斗
+		[2] = {
+			
+		},
+		-- 敏锐
+		[3] = {
+			
+		},
+	},
+	
+	["SHAMAN"] = {
+		-- 元素战斗
+		[1] = {
+
+		},
+		-- 增强
+		[2] = {
+			
+		},
+		-- 恢复
+		[3] = {
+			
+		},
+	},
+	
+	["PALADIN"] = {
+		-- 神圣
+		[1] = {
+
+		},
+		-- 防护
+		[2] = {
+			
+		},
+		-- 惩戒
+		[3] = {
+			
+		},
+	},
+	
+	["WARLOCK"] = {
+		-- 痛苦
+		[1] = {
+
+		},
+		-- 恶魔学识
+		[2] = {
+			
+		},
+		-- 毁灭
+		[3] = {
+			
+		},
+	},
+	
+	["DEATHKNIGHT"] = {
+		-- 鲜血
+		[1] = {
+			48263, -- 鲜血灵气
+			48263, -- 鲜血灵气
+			48263, -- 鲜血灵气
+		},
+		-- 冰霜
+		[2] = {
+			
+		},
+		-- 邪恶
+		[3] = {
+			
+		},
+	},
+	
+	["WARRIOR"] = {
+		-- 武器
+		[1] = {
+
+		},
+		-- 狂怒
+		[2] = {
+			
+		},
+		-- 防护
+		[3] = {
+			
+		},
+	},
+}
 
 cfg.BuffList = {
 
@@ -100,6 +262,8 @@ cfg.BuffList = {
 	},
 	
 }
+
+
 	
 ----------------
 --  命名空间  --
