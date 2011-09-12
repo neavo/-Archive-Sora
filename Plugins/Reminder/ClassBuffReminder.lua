@@ -6,22 +6,6 @@ local _, SR = ...
 local cfg = SR.RDConfig
 
 local ClassBuff, BuffFrame = {}, {}
-local function UpdateBuffFrame()
-	for _,value in pairs(BuffFrame) do
-		value:SetAlpha(0)
-	end
-	local i = 0
-	for _,value in pairs(ClassBuff) do
-		local Name, _, Icon = select(1, GetSpellInfo(value))
-		if not UnitAura("player", Name) then
-			i = i + 1
-			BuffFrame[i].Texture:SetTexture(Icon)
-			BuffFrame[i].Texture:SetTexCoord(0.05, 0.95, 0.05, 0.95)
-			BuffFrame[i].Text:SetText(format("缺少：%s",Name))
-			BuffFrame[i]:SetAlpha(1)			
-		end
-	end
-end
 
 -- Event
 local Event = CreateFrame("Frame")
@@ -79,12 +63,52 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 	
 	-- 生成Buff缺失提示
 	if event == "PLAYER_LOGIN" or (event == "UNIT_AURA" and unit == "player") then
-		UpdateBuffFrame()
+		for _,value in pairs(BuffFrame) do
+			value:SetAlpha(0)
+		end
+		local i = 0
+		for key,value in pairs(ClassBuff) do
+			local flag = 0
+			for _,temp in pairs(value) do
+				local Name, _, Icon = select(1, GetSpellInfo(temp))
+				if UnitAura("player", Name) then
+					flag = 1
+				end
+			end
+			if flag == 0 then
+				local Name, _, Icon = select(1, GetSpellInfo(value[1]))
+				i = i + 1
+				BuffFrame[i].Texture:SetTexture(Icon)
+				BuffFrame[i].Texture:SetTexCoord(0.05, 0.95, 0.05, 0.95)
+				BuffFrame[i].Text:SetText(format("缺少：%s",Name))
+				BuffFrame[i]:SetAlpha(1)
+			end
+		end
 	end
 	
 	-- 声音提示
 	if event == "PLAYER_REGEN_DISABLED" then
-		UpdateBuffFrame()
+		for _,value in pairs(BuffFrame) do
+			value:SetAlpha(0)
+		end
+		local i = 0
+		for key,value in pairs(ClassBuff) do
+			local flag = 0
+			for _,temp in pairs(value) do
+				local Name, _, Icon = select(1, GetSpellInfo(temp))
+				if UnitAura("player", Name) then
+					flag = 1
+				end
+			end
+			if flag == 0 then
+				local Name, _, Icon = select(1, GetSpellInfo(value[1]))
+				i = i + 1
+				BuffFrame[i].Texture:SetTexture(Icon)
+				BuffFrame[i].Texture:SetTexCoord(0.05, 0.95, 0.05, 0.95)
+				BuffFrame[i].Text:SetText(format("缺少：%s",Name))
+				BuffFrame[i]:SetAlpha(1)
+			end
+		end
 		if i ~= 0 and cfg.ClassBuffSound then
 			PlaySoundFile(cfg.Warning)			
 		end
