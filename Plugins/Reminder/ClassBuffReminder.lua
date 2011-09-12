@@ -18,8 +18,8 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 	-- 初始化Buff列表
 	if event == "PLAYER_LOGIN" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
 		local _, Class =  UnitClass("player")
-		ClassBuff = cfg.ClassBuffList[Class][GetPrimaryTalentTree()]
-
+		ClassBuff = cfg.ClassBuffList[Class][GetPrimaryTalentTree() or 1]
+		
 		for key,value in pairs(ClassBuff) do
 		
 			local Temp = CreateFrame("Frame")
