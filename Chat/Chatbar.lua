@@ -25,13 +25,14 @@ local Color = {
 }
 
 local Chatbar = CreateFrame("Frame","Chatbar")
-Chatbar:SetWidth(320)
+Chatbar:SetWidth(300)
 Chatbar:SetHeight(13)
-Chatbar:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT", 10, -9)
+Chatbar:SetPoint("TOP", ChatFrame1, "BOTTOM", 0, -9)
+
 
 for i=1,7 do
 	local frame = CreateFrame("Button", "ChatBarButton"..i , Chatbar)
-	frame:SetWidth(40)
+	frame:SetWidth(Chatbar:GetWidth()/8)
 	frame:SetHeight(Chatbar:GetHeight())
 	if i == 1 then
 		frame:SetPoint("LEFT",Chatbar,"LEFT",0,0)
@@ -55,7 +56,7 @@ end
 local roll = CreateFrame("Button",nil, Chatbar, "SecureActionButtonTemplate")
 roll:SetAttribute("*type*", "macro")
 roll:SetAttribute("macrotext", "/roll")
-roll:SetWidth(40)
+roll:SetWidth(Chatbar:GetWidth()/8)
 roll:SetHeight(Chatbar:GetHeight())
 roll:SetPoint("RIGHT",Chatbar,"RIGHT",0,0)
 roll:SetBackdrop( { 
