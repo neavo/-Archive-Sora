@@ -31,14 +31,14 @@ ChatTypeInfo["OFFICER"].sticky    = 1 -- 官员
 ChatTypeInfo["CHANNEL"].sticky 	  = 0 -- 频道
 
 -- 聊天标签
-CHAT_FRAME_FADE_OUT_TIME = 0 -- 聊天窗口褪色时间
-CHAT_TAB_HIDE_DELAY = 0      -- 聊天标签弹出延时
-CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA = 0.6   -- 鼠标停留时,标签透明度
-CHAT_FRAME_TAB_NORMAL_NOMOUSE_ALPHA = 0       -- 鼠标离开时,标签透明度 (修改这里能一直显示)
-CHAT_FRAME_TAB_SELECTED_MOUSEOVER_ALPHA = 1   -- 鼠标停留时,选择标签时透明度
-CHAT_FRAME_TAB_SELECTED_NOMOUSE_ALPHA = 0     -- 鼠标离开时,选择标签时透明度
-CHAT_FRAME_TAB_ALERTING_MOUSEOVER_ALPHA = 0.6 -- 鼠标停留时,标签闪动时透明度
-CHAT_FRAME_TAB_ALERTING_NOMOUSE_ALPHA = 0     -- 鼠标离开时,标签闪动时透明度
+CHAT_FRAME_FADE_OUT_TIME = 0 					-- 聊天窗口褪色时间
+CHAT_TAB_HIDE_DELAY = 0     					-- 聊天标签弹出延时
+CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA = 0.2  	-- 鼠标停留时,标签透明度
+CHAT_FRAME_TAB_NORMAL_NOMOUSE_ALPHA = 0       	-- 鼠标离开时,标签透明度 (修改这里能一直显示)
+CHAT_FRAME_TAB_SELECTED_MOUSEOVER_ALPHA = 1   	-- 鼠标停留时,选择标签时透明度
+CHAT_FRAME_TAB_SELECTED_NOMOUSE_ALPHA = 0     	-- 鼠标离开时,选择标签时透明度
+CHAT_FRAME_TAB_ALERTING_MOUSEOVER_ALPHA = 0 	-- 鼠标停留时,标签闪动时透明度
+CHAT_FRAME_TAB_ALERTING_NOMOUSE_ALPHA = 0     	-- 鼠标离开时,标签闪动时透明度
 
 do
 	-- Buttons Hiding/moving 
@@ -51,12 +51,6 @@ do
 	for i=1, 10 do
 		local cf = _G[format("%s%d", "ChatFrame", i)]
 		
-		--fix fading
-		local tab = _G["ChatFrame"..i.."Tab"]
-		tab:SetAlpha(0)
-		tab.noMouseAlpha = 0
-		cf:SetFading(false)
-	
 		-- 间距
 		cf:SetSpacing(2)
 	
@@ -83,7 +77,7 @@ do
 		_G["ChatFrame"..i.."TabHighlightMiddle"]:SetTexture(nil)
 		_G["ChatFrame"..i.."TabHighlightRight"]:SetTexture(nil)
 		_G["ChatFrame"..i.."TabHighlightLeft"]:SetTexture(nil)
-	
+		
 		--EditBox Module
 		local ebParts = {'Left', 'Mid', 'Right'}
 		local eb = _G['ChatFrame'..i..'EditBox']
@@ -97,8 +91,8 @@ do
 		eb:ClearAllPoints()
 		eb:SetTextColor(0,0,0)
 		eb:SetFont( cfg.Font, 11, "THINOUTLINE")
-		eb:SetPoint("TOPLEFT", cf, "BOTTOMLEFT", -10, -8)
-		eb:SetPoint("BOTTOMRIGHT", cf, "BOTTOMRIGHT", 10, -28)
+		eb:SetPoint("TOPLEFT", cf, "BOTTOMLEFT", -8, -6)
+		eb:SetPoint("BOTTOMRIGHT", cf, "BOTTOMRIGHT", 8, -22)
 		eb:EnableMouse(false)
 		
 		-- 聊天框缩放按钮

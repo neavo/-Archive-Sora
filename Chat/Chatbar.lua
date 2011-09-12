@@ -24,15 +24,14 @@ local Color = {
 	{255/255, 255/255,   0/255, 0.8},
 }
 
-local Chatbar = CreateFrame("Frame","Chatbar",UIParent)
-Chatbar:SetWidth(160)
-Chatbar:SetHeight(16)
-Chatbar:SetPoint("BOTTOMRIGHT", ChatFrame1, "TOPRIGHT", 5, 7)
-Chatbar:SetScale(0.9)
+local Chatbar = CreateFrame("Frame","Chatbar")
+Chatbar:SetWidth(320)
+Chatbar:SetHeight(13)
+Chatbar:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT", 10, -9)
 
 for i=1,7 do
 	local frame = CreateFrame("Button", "ChatBarButton"..i , Chatbar)
-	frame:SetWidth(20)
+	frame:SetWidth(40)
 	frame:SetHeight(Chatbar:GetHeight())
 	if i == 1 then
 		frame:SetPoint("LEFT",Chatbar,"LEFT",0,0)
@@ -42,7 +41,7 @@ for i=1,7 do
 	frame:SetBackdrop( { 
 		bgFile = cfg.Statusbar,
 		insets = { left = 3, right = 3, top = 3, bottom = 3 },
-		edgeFile = cfg.edgeFile, edgeSize = 4, 
+		edgeFile = cfg.GlowTex, edgeSize = 4, 
 	}) 
 	frame:SetBackdropColor(unpack(Color[i]))
 	frame:SetBackdropBorderColor(0,0,0,1)	
@@ -52,24 +51,38 @@ for i=1,7 do
 	end)
 end
 
--- Roll --
+-- Roll
 local roll = CreateFrame("Button",nil, Chatbar, "SecureActionButtonTemplate")
 roll:SetAttribute("*type*", "macro")
 roll:SetAttribute("macrotext", "/roll")
-roll:SetWidth(20)
+roll:SetWidth(40)
 roll:SetHeight(Chatbar:GetHeight())
 roll:SetPoint("RIGHT",Chatbar,"RIGHT",0,0)
 roll:SetBackdrop( { 
 	bgFile = cfg.Statusbar,
 	insets = { left = 3, right = 3, top = 3, bottom = 3 },
-	edgeFile = cfg.edgeFile, edgeSize = 4, 
+	edgeFile = cfg.GlowTex, edgeSize = 4, 
 })
 roll:SetBackdropColor(unpack(Color[8]))
 roll:SetBackdropBorderColor(0,0,0,1)	
 roll:RegisterForClicks("AnyUp")
 
-
-
+-- Event
+local Event = ChatFrame1EditBox
+Event:RegisterEvent("PLAYER_ENTERING_WORLD")
+Event:SetScript("OnEvent",function(self, event, ...)
+	SetCVar("chatStyle","classic")
+end)
+Event:SetScript("OnShow",function(self)
+	if _G["MainBar"]:GetAlpha() > 0.9 then
+		UIFrameFadeOut(Chatbar, 0.5, 0.6, 0)
+	end
+end)
+Event:SetScript("OnHide",function(self)
+	if _G["MainBar"]:GetAlpha() > 0.9 then
+		UIFrameFadeIn(Chatbar, 0.5, 0, 0.6)
+	end
+end)
 
 
 

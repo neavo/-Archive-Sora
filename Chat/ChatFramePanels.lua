@@ -5,40 +5,55 @@
 local _, SR = ...
 local cfg = SR.ChatConfig
 
+local MainBar = CreateFrame("Frame","MainBar")
+MainBar:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT", 5, -6)
+MainBar:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", -5, -24)
+MainBar:SetBackdrop({
+	bgFile = cfg.bgFile,
+	edgeFile = cfg.GlowTex, edgeSize = 3, 
+	insets = { left = 4, right = 4, top = 4, bottom = 4 }
+})
+MainBar:SetBackdropColor(0, 0, 0, 0.2)
+MainBar:SetBackdropBorderColor(0, 0, 0, 0.8)
 
+MainBar.Left = CreateFrame("Frame")
+MainBar.Left:SetPoint("TOPLEFT",MainBar,"TOPLEFT", -11, 0)
+MainBar.Left:SetPoint("BOTTOMRIGHT",MainBar,"BOTTOMLEFT", 2, 0)
+MainBar.Left:SetBackdrop({
+	edgeFile = cfg.GlowTex, edgeSize = 3, 
+})
+MainBar.Left:SetBackdropBorderColor(0, 0, 0, 0.8)
 
+MainBar.Left:SetScript("OnMouseDown",function(self)
+	if MainBar:GetAlpha() < 0.1 then
+		UIFrameFadeIn(MainBar, 0.5, 0, 1)
+		UIFrameFadeIn(ChatFrame1, 0.5, 0, 1)
+		UIFrameFadeIn(_G["Chatbar"], 0.5, 0, 0.6)
+	elseif MainBar:GetAlpha() > 0.9 then
+		UIFrameFadeOut(MainBar, 0.5, 1, 0)
+		UIFrameFadeOut(_G["Chatbar"], 0.5, 0.6, 0)
+		for i=1, 3 do
+			UIFrameFadeOut(_G["ChatFrame"..i], 0.5, 1, 0)
+			UIFrameFadeOut(_G["ChatFrame"..i.."Tab"], 0.5, 1, 0)
+		end
+	end
+end)
 
-for i = 1, NUM_CHAT_WINDOWS do
+MainBar.Right = CreateFrame("Frame",nil,MainBar)
+MainBar.Right:SetPoint("TOPRIGHT",MainBar,"TOPRIGHT", 11, 0)
+MainBar.Right:SetPoint("BOTTOMLEFT",MainBar,"BOTTOMRIGHT", -2, 0)
+MainBar.Right:SetBackdrop({
+	edgeFile = cfg.GlowTex, edgeSize = 3, 
+})
+MainBar.Right:SetBackdropBorderColor(0, 0, 0, 0.8)
 
-	local parent
-	parent = _G["ChatFrame"..i]	
-	local chatframe = CreateFrame("Frame",nil,parent)
-	chatframe:SetPoint("TOPLEFT",parent,"TOPLEFT",-5,8)
-	chatframe:SetPoint("BOTTOMRIGHT",parent,"BOTTOMRIGHT",5,-8)
-	chatframe:SetFrameLevel("0")
-	chatframe:SetBackdrop( { 
-		bgFile = cfg.bgFile,
-		edgeFile = cfg.edgeFile, edgeSize = 3, 
-		insets = { left = 4, right = 4, top = 4, bottom = 4 }
-	})
-	chatframe:SetBackdropColor(0,0,0,0.6)
-	chatframe:SetBackdropBorderColor(0,0,0,1)
-	local editbox = CreateFrame("Frame",nil,chatframe)
-	editbox:SetHeight(23)
-	editbox:SetPoint("TOPLEFT",chatframe,"BOTTOMLEFT",0,2)
-	editbox:SetPoint("TOPRIGHT",chatframe,"BOTTOMRIGHT",0,2)
-	editbox:SetFrameLevel("1")
-	editbox:SetBackdrop( { 
-		bgFile = cfg.bgFile,
-		edgeFile = cfg.edgeFile, edgeSize = 3, 
-		insets = { left = 4, right = 4, top = 4, bottom = 4 }
-	})
-	editbox:SetBackdropColor(0,0,0,0.6)
-	editbox:SetBackdropBorderColor(0,0,0,1)
-	
-end
-
-
+MainBar.Right:SetScript("OnMouseDown",function(self)
+	if ChatFrame1:GetAlpha() < 0.1 then
+		UIFrameFadeIn(ChatFrame1, 0.5, 0, 1)
+	elseif ChatFrame1:GetAlpha() > 0.9 then
+		UIFrameFadeOut(ChatFrame1, 0.5, 1, 0)
+	end
+end)
 
 
 
