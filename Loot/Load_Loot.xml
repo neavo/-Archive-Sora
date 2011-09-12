@@ -7,6 +7,6 @@
 
 	<Script file="cfg.lua"/>
 	<Script file="Loot.lua"/>
-	<Script file="GroupLoot.lua"/>
+	<Script file="Roll.lua"/>
 	
 </Ui>
