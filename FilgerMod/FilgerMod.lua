@@ -123,15 +123,16 @@ function Update(self)
 					edgeFile = cfg.GlowTex , edgeSize = 5,
 				})
 				bar.icon.Shadow:SetBackdropBorderColor(0,0,0,1)
+				bar.icon.Shadow:SetFrameLevel(0)
 				
-				bar.icon.Shadow = CreateFrame("Frame", nil, bar)
-				bar.icon.Shadow:SetPoint("TOPLEFT", 1, -1)
-				bar.icon.Shadow:SetPoint("BOTTOMRIGHT", -1, 1)
-				bar.icon.Shadow:SetBackdrop({ 
+				bar.icon.Border = CreateFrame("Frame", nil, bar)
+				bar.icon.Border:SetPoint("TOPLEFT", 1, -1)
+				bar.icon.Border:SetPoint("BOTTOMRIGHT", -1, 1)
+				bar.icon.Border:SetBackdrop({ 
 					edgeFile = cfg.Solid , edgeSize = 1,
 				})
-				bar.icon.Shadow:SetBackdropBorderColor(0,0,0,1)
-				
+				bar.icon.Border:SetBackdropBorderColor(0,0,0,1)
+	
 				bar.count = bar.icon.Shadow:CreateFontString(nil, "OVERLAY") 
 				bar.count:SetFont(cfg.Font, value.data.size/30*10, "THINOUTLINE") 
 				bar.count:SetPoint("BOTTOMRIGHT", 1, 1) 
