@@ -133,9 +133,9 @@ function Update(self)
 				})
 				bar.icon.Border:SetBackdropBorderColor(0,0,0,1)
 	
-				bar.count = bar.icon.Shadow:CreateFontString(nil, "OVERLAY") 
+				bar.count = bar.icon.Border:CreateFontString(nil, "OVERLAY") 
 				bar.count:SetFont(cfg.Font, value.data.size/30*10, "THINOUTLINE") 
-				bar.count:SetPoint("BOTTOMRIGHT", 1, 1) 
+				bar.count:SetPoint("BOTTOMRIGHT", 2, 0) 
 				
 				bar.cooldown = CreateFrame("Cooldown", nil, bar, "CooldownFrameTemplate") 
 				bar.cooldown:SetPoint("TOPLEFT", 2, -2) 
