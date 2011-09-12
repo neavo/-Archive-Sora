@@ -163,25 +163,29 @@ ChatFrame_AddMessageEventFilter("CHAT_MSG_DND", function(msg) return true end)
 
 
 --  聊天复制
-
 local _AddMessage = ChatFrame1.AddMessage
 local _SetItemRef = SetItemRef
 local blacklist = {
 	[ChatFrame2] = true,
 }
 
-local ts = "|cff68ccef|HyCopy|h%s|h|r %s"
+local ts = '|cff68ccef|HyCopy|h%s|h|r %s'
 local AddMessage = function(self, text, ...)
-	if type(text) == "string"then
-		text = format(ts, "★", text)
-	end
+	if(type(text) == 'string') then
+        if showtime then
+          text = format(ts, date'%H:%M', text)  --text = format(ts, date'%H:%M:%S', text)
+        else
+	  text = format(ts, '★', text)
+       end
+end
+
 	return _AddMessage(self, text, ...)
 end
 
 for i=1, NUM_CHAT_WINDOWS do
-	local chatframe = _G["ChatFrame"..i]
-	if not blacklist[chatframe] then
-		chatframe.AddMessage = AddMessage
+	local cf = _G['ChatFrame'..i]
+	if(not blacklist[cf]) then
+		cf.AddMessage = AddMessage
 	end
 end
 
@@ -196,11 +200,11 @@ local MouseIsOver = function(frame)
 	local top = frame:GetTop()
 	local bottom = frame:GetBottom()
 
-	if not left then
+	if(not left) then
 		return
 	end
 
-	if x > left and x < right and y > bottom and y < top then
+	if((x > left and x < right) and (y > bottom and y < top)) then
 		return 1
 	else
 		return
@@ -208,9 +212,9 @@ local MouseIsOver = function(frame)
 end
 
 local borderManipulation = function(...)
-	for l = 1, select("#", ...) do
+	for l = 1, select('#', ...) do
 		local obj = select(l, ...)
-		if obj:GetObjectType() == "FontString" and MouseIsOver(obj) then
+		if(obj:GetObjectType() == 'FontString' and MouseIsOver(obj)) then
 			return obj:GetText()
 		end
 	end
@@ -218,11 +222,12 @@ end
 
 local eb = ChatFrame1EditBox
 SetItemRef = function(link, text, button, ...)
+	if(link:sub(1, 5) ~= 'yCopy') then return _SetItemRef(link, text, button, ...) end
 
 	local text = borderManipulation(SELECTED_CHAT_FRAME:GetRegions())
-	if text then
-		text = text:gsub("|c%x%x%x%x%x%x%x%x(.-)|r", "%1")
-		text = text:gsub("|H.-|h(.-)|h", "%1")
+	if(text) then
+		text = text:gsub('|c%x%x%x%x%x%x%x%x(.-)|r', '%1')
+		text = text:gsub('|H.-|h(.-)|h', '%1')
 
 		eb:Insert(text)
 		eb:Show()
