@@ -56,12 +56,9 @@ cfg.Solid = Media.."solid"
 cfg.GlowTex = Media.."glowTex"
 
 cfg.statusbar_texture = Media.."Statusbar"
-cfg.powerbar_texture = Media.."Minimalist"
 cfg.backdrop_texture = Media.."backdrop"
 cfg.highlight_texture = Media.."raidbg"
 cfg.debuffhighlight_texture = Media.."debuff_highlight"
-cfg.backdrop_edge_texture = Media.."backdrop_edge"
-cfg.spark = Media.."spark"
 cfg.font = "Fonts\\ZYKai_T.ttf"
 cfg.smallfont = "Fonts\\ZYKai_T.ttf"
 

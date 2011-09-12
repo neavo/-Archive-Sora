@@ -10,23 +10,22 @@ local fixStatusbar = function(BG)
 	BG:GetStatusBarTexture():SetHorizTile(false)
 	BG:GetStatusBarTexture():SetVertTile(false)
 end
-
---backdrop table
-local backdrop_tab = { 
-	bgFile = cfg.backdrop_texture, 
-	edgeFile = cfg.backdrop_edge_texture, edgeSize = 5, 
-	insets = { left = 3, right = 3, top = 3, bottom = 3}
-}
   
 -- backdrop func
 lib.gen_backdrop = function(self)
-	self:SetBackdrop(backdrop_tab);
-	self:SetBackdropColor(0,0,0,1)
+	self:SetBackdrop({
+		edgeFile = cfg.Solid, edgeSize = 1, 
+		insets = { left = 1, right = 1, top = 1, bottom = 1},
+	})
 	self:SetBackdropBorderColor(0,0,0,0.8)
 end
 
 lib.gen_castbackdrop = function(self)
-	self:SetBackdrop(backdrop_tab);
+	self:SetBackdrop({
+		bgFile = cfg.backdrop_texture, 
+		edgeFile = cfg.Solid, edgeSize = 1, 
+		insets = { left = 1, right = 1, top = 1, bottom = 1},
+	})
 	self:SetBackdropColor(0,0,0,0.6)
 	self:SetBackdropBorderColor(0,0,0,1)
 end
@@ -151,7 +150,7 @@ end
 lib.gen_ppbar = function(self)
 	-- statusbar
 	local Statusbar = CreateFrame("StatusBar", nil, self)
-	Statusbar:SetStatusBarTexture(cfg.powerbar_texture)
+	Statusbar:SetStatusBarTexture(cfg.statusbar_texture)
 	Statusbar:GetStatusBarTexture():SetHorizTile(true)
 	Statusbar:SetWidth(self:GetWidth())
 	if self.mystyle == "target" or self.mystyle == "player" or self.mystyle == "focus" then
@@ -173,7 +172,7 @@ lib.gen_ppbar = function(self)
 	
 	-- BG
 	local BG = Statusbar:CreateTexture(nil, "BACKGROUND")
-	BG:SetTexture(cfg.powerbar_texture)
+	BG:SetTexture(cfg.statusbar_texture)
 	BG:SetAllPoints(Statusbar)
 	BG:SetVertexColor(0.2,0.2,0.2)
 	
@@ -363,7 +362,7 @@ end
 -- Create Raid Threat Status Border
 function lib.CreateThreatBorder(self)
 	
-	local glowBorder = {edgeFile = cfg.backdrop_edge_texture, edgeSize = 3}
+	local glowBorder = {edgeFile = cfg.GlowTex, edgeSize = 3}
 	self.Thtborder = CreateFrame("Frame", nil, self)
 	self.Thtborder:SetPoint("TOPLEFT", self, "TOPLEFT", -5, 5)
 	self.Thtborder:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 5, -5)
@@ -444,17 +443,9 @@ lib.gen_castbar = function(self)
 	--Border
 	local Border = CreateFrame("Frame", nil, Statusbar)
 	Border:SetFrameLevel(0)
-	Border:SetPoint("TOPLEFT",-5,5)
-	Border:SetPoint("BOTTOMRIGHT",5,-5)
+	Border:SetPoint("TOPLEFT", -1, 1)
+	Border:SetPoint("BOTTOMRIGHT", 1, -1)
 	lib.gen_castbackdrop(Border)
-	
-	--spark
-	sp = Statusbar:CreateTexture(nil, "OVERLAY")
-	sp:SetTexture(spark)
-	sp:SetBlendMode("ADD")
-	sp:SetVertexColor(1, 1, 1, 1)
-	sp:SetHeight(Statusbar:GetHeight()*2.5)
-	sp:SetWidth(Statusbar:GetWidth()/18)
 	
 	--spell text
 	local txt = lib.gen_fontstring(Statusbar, cfg.font, 10, "THINOUTLINE")
@@ -481,25 +472,25 @@ lib.gen_castbar = function(self)
 	--helper2 for icon
 	local h2 = CreateFrame("Frame", nil, Statusbar)
 	h2:SetFrameLevel(0)
-	h2:SetPoint("TOPLEFT",i,"TOPLEFT",-5,5)
-	h2:SetPoint("BOTTOMRIGHT",i,"BOTTOMRIGHT",5,-5)
+	h2:SetPoint("TOPLEFT",i,"TOPLEFT", -1, 1)
+	h2:SetPoint("BOTTOMRIGHT",i,"BOTTOMRIGHT", 1, -1)
 	lib.gen_backdrop(h2)
 	if self.mystyle == "player" then
-	  --latency (only for player unit)
-	  local z = Statusbar:CreateTexture(nil,"OVERLAY")
-	  z:SetTexture(cfg.statusbar_texture)
-	  z:SetVertexColor(1,0.1,0,.6)
-	  z:SetPoint("TOPRIGHT")
-	  z:SetPoint("BOTTOMRIGHT")
-	  Statusbar:SetFrameLevel(1)
-	  Statusbar.SafeZone = z
-	  -- custom latency display
-	  local l = lib.gen_fontstring(Statusbar, cfg.font, 10, "THINOUTLINE")
-	  l:SetPoint("CENTER", -2, 17)
-	  l:SetJustifyH("RIGHT")
-	  l:Hide()
-	  Statusbar.Lag = l
-	  self:RegisterEvent("UNIT_SPELLCAST_SENT", cast.OnCastSent)
+		--latency (only for player unit)
+		local z = Statusbar:CreateTexture(nil,"OVERLAY")
+		z:SetTexture(cfg.statusbar_texture)
+		z:SetVertexColor(1,0.1,0,.6)
+		z:SetPoint("TOPRIGHT")
+		z:SetPoint("BOTTOMRIGHT")
+		Statusbar:SetFrameLevel(1)
+		Statusbar.SafeZone = z
+		-- custom latency display
+		local l = lib.gen_fontstring(Statusbar, cfg.font, 10, "THINOUTLINE")
+		l:SetPoint("CENTER", -2, 17)
+		l:SetJustifyH("RIGHT")
+		l:Hide()
+		Statusbar.Lag = l
+		self:RegisterEvent("UNIT_SPELLCAST_SENT", cast.OnCastSent)
 	end
 	Statusbar.OnUpdate = cast.OnCastbarUpdate
 	Statusbar.PostCastStart = cast.PostCastStart
@@ -513,7 +504,6 @@ lib.gen_castbar = function(self)
 	self.Castbar.Text = txt
 	self.Castbar.Time = t
 	self.Castbar.Icon = i
-	self.Castbar.Spark = sp
 end
   
 -- mirror castbar!
@@ -541,8 +531,8 @@ lib.gen_mirrorcb = function(f)
 		--glowing borders
 		local h = CreateFrame("Frame", nil, _G[bar])
 		h:SetFrameLevel(0)
-		h:SetPoint("TOPLEFT",-5,5)
-		h:SetPoint("BOTTOMRIGHT",5,-5)
+		h:SetPoint("TOPLEFT", -1, 1)
+		h:SetPoint("BOTTOMRIGHT", 1, -1)
 		lib.gen_backdrop(h)
 	end
 end  
@@ -1104,8 +1094,8 @@ local AWPostCreateIcon = function(AWatch, icon, spellID, name, self)
 	icon.count = count
 	local Border = CreateFrame("Frame", nil, icon)
 	Border:SetFrameLevel(4)
-	Border:SetPoint("TOPLEFT",-3,3)
-	Border:SetPoint("BOTTOMRIGHT",3,-3)
+	Border:SetPoint("TOPLEFT", -1, 1)
+	Border:SetPoint("BOTTOMRIGHT", 1, -1)
 	lib.gen_backdrop(Border)
 end
 lib.createAuraWatch = function(self, unit)

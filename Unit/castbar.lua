@@ -74,9 +74,7 @@ cast.OnCastbarUpdate = function(self, elapsed)
 		end
 		self.duration = duration
 		self:SetValue(duration)
-		self.Spark:SetPoint('CENTER', self, 'LEFT', (duration / self.max) * self:GetWidth(), 0)
 	else
-		self.Spark:Hide()
 		local alpha = self:GetAlpha() - 0.02
 		if alpha > 0 then
 			self:SetAlpha(alpha)
@@ -96,7 +94,6 @@ cast.PostCastStart = function(self, unit, name, rank, text)
 	local pcolor = {255/255, 128/255, 128/255}
 	local interruptcb = {95/255, 182/255, 255/255}
 	self:SetAlpha(1.0)
-	self.Spark:Show()
 	self:SetStatusBarColor(unpack(self.casting and self.CastingColor or self.ChannelingColor))
 	if unit == "player"then
 		local sf = self.SafeZone
