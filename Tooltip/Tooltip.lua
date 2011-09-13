@@ -131,8 +131,8 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
     if GameTooltipStatusBar:IsShown() then
         GameTooltipStatusBar:ClearAllPoints()
 		GameTooltipStatusBar:SetHeight(6)
-		GameTooltipStatusBar:SetPoint("TOPLEFT", GameTooltipStatusBar:GetParent(), "BOTTOMLEFT", 1, -8)
-		GameTooltipStatusBar:SetPoint("TOPRIGHT", GameTooltipStatusBar:GetParent(), "BOTTOMRIGHT", -1, -8)
+		GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltipStatusBar:GetParent(), "TOPLEFT", 0, 8)
+		GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar:GetParent(), "TOPRIGHT", 0, 8)
 		GameTooltipStatusBar.BG = CreateFrame("Frame", "StatusBarBG", GameTooltipStatusBar)
 		GameTooltipStatusBar.BG:SetFrameLevel(GameTooltipStatusBar:GetFrameLevel()-1)
 		GameTooltipStatusBar.BG:SetPoint("TOPLEFT", -1, 1)
@@ -173,7 +173,7 @@ GameTooltipStatusBar:SetScript("OnValueChanged", function(self, value)
         min, max = UnitHealth(unit), UnitHealthMax(unit)
         if not self.text then
             self.text = self:CreateFontString(nil, "OVERLAY")
-			self.text:SetPoint("CENTER", GameTooltipStatusBar, "TOP", 0, 0)
+			self.text:SetPoint("BOTTOM", GameTooltipStatusBar, "TOP", 0, -5)
             self.text:SetFont(cfg.Font, 12, "THINOUTLINE")
         end
         self.text:Show()
@@ -182,40 +182,15 @@ GameTooltipStatusBar:SetScript("OnValueChanged", function(self, value)
     end
 end)
 
-local function SetTooltipPosition(tooltip)
-	local X, Y= 0, 0
-	if cfg.Cursor then
-		local CurrentX, CurrentY = GetCursorPosition()
-		local Scale = UIParent:GetEffectiveScale()
-		X, Y = (CurrentX / Scale), (CurrentY / Scale)
-		tooltip:ClearAllPoints()
-		tooltip:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", X+15, Y+41)
-	else
-		tooltip:SetPoint(unpack(cfg.Position))
-	end
-
-end
-
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-	if cfg.Cursor then
-		tooltip:SetOwner(parent, "ANCHOR_CURSOR")
-	else
-		tooltip:SetOwner(parent,"ANCHOR_NONE")
-	end
-	SetTooltipPosition(tooltip)
-	tooltip.default = 1
-	if not tooltip[tostring(tooltip)] then
-		tooltip[tostring(tooltip)] = 1
-		tooltip:HookScript("OnUpdate", function(self, ...)
-			if self.default then
-				SetTooltipPosition(self)
-			end
-		end)
-		tooltip:HookScript("OnHide", function(self, unit)
-			tooltip.default = nil
-			tooltip.unit = nil
-		end)
-	end
+    local frame = GetMouseFocus()
+    if cfg.Cursor and frame == WorldFrame then
+        tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+    else
+        tooltip:SetOwner(parent, "ANCHOR_NONE")	
+        tooltip:SetPoint(unpack(cfg.Position))
+    end
+    tooltip.default = 1
 end)
 
 local function setBakdrop(frame)

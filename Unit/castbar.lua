@@ -38,7 +38,7 @@ cast.setBarTicks = function(castBar, ticknum)
 				ticks[k] = castBar:CreateTexture(nil, 'OVERLAY')
 				ticks[k]:SetTexture(cfg.statusbar_texture)
 				ticks[k]:SetVertexColor(0, 0, 0)
-				ticks[k]:SetWidth(1)
+				ticks[k]:SetWidth(1.2)
 				ticks[k]:SetHeight(castBar:GetHeight())
 			end
 			ticks[k]:ClearAllPoints()
