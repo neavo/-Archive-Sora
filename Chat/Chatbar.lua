@@ -12,7 +12,7 @@ local cfg = SR.ChatConfig
 
 
 
-local Channel = {"/s ","/y ","/p ","/g ","/raid ","/1 ","/2 "}
+local Channel = {"SAY","YELL","PARTY","GUILD","RAID"}
 local Color = {
 	{255/255, 255/255, 255/255, 0.8},
 	{255/255,  64/255,  64/255, 0.8},
@@ -31,13 +31,13 @@ Chatbar:SetPoint("TOP", ChatFrame1, "BOTTOM", 0, -9)
 
 
 for i=1,7 do
-	local frame = CreateFrame("Button", "ChatBarButton"..i , Chatbar)
+	local frame = CreateFrame("Button", nil, Chatbar)
 	frame:SetWidth(Chatbar:GetWidth()/8)
 	frame:SetHeight(Chatbar:GetHeight())
 	if i == 1 then
 		frame:SetPoint("LEFT",Chatbar,"LEFT",0,0)
 	else
-		frame:SetPoint("LEFT","ChatBarButton"..i-1,"RIGHT",0,0)
+		frame:SetPoint("LEFT", Pre,"RIGHT",0,0)
 	end
 	frame:SetBackdrop( { 
 		bgFile = cfg.Statusbar,
@@ -48,8 +48,19 @@ for i=1,7 do
 	frame:SetBackdropBorderColor(0,0,0,1)	
 	frame:RegisterForClicks("AnyUp")
 	frame:SetScript("OnClick", function() 
-		ChatFrame_OpenChat(Channel[i], chatFrame)
+		EditBox = SELECTED_DOCK_FRAME.editBox
+		if i <= 5 then
+			ChatEdit_ActivateChat(EditBox)
+			EditBox:SetAttribute("chatType",Channel[i]) 
+			ChatEdit_UpdateHeader(EditBox)
+		else
+			ChatEdit_ActivateChat(EditBox)
+			EditBox:SetAttribute("channelTarget", i-5)
+			EditBox:SetAttribute("chatType", "CHANNEL")
+			ChatEdit_UpdateHeader(EditBox) 
+		end
 	end)
+	Pre = frame
 end
 
 -- Roll
