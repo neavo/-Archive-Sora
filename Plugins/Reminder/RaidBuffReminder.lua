@@ -74,18 +74,30 @@ end
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("UNIT_AURA")
+Event:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 Event:SetScript("OnEvent",function(self, event, unit, ...)
 
-	if cfg.ShowOnlyInParty then 
-		if not (GetNumPartyMembers() > 0) then
-			return
-		end
+	if cfg.ShowOnlyInParty and not (GetNumPartyMembers() > 0) then 
+		return
 	end
 	
 	if event == "UNIT_AURA" and unit ~= "player" then 
 		return
 	end
 	
+	-- 按照玩家是物理职业还是法系职业
+	if event == "ACTIVE_TALENT_GROUP_CHANGED" or "PLAYER_LOGIN" then
+		local Flag = nil
+		local _, Class =  UnitClass("player")
+		local Talent = GetPrimaryTalentTree()
+		if	(Class == "DRUID" and Talent == 2) or Class == "HUNTER" or Class == "ROGUE" or
+			(Class == "SHAMAN" and Talent == 2) or Class == "DEATHKNIGHT" or Class == "WARRIOR" or
+			(Class == "PALADIN" and (Talent == 2 or Talent == 3)) then
+			Flag = true
+		else
+			Flag = false
+		end
+	end
 	
 	-- 通用Buff
 	for i=1, 5 do
@@ -108,10 +120,7 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 	end
 	
 	-- 按照物理/法系分别对应不同的ID List
-	local Str = select(2, UnitStat("player", 1))
-	local Agi = select(2, UnitStat("player", 2))
-	local Int = select(2, UnitStat("player", 4))
-	if Str > Int or Agi > Int then
+	if Flag then
 		if cfg.BuffList[6] and cfg.BuffList[6][1] then
 			BuffFrame[6]:SetAlpha(1)
 			BuffFrame[6].Texture:SetTexture(select(3, GetSpellInfo(cfg.BuffList[6][1])))
