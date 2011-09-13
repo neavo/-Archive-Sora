@@ -77,11 +77,11 @@ Event:RegisterEvent("UNIT_AURA")
 Event:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 Event:SetScript("OnEvent",function(self, event, unit, ...)
 
-	if cfg.ShowOnlyInParty and not (GetNumPartyMembers() > 0) then 
+	if event == "UNIT_AURA" and unit ~= "player" then 
 		return
 	end
-	
-	if event == "UNIT_AURA" and unit ~= "player" then 
+
+	if cfg.ShowOnlyInParty and not (GetNumPartyMembers() > 0) then 
 		return
 	end
 	
