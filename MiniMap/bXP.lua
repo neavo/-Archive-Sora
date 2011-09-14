@@ -4,10 +4,9 @@
 
 local _, SR = ...
 local cfg = SR.MapConfig
+local BMFrame =_G["BMFrame"]
+local Init = false
 
-
-local color = {r = .4, g = .1, b = 0.6}
-local restedcolor = {r = .2, g = .4, b = 0.8}
 local numberize = function(v)
     if v <= 9999 then return v end
     if v >= 1000000 then
@@ -19,122 +18,88 @@ local numberize = function(v)
     end
 end
 
-local function setup(frame, level)
-    frame:SetStatusBarTexture(cfg.Statusbar)
-    frame:SetFrameLevel(level)
-    frame:SetPoint("LEFT", Minimap, "LEFT", 1, 0)
-    frame:SetPoint("RIGHT", Minimap, "RIGHT", -1, 0)
-    frame:SetHeight(4)
-    frame:SetValue(0)
-    frame:Show()
-end
+local Bar = CreateFrame("StatusBar", nil, BMFrame)
+Bar:SetStatusBarTexture(cfg.Statusbar)
+Bar:SetWidth(Minimap:GetWidth()-2)
+Bar:SetHeight(4)
+Bar:SetValue(0)
+Bar:SetFrameStrata("HIGH")
+Bar:SetPoint("TOP", BMFrame, "BOTTOM", 0, -3)
+Bar.Text = Bar:CreateFontString(nil,"OVERLAY")
+Bar.Text:SetPoint("TOP", Bar, "BOTTOM", 0, -5)
+Bar.Text:SetFont(cfg.Font, 9, "THINOUTLINE")
+Bar.Text:SetAlpha(0)
+Bar:SetScript("OnEnter", function()
+	BMFrame:SetAlpha(1)
+	Bar.Text:SetAlpha(1)
+end)
+Bar:SetScript("OnLeave", function()
+	BMFrame:SetAlpha(0.2)
+	Bar.Text:SetAlpha(0)
+end)
 
-local bar = CreateFrame("StatusBar", "bXP", BMFrame)
-setup(bar, 2)
-bar:SetPoint("TOP", "BMFrame", "BOTTOM", 0, -3)
-        
-xptext = bar:CreateFontString("XP Text")
-xptext:SetPoint("CENTER", bar,"CENTER", 0,-18)
-xptext:SetFont(cfg.Font, 9, "THINOUTLINE")
-xptext:SetAlpha(0)
-
-bar:RegisterEvent("PLAYER_XP_UPDATE")
-bar:RegisterEvent("PLAYER_LEVEL_UP")
-bar:RegisterEvent("PLAYER_ENTERING_WORLD")
-bar:RegisterEvent("UPDATE_EXHAUSTION");
-bar:RegisterEvent("UPDATE_FACTION")
-
-local rbar = CreateFrame("StatusBar", nil, BMFrame)
-setup(rbar, 1)
-rbar:SetBackdrop({
+local RBar = CreateFrame("StatusBar", nil, BMFrame)
+RBar:SetStatusBarTexture(cfg.Statusbar)
+RBar:SetAllPoints(Bar)
+RBar:SetValue(0)
+RBar:EnableMouse(true)
+RBar:SetBackdrop({
 	bgFile= cfg.Statusbar,
 	insets = {left = -1, right = -1, top = -1, bottom = -1}
 })
-rbar:SetBackdropColor(0,0,0,1)
-rbar:EnableMouse(true)
-rbar:SetPoint("TOPLEFT", bar, "TOPLEFT")
-bg = rbar:CreateTexture(nil, 'BORDER')
-bg:SetAllPoints(rbar)
-bg:SetTexture(cfg.Statusbar)
-bg:SetVertexColor(0.16,0.16,0.16,1)
+RBar:SetBackdropColor(0,0,0,1)
+RBar.BG = RBar:CreateTexture(nil, "BORDER")
+RBar.BG:SetAllPoints(RBar)
+RBar.BG:SetTexture(cfg.Statusbar)
+RBar.BG:SetVertexColor(0.16,0.16,0.16,1)
 
-local function Rested()
-    rbar:SetMinMaxValues(0,mxp)
-    rbar:SetStatusBarColor(restedcolor.r,restedcolor.g,restedcolor.b, 0.3)
-    bar:SetStatusBarColor(restedcolor.r,restedcolor.g,restedcolor.b, 1)
-    if (rxp+xp) >= mxp then
-        rbar:SetValue(mxp)
-    else
-        rbar:SetValue(rxp+xp)
-    end
-end
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_XP_UPDATE")
+Event:RegisterEvent("PLAYER_LEVEL_UP")
+Event:RegisterEvent("UPDATE_EXHAUSTION")
+Event:RegisterEvent("UPDATE_FACTION")
+Event:SetScript("OnEvent", function(self)
 
-local function XP()
-    bar:SetStatusBarColor(.4,.2,.8, 1)
-    bar:SetValue(xp)
-    if rxp then
-        xptext:SetText(numberize(xp).." / "..numberize(mxp).."\n"..floor((xp/mxp)*1000)/10 .."%" .. " (+"..numberize(rxp)..")")
-        Rested()
-    else
-        xptext:SetText(numberize(xp).." / "..numberize(mxp).." | "..floor((xp/mxp)*1000)/10 .."%")
-        rbar:SetValue(0)
-        bar:SetStatusBarColor(color.r,color.g,color.b, 1)
-    end
-end
+	currXP = UnitXP("player")
+	playerMaxXP = UnitXPMax("player")
+	exhaustionXP  = GetXPExhaustion("player")
+	name, standing, minrep, maxrep, value = GetWatchedFactionInfo()
 
-local function Rep()
-    bar:SetStatusBarColor(FACTION_BAR_COLORS[standing].r, FACTION_BAR_COLORS[standing].g, FACTION_BAR_COLORS[standing].b, 1)
-    bar:SetMinMaxValues(minrep,maxrep)
-    bar:SetValue(value)
-    rbar:SetValue(0)
-    xptext:SetText(value-minrep.." / "..maxrep-minrep.."\n"..floor(((value-minrep)/(maxrep-minrep))*1000)/10 .."% | ".. name)
-end
+	RBar:SetMinMaxValues(0,playerMaxXP)
+	Bar:SetMinMaxValues(0,playerMaxXP)
+	
+	if UnitLevel("player") == MAX_PLAYER_LEVEL or IsXPUserDisabled == true then
+		if name then
+			Bar:SetStatusBarColor(FACTION_BAR_COLORS[standing].r, FACTION_BAR_COLORS[standing].g, FACTION_BAR_COLORS[standing].b, 1)
+			Bar:SetMinMaxValues(minrep,maxrep)
+			Bar:SetValue(value)
+			RBar:SetValue(0)
+			Bar.Text:SetText(value-minrep.." / "..maxrep-minrep.."\n"..floor(((value-minrep)/(maxrep-minrep))*1000)/10 .."% | ".. name)
+			Bar:Show()
+			RBar:Show()
+		else
+			Bar:Hide()
+			RBar:Hide()
+		end
+	else
+		Bar:SetStatusBarColor(.4,.2,.8, 1)
+		Bar:SetValue(currXP)
+		if exhaustionXP  then
+			Bar.Text:SetText(numberize(currXP).." / "..numberize(playerMaxXP).."\n"..floor((currXP/playerMaxXP)*1000)/10 .."%" .. " (+"..numberize(exhaustionXP )..")")
+			RBar:SetMinMaxValues(0,playerMaxXP)
+			RBar:SetStatusBarColor(0.2, 0.4, 0.8, 0.3)
+			Bar:SetStatusBarColor(0.2, 0.4, 0.8, 1)
+			if (exhaustionXP +currXP) >= playerMaxXP then
+				RBar:SetValue(playerMaxXP)
+			else
+				RBar:SetValue(exhaustionXP +currXP)
+			end
+		else
+			Bar.Text:SetText(numberize(currXP).." / "..numberize(playerMaxXP).." | "..floor((currXP/playerMaxXP)*1000)/10 .."%")
+			RBar:SetValue(0)
+			Bar:SetStatusBarColor(0.4, 0.1, 0.6, 1)
+		end
+	end
 
-bar:SetScript("OnEvent", function()
-    xp = UnitXP("player")
-    mxp = UnitXPMax("player")
-    rxp = GetXPExhaustion("player")
-    name, standing, minrep, maxrep, value = GetWatchedFactionInfo()
-    
-    rbar:SetMinMaxValues(0,mxp)
-    bar:SetMinMaxValues(0,mxp)
-    if UnitLevel("player") == MAX_PLAYER_LEVEL or IsXPUserDisabled == true then
-        if name then
-            Rep()
-            bar:Show()
-            rbar:Show()
-        else
-        bar:Hide()
-        rbar:Hide()
-        end
-    else
-        XP()
-    end
-
-	local BMFrame = _G["BMFrame"]
-	rbar:SetScript("OnEnter", function()
-		BMFrame:SetAlpha(1)
-		xptext:SetAlpha(1)
-	end)
-	rbar:SetScript("OnLeave", function()
-		BMFrame:SetAlpha(0.2)
-		xptext:SetAlpha(0)
-	end)
-	bar:SetScript("OnEnter", function()
-		BMFrame:SetAlpha(1)
-		xptext:SetAlpha(1)
-	end)
-	bar:SetScript("OnLeave", function()
-		BMFrame:SetAlpha(0.2)
-		xptext:SetAlpha(0)
-	end)
 end)
-
-
-
-
-
-
-
-
-
