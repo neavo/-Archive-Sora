@@ -131,16 +131,18 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
     if GameTooltipStatusBar:IsShown() then
         GameTooltipStatusBar:ClearAllPoints()
 		GameTooltipStatusBar:SetHeight(6)
-		GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltipStatusBar:GetParent(), "TOPLEFT", 0, 8)
-		GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar:GetParent(), "TOPRIGHT", 0, 8)
-		GameTooltipStatusBar.BG = CreateFrame("Frame", "StatusBarBG", GameTooltipStatusBar)
-		GameTooltipStatusBar.BG:SetFrameLevel(GameTooltipStatusBar:GetFrameLevel()-1)
-		GameTooltipStatusBar.BG:SetPoint("TOPLEFT", -1, 1)
-		GameTooltipStatusBar.BG:SetPoint("BOTTOMRIGHT", 1, -1)
-		GameTooltipStatusBar.BG:SetBackdrop({
-			edgeFile = cfg.Solid, edgeSize = 1,
-		})
-		GameTooltipStatusBar.BG:SetBackdropBorderColor(0, 0, 0, 1)
+		GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltipStatusBar:GetParent(), "TOPLEFT", 1, 8)
+		GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar:GetParent(), "TOPRIGHT", -1, 8)
+		if not GameTooltipStatusBar.BG then 
+			GameTooltipStatusBar.BG = CreateFrame("Frame", nil, GameTooltipStatusBar)
+			GameTooltipStatusBar.BG:SetFrameLevel(GameTooltipStatusBar:GetFrameLevel()-1)
+			GameTooltipStatusBar.BG:SetPoint("TOPLEFT", -1, 1)
+			GameTooltipStatusBar.BG:SetPoint("BOTTOMRIGHT", 1, -1)
+			GameTooltipStatusBar.BG:SetBackdrop({
+				edgeFile = cfg.Solid, edgeSize = 1,
+			})
+			GameTooltipStatusBar.BG:SetBackdropBorderColor(0, 0, 0, 1)
+		end
     end
 end)
 
