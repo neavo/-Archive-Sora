@@ -18,7 +18,7 @@ cfg.RaidBuffSize = 18											-- RaidBuff图标大小
 cfg.RaidBuffSpace = 4											-- RaidBuff图标间距
 cfg.RaidBuffDirection = 1										-- RaidBuff图标排列方向 1-横排 2-竖排
 cfg.RaidBuffPos = {"TOPLEFT", Minimap, "BOTTOMLEFT", -5, -35}	-- RaidBuff图标位置
-cfg.ShowOnlyInParty = false										-- 只在队伍中显示RaidBuff图标
+cfg.ShowOnlyInParty = true										-- 只在队伍中显示RaidBuff图标
 
 cfg.ClassBuffSize = 48											-- ClassBuff图标大小
 cfg.ClassBuffSpace = 40											-- ClassBuff图标间距

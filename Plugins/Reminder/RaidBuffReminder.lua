@@ -87,7 +87,7 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 	
 	-- 按照玩家是物理职业还是法系职业
 	if event == "ACTIVE_TALENT_GROUP_CHANGED" or "PLAYER_LOGIN" then
-		local Flag = nil
+		local Melee = false
 		local _, Class =  UnitClass("player")
 		local Talent = GetPrimaryTalentTree()
 		if	(Class == "DRUID" and Talent == 2) or Class == "HUNTER" or Class == "ROGUE" or
