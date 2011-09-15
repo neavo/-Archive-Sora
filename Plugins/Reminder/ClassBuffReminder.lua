@@ -26,7 +26,7 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 		
 		for key,value in pairs(ClassBuff) do
 		
-			local Temp = CreateFrame("Frame")
+			local Temp = CreateFrame("Frame", nil, UIParent)
 			Temp:SetWidth(cfg.ClassBuffSize)
 			Temp:SetHeight(cfg.ClassBuffSize)
 			

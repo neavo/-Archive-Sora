@@ -7,7 +7,7 @@ local cfg = SR.RDConfig
 
 local BuffFrame = {}
 for i = 1, 6 do
-	local Temp = CreateFrame("Frame")
+	local Temp = CreateFrame("Frame", nil, UIParent)
 	Temp:SetWidth(cfg.RaidBuffSize)
 	Temp:SetHeight(cfg.RaidBuffSize)
 	

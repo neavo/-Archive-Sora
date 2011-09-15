@@ -5,7 +5,7 @@
 local _, SR = ...
 local cfg = SR.ActionBarConfig
 
-local MainBar = CreateFrame("Frame")
+local MainBar = CreateFrame("Frame", nil, UIParent)
 MainBar:SetPoint("TOPLEFT",ActionButton1,"LEFT", -10, -3)
 MainBar:SetPoint("BOTTOMRIGHT",ActionButton12,"BOTTOMRIGHT", 10, -7)
 MainBar:SetBackdrop({

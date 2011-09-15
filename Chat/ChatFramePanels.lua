@@ -5,7 +5,7 @@
 local _, SR = ...
 local cfg = SR.ChatConfig
 
-local MainBar = CreateFrame("Frame","MainBar")
+local MainBar = CreateFrame("Frame", "MainBar", UIParent)
 MainBar:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT", 5, -6)
 MainBar:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", -5, -24)
 MainBar:SetBackdrop({
@@ -16,7 +16,7 @@ MainBar:SetBackdrop({
 MainBar:SetBackdropColor(0, 0, 0, 0.2)
 MainBar:SetBackdropBorderColor(0, 0, 0, 0.8)
 
-MainBar.Left = CreateFrame("Frame")
+MainBar.Left = CreateFrame("Frame", nil, UIParent)
 MainBar.Left:SetPoint("TOPLEFT",MainBar,"TOPLEFT", -11, 0)
 MainBar.Left:SetPoint("BOTTOMRIGHT",MainBar,"BOTTOMLEFT", 2, 0)
 MainBar.Left:SetBackdrop({

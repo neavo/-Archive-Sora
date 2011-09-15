@@ -24,7 +24,7 @@ local Color = {
 	{255/255, 255/255,   0/255, 0.8},
 }
 
-local Chatbar = CreateFrame("Frame","Chatbar")
+local Chatbar = CreateFrame("Frame", nil, UIParent)
 Chatbar:SetWidth(300)
 Chatbar:SetHeight(13)
 Chatbar:SetPoint("TOP", ChatFrame1, "BOTTOM", 0, -9)
