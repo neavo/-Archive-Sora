@@ -7,7 +7,6 @@ local cfg = SR.MiscConfig
 
 local function UpdateGlow(button, id)
 	local quality, texture
-	local Icon = _G[name.."IconTexture"]
 	local Border = _G[button:GetName().."NormalTexture"]
 	
 	if Border then
