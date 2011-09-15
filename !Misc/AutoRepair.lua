@@ -1,60 +1,68 @@
-﻿-- Contemplate v2.3 by Aeyan & yMerchant v0.7 by YLeaf
-local addon = CreateFrame('Frame')
-addon:SetScript('OnEvent', function(self, event, ...) if self[event] then return self[event](self, ...) end end)
-addon:RegisterEvent('PLAYER_REGEN_ENABLED')
-addon:RegisterEvent('PLAYER_REGEN_DISABLED')
-addon:RegisterEvent('MERCHANT_SHOW')
+﻿-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("MERCHANT_SHOW")
+Event:SetScript("OnEvent", function(self)
 
-local autoName = true
-local AutoSellJunk = true
-local AutoRepair = true
-local UseGuildBank = true
-local CustomSellList = {
-}
-
-local function formats(value)
-	local str = ''
-	if value > 9999 then
-		str = str .. format('|c00ffd700%dg|r', floor(value / 10000))
-	end
-	if value > 99 then
-		str = str .. format('|c00c7c7cf%ds|r', (floor(value / 100) % 100))
-	end
-	str = str .. format('|c00eda55f%dc|r', (floor(value) % 100))
-	return str
-end
-
-function addon:MERCHANT_SHOW()
-	if AutoSellJunk then
-		for bag=0,4 do
-			for slot=0,GetContainerNumSlots(bag) do
-				local link = GetContainerItemLink(bag, slot)
-				if link then
-					local id = tonumber(link:match'item:(%d+):')
-					if (select(3, GetItemInfo(id)) == 0) or CustomSellList[id] then
-						ShowMerchantSellCursor(1)
-						UseContainerItem(bag, slot)
-					end
+	-- 自动出售垃圾
+	local c = 0
+	for b=0,4 do
+		for s=1,GetContainerNumSlots(b) do
+			local l = GetContainerItemLink(b, s)
+			if l then
+				local p = select(11, GetItemInfo(l))*select(2, GetContainerItemInfo(b, s))
+				if select(3, GetItemInfo(l))==0 and p>0 then
+					UseContainerItem(b, s)
+					PickupMerchantItem()
+					c = c+p
 				end
 			end
 		end
 	end
-	if AutoRepair and CanMerchantRepair() then
-		local cost, canRepair = GetRepairAllCost()
-		if canRepair then
-			local str = formats(cost)
-			if UseGuildBank and IsInGuild() and CanGuildBankRepair() and (GetGuildBankWithdrawMoney() >= cost or (GetGuildBankWithdrawMoney() == -1 and GetGuildBankMoney() >= cost)) then
-				RepairAllItems(1)
-				str = '公会修理：' .. str
-			elseif GetMoney() >= cost then
-				RepairAllItems()
-				str = '自费修理：' .. str
-			else
-				DEFAULT_CHAT_FRAME:AddMessage('修理花费：' .. str)
-				return
+	if c>0 then
+		local g, s, c = math.floor(c/10000) or 0, math.floor((c%10000)/100) or 0, c%100
+		DEFAULT_CHAT_FRAME:AddMessage("共售出：".." |cffffffff"..g.."|cffffc125 G|r".." |cffffffff"..s.."|cffc7c7cf S|r".." |cffffffff"..c.."|cffeda55f C|r"..".",255,255,255)
+	end
+	
+	-- 自动修理
+	if CanMerchantRepair() then
+		local cost, possible = GetRepairAllCost()
+		if cost>0 then
+			local c = cost%100
+			local s = math.floor((cost%10000)/100)
+			local g = math.floor(cost/10000)
+			if IsInGuild() then
+				local guildMoney = GetGuildBankWithdrawMoney()
+				if guildMoney > GetGuildBankMoney() then
+					guildMoney = GetGuildBankMoney()
+				end
+				if guildMoney > cost and CanGuildBankRepair() then
+					RepairAllItems(1)
+					DEFAULT_CHAT_FRAME:AddMessage("|cffffff00您修理装备花费了公会：|r"..format(GOLD_AMOUNT_TEXTURE, g, 0, 0).." "..format(SILVER_AMOUNT_TEXTURE, s, 0, 0).." "..format(COPPER_AMOUNT_TEXTURE, c, 0, 0),255,255,255)
+					return
+				end
 			end
-			PlaySound('ITEM_REPAIR')
-			DEFAULT_CHAT_FRAME:AddMessage(str)
+			if possible then
+				RepairAllItems()
+				DEFAULT_CHAT_FRAME:AddMessage("|cffffff00您修理装备花费了：|r"..format(GOLD_AMOUNT_TEXTURE, g, 0, 0).." "..format(SILVER_AMOUNT_TEXTURE, s, 0, 0).." "..format(COPPER_AMOUNT_TEXTURE, c, 0, 0),255,255,255)
+			else
+				DEFAULT_CHAT_FRAME:AddMessage("您没有足够的金币以完成修理！",255,0,0)
+			end
 		end
 	end
+end)
+
+-- 按住Alt一次购买一组
+local savedMerchantItemButton_OnModifiedClick = MerchantItemButton_OnModifiedClick
+function MerchantItemButton_OnModifiedClick(self, ...)
+	if IsAltKeyDown() then
+		local itemLink = GetMerchantItemLink(self:GetID())
+		if not itemLink then
+			return
+		end
+		local maxStack = select(8, GetItemInfo(itemLink))
+		if maxStack and maxStack > 1 then
+			BuyMerchantItem(self:GetID(), GetMerchantItemMaxStack(self:GetID()))
+		end
+	end
+	savedMerchantItemButton_OnModifiedClick(self, ...)
 end
