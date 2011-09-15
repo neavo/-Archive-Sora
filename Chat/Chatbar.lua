@@ -9,7 +9,7 @@
 
 local _, SR = ...
 local cfg = SR.ChatConfig
-
+local MainBar = _G["MainBar"]
 
 
 local Channel = {"SAY","YELL","PARTY","GUILD","RAID"}
@@ -24,10 +24,10 @@ local Color = {
 	{255/255, 255/255,   0/255, 0.8},
 }
 
-local Chatbar = CreateFrame("Frame", nil, UIParent)
-Chatbar:SetWidth(300)
+local Chatbar = CreateFrame("Frame", nil, MainBar)
+Chatbar:SetWidth(MainBar:GetWidth()-130)
 Chatbar:SetHeight(13)
-Chatbar:SetPoint("TOP", ChatFrame1, "BOTTOM", 0, -9)
+Chatbar:SetPoint("CENTER", MainBar, "CENTER", 0, 0)
 
 
 for i=1,7 do
