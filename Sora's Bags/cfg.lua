@@ -7,7 +7,7 @@
 ------------
 
 local cfg = CreateFrame("Frame")
-local Media = "Interface\\Addons\\Sora's\\Bags\\media\\"
+local Media = "Interface\\Addons\\Sora's Bags\\Media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.edgeFile = Media.."glowTex"

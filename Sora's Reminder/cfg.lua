@@ -7,7 +7,7 @@
 ------------
 
 local cfg = CreateFrame("Frame")
-local Media = "Interface\\AddOns\\Sora's\\Plugins\\Reminder\\Media\\"
+local Media = "Interface\\AddOns\\Sora's Reminder\\Media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.Solid = Media.."solid"
 cfg.GlowTex = Media.."glowTex"

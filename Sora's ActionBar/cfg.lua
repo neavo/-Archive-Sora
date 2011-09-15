@@ -7,7 +7,7 @@
 ------------
 
 local cfg = CreateFrame("Frame")
-local Media = "Interface\\AddOns\\Sora's\\ActionBar\\Media\\"
+local Media = "Interface\\AddOns\\Sora's ActionBar\\Media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.Texture = Media.."icon"

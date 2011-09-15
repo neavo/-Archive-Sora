@@ -7,7 +7,7 @@
 ------------
 
 local cfg = CreateFrame("Frame")
-local Media = "Interface\\Addons\\Sora's\\MiniMap\\media\\"
+local Media = "Interface\\Addons\\Sora's MiniMap\\media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"

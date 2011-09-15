@@ -7,7 +7,7 @@
 ------------
 
 local cfg = CreateFrame("Frame")
-local Media = "Interface\\Addons\\Sora's\\Buff\\media\\"
+local Media = "Interface\\Addons\\Sora's Buff\\media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"
