@@ -1,0 +1,21 @@
+tag 1.4.1
+4834e4837a9b03f6d85498d3549d60b9bb195882
+Hendrik Leppkes <h.leppkes@gmail.com>
+2011-04-27 16:48:33 +0200
+
+Tag as 1.4.1
+
+
+--------------------
+
+Hendrik Leppkes:
+	- Bump .toc
+	- Fix for 4.1
+	- Use a hidden parent frame to hide the Track Quest checkbox.
+	- Fix digsite blobs on certain conditions when switching maps in combat.
+	- Fix digsite blob position after minimizing and maximizing the map again.
+	- nil out the new scale when proxying the blob frame.
+	- Proxy :SetScale on the dig site blob frame as well, so it doesn't go boom in combat.
+	- Fix digsite blobs when the quest panels are shown or the map is minimized.
+	- Added missing fog clear data for parts of Vashjir and Twilight Highlands.
+	- Only let Blizzard move the quest description if we're actually showing the quest panel on the map.
