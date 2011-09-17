@@ -1,7 +1,0 @@
-﻿## Interface: 40100
-## Title: FilgerMod
-## Notes: Moded by Neavo
-
-## X-Email:neavo7@Gmail.com
-
-Load_FilgerMod.xml
