@@ -7,7 +7,7 @@
 ------------
 
 local cfg = CreateFrame("Frame")
-local Media = "Interface\\AddOns\\FilgerMod\\Media\\"
+local Media = "Interface\\AddOns\\Sora's AuraWatch\\Media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.Statusbar = Media.."statusbar"
 cfg.GlowTex = Media.."glowTex"
