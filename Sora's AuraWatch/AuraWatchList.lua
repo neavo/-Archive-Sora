@@ -1,19 +1,45 @@
 ﻿--[[
 
-	关于FilgerMod的新属性
-
-	spellID，iconSize，unitId，barWidth，caster，Filter 等属性均与Filger原版一样，就不说多了,不理解的请自行查阅资料
-
-	要说的是新属性stack，即BUFF层数的显示阀值
-
-	当BUFF的层数"大于等于"stack的值得时候，BUFF才会显示
-
-	如果不需要控制BUFF层数阀值，请将stack设为0，或者干脆不要写stack这一项，就像下面的Test_Icon一样
+	Sora's AuraWatch对于Buff列表的管理是分组进行的,每一组Buff公用同一个定位点,同样的大小,同样的样式
 	
-	-- Test_Icon
-	{spellID = 67696, unitId = "player", Filter = "BUFF"},
-	-- Test_Bar
-	{spellID = 67696, iconSize = 30, barWidth = 170 ,unitId = "player", Filter = "BUFF", stack = 3},
+	在组属性中
+	{
+		Name = 分组的名称
+		Direction = 提示的增长方向 ("RIGHT"/"LEFT"/"UP"/"DOWN")
+		Interval = 相邻提示的间距
+		Mode = 提示模式(图标ICON 或者 计时条BAR)
+		iconSize = 图标大小
+		barWidth = 计时条宽度(BAR模式下必须有这个属性)
+		Pos = 首图标的定位点
+		List = 要监视的Buff/Debuff/CD列表
+	}
+	
+	其中List = 
+	{
+		spellID = 要监视的Buff/Debuff/技能 ID (必须有)
+		unitId = 要监视的目标，常用的有 玩家"player"/目标"target" (必须有)
+		Filter = 要监视的类型， "BUFF"/"DEBUFF"/"CD" (必须有)
+		Caster = 过滤Buff/Debuff的释放者 (可选，如果不需要按照施法者过滤请不要写这一项)
+		Stack = 过滤Buff/Debuff的层数(可选，当Buff/Debuff层数大于等于Stack的值的时候才显示)
+	}
+
+	eg. 这是一个示例
+	{
+		Name = "TargetDebuff",
+		Direction = "UP",
+		Interval = 4,
+		Mode = "BAR",
+		iconSize = 16,
+		barWidth = 175,
+		Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+		List = {
+			--血之疫病
+			{spellID = 55078, unitId = "target", Filter = "DEBUFF", Stack = 1},
+			--冰霜疫病
+			{spellID = 55095, unitId = "target", Filter = "DEBUFF", Caster = "player"},
+		},
+	},
+
 ]]
 
 
@@ -933,7 +959,7 @@ SRAuraList = {
 			},
 		},
 		
-		{
+		--[[{
 			--Name = "CD",
 			Direction = "UP",
 			Interval = 4,
@@ -945,7 +971,7 @@ SRAuraList = {
 				--Example
 				{spellID = 57330, Filter = "CD"},
 			},
-		},	
+		},	]]
 	
 	},
 }

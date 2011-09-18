@@ -97,7 +97,7 @@ local function Update()
 			else
 				contiue = false
 			end
-			if value.caster and caster and value.caster:lower() ~= caster:lower() then
+			if value.Caster and caster and value.Caster:lower() ~= caster:lower() then
 				contiue = false
 			end
 			if value.Stack and count and value.Stack > count then
