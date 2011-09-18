@@ -15,8 +15,7 @@ function cfg.BuildICON(iconSize)
 	Frame:SetHeight(iconSize)
 	
 	Frame.Icon = Frame:CreateTexture(nil, "ARTWORK") 
-	Frame.Icon:SetPoint("TOPLEFT", 2, -2)
-	Frame.Icon:SetPoint("BOTTOMRIGHT", -2, 2)
+	Frame.Icon:SetAllPoints()
 	Frame.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92) 
 	
 	Frame.Shadow = CreateFrame("Frame", nil, Frame)
@@ -29,8 +28,8 @@ function cfg.BuildICON(iconSize)
 	Frame.Shadow:SetFrameLevel(0)
 	
 	Frame.Border = CreateFrame("Frame", nil, Frame)
-	Frame.Border:SetPoint("TOPLEFT", 1, -1)
-	Frame.Border:SetPoint("BOTTOMRIGHT", -1, 1)
+	Frame.Border:SetPoint("TOPLEFT", -1, 1)
+	Frame.Border:SetPoint("BOTTOMRIGHT", 1, -1)
 	Frame.Border:SetBackdrop({ 
 		edgeFile = cfg.Solid , edgeSize = 1,
 	})
@@ -42,11 +41,8 @@ function cfg.BuildICON(iconSize)
 	Frame.Count:SetPoint("BOTTOMRIGHT", 3, -1)
 	
 	Frame.Cooldown = CreateFrame("Cooldown", nil, Frame, "CooldownFrameTemplate") 
-	Frame.Cooldown:SetPoint("TOPLEFT", 2, -2) 
-	Frame.Cooldown:SetPoint("BOTTOMRIGHT", -2, 2) 
+	Frame.Cooldown:SetAllPoints() 
 	Frame.Cooldown:SetReverse(true)
-		
-	Frame:Hide()
 	
 	return Frame
 end

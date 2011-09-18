@@ -58,7 +58,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {
 				--嗜血
@@ -158,7 +158,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {	
 				--嗜血
@@ -252,7 +252,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {
 				--嗜血
@@ -336,7 +336,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {
 				--嗜血
@@ -446,7 +446,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 25},
 			List = {
 				--嗜血
@@ -516,7 +516,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {
 				--嗜血
@@ -612,7 +612,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {
 				--嗜血
@@ -658,7 +658,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
 			List = {
 				--变羊
@@ -707,7 +707,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {
 				--嗜血
@@ -740,7 +740,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
 			List = {
 				--变羊
@@ -805,7 +805,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {
 				--嗜血
@@ -834,7 +834,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
 			List = {
 				--变羊
@@ -880,7 +880,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
 			List = {	
 				--嗜血
@@ -921,7 +921,7 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			iconSize = 32,
+			iconSize = 30,
 			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
 			List = {				
 				--变羊

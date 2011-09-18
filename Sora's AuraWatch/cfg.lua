@@ -12,7 +12,6 @@ cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.Statusbar = Media.."statusbar"
 cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"
-cfg.ConfigMode = false
 	
 ----------------
 --  命名空间  --
