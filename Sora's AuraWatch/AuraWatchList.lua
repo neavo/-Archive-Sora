@@ -127,27 +127,27 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {	
 				--挫志咆哮(熊)
-				{spellID =    99, unitId = "target", Filter = "DEBUFF"},
+				{spellID =    99, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--回春术
-				{spellID =   774, unitId = "target", Filter = "DEBUFF"},
+				{spellID =   774, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--割裂(猫)
-				{spellID =  1079, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  1079, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--斜掠(猫)
-				{spellID =  1822, unitId = "target", Filter = "DEBUFF"},			
+				{spellID =  1822, unitId = "target", Caster = "player", Filter = "DEBUFF"},			
 				--虫群
-				{spellID =  5570, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  5570, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--月火术
-				{spellID =  8921, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  8921, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--割伤(熊)
-				{spellID = 33745, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 33745, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--生命绽放
-				{spellID = 33763, unitId = "target", Filter = "DEBUFF"},			
+				{spellID = 33763, unitId = "target", Caster = "player", Filter = "DEBUFF"},			
 				--裂伤(猫)
-				{spellID = 33876, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 33876, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--野蛮咆哮(猫)
-				{spellID = 52610, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 52610, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--阳炎术
-				{spellID = 93402, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 93402, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
@@ -235,13 +235,13 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--猎人印记
-				{spellID =  1130 ,unitId = "target", Filter = "DEBUFF"},
+				{spellID =  1130 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--毒蛇钉刺
-				{spellID =  1978 ,unitId = "target", Filter = "DEBUFF"},
+				{spellID =  1978 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--驱散射击
-				{spellID = 19503 ,unitId = "target", Filter = "DEBUFF"},
+				{spellID = 19503 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--穿刺射击
-				{spellID = 63468 ,unitId = "target", Filter = "DEBUFF"},
+				{spellID = 63468 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
@@ -319,13 +319,13 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {		
 				--点燃
-				{spellID = 12654 ,unitId = "target", Filter = "DEBUFF"},
+				{spellID = 12654 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--临界炽焰
-				{spellID = 22959 ,unitId = "target", Filter = "DEBUFF"},
+				{spellID = 22959 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--减速
-				{spellID = 31589 ,unitId = "target", Filter = "DEBUFF"},
+				{spellID = 31589 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--活动炸弹
-				{spellID = 44457 ,unitId = "target", Filter = "DEBUFF"},
+				{spellID = 44457 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
@@ -435,7 +435,7 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--撕裂(战斗,防御姿态)
-				{spellID = 94009, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 94009, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
@@ -503,9 +503,9 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--灼热烈焰
-				{spellID = 77661, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 77661, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--烈焰震击
-				{spellID =  8050, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  8050, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
@@ -595,13 +595,13 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--制裁之锤
-				{spellID =   853, unitId = "target", Filter = "DEBUFF"},
+				{spellID =   853, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--神圣愤怒
-				{spellID =  2812, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  2812, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--超度邪恶
-				{spellID = 10326, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 10326, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--忏悔
-				{spellID = 20066, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 20066, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
@@ -690,13 +690,13 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--暗言术:痛
-				{spellID =   589, unitId = "target", Filter = "DEBUFF"},
+				{spellID =   589, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--噬灵疫病
-				{spellID =  2944, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  2944, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--虚弱灵魂
-				{spellID =  6788, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  6788, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--吸血鬼之触
-				{spellID = 34914, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 34914, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
@@ -772,29 +772,29 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--腐蚀术
-				{spellID =   172, unitId = "target", Filter = "DEBUFF"},
+				{spellID =   172, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--献祭
-				{spellID =   348, unitId = "target", Filter = "DEBUFF"},
+				{spellID =   348, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--末日灾祸
-				{spellID =   603, unitId = "target", Filter = "DEBUFF"},
+				{spellID =   603, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--暗影箭
-				{spellID =   686, unitId = "target", Filter = "DEBUFF"},
+				{spellID =   686, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--痛苦灾祸
-				{spellID =   980, unitId = "target", Filter = "DEBUFF"},
+				{spellID =   980, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--元素诅咒
-				{spellID =  1490, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  1490, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--烧尽
-				{spellID = 29722, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 29722, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--痛苦无常
-				{spellID = 30108, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 30108, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--鬼影缠身
-				{spellID = 48181, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 48181, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--混乱之箭
-				{spellID = 50796, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 50796, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--浩劫灾祸
-				{spellID = 80240, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 80240, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--古尔丹邪咒
-				{spellID = 86000, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 86000, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},	
 	},
@@ -866,9 +866,9 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--割裂
-				{spellID =  1943, unitId = "target", Filter = "DEBUFF"},
+				{spellID =  1943, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--要害打击
-				{spellID = 84617, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 84617, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			}
 		},
 			
@@ -953,9 +953,9 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--血之疫病
-				{spellID = 55078, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 55078, unitId = "target",  Caster = "player", Filter = "DEBUFF"},
 				--冰霜疫病
-				{spellID = 55095, unitId = "target", Filter = "DEBUFF"},
+				{spellID = 55095, unitId = "target",  Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 		
