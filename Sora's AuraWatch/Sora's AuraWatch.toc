@@ -1,5 +1,6 @@
 ﻿## Interface: 40100
 ## Title: |cff70C0F5Sora's|r AuraWatch
+## Notes: Sora's O(∩_∩)O
 ## Notes: Neavo
 
 ## X-Email:neavo7@Gmail.com
