@@ -51,7 +51,37 @@ local _, SR = ...
 local cfg = SR.AuraWatchConfig
 
 SRAuraList = {
+	-- 全职业
+	["ALL"] = {
+		{
+			Name = "PlayerDebuff",
+			Direction = "RIGHT",
+			Interval = 4,
+			Mode = "ICON",
+			iconSize = 54,
+			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
+			List = {
+				--变羊
+				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
+				--制裁之锤
+				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
+				--肾击
+				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
+				--撕扯
+				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
+				--沉默
+				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
+				--割碎
+				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
+				--断筋
+				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
+				--减速药膏
+				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
+			},
+		},
+	},
 
+	-- 德鲁伊
 	["DRUID"] = {
 		{
 			Name = "PlayerBuff",
@@ -87,33 +117,6 @@ SRAuraList = {
 				{spellID = 93400, unitId = "player", Filter = "BUFF"},
 				--狂暴
 				{spellID = 93622, unitId = "player", Filter = "BUFF"},
-			},
-		},
-
-		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 54,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
 			},
 		},
 		
@@ -152,6 +155,7 @@ SRAuraList = {
 		},
 	},
 	
+	-- 猎人
 	["HUNTER"] = {
 		{
 			Name = "PlayerBuff",
@@ -197,33 +201,6 @@ SRAuraList = {
 				{spellID = 95712, unitId = "player", Filter = "BUFF"},
 			},
 		},
-
-		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 54,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-			   {spellID =   1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-			   {spellID =   3775, unitId = "player", Filter = "DEBUFF"},
-			},
-		},
 		
 		{
 			Name = "TargetDebuff",
@@ -246,6 +223,7 @@ SRAuraList = {
 		},
 	},
 	
+	-- 法师
 	["MAGE"] = {
 		{
 			Name = "PlayerBuff",
@@ -281,33 +259,6 @@ SRAuraList = {
 				{spellID = 87023, unitId = "player", Filter = "BUFF"},
 			},
 		},
-
-		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 54,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
-			},
-		},
 		
 		{
 			Name = "TargetDebuff",
@@ -330,6 +281,7 @@ SRAuraList = {
 		},
 	},
 	
+	-- 战士
 	["WARRIOR"] = {
 		{
 			Name = "PlayerBuff",
@@ -399,33 +351,6 @@ SRAuraList = {
 		},	
 
 		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 54,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-			   {spellID =   1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-			   {spellID =   3775, unitId = "player", Filter = "DEBUFF"},
-			},
-		},
-
-		{
 			Name = "TargetDebuff",
 			Direction = "UP",
 			Interval = 4,
@@ -440,6 +365,7 @@ SRAuraList = {
 		},
 	},
 	
+	-- 萨满
 	["SHAMAN"] = {
 		{
 			Name = "PlayerBuff",
@@ -465,33 +391,6 @@ SRAuraList = {
 				{spellID = 80353, unitId = "player", Filter = "BUFF"},
 			},
 		},
-
-		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 54,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
-			},
-		},
 		
 		{
 			Name = "TargetDebuff",
@@ -510,6 +409,7 @@ SRAuraList = {
 		},
 	},
 	
+	-- 圣骑士
 	["PALADIN"] = {
 		{
 			Name = "PlayerBuff",
@@ -559,33 +459,6 @@ SRAuraList = {
 		},
 
 		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 54,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
-			},
-		},
-		
-		{
 			Name = "TargetDebuff",
 			Direction = "UP",
 			Interval = 4,
@@ -606,6 +479,7 @@ SRAuraList = {
 		},
 	},
 
+	-- 牧师
 	["PRIEST"] = {
 		{
 			Name = "PlayerBuff",
@@ -654,33 +528,6 @@ SRAuraList = {
 		},
 
 		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 30,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
-			},
-		},
-		
-		{
 			Name = "TargetDebuff",
 			Direction = "UP",
 			Interval = 4,
@@ -701,6 +548,7 @@ SRAuraList = {
 		},
 	},
 
+	-- 术士
 	["WARLOCK"] = {
 		{
 			Name = "PlayerBuff",
@@ -732,33 +580,6 @@ SRAuraList = {
 				{spellID = 85383, unitId = "player", Filter = "BUFF"},
 				--魔能火花
 				{spellID = 89937, unitId = "player", Filter = "BUFF"},
-			},
-		},
-
-		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 30,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
 			},
 		},
 
@@ -799,6 +620,7 @@ SRAuraList = {
 		},	
 	},
 	
+	-- 盗贼
 	["ROGUE"] = {
 		{
 			Name = "PlayerBuff",
@@ -830,33 +652,6 @@ SRAuraList = {
 		},
 		
 		{
-			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 30,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
-			}
-		},
-
-		{
 			Name = "TargetDebuff",
 			Direction = "UP",
 			Interval = 4,
@@ -874,6 +669,7 @@ SRAuraList = {
 			
 	},
 	
+	-- 死亡骑士
 	["DEATHKNIGHT"] = {
 		{
 			--Name = "PlayerBuff",
@@ -917,33 +713,6 @@ SRAuraList = {
 		},
 		
 		{
-			--Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			iconSize = 30,
-			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
-			List = {				
-				--变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
-				--制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
-				--肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
-				--撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
-				--沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
-				--割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
-				--断筋
-			    {spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-			    {spellID =  3775, unitId = "player", Filter = "DEBUFF"},
-			},
-		},
-		
-		{
 			--Name = "TargetDebuff",
 			Direction = "UP",
 			Interval = 4,
@@ -953,9 +722,9 @@ SRAuraList = {
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				--血之疫病
-				{spellID = 55078, unitId = "target",  Caster = "player", Filter = "DEBUFF"},
+				{spellID = 55078, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--冰霜疫病
-				{spellID = 55095, unitId = "target",  Caster = "player", Filter = "DEBUFF"},
+				{spellID = 55095, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 		

@@ -4,39 +4,44 @@
 
 local _, SR = ...
 local cfg = SR.AuraWatchConfig
-local Aura = {}
+local Aura, Arg, AuraList = {}, {}, {}
 local class = select(2, UnitClass("player")) 
 local BuildICON = cfg.BuildICON
 local BuildBAR = cfg.BuildBAR
 
+
 -- Init
 local function Init()
+	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
 	for key, _ in pairs(SRAuraList) do
-		if key ~= class then
-			SRAuraList[key] = nil
-		else
+		if key == class then
 			for _, value in pairs(SRAuraList[class]) do
-				local tempTable = {}
-				for i = 1, #(value.List) do
-					local temp = nil
-					if value.Mode:lower() == "icon" then
-						temp = BuildICON(value.iconSize)
-					elseif value.Mode:lower() == "bar" then
-						temp = cfg.BuildBAR(value.iconSize, value.barWidth)
-					end
-					temp:Hide()
-					table.insert(tempTable,temp)
-				end
-				table.insert(Aura,tempTable)
+				table.insert(AuraList, value)
 			end
 		end
+		SRAuraList[key] = nil
+	end
+	for _, value in pairs(AuraList) do
+		local tempTable = {}
+		for i = 1, #(value.List) do
+			local temp = nil
+			if value.Mode:lower() == "icon" then
+				temp = BuildICON(value.iconSize)
+			elseif value.Mode:lower() == "bar" then
+				temp = cfg.BuildBAR(value.iconSize, value.barWidth)
+			end
+			temp:Hide()
+			table.insert(tempTable, temp)
+		end
+		table.insert(Arg, 0)
+		table.insert(Aura, tempTable)
 	end
 end
 
 -- Pos
 local function Pos()
 	for key,VALUE in pairs(Aura) do
-		local value = SRAuraList[class][key]
+		local value = AuraList[key]
 		local Pre = nil
 		for i = 1,#VALUE do
 			local frame = VALUE[i]
@@ -73,15 +78,15 @@ end
 
 -- Update
 local function Update()
-	for _,VALUE in pairs(Aura) do
-		for _,value in pairs(VALUE) do
-			value:Hide()
-			value:SetScript("OnUpdate",nil)		
+	for KEY,VALUE in pairs(Aura) do
+		for i = 1, Arg[KEY] do
+			VALUE[i]:Hide()
+			VALUE[i]:SetScript("OnUpdate",nil)		
 		end
 	end
 	for KEY,VALUE in pairs(Aura) do
-		local flag = 1
-		for _,value in pairs(SRAuraList[class][KEY].List) do
+		Arg[KEY] = 1
+		for key,value in pairs(AuraList[KEY].List) do
 			local spn = GetSpellInfo(value.spellID)
 			local contiue = true
 			local name, icon, count, duration, expires, caster, start
@@ -104,7 +109,7 @@ local function Update()
 				contiue = false
 			end
 			if contiue then
-				local frame = VALUE[flag]
+				local frame = VALUE[Arg[KEY]]
 				frame:Show()
 				
 				if frame.Icon and value.Filter:lower() ~= "cd" then
@@ -135,10 +140,10 @@ local function Update()
 				if frame.Spellname then
 					frame.Spellname:SetText(name)		
 				end
-
-				flag = flag + 1
+				Arg[KEY] = Arg[KEY] + 1
 			end
 		end
+		Arg[KEY] = Arg[KEY] - 1
 	end
 end
 
@@ -156,7 +161,7 @@ end)
 Event.Timer = 0
 Event:SetScript("OnUpdate",function(self,elapsed)
 	self.Timer = self.Timer + elapsed
-	if self.Timer > 0.3 then
+	if self.Timer > 0.5 then
 		self.Timer = 0
 		Update()
 	end	
@@ -166,47 +171,52 @@ end)
 -- Test
 local testFlag = true
 local function Test()
-
 	if testFlag then
 		testFlag = false
 		Event:SetScript("OnUpdate", nil)
+		for _,VALUE in pairs(Aura) do
+			for _,value in pairs(VALUE) do
+				value:Hide()
+				value:SetScript("OnUpdate",nil)		
+				
+				local name, _, icon = GetSpellInfo(118)
+				
+				if value.Icon then
+					value.Icon:SetTexture(icon)
+				end
+				if value.Count then
+					value.Count:SetText("9")
+				end
+				if value.Time then
+					value.Time:SetText("59.59")
+				end
+				if value.Statusbar then
+					value.Statusbar:SetValue(1)
+				end
+				if value.Spellname then
+					value.Spellname:SetText(name)
+				end
+				if value.Cooldown then
+					CooldownFrame_SetTimer(value.Cooldown, nil, nil, nil) 
+				end
+				
+				value:Show()		
+			end
+		end
 	else
+		testFlag = true
 		Event:SetScript("OnUpdate",function(self,elapsed)
 			self.Timer = self.Timer + elapsed
-			if self.Timer > 0.3 then
+			if self.Timer > 0.5 then
 				self.Timer = 0
 				Update()
 			end	
 		end)
-		testFlag = true
-	end
-	for _,VALUE in pairs(Aura) do
-		for _,value in pairs(VALUE) do
-			value:Hide()
-			value:SetScript("OnUpdate",nil)		
-			
-			local name, _, icon = GetSpellInfo(118)
-			
-			if value.Icon then
-				value.Icon:SetTexture(icon)
+		for _,VALUE in pairs(Aura) do
+			for _,value in pairs(VALUE) do
+				value:Hide()
+				value:SetScript("OnUpdate",nil)		
 			end
-			if value.Count then
-				value.Count:SetText("9")
-			end
-			if value.Time then
-				value.Time:SetText("59.59")
-			end
-			if value.Statusbar then
-				value.Statusbar:SetValue(1)
-			end
-			if value.Spellname then
-				value.Spellname:SetText(name)
-			end
-			if value.Cooldown then
-				CooldownFrame_SetTimer(value.Cooldown, nil, nil, nil) 
-			end
-			
-			value:Show()		
 		end
 	end
 end
