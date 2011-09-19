@@ -4,7 +4,7 @@
 
 local _, SR = ...
 local cfg = SR.ThreatConfig
-
+local CLASS_COLORS = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
 
 -- 主框体
 local ThreatFrame = CreateFrame("Frame")
@@ -71,24 +71,11 @@ end
 
 -- 文字格式
 local function FormatNameText(nametext)
-	local t
 	if strupper(nametext) ~= nametext then
-		t = 'English'
+		return nametext:sub(1, cfg.NameTextL)
 	else
-		t = 'Chinese'
+		return nametext:sub(1, cfg.NameTextL*3)
 	end
-
-	local strbox = {}
-	if t == 'English' then
-		for i = 1, cfg.NameTextL do
-			tinsert(strbox, strsub(nametext, i, i))
-		end
-	elseif t == 'Chinese' then
-		for i = 1, cfg.NameTextL * 3, 3 do
-			tinsert(strbox, strsub(nametext, i, i+2))
-		end
-	end
-	return table.concat(strbox,'')
 end
 
 -- 仇恨排序	
@@ -130,11 +117,10 @@ local function UpdateThreatFlag()
 				
 			end
 		
-			local Color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[value.class] and CUSTOM_CLASS_COLORS[value.class] or RAID_CLASS_COLORS[value.class]
-			FlagT.Name:SetVertexColor(Color.r, Color.g, Color.b)
-						
+			FlagT.Name:SetVertexColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
+			
 			FlagT.Text:SetText(FormatNameText(value.name))
-			FlagT.Text:SetTextColor(Color.r, Color.g, Color.b)
+			FlagT.Text:SetTextColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
 
 			FlagT:SetPoint("LEFT", ThreatFrame, "LEFT", 207*100/130+3, 0)
 			FlagT:Show()
@@ -168,14 +154,13 @@ local function UpdateThreatFlag()
 			
 			tinsert(ThreatFlag, Flag)
 		end
-
-		local Color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[value.class] and CUSTOM_CLASS_COLORS[value.class] or RAID_CLASS_COLORS[value.class]	
+		
 		local rawPercent = value.rawPercent
 		
-		Flag.Name:SetVertexColor( Color.r, Color.g, Color.b)
+		Flag.Name:SetVertexColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
 		
 		Flag.Text:SetText(FormatNameText(value.name))
-		Flag.Text:SetTextColor(Color.r, Color.g, Color.b)
+		Flag.Text:SetTextColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
 		
 		Flag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*rawPercent/130+3, 0)
 		Flag:Show()
