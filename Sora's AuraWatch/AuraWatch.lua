@@ -94,7 +94,7 @@ local function Update()
 				name, _, icon, count, _, duration, expires, caster = UnitBuff(value.unitId, spn)
 			elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, spn) then
 				name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, spn)
-			elseif value.Filter:lower() == "cd" and GetSpellCooldown(spn) then
+			elseif value.Filter:lower() == "cd" and GetSpellCooldown(spn) and select(2,GetSpellCooldown(spn)) > 1.5 then
 				start, duration = GetSpellCooldown(spn)
 				_, _, icon = GetSpellInfo(value.spellID)
 				count = 0

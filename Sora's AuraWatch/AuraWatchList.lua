@@ -729,18 +729,27 @@ SRAuraList = {
 		},
 		
 		--[[{
-			--Name = "CD",
-			Direction = "UP",
+			Name = "CD",
+			Direction = "RIGHT",
 			Interval = 4,
-			Mode = "BAR",
-			iconSize = 16,
-			barWidth = 175,
+			Mode = "ICON",
+			iconSize = 48,
 			Pos = {"CENTER", UIParent, "CENTER", 0, 100},
 			List = {	
 				--Example
-				{spellID = 57330, Filter = "CD"},
+				{spellID = 77577, Filter = "CD"},
+				--Example
+				{spellID = 48982, Filter = "CD"},
+				--Example
+				{spellID = 55233, Filter = "CD"},
+				--Example
+				{spellID = 49028, Filter = "CD"},
+				--Example
+				{spellID = 48792, Filter = "CD"},
+				--Example
+				{spellID = 48707, Filter = "CD"},
 			},
-		},	]]
+		},]]
 	
 	},
 }
