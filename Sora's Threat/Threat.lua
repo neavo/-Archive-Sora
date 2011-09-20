@@ -4,7 +4,7 @@
 
 local _, SR = ...
 local cfg = SR.ThreatConfig
-local ThreatList, ThreatFlag, ThreatGuid = {}, {}, ""
+local ThreatList, ThreatFlag = {}, {}
 local Threat = CreateFrame("Frame")
 
 -- 初始化
@@ -107,20 +107,17 @@ local function getThreat(unit, pet)
 end
 
 local function addThreat(unit, pet)
-
 	if UnitExists(pet) then
 		getThreat(unit)
 		getThreat(unit, pet)
-	else
-		if GetNumPartyMembers() > 0 or GetNumRaidMembers() > 0 then
-			getThreat(unit)
-		end
+	elseif GetNumPartyMembers() > 0 or GetNumRaidMembers() > 0 then
+		getThreat(unit)
 	end
 end
 
-local function updateThreat(unit)
+local function updateThreat()
 	wipe(ThreatList)
-	if unit and UnitExists(unit) and UnitCanAttack("player", unit) then
+	if UnitExists("target") and UnitCanAttack("player", "target") then
 		if GetNumRaidMembers() > 0 then
 			for i = 1, GetNumRaidMembers() do
 				addThreat("raid"..i, "raid"..i.."pet")
@@ -149,6 +146,20 @@ local function sortThreat(a,b)
 	return a.rawPercent > b.rawPercent
 end
 
+local function shouldShow()
+	local temp = true
+	if not UnitCanAttack("player", "target") or UnitIsDead("target") then
+		temp = false
+	end
+	if not HasPetUI() and not (GetNumPartyMembers() > 0) then
+		temp = false
+	end
+	if IsActiveBattlefieldArena() then
+		temp = false
+	end
+	return temp
+end
+
 local function updateThreatFlag()
 
 	-- 隐藏旧的仇恨标签
@@ -173,10 +184,11 @@ local function updateThreatFlag()
 		end
 	end
 	
+	-- 仇恨排序
 	table.sort(ThreatList, sortThreat)
 	
 	-- 设置一般仇恨标签
-	for key, value in ipairs(ThreatFlag) do
+	for key, value in pairs(ThreatFlag) do
 		if ThreatList[key] then
 			local class = ThreatList[key].class
 			local rawPercent = ThreatList[key].rawPercent
@@ -192,16 +204,16 @@ local function updateThreatFlag()
 			value:Show()
 		end
 	end
+			
 end
 
--- 渐隐/渐显
-local function Fade(frame)
-	if HasPetUI() or GetNumPartyMembers() > 0 then
-		if frame:GetAlpha() > 0.9 then
-			UIFrameFadeOut(Threat, 0.5, 1, 0)
-		elseif frame:GetAlpha() < 0.1 then
-			UIFrameFadeIn(Threat, 0.5, 0, 1)
-		end
+-- 更新目标
+local function updateTarget()
+	wipe(ThreatList)
+	if shouldShow() then
+		UIFrameFadeIn(Threat, 0.5, 0, 1)
+	else
+		UIFrameFadeOut(Threat, 0.5, 1, 0)
 	end
 end
 
@@ -213,21 +225,28 @@ Event:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 Event:RegisterEvent("PLAYER_TARGET_CHANGED")
 Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 Event:RegisterEvent("PLAYER_REGEN_ENABLED")
-Event:SetScript("OnEvent",function(self, event, unit, ...)
+Event:SetScript("OnEvent",function(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		Init()
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		Pos()
-	elseif event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" then
-		Fade(Threat)
-	elseif event == "UNIT_THREAT_LIST_UPDATE" then
-		updateThreat(unit)
-		updateThreatFlag()
-	elseif event == "PLAYER_TARGET_CHANGED" then
-		if UnitAffectingCombat("player") and (HasPetUI() or GetNumPartyMembers() > 0) then
-			UIFrameFadeIn(Threat, 0.5, 0, 1)
+	elseif event == "PLAYER_REGEN_DISABLED" then
+		if shouldShow() then
+			if Threat:GetAlpha() < 0.1 then
+				UIFrameFadeIn(Threat, 0.5, 0, 1)
+			end
 		end
-		wipe(ThreatList)
+	elseif event == "PLAYER_REGEN_ENABLED" then
+		if shouldShow() then
+			if Threat:GetAlpha() > 0.9 then
+				UIFrameFadeOut(Threat, 0.5, 1, 0)
+			end
+		end
+	elseif event == "UNIT_THREAT_LIST_UPDATE" and UnitAffectingCombat("player") then
+		updateThreat()
+		updateThreatFlag()
+	elseif event == "PLAYER_TARGET_CHANGED" and UnitAffectingCombat("player") then
+		updateTarget()
 		updateThreatFlag()
 	end	
 end)
