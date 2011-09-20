@@ -114,7 +114,7 @@ local function Update()
 				
 				if frame.Icon and value.Filter:lower() ~= "cd" then
 					frame.Icon:SetTexture(icon)
-				elseif frame.Icon and value.Filter:lower() == "cd" and duration > 1.5 then
+				elseif frame.Icon and value.Filter:lower() == "cd" then
 					frame.Icon:SetTexture(icon)
 				elseif frame.Icon then
 					frame.Icon:SetTexture(nil)
