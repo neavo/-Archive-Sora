@@ -64,14 +64,20 @@ end
 -- OnUpdate
 local Timer = 0
 local function OnUpdate(self, elapsed)
-	Timer = self.Filter == "CD" and self.expires+self.duration-GetTime() or self.expires-GetTime() 
+	Timer = self.Filter == "CD" and self.expires+self.duration-GetTime() or self.expires-GetTime()
 	if self.Time then
-		self.Statusbar:SetMinMaxValues(0, self.duration) 
-		self.Statusbar:SetValue(Timer) 
-		if Timer <= 60 then
-			self.Time:SetFormattedText("%.1f",(Timer)) 
+		if Timer < -1 then
+			self.Time:SetText("N/A")
+			self.Statusbar:SetMinMaxValues(0,1) 
+			self.Statusbar:SetValue(1)		
+		elseif Timer <= 60 then
+			self.Time:SetFormattedText("%.1f",(Timer))
+			self.Statusbar:SetMinMaxValues(0, self.duration) 
+			self.Statusbar:SetValue(Timer)
 		else
-			self.Time:SetFormattedText("%d:%.1d",(Timer/60),(Timer/2)) 
+			self.Time:SetFormattedText("%d:%.1d",(Timer/60),(Timer/2))
+			self.Statusbar:SetMinMaxValues(0, self.duration) 
+			self.Statusbar:SetValue(Timer)
 		end
 	end
 end

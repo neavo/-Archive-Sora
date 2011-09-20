@@ -725,6 +725,8 @@ SRAuraList = {
 				{spellID = 55078, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--冰霜疫病
 				{spellID = 55095, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				--冰霜疫病
+				{spellID = 61574, unitId = "target", Filter = "BUFF"},
 			},
 		},
 		
