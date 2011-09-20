@@ -4,43 +4,91 @@
 
 local _, SR = ...
 local cfg = SR.ThreatConfig
-local CLASS_COLORS = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
+local ThreatList, ThreatFlag, ThreatGuid = {}, {}, ""
+local Threat = CreateFrame("Frame")
 
--- 主框体
-local ThreatFrame = CreateFrame("Frame")
-ThreatFrame:SetWidth(cfg.ThreatBarWidth)
-ThreatFrame:SetHeight(6)
-ThreatFrame:SetAlpha(0)
-ThreatFrame:SetFrameLevel(1)
-ThreatFrame:SetBackdrop({ 
-	bgFile = cfg.Statusbar, 
-})
+-- 初始化
+local function Init()
 
-ThreatFrame.Overlay = CreateFrame("Frame", nil, ThreatFrame)
-ThreatFrame.Overlay:SetPoint("TOPLEFT", -1, 1)
-ThreatFrame.Overlay:SetPoint("BOTTOMRIGHT", 1, -1)
-ThreatFrame.Overlay:SetBackdrop({ 
-	edgeFile = cfg.Solid, edgeSize = 1
-})
-ThreatFrame.Overlay:SetBackdropBorderColor(0,0,0,1)
+	-- 创建主框体
+	Threat:SetWidth(cfg.ThreatBarWidth)
+	Threat:SetHeight(6)
+	Threat:SetAlpha(0)
+	Threat:SetFrameLevel(1)
+	Threat:SetBackdrop({ 
+		bgFile = cfg.Statusbar, 
+	})
 
-ThreatFrame.Shadow = CreateFrame("Frame", nil, ThreatFrame.Overlay)
-ThreatFrame.Shadow:SetFrameLevel(0)
-ThreatFrame.Shadow:SetPoint("TOPLEFT", 5, 1)
-ThreatFrame.Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
-ThreatFrame.Shadow:SetBackdrop({ 
-	edgeFile = cfg.GlowTex, edgeSize = 5
-})
-ThreatFrame.Shadow:SetBackdropBorderColor(0,0,0,1)
+	Threat.Border = CreateFrame("Frame", nil, Threat)
+	Threat.Border:SetPoint("TOPLEFT", -1, 1)
+	Threat.Border:SetPoint("BOTTOMRIGHT", 1, -1)
+	Threat.Border:SetBackdrop({ 
+		edgeFile = cfg.Solid, edgeSize = 1
+	})
+	Threat.Border:SetBackdropBorderColor(0,0,0,1)
 
--- 构建仇恨列表
-local ThreatList, ThreatFlag, ThreatUnit, ThreatGuid = {}, {}, "target", ""
-local function GetThreat(unit, pet)
+	Threat.Shadow = CreateFrame("Frame", nil, Threat.Border)
+	Threat.Shadow:SetFrameLevel(0)
+	Threat.Shadow:SetPoint("TOPLEFT", 5, 1)
+	Threat.Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	Threat.Shadow:SetBackdrop({ 
+		edgeFile = cfg.GlowTex, edgeSize = 5
+	})
+	Threat.Shadow:SetBackdropBorderColor(0,0,0,1)
+	
+	-- 创建坦克仇恨标签
+	Threat.FlagT = CreateFrame("Frame","ThreatFlagTank",Threat)
+	Threat.FlagT:SetWidth(1)
+	Threat.FlagT:SetHeight(Threat:GetHeight())
+	Threat.FlagT:SetBackdrop({ bgFile = cfg.Solid })
+	Threat.FlagT:SetBackdropColor(0,0,0)
+	Threat.FlagT:SetFrameLevel(2)
+	
+	Threat.FlagT.Name = Threat.FlagT:CreateTexture(nil, "OVERLAY")
+	Threat.FlagT.Name:SetHeight(16)
+	Threat.FlagT.Name:SetWidth(32)
+	Threat.FlagT.Name:SetTexture(cfg.ArrowLarge)
+	Threat.FlagT.Name:SetPoint("BOTTOM", Threat.FlagT, "TOP", 0, 0)
+	
+	Threat.FlagT.Text = Threat.FlagT:CreateFontString(nil, "OVERLAY")
+	Threat.FlagT.Text:SetFont(cfg.Font,9,"THINOUTLINE")
+	Threat.FlagT.Text:SetPoint("BOTTOM", Threat.FlagT.Name, "TOP", 1, -1)
+	
+	-- 创建一般仇恨标签
+	for i=1, cfg.ThreatLimited do 
+		Flag = CreateFrame("Frame", nil, Threat)
+		Flag:SetWidth(1)
+		Flag:SetHeight(Threat:GetHeight())
+		Flag:SetBackdrop({ bgFile = cfg.Solid })
+		Flag:SetBackdropColor(0,0,0)
+		Flag:SetFrameLevel(2)
+		
+		Flag.Name = Flag:CreateTexture(nil,"OVERLAY")
+		Flag.Name:SetHeight(8)
+		Flag.Name:SetWidth(16)
+		Flag.Name:SetTexture(cfg.ArrowSmall)
+		Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, -1)
+		
+		Flag.Text = Flag:CreateFontString(nil,"OVERLAY")
+		Flag.Text:SetFont(cfg.Font,9,"THINOUTLINE")
+		Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, -1)
+		
+		tinsert(ThreatFlag, Flag)
+	end
+end
+
+-- 设置锚点
+local function Pos()
+	Threat:SetPoint(unpack(cfg.Pos))
+end
+
+-- 更新仇恨列表
+local function getThreat(unit, pet)
 	if UnitName(pet or unit) == UNKNOWN or not UnitIsVisible(pet or unit) then
 		return
 	end
 	
-	local isTanking, _, _, rawPercent, _  = UnitDetailedThreatSituation(pet or unit, ThreatUnit)
+	local isTanking, _, _, rawPercent = UnitDetailedThreatSituation(pet or unit, "target")
 	local name = pet and UnitName(pet) or UnitName(unit)
 	
 	for index, value in ipairs(ThreatList) do
@@ -54,161 +102,132 @@ local function GetThreat(unit, pet)
 		name = name,
 		class = select(2, UnitClass(unit)),
 		rawPercent = rawPercent or 0,
-		isTanking = isTanking or nil,
+		isTanking = isTanking or false,
 	})
 end
 
-local function AddThreat(unit, pet)
+local function addThreat(unit, pet)
+
 	if UnitExists(pet) then
-		GetThreat(unit)
-		GetThreat(unit, pet)
+		getThreat(unit)
+		getThreat(unit, pet)
 	else
 		if GetNumPartyMembers() > 0 or GetNumRaidMembers() > 0 then
-			GetThreat(unit)
+			getThreat(unit)
 		end
 	end
 end
 
--- 文字格式
-local function FormatNameText(nametext)
-	if strupper(nametext) ~= nametext then
-		return nametext:sub(1, cfg.NameTextL)
+local function updateThreat(unit)
+	wipe(ThreatList)
+	if unit and UnitExists(unit) and UnitCanAttack("player", unit) then
+		if GetNumRaidMembers() > 0 then
+			for i = 1, GetNumRaidMembers() do
+				addThreat("raid"..i, "raid"..i.."pet")
+			end
+		elseif GetNumPartyMembers() > 0 then
+			addThreat("player", "pet")
+			for i = 1, GetNumPartyMembers() do
+				addThreat("party"..i, "party"..i.."pet")
+			end
+		else
+			addThreat("player", "pet")
+		end	
+	end	
+end
+
+-- 更新仇恨标签
+local function formatName(name)
+	if strupper(name) ~= name then
+		return name:sub(1, cfg.NameTextL)
 	else
-		return nametext:sub(1, cfg.NameTextL*3)
+		return name:sub(1, cfg.NameTextL*3)
 	end
 end
 
--- 仇恨排序	
-local function SortThreat(a,b)
+local function sortThreat(a,b)
 	return a.rawPercent > b.rawPercent
 end
 
-local function UpdateThreatFlag()
-	local Flag, FlagT
-	
+local function updateThreatFlag()
+
+	-- 隐藏旧的仇恨标签
+	Threat.FlagT:Hide()
 	for key, value in ipairs(ThreatFlag) do
 		value:Hide()
 	end
-	if _G["ThreatFlagTank"] then
-		_G["ThreatFlagTank"]:Hide()
-	end
 	
+	-- 设置Tank仇恨标签
 	for key, value in ipairs(ThreatList) do
 		if ThreatList[key].isTanking then
-			FlagT = _G["ThreatFlagTank"]
-			if not FlagT then
-				
-				FlagT = CreateFrame("Frame","ThreatFlagTank",ThreatFrame)
-				FlagT:SetWidth(1)
-				FlagT:SetHeight(ThreatFrame:GetHeight())
-				FlagT:SetBackdrop({ bgFile = cfg.Solid })
-				FlagT:SetBackdropColor(0,0,0)
-				FlagT:SetFrameLevel(2)
-				
-				FlagT.Name = FlagT:CreateTexture(nil,"OVERLAY")
-				FlagT.Name:SetHeight(16)
-				FlagT.Name:SetWidth(32)
-				FlagT.Name:SetTexture(cfg.ArrowLarge)
-				FlagT.Name:SetPoint("BOTTOM", FlagT, "TOP", 0, 0)
-				
-				FlagT.Text = FlagT:CreateFontString(nil,"OVERLAY")
-				FlagT.Text:SetFont(cfg.Font,9,"THINOUTLINE")
-				FlagT.Text:SetPoint("BOTTOM", FlagT.Name, "TOP", 1, -1)
-				
-			end
-		
-			FlagT.Name:SetVertexColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
+			local CLASS_COLORS = RAID_CLASS_COLORS[value.class]
+			Threat.FlagT.Name:SetVertexColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
 			
-			FlagT.Text:SetText(FormatNameText(value.name))
-			FlagT.Text:SetTextColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
+			Threat.FlagT.Text:SetText(formatName(value.name))
+			Threat.FlagT.Text:SetTextColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
 
-			FlagT:SetPoint("LEFT", ThreatFrame, "LEFT", 207*100/130+3, 0)
-			FlagT:Show()
+			Threat.FlagT:SetPoint("LEFT", Threat, "LEFT", 207*100/130+3, 0)
+			Threat.FlagT:Show()
 			
 			tremove(ThreatList, key)
-			
 		end
 	end
-	table.sort(ThreatList, SortThreat)
-	for key, value in ipairs(ThreatList) do
-		if key > cfg.ThreatLimited then return end
-		
-		Flag = ThreatFlag[key]
-		if not Flag then
-			Flag = CreateFrame("Frame","ThreatFlag"..key,ThreatFrame)
-			Flag:SetWidth(1)
-			Flag:SetHeight(ThreatFrame:GetHeight())
-			Flag:SetBackdrop({ bgFile = cfg.Solid })
-			Flag:SetBackdropColor(0,0,0)
-			Flag:SetFrameLevel(2)
+	
+	table.sort(ThreatList, sortThreat)
+	
+	-- 设置一般仇恨标签
+	for key, value in ipairs(ThreatFlag) do
+		if ThreatList[key] then
+			local class = ThreatList[key].class
+			local rawPercent = ThreatList[key].rawPercent
+			local name = ThreatList[key].name
 			
-			Flag.Name = Flag:CreateTexture(nil,"OVERLAY")
-			Flag.Name:SetHeight(8)
-			Flag.Name:SetWidth(16)
-			Flag.Name:SetTexture(cfg.ArrowSmall)
-			Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, -1)
+			local CLASS_COLORS = RAID_CLASS_COLORS[class]
+			value.Name:SetVertexColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
 			
-			Flag.Text = Flag:CreateFontString(nil,"OVERLAY")
-			Flag.Text:SetFont(cfg.Font,9,"THINOUTLINE")
-			Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, -1)
+			value.Text:SetText(formatName(name))
+			value.Text:SetTextColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
 			
-			tinsert(ThreatFlag, Flag)
+			value:SetPoint("LEFT", Threat, "LEFT", 207*rawPercent/130+3, 0)
+			value:Show()
 		end
-		
-		local rawPercent = value.rawPercent
-		
-		Flag.Name:SetVertexColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
-		
-		Flag.Text:SetText(FormatNameText(value.name))
-		Flag.Text:SetTextColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
-		
-		Flag:SetPoint("LEFT", ThreatFrame, "LEFT", 207*rawPercent/130+3, 0)
-		Flag:Show()
+	end
+end
+
+-- 渐隐/渐显
+local function Fade(frame)
+	if HasPetUI() or GetNumPartyMembers() > 0 then
+		if frame:GetAlpha() > 0.9 then
+			UIFrameFadeOut(Threat, 0.5, 1, 0)
+		elseif frame:GetAlpha() < 0.1 then
+			UIFrameFadeIn(Threat, 0.5, 0, 1)
+		end
 	end
 end
 
 -- Event
 local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("PLAYER_ENTERING_WORLD")
 Event:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 Event:RegisterEvent("PLAYER_TARGET_CHANGED")
 Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 Event:RegisterEvent("PLAYER_REGEN_ENABLED")
-Event:RegisterEvent("ADDON_LOADED")
-Event:SetScript("OnEvent",function(self, event, unit)
-	if event == "PLAYER_ENTERING_WORLD" then
-		ThreatFrame:SetPoint(unpack(cfg.Pos))
-	elseif event == "PLAYER_REGEN_DISABLED" then
-		UIFrameFadeIn(ThreatFrame, 0.5, 0, 1)
-	elseif event == "PLAYER_REGEN_ENABLED" then
-		UIFrameFadeOut(ThreatFrame, 0.5, 1, 0)
+Event:SetScript("OnEvent",function(self, event, unit, ...)
+	if event == "PLAYER_LOGIN" then
+		Init()
+	elseif event == "PLAYER_ENTERING_WORLD" then
+		Pos()
+	elseif event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" then
+		Fade(Threat)
 	elseif event == "UNIT_THREAT_LIST_UPDATE" then
-		if unit and UnitExists(unit) and UnitGUID(unit) == ThreatGuid and UnitCanAttack("player", ThreatUnit) then
-			wipe(ThreatList)
-			if GetNumRaidMembers() > 0 then
-				for i = 1, GetNumRaidMembers() do
-					AddThreat("raid"..i, "raid"..i.."pet")
-				end
-			elseif GetNumPartyMembers() > 0 then
-				AddThreat("player", "pet")
-				for i = 1, GetNumPartyMembers() do
-					AddThreat("party"..i, "party"..i.."pet")
-				end
-			else
-				AddThreat("player", "pet")
-			end
-			UpdateThreatFlag()
-		end
+		updateThreat(unit)
+		updateThreatFlag()
 	elseif event == "PLAYER_TARGET_CHANGED" then
-		if UnitExists("target") and not UnitIsDead("target") and not UnitIsPlayer("target") then
-			ThreatGuid = UnitGUID("target")
-			if UnitAffectingCombat("player") then
-				UIFrameFadeIn(ThreatFrame, 0.5, 0, 1)
-			end
-		else
-			ThreatGuid = ""
+		if UnitAffectingCombat("player") and (HasPetUI() or GetNumPartyMembers() > 0) then
+			UIFrameFadeIn(Threat, 0.5, 0, 1)
 		end
 		wipe(ThreatList)
-		UpdateThreatFlag()
+		updateThreatFlag()
 	end	
 end)
