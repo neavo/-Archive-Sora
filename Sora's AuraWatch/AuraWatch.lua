@@ -47,13 +47,13 @@ local function Pos()
 			local frame = VALUE[i]
 			if i == 1 then
 				frame:SetPoint(unpack(value.Pos))
-			elseif value.Direction == "RIGHT" then
+			elseif value.Direction:lower() == "right" then
 				frame:SetPoint("LEFT", Pre, "RIGHT", value.Interval, 0)
-			elseif value.Direction == "LEFT" then
+			elseif value.Direction:lower() == "left" then
 				frame:SetPoint("RIGHT", Pre, "LEFT", -value.Interval, 0)
-			elseif value.Direction == "UP" then
+			elseif value.Direction:lower() == "up" then
 				frame:SetPoint("BOTTOM", Pre, "TOP", 0, value.Interval)
-			elseif value.Direction == "DOWN" then
+			elseif value.Direction:lower() == "down" then
 				frame:SetPoint("TOP", Pre, "BOTTOM", 0, -value.Interval)
 			end
 			Pre = frame
@@ -82,71 +82,149 @@ local function OnUpdate(self, elapsed)
 	end
 end
 
+-- updateBuff
+local function updateBuff(frame, value, idName)
+	local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.unitId, idName)
+	
+	-- 判断施法者和层数阈值
+	if value.Caster and value.Caster:lower() ~= caster:lower() then
+		return
+	end
+	if value.Stack and value.Stack > count then
+		return
+	end
+	
+	-- 更新图标
+	frame:Show()
+	frame.Icon:SetTexture(icon)
+	frame.Count:SetText(count > 1 and count or "")
+	if frame.Cooldown then
+		CooldownFrame_SetTimer(frame.Cooldown, expires-duration, duration, 1)
+	end
+	
+	-- 更新计时条
+	if frame.Time then
+		frame.Filter = value.Filter
+		frame.duration = duration
+		frame.expires = expires
+		frame.Spellname:SetText(name)
+		frame:SetScript("OnUpdate",OnUpdate)
+	end
+
+end
+
+-- updateDebuff
+local function updateDebuff(frame, value, idName)
+	local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, idName)
+	
+	-- 判断施法者和层数阈值
+	if value.Caster and value.Caster:lower() ~= caster:lower() then
+		return
+	end
+	if value.Stack and value.Stack > count then
+		return
+	end
+	
+	-- 更新图标
+	frame:Show()
+	frame.Icon:SetTexture(icon)
+	frame.Count:SetText(count > 1 and count or "")
+	if frame.Cooldown then
+		CooldownFrame_SetTimer(frame.Cooldown, expires-duration, duration, 1)
+	end
+	
+	-- 更新计时条
+	if frame.Time then
+		frame.Filter = value.Filter
+		frame.duration = duration
+		frame.expires = expires
+		frame.Spellname:SetText(name)
+		frame:SetScript("OnUpdate",OnUpdate)
+	end
+
+end
+
+-- updateCD
+local function updateCD(frame, value, idName)
+	start, duration = GetSpellCooldown(idName)
+	_, _, icon = GetSpellInfo(value.spellID)
+
+	-- 更新图标
+	frame:Show()	
+	frame.Icon:SetTexture(icon)
+	if frame.Cooldown then
+		frame.Cooldown:SetReverse(false)
+		CooldownFrame_SetTimer(frame.Cooldown, start , duration, 1)
+	end
+	
+	-- 更新计时条
+	if frame.Time then
+		frame.Filter = value.Filter
+		frame.duration = duration
+		frame.expires = start
+		frame.Spellname:SetText(idName)	
+		frame:SetScript("OnUpdate",OnUpdate)
+	end
+
+end
+
+-- updateItemCD
+local function updateItemCD(frame, value, idName)
+	start, duration = GetItemCooldown(value.itemID)
+	name, _, _, _, _, _, _, _, _, icon = GetItemInfo(value.itemID)
+
+	-- 更新图标
+	frame:Show()
+	frame.Icon:SetTexture(icon)
+	if frame.Cooldown then
+		frame.Cooldown:SetReverse(false)
+		CooldownFrame_SetTimer(frame.Cooldown, start , duration, 1)
+	end
+	
+	-- 更新计时条
+	if frame.Time then
+		frame.Filter = value.Filter
+		frame.duration = duration
+		frame.expires = start
+		frame.Spellname:SetText(idName)	
+		frame:SetScript("OnUpdate",OnUpdate)
+	end
+	
+end
+
 -- Update
 local function Update()
+
+	-- 重置旧的Aura
 	for KEY,VALUE in pairs(Aura) do
 		for i = 1, Arg[KEY] do
 			VALUE[i]:Hide()
 			VALUE[i]:SetScript("OnUpdate",nil)		
 		end
 	end
+	-- 更新新的Aura
 	for KEY,VALUE in pairs(Aura) do
 		Arg[KEY] = 1
 		for key,value in pairs(AuraList[KEY].List) do
-			local spn = GetSpellInfo(value.spellID)
-			local contiue = true
-			local name, icon, count, duration, expires, caster, start
-			if value.Filter:lower() == "buff" and UnitBuff(value.unitId, spn) then
-				name, _, icon, count, _, duration, expires, caster = UnitBuff(value.unitId, spn)
-			elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, spn) then
-				name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, spn)
-			elseif value.Filter:lower() == "cd" and GetSpellCooldown(spn) and select(2,GetSpellCooldown(spn)) > 1.5 then
-				start, duration = GetSpellCooldown(spn)
-				_, _, icon = GetSpellInfo(value.spellID)
-				count = 0
-				name = spn
-			else
-				contiue = false
-			end
-			if value.Caster and caster and value.Caster:lower() ~= caster:lower() then
-				contiue = false
-			end
-			if value.Stack and count and value.Stack > count then
-				contiue = false
-			end
-			if contiue then
-				local frame = VALUE[Arg[KEY]]
-				frame:Show()
-				
-				if frame.Icon and value.Filter:lower() ~= "cd" then
-					frame.Icon:SetTexture(icon)
-				elseif frame.Icon and value.Filter:lower() == "cd" then
-					frame.Icon:SetTexture(icon)
-				elseif frame.Icon then
-					frame.Icon:SetTexture(nil)
-					frame:Hide()
+			local frame = VALUE[Arg[KEY]]
+			if value.spellID then
+				local idName = GetSpellInfo(value.spellID)
+				if value.Filter:lower() == "buff" and UnitBuff(value.unitId, idName) then
+					updateBuff(frame, value, idName)
+					Arg[KEY] = Arg[KEY] + 1
+				elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, idName) then
+					updateDebuff(frame, value, idName)
+					Arg[KEY] = Arg[KEY] + 1
+				elseif value.Filter:lower() == "cd" and select(2,GetSpellCooldown(idName)) > 1.5 then
+					updateCD(frame, value, idName)
+					Arg[KEY] = Arg[KEY] + 1
 				end
-				if frame.Count and count > 1 then
-					frame.Count:SetText(count)
-				elseif frame.Count then
-					frame.Count:SetText("")
+			elseif value.itemID then
+				idName = GetItemInfo(value.itemID)
+				if select(2,GetItemCooldown(value.itemID)) > 1.5 then
+					updateItemCD(frame, value, idName)
+					Arg[KEY] = Arg[KEY] + 1
 				end
-				if frame.Cooldown and value.Filter:lower() ~= "cd" then
-					CooldownFrame_SetTimer(frame.Cooldown, expires-duration, duration, 1) 
-				elseif frame.Cooldown and value.Filter:lower() == "cd" then
-					frame.Cooldown:SetReverse(false)
-					CooldownFrame_SetTimer(frame.Cooldown, start , duration, 1) 
-				end
-				if frame.Time then
-					frame.Filter = value.Filter
-					frame.duration = duration
-					frame.expires = expires or start
-					frame:SetScript("OnUpdate",OnUpdate)
-				end
-				if frame.Spellname then
-					frame.Spellname:SetText(name)		
-				end
-				Arg[KEY] = Arg[KEY] + 1
 			end
 		end
 		Arg[KEY] = Arg[KEY] - 1

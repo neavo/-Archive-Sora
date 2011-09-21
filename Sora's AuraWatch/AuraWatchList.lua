@@ -728,28 +728,23 @@ SRAuraList = {
 			},
 		},
 		
-		--[[{
+		{
 			Name = "CD",
-			Direction = "RIGHT",
+			Direction = "DOWN",
 			Interval = 4,
 			Mode = "ICON",
 			iconSize = 48,
+			barWidth = 175,
 			Pos = {"CENTER", UIParent, "CENTER", 0, 100},
 			List = {	
-				--Example
-				{spellID = 77577, Filter = "CD"},
-				--Example
-				{spellID = 48982, Filter = "CD"},
-				--Example
-				{spellID = 55233, Filter = "CD"},
-				--Example
-				{spellID = 49028, Filter = "CD"},
-				--Example
-				{spellID = 48792, Filter = "CD"},
-				--Example
-				{spellID = 48707, Filter = "CD"},
-			},
-		},]]
+				-- 随身邮箱
+				{itemID = 40768, Filter = "CD"},
+				-- 不灭药水
+				{itemID = 40093, Filter = "CD"},
+				-- 厚烬丝绷带
+				{itemID = 53050, Filter = "CD"},
+			}
+		},
 	
 	},
 }
