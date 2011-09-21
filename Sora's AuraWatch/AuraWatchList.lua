@@ -40,6 +40,8 @@
 			{spellID = 55078, unitId = "target", Filter = "DEBUFF", Stack = 1},
 			--冰霜疫病
 			{spellID = 55095, unitId = "target", Filter = "DEBUFF", Caster = "player"},
+			-- 不灭药水
+			{itemID = 40093, Filter = "CD"},
 		},
 	},
 
@@ -178,8 +180,6 @@ SRAuraList = {
 				{spellID = 34471, unitId = "player", Filter = "BUFF"},
 				--误导
 				{spellID = 34477, unitId = "player", Filter = "BUFF"},			
-				--误导
-				{spellID = 35079, unitId = "player", Filter = "BUFF"},
 				--强化稳固射击
 				{spellID = 53220, unitId = "player", Filter = "BUFF"},
 				--眼镜蛇打击
@@ -675,13 +675,13 @@ SRAuraList = {
 	-- 死亡骑士
 	["DEATHKNIGHT"] = {
 		{
-			--Name = "PlayerBuff",
+			Name = "PlayerBuff",
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
-			List = {	
+			List = {
 				--嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
 				--英勇气概
@@ -712,11 +712,12 @@ SRAuraList = {
 				{spellID = 81162, unitId = "player", Filter = "BUFF"},
 				--符文刃舞
 				{spellID = 81256, unitId = "player", Filter = "BUFF"},
+
 			},
 		},
 		
 		{
-			--Name = "TargetDebuff",
+			Name = "TargetDebuff",
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
@@ -728,10 +729,10 @@ SRAuraList = {
 				{spellID = 55078, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--冰霜疫病
 				{spellID = 55095, unitId = "target", Caster = "player", Filter = "DEBUFF"},
-			},
+			}
 		},
 		
-		{
+		--[[{
 			Name = "CD",
 			Direction = "DOWN",
 			Interval = 4,
@@ -739,7 +740,7 @@ SRAuraList = {
 			iconSize = 48,
 			barWidth = 175,
 			Pos = {"CENTER", UIParent, "CENTER", 0, 100},
-			List = {	
+			List = {
 				-- 随身邮箱
 				{itemID = 40768, Filter = "CD"},
 				-- 不灭药水
@@ -747,7 +748,7 @@ SRAuraList = {
 				-- 厚烬丝绷带
 				{itemID = 53050, Filter = "CD"},
 			}
-		},
+		},]]
 	
 	},
 }

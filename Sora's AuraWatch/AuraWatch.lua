@@ -9,6 +9,8 @@ local class = select(2, UnitClass("player"))
 local BuildICON = cfg.BuildICON
 local BuildBAR = cfg.BuildBAR
 
+local Event = CreateFrame("Frame")
+
 
 -- Init
 local function Init()
@@ -209,15 +211,25 @@ local function Update()
 			local frame = VALUE[Arg[KEY]]
 			if value.spellID then
 				local idName = GetSpellInfo(value.spellID)
-				if value.Filter:lower() == "buff" and UnitBuff(value.unitId, idName) then
-					updateBuff(frame, value, idName)
-					Arg[KEY] = Arg[KEY] + 1
-				elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, idName) then
-					updateDebuff(frame, value, idName)
-					Arg[KEY] = Arg[KEY] + 1
-				elseif value.Filter:lower() == "cd" and select(2,GetSpellCooldown(idName)) > 1.5 then
-					updateCD(frame, value, idName)
-					Arg[KEY] = Arg[KEY] + 1
+				
+				-- error catch
+				if value.Filter:lower() ~= "cd" and not GetSpellInfo(value.spellID) then
+					print("|cffff1010！！ERROR！！|r The spellID |cff70C0F5"..value.spellID.."|r has a error")
+					Event:SetScript("OnUpdate", nil)
+				elseif value.Filter:lower() == "cd" and not GetSpellCooldown(idName) then
+					print("|cffff1010！！ERROR！！|r The spellID |cff70C0F5"..value.spellID.."|r has a error")
+					Event:SetScript("OnUpdate", nil)
+				else
+					if value.Filter:lower() == "buff" and UnitBuff(value.unitId, idName) then
+						updateBuff(frame, value, idName)
+						Arg[KEY] = Arg[KEY] + 1
+					elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, idName) then
+						updateDebuff(frame, value, idName)
+						Arg[KEY] = Arg[KEY] + 1
+					elseif value.Filter:lower() == "cd" and select(2,GetSpellCooldown(idName)) > 1.5 then
+						updateCD(frame, value, idName)
+						Arg[KEY] = Arg[KEY] + 1
+					end
 				end
 			elseif value.itemID then
 				idName = GetItemInfo(value.itemID)
@@ -232,7 +244,6 @@ local function Update()
 end
 
 -- Event
-local Event = CreateFrame("Frame")
 Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("PLAYER_ENTERING_WORLD")
 Event:SetScript("OnEvent",function(self, event, ...)
