@@ -1,9 +1,12 @@
 ﻿--[[
 
-	Sora's AuraWatch对于Buff列表的管理是分组进行的,每一组Buff公用同一个定位点,同样的大小,同样的样式
-	
-	在组属性中
-	{
+
+一些说明：
+
+   Sora's AuraWatch对于Buff列表的管理是分组进行的,每一组Buff公用同一个定位点,同样的大小,同样的样式
+   
+   在组属性中
+   {
 		Name = 分组的名称
 		Direction = 提示的增长方向 ("RIGHT"/"LEFT"/"UP"/"DOWN")
 		Interval = 相邻提示的间距
@@ -11,16 +14,16 @@
 		iconSize = 图标大小
 		barWidth = 计时条宽度(BAR模式下必须有这个属性)
 		Pos = 首图标的定位点
-		List = 要监视的Buff/Debuff/CD列表
-	}
-	
-	其中List = 
-	{
-		spellID = 要监视的Buff/Debuff/技能 ID (必须有)
+		List = 要监视的Buff/Debuff/CD列表	
+   }
+   
+   其中List =
+   {
+		spellID/itemID = 要监视的Buff/Debuff/技能/物品 ID (二选一，必须有，其中itemID只能搭配Filter = "CD"来监视物品CD)
 		unitId = 要监视的目标，常用的有 玩家"player"/目标"target" (必须有)
-		Filter = 要监视的类型， "BUFF"/"DEBUFF"/"CD" (必须有)
-		Caster = 过滤Buff/Debuff的释放者 (可选，如果不需要按照施法者过滤请不要写这一项)
-		Stack = 过滤Buff/Debuff的层数(可选，当Buff/Debuff层数大于等于Stack的值的时候才显示)
+		Filter = 要监视的类型， "BUFF"/"DEBUFF"/"CD" (必须有 ！！！注意，F为大写！！！)
+		Caster = 过滤Buff/Debuff的释放者 (可选，如果不需要按照施法者过滤请不要写这一项 ！！！注意，C为大写！！！ )
+		Stack = 过滤Buff/Debuff的层数(可选，当Buff/Debuff层数大于等于Stack的值的时候才显示 ！！！注意，S为大写！！！)
 	}
 
 	eg. 这是一个示例
