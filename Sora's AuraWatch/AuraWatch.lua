@@ -70,12 +70,12 @@ local function OnUpdate(self, elapsed)
 			self.Time:SetText("N/A")
 			self.Statusbar:SetMinMaxValues(0,1) 
 			self.Statusbar:SetValue(1)		
-		elseif Timer <= 60 then
-			self.Time:SetFormattedText("%.1f",(Timer))
+		elseif Timer < 60 then
+			self.Time:SetFormattedText("%.1f", Timer)
 			self.Statusbar:SetMinMaxValues(0, self.duration) 
 			self.Statusbar:SetValue(Timer)
 		else
-			self.Time:SetFormattedText("%d:%.1d",(Timer/60),(Timer/2))
+			self.Time:SetFormattedText("%d:%.1d", Timer/60, Timer%60)
 			self.Statusbar:SetMinMaxValues(0, self.duration) 
 			self.Statusbar:SetValue(Timer)
 		end
@@ -230,4 +230,5 @@ SlashCmdList.SRAuraWatch = function()
 	Test()
 end
 SLASH_SRAuraWatch1 = "/SRAuraWatch"
+SLASH_SRAuraWatch2 = "/SRAW"
 
