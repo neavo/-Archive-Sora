@@ -213,11 +213,8 @@ local function Update()
 				local idName = GetSpellInfo(value.spellID)
 				
 				-- error catch
-				if value.Filter:lower() ~= "cd" and not GetSpellInfo(value.spellID) then
-					print("|cffff1010！！ERROR！！|r The spellID |cff70C0F5"..value.spellID.."|r has a error")
-					Event:SetScript("OnUpdate", nil)
-				elseif value.Filter:lower() == "cd" and not GetSpellCooldown(idName) then
-					print("|cffff1010！！ERROR！！|r The spellID |cff70C0F5"..value.spellID.."|r has a error")
+				if not GetSpellInfo(value.spellID) then
+					print("|cffff1010！！ERROR！！|r The spellID |cff70C0F5"..value.spellID.."|r has an error")
 					Event:SetScript("OnUpdate", nil)
 				else
 					if value.Filter:lower() == "buff" and UnitBuff(value.unitId, idName) then
@@ -226,7 +223,7 @@ local function Update()
 					elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, idName) then
 						updateDebuff(frame, value, idName)
 						Arg[KEY] = Arg[KEY] + 1
-					elseif value.Filter:lower() == "cd" and select(2,GetSpellCooldown(idName)) > 1.5 then
+					elseif value.Filter:lower() == "cd" and GetSpellCooldown(idName) and select(2,GetSpellCooldown(idName)) > 1.5 then
 						updateCD(frame, value, idName)
 						Arg[KEY] = Arg[KEY] + 1
 					end
@@ -265,7 +262,7 @@ end)
 
 -- Test
 local testFlag = true
-local function Test()
+SlashCmdList.SRAuraWatch = function()
 	if testFlag then
 		testFlag = false
 		Event:SetScript("OnUpdate", nil)
@@ -315,9 +312,6 @@ local function Test()
 		end
 	end
 end
-SlashCmdList.SRAuraWatch = function()
-	Test()
-end
 SLASH_SRAuraWatch1 = "/SRAuraWatch"
-SLASH_SRAuraWatch2 = "/SRAW"
+SLASH_SRAuraWatch2 = "/sRaw"
 

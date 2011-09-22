@@ -729,7 +729,7 @@ SRAuraList = {
 				{spellID = 55078, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				--冰霜疫病
 				{spellID = 55095, unitId = "target", Caster = "player", Filter = "DEBUFF"},
-			}
+			},
 		},
 		
 		--[[{
@@ -747,7 +747,7 @@ SRAuraList = {
 				{itemID = 40093, Filter = "CD"},
 				-- 厚烬丝绷带
 				{itemID = 53050, Filter = "CD"},
-			}
+			},
 		},]]
 	
 	},
