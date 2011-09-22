@@ -306,6 +306,9 @@ SlashCmdList.SRAuraWatch = function()
 		end)
 		for _,VALUE in pairs(Aura) do
 			for _,value in pairs(VALUE) do
+				if value.Count then
+					value.Count:SetText(nil)
+				end
 				value:Hide()
 				value:SetScript("OnUpdate",nil)		
 			end
