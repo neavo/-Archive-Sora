@@ -89,10 +89,10 @@ local function updateBuff(frame, value, idName)
 	local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.unitId, idName)
 	
 	-- 判断施法者和层数阈值
-	if value.Caster and value.Caster:lower() ~= caster:lower() then
+	if value.Caster and caster and value.Caster:lower() ~= caster:lower() then
 		return
 	end
-	if value.Stack and value.Stack > count then
+	if value.Stack and count and value.Stack > count then
 		return
 	end
 	
@@ -120,10 +120,10 @@ local function updateDebuff(frame, value, idName)
 	local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, idName)
 	
 	-- 判断施法者和层数阈值
-	if value.Caster and value.Caster:lower() ~= caster:lower() then
+	if value.Caster and caster and value.Caster:lower() ~= caster:lower() then
 		return
 	end
-	if value.Stack and value.Stack > count then
+	if value.Stack and count and value.Stack > count then
 		return
 	end
 	
