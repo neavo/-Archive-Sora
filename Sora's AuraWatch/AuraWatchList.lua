@@ -732,7 +732,7 @@ SRAuraList = {
 			},
 		},
 		
-		{
+		--[[{
 			Name = "CD",
 			Direction = "DOWN",
 			Interval = 4,
@@ -748,7 +748,7 @@ SRAuraList = {
 				-- 厚烬丝绷带
 				{itemID = 53050, Filter = "CD"},
 			},
-		},
+		},]]
 	
 	},
 }
