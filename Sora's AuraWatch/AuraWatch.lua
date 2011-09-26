@@ -13,6 +13,13 @@ local Event = CreateFrame("Frame")
 
 
 -- Init
+--[[
+	初始化函数
+	首先从AuraList.lua中读取全职业分组["ALL"]和本职业分组["class"]的技能列表,
+	储存在表AuraList中,以后对技能列表的调用都通过AuraList进行,并且在读取玩技能列表信息以后将SRAuraList表置空以解决内存
+	然后遍历AuraList表,为表中每一个元素(即一个每一个ID条目)都建立一个Frame, 并Hide()等待赋值
+	以后可以把GUI的初始化部分也写在这里
+]]
 local function Init()
 	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
 	for key, _ in pairs(SRAuraList) do
@@ -41,6 +48,9 @@ local function Init()
 end
 
 -- Pos
+--[[
+	设置锚点
+]]
 local function Pos()
 	for key,VALUE in pairs(Aura) do
 		local value = AuraList[key]
@@ -64,6 +74,9 @@ local function Pos()
 end
 
 -- OnUpdate
+--[[
+	计时条模式的时间显示计时器
+]]
 local Timer = 0
 local function OnUpdate(self, elapsed)
 	Timer = self.Filter == "CD" and self.expires+self.duration-GetTime() or self.expires-GetTime()
@@ -195,6 +208,13 @@ local function updateItemCD(frame, value, idName)
 end
 
 -- Update
+--[[
+	由驱动器(目前为OnUpdate)驱动的更新函数, 执行频率0.5次/秒
+	首先清除之前旧的残留的图标和计时条信息, 并停止计时条的计时器
+	然后对照AuraList, 逐一核对寻找符合条件的Aura, 一旦找到符合条件的Aura, 执行对应的提示更新函数
+	其中Arg表中记录了本次更新中的活动框体
+	这样在下一次更新操作进行前,清除旧的提示信息的时候就可以只清除在上一次更新中被标记为活动的框体,以减少CPU操作
+]]
 local function Update()
 
 	-- 重置旧的Aura
@@ -213,6 +233,9 @@ local function Update()
 				local idName = GetSpellInfo(value.spellID)
 				
 				-- error catch
+				--[[
+					这是一个简单的错误冗余系统, 用于检测并提示那些并不存在的spellID
+				]]
 				if not GetSpellInfo(value.spellID) then
 					print("|cffff1010！！ERROR！！|r The spellID |cff70C0F5"..value.spellID.."|r has an error")
 					Event:SetScript("OnUpdate", nil)
@@ -229,6 +252,7 @@ local function Update()
 					end
 				end
 			elseif value.itemID then
+				-- 物品CD检测, 这一部分也需要一个类似的错误冗余系统
 				idName = GetItemInfo(value.itemID)
 				if select(2,GetItemCooldown(value.itemID)) > 1.5 then
 					updateItemCD(frame, value, idName)
@@ -245,11 +269,14 @@ Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("PLAYER_ENTERING_WORLD")
 Event:SetScript("OnEvent",function(self, event, ...)
 	if event == "PLAYER_LOGIN" then
+		-- 登陆时执行初始化,包括框体的创建等
 		Init()
 	elseif event == "PLAYER_ENTERING_WORLD" then
+		-- 锚定
 		Pos()
 	end
 end)
+-- 暂时使用OnUpdate来驱动更新器而不是使用事件驱动,以降低逻辑难度
 Event.Timer = 0
 Event:SetScript("OnUpdate",function(self,elapsed)
 	self.Timer = self.Timer + elapsed
