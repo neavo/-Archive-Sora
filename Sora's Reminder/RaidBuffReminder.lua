@@ -4,8 +4,10 @@
 
 local _, SR = ...
 local cfg = SR.RDConfig
-
+local Event = CreateFrame("Frame")
 local BuffFrame = {}
+
+
 for i = 1, 6 do
 	local Temp = CreateFrame("Frame", nil, UIParent)
 	Temp:SetWidth(cfg.RaidBuffSize)
@@ -72,23 +74,25 @@ for i = 1, 6 do
 end
 
 -- Event
-local IsInParty = false
-local Event = CreateFrame("Frame")
+Event.IsInParty = false
 Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("UNIT_AURA")
 Event:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 Event:RegisterEvent("PARTY_MEMBERS_CHANGED")
 Event:SetScript("OnEvent",function(self, event, unit, ...)
 
-	if event == "UNIT_AURA" and unit ~= "player" then 
-		return
+	if event == "PARTY_MEMBERS_CHANGED" then
+		self.IsInParty = (GetNumPartyMembers() > 0) and true or false
 	end
 
-	if event == "PARTY_MEMBERS_CHANGED" then
-		IsInParty = (GetNumPartyMembers() > 0) and true or false
+	if cfg.ShowOnlyInParty and not self.IsInParty then 
+		for key, value in pairs(BuffFrame) do
+			value:SetAlpha(0)
+		end
+		return
 	end
 	
-	if cfg.ShowOnlyInParty and not IsInParty then 
+	if event == "UNIT_AURA" and unit ~= "player" then 
 		return
 	end
 	
