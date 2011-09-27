@@ -10,6 +10,7 @@ for i = 1, 6 do
 	local Temp = CreateFrame("Frame", nil, UIParent)
 	Temp:SetWidth(cfg.RaidBuffSize)
 	Temp:SetHeight(cfg.RaidBuffSize)
+	Temp:SetFrameStrata("LOW")
 	
 	Temp.Border = CreateFrame("Frame", nil, Temp)
 	Temp.Border:SetAllPoints(Temp)
