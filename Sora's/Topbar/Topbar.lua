@@ -275,6 +275,8 @@ topinfo[3].Status:SetScript("OnEnter", function(self)
 	if not InCombatLockdown() then
 		GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, 0)
 		GameTooltip:ClearLines()
+		GameTooltip:AddLine("耐久度：", 0.4, 0.78, 1)
+		GameTooltip:AddLine(" ")
 		for i = 1, 11 do
 			if Slots[i][3] ~= 1000 then
 				green = Slots[i][3]*2
