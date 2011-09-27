@@ -7,7 +7,7 @@
 ------------
 
 local cfg = CreateFrame("Frame")
-local MediaPath = "Interface\\AddOns\\Sora's\\Nameplates\\Media\\"
+local MediaPath = "Interface\\AddOns\\Sora's Nameplates\\Media\\"
 cfg.statusbar_texture = MediaPath.."Statusbar"
 cfg.backdrop_edge_texture = MediaPath.."glowTex"
 cfg.Font = "Fonts\\ZYKai_T.ttf"

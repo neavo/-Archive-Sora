@@ -7,7 +7,7 @@
 ------------
 
 local cfg = CreateFrame("Frame")
-local Media = "InterFace\\AddOns\\Sora's\\Tooltip\\Media\\"
+local Media = "InterFace\\AddOns\\Sora's Tooltip\\Media\\"
 cfg.Font = "Fonts\\ZYKai_T.ttf"
 cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."Solid"
