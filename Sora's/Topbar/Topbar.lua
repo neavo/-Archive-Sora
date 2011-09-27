@@ -179,9 +179,9 @@ local function UpdateMem(self, t)
 		Text:SetText(formatMem(total))
 		StatusBar:SetMinMaxValues(0,15000)
 		StatusBar:SetValue(total)
-		if total>12000 then
+		if total > 12000 then
 			StatusBar:SetStatusBarColor(1, 0, 0, 0.6)
-		elseif total>8000 then
+		elseif total > 8000 then
 			StatusBar:SetStatusBarColor(1, 1, 0, 0.6)
 		else
 			StatusBar:SetStatusBarColor(0, 0.4, 1, 0.6)
@@ -213,7 +213,7 @@ Stat:SetScript("OnEnter", function(self)
 		GameTooltip:AddLine(" ")
 	end
 	local totalMemory = UpdateMemory()
-	GameTooltip:AddDoubleLine("总共内存使用: ", formatMem(totalMemory), 0.69, 0.31, 0.31,0.84, 0.75, 0.65)
+	GameTooltip:AddDoubleLine("总共内存使用: ", formatMem(totalMemory), 0.4, 0.78, 1, 0.84, 0.75, 0.65)
 	GameTooltip:AddLine(" ")
 	for i = 1, #memoryTable do
 		if (memoryTable[i][4]) then
