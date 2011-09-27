@@ -72,17 +72,23 @@ for i = 1, 6 do
 end
 
 -- Event
+local IsInParty = false
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("UNIT_AURA")
 Event:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+Event:RegisterEvent("PARTY_MEMBERS_CHANGED")
 Event:SetScript("OnEvent",function(self, event, unit, ...)
 
 	if event == "UNIT_AURA" and unit ~= "player" then 
 		return
 	end
 
-	if cfg.ShowOnlyInParty and not (GetNumPartyMembers() > 0) then 
+	if event == "PARTY_MEMBERS_CHANGED" then
+		IsInParty = (GetNumPartyMembers() > 0) and true or false
+	end
+	
+	if cfg.ShowOnlyInParty and not IsInParty then 
 		return
 	end
 	
