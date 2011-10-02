@@ -80,8 +80,6 @@ SRAuraList = {
 				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
 				--断筋
 				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
-				--减速药膏
-				{spellID =  3775, unitId = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
