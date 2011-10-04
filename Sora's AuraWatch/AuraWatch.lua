@@ -12,11 +12,6 @@ local BuildBAR = cfg.BuildBAR
 
 local Event = CreateFrame("Frame")
 
--- CreateAura
-local function CreateAura(AuraList)
-
-end
-
 -- Init
 local function Init()
 	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
@@ -128,7 +123,7 @@ local function updateDebuff(frame, value, idName)
 	local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, idName)
 	
 	-- 判断施法者和层数阈值
-	if value.Caster and caster and value.Caster:lower() ~= caster:lower() then
+	if value.Caster and caster and value.Caster:lower() ~= caster:lower() or not caster then
 		return
 	end
 	if value.Stack and count and value.Stack > count then
