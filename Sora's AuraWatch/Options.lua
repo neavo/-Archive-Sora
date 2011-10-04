@@ -354,8 +354,11 @@ local function BuildOptTable()
 				type = "select",
 				name = "施法者:",
 				desc = "请选择要过滤的施法者",
+				disabled = function()
+					return AuraList[opt.GroupSelectValue].List[opt.AuraSelectValue].Filter == "CD"
+				end,
 				order = 8,
-				values = { ["player"] = "玩家", ["target"] = "目标", ["focus"] = "焦点", ["pet"] = "宠物", ["NONE"] = "不限"},
+				values = {["player"] = "玩家", ["target"] = "目标", ["focus"] = "焦点", ["pet"] = "宠物", ["NONE"] = "不限"},
 				get = function()
 					opt.GroupSelectValue = AuraList[opt.GroupSelectValue] and opt.GroupSelectValue or 1
 					opt.AuraSelectValue = AuraList[opt.GroupSelectValue].List[opt.AuraSelectValue] and opt.AuraSelectValue or 1
@@ -375,6 +378,9 @@ local function BuildOptTable()
 				type = "select",
 				name = "层数阈值:",
 				desc = "请选择要过滤的层数阈值",
+				disabled = function()
+					return AuraList[opt.GroupSelectValue].List[opt.AuraSelectValue].Filter == "CD"
+				end,
 				order = 9,
 				values = {[0] = "不限", [1] = "1", [2] = "2", [3] = "3", [4] = "4", [5] = "5", [6] = "6", [7] = "7", [8] = "8", [9] = "9"},
 				get = function()
