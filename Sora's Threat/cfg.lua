@@ -18,7 +18,6 @@ cfg.Pos = {"TOP", "oUF_SoraPlayer", "BOTTOM", 0, -60}	-- 仇恨条位置(已修�
 cfg.ThreatBarWidth = 210								-- 仇恨条宽度
 cfg.NameTextL = 3										-- 姓名长度(单位:字)
 cfg.ThreatLimited = 2									-- 显示仇恨人数(不包括Tank)
-
 	
 ----------------
 --  命名空间  --
