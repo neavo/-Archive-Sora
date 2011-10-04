@@ -184,15 +184,43 @@ GameTooltipStatusBar:SetScript("OnValueChanged", function(self, value)
     end
 end)
 
+local function SetTooltipPosition(tooltip)
+	local X, Y = 0, 0
+	tooltip:ClearAllPoints()
+	if cfg.Cursor then
+		local CurrentX, CurrentY = GetCursorPosition()
+		local Scale = UIParent:GetEffectiveScale()
+		X, Y = CurrentX/Scale, CurrentY/Scale
+		tooltip:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", X+25, Y+25)
+	else
+		tooltip:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -50, 201)
+	end
+end
+
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-    local frame = GetMouseFocus()
-    if cfg.Cursor and frame == WorldFrame then
-        tooltip:SetOwner(parent, "ANCHOR_CURSOR")
-    else
-        tooltip:SetOwner(parent, "ANCHOR_NONE")	
-        tooltip:SetPoint(unpack(cfg.Position))
-    end
-    tooltip.default = 1
+	if HideInCombat and InCombatLockdown() then
+		tooltip:Hide()
+	else
+		if cfg.Cursor then
+			tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+		else
+			tooltip:SetOwner(parent,"ANCHOR_NONE")
+		end
+		SetTooltipPosition(tooltip)
+		tooltip.default = 1
+		if not tooltip[tostring(tooltip)] then
+			tooltip[tostring(tooltip)] = 1
+			tooltip:HookScript("OnUpdate", function(self, ...)
+				if self.default then
+					SetTooltipPosition(self)
+				end
+			end)
+			tooltip:HookScript("OnHide", function(self, unit)
+				tooltip.default = nil
+				tooltip.unit = nil
+			end)
+		end
+	end
 end)
 
 local function setBakdrop(frame)
