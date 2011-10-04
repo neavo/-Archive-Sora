@@ -25,7 +25,7 @@ local function Init()
 	Threat.Border:SetBackdrop({ 
 		edgeFile = cfg.Solid, edgeSize = 1
 	})
-	Threat.Border:SetBackdropBorderColor(0,0,0,1)
+	Threat.Border:SetBackdropBorderColor(0, 0, 0, 1)
 
 	Threat.Shadow = CreateFrame("Frame", nil, Threat.Border)
 	Threat.Shadow:SetFrameLevel(0)
@@ -34,25 +34,25 @@ local function Init()
 	Threat.Shadow:SetBackdrop({ 
 		edgeFile = cfg.GlowTex, edgeSize = 5
 	})
-	Threat.Shadow:SetBackdropBorderColor(0,0,0,1)
+	Threat.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	
 	-- 创建坦克仇恨标签
-	Threat.FlagT = CreateFrame("Frame","ThreatFlagTank",Threat)
+	Threat.FlagT = CreateFrame("Frame", "ThreatFlagTank", Threat)
 	Threat.FlagT:SetWidth(1)
 	Threat.FlagT:SetHeight(Threat:GetHeight())
 	Threat.FlagT:SetBackdrop({ bgFile = cfg.Solid })
-	Threat.FlagT:SetBackdropColor(0,0,0)
+	Threat.FlagT:SetBackdropColor(0, 0, 0)
 	Threat.FlagT:SetFrameLevel(2)
 	
 	Threat.FlagT.Name = Threat.FlagT:CreateTexture(nil, "OVERLAY")
-	Threat.FlagT.Name:SetHeight(16)
+	Threat.FlagT.Name:SetHeight(32)
 	Threat.FlagT.Name:SetWidth(32)
-	Threat.FlagT.Name:SetTexture(cfg.ArrowLarge)
+	Threat.FlagT.Name:SetTexture(cfg.ArrowT)
 	Threat.FlagT.Name:SetPoint("BOTTOM", Threat.FlagT, "TOP", 0, 0)
 	
 	Threat.FlagT.Text = Threat.FlagT:CreateFontString(nil, "OVERLAY")
-	Threat.FlagT.Text:SetFont(cfg.Font,9,"THINOUTLINE")
-	Threat.FlagT.Text:SetPoint("BOTTOM", Threat.FlagT.Name, "TOP", 1, -1)
+	Threat.FlagT.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+	Threat.FlagT.Text:SetPoint("BOTTOM", Threat.FlagT.Name, "TOP", 0, -12)
 	
 	-- 创建一般仇恨标签
 	for i=1, cfg.ThreatLimited do 
@@ -60,18 +60,18 @@ local function Init()
 		Flag:SetWidth(1)
 		Flag:SetHeight(Threat:GetHeight())
 		Flag:SetBackdrop({ bgFile = cfg.Solid })
-		Flag:SetBackdropColor(0,0,0)
+		Flag:SetBackdropColor(0, 0, 0)
 		Flag:SetFrameLevel(2)
 		
-		Flag.Name = Flag:CreateTexture(nil,"OVERLAY")
-		Flag.Name:SetHeight(8)
+		Flag.Name = Flag:CreateTexture(nil, "OVERLAY")
+		Flag.Name:SetHeight(16)
 		Flag.Name:SetWidth(16)
-		Flag.Name:SetTexture(cfg.ArrowSmall)
-		Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, -1)
+		Flag.Name:SetTexture(cfg.Arrow)
+		Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, 0)
 		
-		Flag.Text = Flag:CreateFontString(nil,"OVERLAY")
-		Flag.Text:SetFont(cfg.Font,9,"THINOUTLINE")
-		Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, -1)
+		Flag.Text = Flag:CreateFontString(nil, "OVERLAY")
+		Flag.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+		Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, 5)
 		
 		tinsert(ThreatFlag, Flag)
 	end
@@ -99,10 +99,10 @@ local function getThreat(unit, pet)
 	end
 
 	table.insert(ThreatList, {
-		name = name,
-		class = select(2, UnitClass(unit)),
-		rawPercent = rawPercent or 0,
-		isTanking = isTanking or false,
+		name = name, 
+		class = select(2, UnitClass(unit)), 
+		rawPercent = rawPercent or 0, 
+		isTanking = isTanking or false, 
 	})
 end
 
@@ -142,7 +142,7 @@ local function formatName(name)
 	end
 end
 
-local function sortThreat(a,b)
+local function sortThreat(a, b)
 	return a.rawPercent > b.rawPercent
 end
 
@@ -225,7 +225,7 @@ Event:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 Event:RegisterEvent("PLAYER_TARGET_CHANGED")
 Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 Event:RegisterEvent("PLAYER_REGEN_ENABLED")
-Event:SetScript("OnEvent",function(self, event, ...)
+Event:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		Init()
 	elseif event == "PLAYER_ENTERING_WORLD" then
