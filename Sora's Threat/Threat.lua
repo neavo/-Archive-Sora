@@ -45,14 +45,14 @@ local function Init()
 	Threat.FlagT:SetFrameLevel(2)
 	
 	Threat.FlagT.Name = Threat.FlagT:CreateTexture(nil, "OVERLAY")
-	Threat.FlagT.Name:SetHeight(32)
-	Threat.FlagT.Name:SetWidth(32)
+	Threat.FlagT.Name:SetHeight(24)
+	Threat.FlagT.Name:SetWidth(24)
 	Threat.FlagT.Name:SetTexture(cfg.ArrowT)
 	Threat.FlagT.Name:SetPoint("BOTTOM", Threat.FlagT, "TOP", 0, 0)
 	
 	Threat.FlagT.Text = Threat.FlagT:CreateFontString(nil, "OVERLAY")
 	Threat.FlagT.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
-	Threat.FlagT.Text:SetPoint("BOTTOM", Threat.FlagT.Name, "TOP", 0, -12)
+	Threat.FlagT.Text:SetPoint("BOTTOM", Threat.FlagT.Name, "TOP", 0, -8)
 	
 	-- 创建一般仇恨标签
 	for i=1, cfg.ThreatLimited do 
@@ -71,7 +71,7 @@ local function Init()
 		
 		Flag.Text = Flag:CreateFontString(nil, "OVERLAY")
 		Flag.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
-		Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, 5)
+		Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, 3)
 		
 		tinsert(ThreatFlag, Flag)
 	end
