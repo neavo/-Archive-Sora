@@ -32,27 +32,27 @@ function RightBarFadeOut()
 	local Updater = CreateFrame("Frame")
 	Updater:SetScript("OnUpdate",function(self,elapsed)
 		Timer = Timer + elapsed
-		if Timer < 0.3 then
+		if Timer < 0.1 then
 			for i=1,3 do
 				local Button = _G["MultiBarRightButton"..i]
-				UIFrameFadeOut(Button, 0.5, 1, 0)
+				UIFrameFadeOut(Button, 0.3, 1, 0)
 			end
-		elseif Timer < 0.9 then
+		elseif Timer < 0.3 then
 			for i=4,6 do
 				local Button = _G["MultiBarRightButton"..i]
-				UIFrameFadeOut(Button, 0.5, 1, 0)
+				UIFrameFadeOut(Button, 0.3, 1, 0)
 			end
-		elseif Timer < 1.5 then
+		elseif Timer < 0.9 then
 			for i=7,9 do
 				local Button = _G["MultiBarRightButton"..i]
-				UIFrameFadeOut(Button, 0.5, 1, 0)
+				UIFrameFadeOut(Button, 0.3, 1, 0)
 			end
-		elseif Timer < 2.1 then
+		elseif Timer < 1.3 then
 			for i=10,11 do
 				local Button = _G["MultiBarRightButton"..i]
-				UIFrameFadeOut(Button, 0.5, 1, 0)
+				UIFrameFadeOut(Button, 0.3, 1, 0)
 			end
-		elseif Timer > 3 then
+		elseif Timer > 1.7 then
 			HideFrame:Show()
 			Updater:ClearAllPoints()
 		end
@@ -64,27 +64,27 @@ function RightBarFadeIn()
 	local Updater = CreateFrame("Frame")
 	Updater:SetScript("OnUpdate",function(self,elapsed)
 		Timer = Timer + elapsed
-		if Timer < 0.3 then
+		if Timer < 0.1 then
 			for i=10,11 do
 				local Button = _G["MultiBarRightButton"..i]
-				UIFrameFadeIn(Button, 0.5, 0, 1)
+				UIFrameFadeIn(Button, 0.3, 0, 1)
 			end
-		elseif Timer < 0.9 then
+		elseif Timer < 0.5 then
 			for i=7,9 do
 				local Button = _G["MultiBarRightButton"..i]
-				UIFrameFadeIn(Button, 0.5, 0, 1)
+				UIFrameFadeIn(Button, 0.3, 0, 1)
 			end
-		elseif Timer < 1.5 then
+		elseif Timer < 0.9 then
 			for i=4,6 do
 				local Button = _G["MultiBarRightButton"..i]
-				UIFrameFadeIn(Button, 0.5, 0, 1)
+				UIFrameFadeIn(Button, 0.3, 0, 1)
 			end
-		elseif Timer < 2.1 then
+		elseif Timer < 1.3 then
 			for i=1,3 do
 				local Button = _G["MultiBarRightButton"..i]
-				UIFrameFadeIn(Button, 0.5, 0, 1)
+				UIFrameFadeIn(Button, 0.3, 0, 1)
 			end
-		elseif Timer > 3 then
+		elseif Timer > 1.7 then
 			HideFrame:Hide()
 			Updater:ClearAllPoints()
 		end
