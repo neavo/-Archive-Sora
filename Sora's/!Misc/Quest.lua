@@ -51,11 +51,10 @@ local function helper(isActive, ...)
 	if num == 0 then return end
 	local skip = isActive and 4 or 5
 	for j = 1, num, skip do
-		local title, level, isTrivial, daily, repeatable = select(j, ...)
-		if isActive then daily, repeatable = nil end
+		local title, level, isTrivial = select(j, ...)
 		if title and level and level ~= -1 then
 			local color = GetQuestDifficultyColor(level)
-			_G["GossipTitleButton"..i]:SetFormattedText(isActive and isTrivial and TRIVIAL or NORMAL, color.r*255, color.g*255, color.b*255, level, repeatable and tags.Repeatable or "", daily and tags.Daily or "", title)
+			_G["GossipTitleButton"..i]:SetFormattedText(isActive and isTrivial and TRIVIAL or NORMAL, color.r*255, color.g*255, color.b*255, level, "", "", title)
 		end
 		i = i + 1
 	end
