@@ -522,6 +522,91 @@ local debuffFilter = {
 	89666, --Lightning Rod
 	89668, --Lightning Rod
 	87856, --Squall Line
+
+-- Firelands
+	--Trash
+	--Flamewaker Forward Guard
+	76622,--Sunder Armor
+	99610,--Shockwave
+	--Flamewaker Pathfinder
+	99695, --Flaming Spear
+	99800, --Ensnare
+	--Fire Scorpion
+	99993, --Fiery Blood
+	--Molten Lord
+	100767, --Melt Armor
+	--Ancient Core Hound
+	99693, --Dinner Time
+	--Magma
+	97151, --Magma
+
+	--Beth'tilac
+	99506, --The Widow's Kiss
+	--Cinderweb Drone
+	49026, --Fixate
+	--Cinderweb Spinner
+	97202, --Fiery Web Spin
+	--Cinderweb Spiderling99693
+	97079, --Seeping Venom
+
+	--Lord Rhyolith
+	98492, --Eruption
+
+	--Alysrazor
+	101729, --Blazing Claw
+	100094, --Fieroblast
+	99389, --Imprinted
+	99308, --Gushing Wound
+	100640, --Harsh Winds
+	100555, --Smouldering Roots
+	--Do we want to show these?
+	99461, --Blazing Power
+
+	--Shannox
+	99936, --Jagged Tear
+	99837, --Crystal Prison Trap Effect
+	101208, --Immolation Trap
+	99840, --Magma Rupture
+	-- Rageface
+	99947, --Face Rage
+	100415, --Rage
+
+	--Baleroc
+	99252, --Blaze of Glory
+	99256, --Torment
+	99403, --Tormented
+	99262, --Vital Spark
+	99263, --Vital Flame
+	99516, --Countdown
+	99353, --Decimating Strike
+	100908, --Fiery Torment
+
+	--Majordomo Staghelm
+	98535, --Leaping Flames
+	98443, --Fiery Cyclone
+	98450, --Searing Seeds
+	--Burning Orbs
+	100210, --Burning Orb
+	-- ?
+	96993, --Stay Withdrawn?
+
+	--Ragnaros
+	99399, --Burning Wound
+	100293, --Lava Wave
+	100238, --Magma Trap Vulnerability
+	98313, --Magma Blast
+	--Lava Scion
+	100460, --Blazing Heat
+	--Dreadflame?
+	--Son of Flame
+	--Lava
+	98981, --Lava Bolt
+	--Molten Elemental
+	--Living Meteor
+	100249, --Combustion
+	--Molten Wyrms
+	99613, --Molten Blast
+
 }
 
 ORD:RegisterDebuffs(debuffFilter)
