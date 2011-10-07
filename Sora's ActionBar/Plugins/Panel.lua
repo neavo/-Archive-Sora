@@ -5,11 +5,14 @@
 local _, SR = ...
 local cfg = SR.ActionBarConfig
 
+local RightBar = SR.RightBar
+local LeftBar = SR.LeftBar
+
 local MainBar = CreateFrame("Frame", nil, UIParent)
-MainBar:SetPoint("TOPLEFT",ActionButton1,"LEFT", -10, -3)
-MainBar:SetPoint("BOTTOMRIGHT",ActionButton12,"BOTTOMRIGHT", 10, -7)
+MainBar:SetPoint("TOPLEFT", ActionButton1, "LEFT", -10, -3)
+MainBar:SetPoint("BOTTOMRIGHT", ActionButton12, "BOTTOMRIGHT", 10, -7)
 MainBar:SetBackdrop({
-	bgFile = cfg.bgFile,
+	bgFile = cfg.bgFile, 
 	edgeFile = cfg.GlowTex, edgeSize = 3, 
 	insets = { left = 4, right = 4, top = 4, bottom = 4 }
 })
@@ -17,38 +20,38 @@ MainBar:SetBackdropColor(0, 0, 0, 0.2)
 MainBar:SetBackdropBorderColor(0, 0, 0, 1)
 
 if cfg.ShowExtraBar then
-	MainBar.Left = CreateFrame("Frame",nil,MainBar)
-	MainBar.Left:SetPoint("TOPLEFT",MainBar,"TOPLEFT", -11, 0)
-	MainBar.Left:SetPoint("BOTTOMRIGHT",MainBar,"BOTTOMLEFT", 2, 0)
+	MainBar.Left = CreateFrame("Frame", nil, MainBar)
+	MainBar.Left:SetPoint("TOPLEFT", MainBar, "TOPLEFT", -11, 0)
+	MainBar.Left:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMLEFT", 2, 0)
 	MainBar.Left:SetBackdrop({
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
 	})
 	MainBar.Left:SetBackdropBorderColor(0, 0, 0, 1)
 
-	MainBar.Left:SetScript("OnMouseDown",function(self)
+	MainBar.Left:SetScript("OnMouseDown", function(self)
 		if MultiBarLeftButton1:GetAlpha() < 0.1 then
-			LeftBarFadeIn()
+			LeftBar.FadeIn()
 		elseif MultiBarLeftButton1:GetAlpha() > 0.9 then
-			LeftBarFadeOut()
+			LeftBar.FadeOut()
 		end
 	end)
 
-	MainBar.Right = CreateFrame("Frame",nil,MainBar)
-	MainBar.Right:SetPoint("TOPRIGHT",MainBar,"TOPRIGHT", 11, 0)
-	MainBar.Right:SetPoint("BOTTOMLEFT",MainBar,"BOTTOMRIGHT", -2, 0)
+	MainBar.Right = CreateFrame("Frame", nil, MainBar)
+	MainBar.Right:SetPoint("TOPRIGHT", MainBar, "TOPRIGHT", 11, 0)
+	MainBar.Right:SetPoint("BOTTOMLEFT", MainBar, "BOTTOMRIGHT", -2, 0)
 	MainBar.Right:SetBackdrop({
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
 	})
 	MainBar.Right:SetBackdropBorderColor(0, 0, 0, 1)
 
-	MainBar.Right:SetScript("OnMouseDown",function(self)
+	MainBar.Right:SetScript("OnMouseDown", function(self)
 		if MultiBarRightButton1:GetAlpha() < 0.1 then
-			RightBarFadeIn()
+			RightBar.FadeIn()
 		elseif MultiBarRightButton1:GetAlpha() > 0.9 then
-			RightBarFadeOut()
+			RightBar.FadeOut()
 		end
 	end)
 else
-	RightBarFadeOut()
-	LeftBarFadeOut()
+	RightBar.FadeOut()
+	LeftBar.FadeOut()
 end

@@ -6,9 +6,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Script file="cfg.lua"/>
-
 	<Include file="Bars\bars.xml"/>
-
 	<Include file="Plugins\Plugins.xml"/>
 	
 </Ui>
