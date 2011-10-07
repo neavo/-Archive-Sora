@@ -8,7 +8,7 @@
 
 local cfg = CreateFrame("Frame")
 local Media = "Interface\\AddOns\\Sora's\\!Misc\\Media\\"
-cfg.Font = "Fonts\\ZYKai_T.ttf"
+cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 cfg.Solid = Media.."solid"
 
 	

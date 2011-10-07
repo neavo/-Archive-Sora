@@ -10,7 +10,7 @@ local cfg = CreateFrame("Frame")
 local MediaPath = "Interface\\AddOns\\Sora's Nameplates\\Media\\"
 cfg.statusbar_texture = MediaPath.."Statusbar"
 cfg.backdrop_edge_texture = MediaPath.."glowTex"
-cfg.Font = "Fonts\\ZYKai_T.ttf"
+cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 cfg.Fontsize = 10						-- 字体大小
 cfg.Fontflag = "THINOUTLINE"			-- 字体描边
 cfg.hpHeight = 5						-- 姓名板血条高度

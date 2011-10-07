@@ -8,7 +8,7 @@
 
 local cfg = CreateFrame("Frame")
 local Media = "Interface\\AddOns\\Sora's AuraWatch\\Media\\"
-cfg.Font = "Fonts\\ZYKai_T.ttf"
+cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 cfg.Statusbar = Media.."statusbar"
 cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"

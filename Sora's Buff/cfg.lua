@@ -8,7 +8,7 @@
 
 local cfg = CreateFrame("Frame")
 local Media = "Interface\\Addons\\Sora's Buff\\media\\"
-cfg.Font = "Fonts\\ZYKai_T.ttf"
+cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 cfg.GlowTex = Media.."glowTex"
 cfg.Solid = Media.."solid"
 cfg.IconSize = 27 											-- 图标大小

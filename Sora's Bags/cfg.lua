@@ -8,7 +8,7 @@
 
 local cfg = CreateFrame("Frame")
 local Media = "Interface\\Addons\\Sora's Bags\\Media\\"
-cfg.Font = "Fonts\\ZYKai_T.ttf"
+cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 cfg.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 cfg.edgeFile = Media.."glowTex"
 cfg.Solid = Media.."Solid"

@@ -5,7 +5,7 @@
 local addon, ns = ...
 local oUF = ns.oUF or oUF
 local cfg = CreateFrame("Frame")
-local Media = "Interface\\AddOns\\oUF_Sora\\media\\"	-- don't touch this ...
+local Media = "Interface\\AddOns\\oUF_Sora\\Media\\"
 
 -----------------------------
 -- CONFIG
@@ -59,8 +59,8 @@ cfg.statusbar_texture = Media.."Statusbar"
 cfg.backdrop_texture = Media.."backdrop"
 cfg.highlight_texture = Media.."raidbg"
 cfg.debuffhighlight_texture = Media.."debuff_highlight"
-cfg.font = "Fonts\\ZYKai_T.ttf"
-cfg.smallfont = "Fonts\\ZYKai_T.ttf"
+cfg.font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
+cfg.smallfont = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 
 -----------------------------
 -- HANDOVER
