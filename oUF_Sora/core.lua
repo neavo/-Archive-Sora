@@ -67,7 +67,6 @@ local UnitSpecific = {
 		lib.gen_highlight(self)
 		lib.gen_RaidMark(self)
 		lib.gen_InfoIcons(self)
-		lib.HealPred(self)
 		lib.gen_castbar(self)
 		lib.gen_mirrorcb(self)
 		lib.RogueComboPoints(self)
@@ -106,7 +105,6 @@ local UnitSpecific = {
 		lib.gen_RaidMark(self)
 		lib.gen_InfoIcons(self)
 		lib.gen_castbar(self)
-		lib.HealPred(self)
 
 		--style specific stuff
 		self.Health.frequentUpdates = true
@@ -141,7 +139,6 @@ local UnitSpecific = {
 		lib.gen_highlight(self)
 		lib.gen_RaidMark(self)
 		lib.gen_castbar(self)
-		lib.HealPred(self)
 
 		--style specific stuff
 		self.Health.frequentUpdates = true
@@ -247,8 +244,6 @@ local UnitSpecific = {
 		self.Power.BG.multiplier = 0.2
 		lib.gen_InfoIcons(self)
 		lib.CreateThreatBorder(self)
-		lib.HealPred(self)
-		lib.debuffHighlight(self)
 		
 		if cfg.showPartyDebuff then lib.createDebuffs(self) end
 
@@ -282,8 +277,6 @@ local UnitSpecific = {
 		self.Power.BG.multiplier = 0.2
 		lib.gen_InfoIcons(self)
 		lib.CreateThreatBorder(self)
-		lib.HealPred(self)
-		lib.debuffHighlight(self)
 		lib.raidDebuffs(self)
 		lib.createAuraWatch(self, unit)
 		self.Health.PostUpdate = lib.PostUpdateRaidFrame

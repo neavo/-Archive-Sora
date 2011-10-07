@@ -952,32 +952,6 @@ lib.raidDebuffs = function(self)
 	end
 end
 
--- oUF_HealPred
-lib.HealPred = function(self)
-	if not cfg.ShowIncHeals then return end
-	
-	local mhpb = CreateFrame('StatusBar', nil, self.Health)
-	mhpb:SetPoint('TOPLEFT', self.Health:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
-	mhpb:SetPoint('BOTTOMLEFT', self.Health:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
-	mhpb:SetWidth(self:GetWidth())
-	mhpb:SetStatusBarTexture(cfg.statusbar_texture)
-	mhpb:SetStatusBarColor(1, 1, 1, 0.4)
-	mhpb:SetFrameLevel(1)
-
-	local ohpb = CreateFrame('StatusBar', nil, self.Health)
-	ohpb:SetPoint('TOPLEFT', mhpb:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
-	ohpb:SetPoint('BOTTOMLEFT', mhpb:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
-	ohpb:SetWidth(self:GetWidth())
-	ohpb:SetStatusBarTexture(cfg.statusbar_texture)
-	ohpb:SetStatusBarColor(1, 1, 1, 0.4)
-	mhpb:SetFrameLevel(1)
-	self.HealPrediction = {
-		myBar = mhpb,
-		otherBar = ohpb,
-		maxOverflow = 1,
-	}
-end
-
 -- Combo points
 lib.RogueComboPoints = function(self)
 	if playerClass == "ROGUE" or playerClass == "DRUID" then
@@ -1072,18 +1046,6 @@ lib.gen_TotemBar = function(self)
 		
 	self.TotemBar = TotemBar
 	end
-end
-
--- oUF_DebuffHighlight
-lib.debuffHighlight = function(self)
-	local dbh = self.Health:CreateTexture(nil, "OVERLAY")
-	dbh:SetAllPoints(self.Health)
-	dbh:SetTexture(cfg.debuffhighlight_texture)
-	dbh:SetBlendMode("ADD")
-	dbh:SetVertexColor(0,0,0,0) -- set alpha to 0 to hide the texture
-	self.DebuffHighlight = dbh
-	self.DebuffHighlightAlpha = 0.5
-	self.DebuffHighlightFilter = true
 end
 
 -- AuraWatch
