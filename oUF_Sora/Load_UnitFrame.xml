@@ -1,0 +1,16 @@
+﻿
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<!--  oUF核心,勿动  -->
+	<Include file="oUF\oUF.xml"/>
+	
+	<Script file="cfg.lua"/>	
+	<Include file="Plugins\Plugins.xml"/>
+	
+	<Script file="lib.lua" />
+	<Script file="core.lua" />
+	
+	<Include file="Layout\Layout.xml"/>
+</Ui>

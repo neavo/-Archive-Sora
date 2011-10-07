@@ -296,6 +296,18 @@ local GlobalStyle = function(self, unit, isSingle)
 		return UnitSpecific[unit](self)
 	end
 end
+
+-- The Shared Style Function for Party and Raid
+local GroupGlobalStyle = function(self, unit)
+
+	self.menu = lib.spawnMenu
+	self:RegisterForClicks('AnyDown')
+	
+	-- Call Unit Specific Styles
+	if UnitSpecific[unit] then
+		return UnitSpecific[unit](self)
+	end
+end
 	
   -----------------------------
   -- SPAWN UNITS

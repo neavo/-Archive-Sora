@@ -1,0 +1,16 @@
+﻿
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Script file="AuraWatch.lua"/>
+	<Script file="boring_totembar.lua"/>
+	<Script file="Castbar.lua"/>
+	<Script file="Focuser.lua" />
+	<Script file="Movable.lua"/>
+	<Script file="RaidDebuff.lua"/>
+	<Script file="RaidDebuffList.lua"/>
+	<Script file="Smooth.lua"/>
+	<Script file="Tags.lua"/>
+
+</Ui>
