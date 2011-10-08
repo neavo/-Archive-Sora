@@ -177,7 +177,7 @@ local function BuildCastbar(self)
 	Bar:SetWidth(self:GetWidth()-70)
 	Bar:SetStatusBarTexture(cfg.Statusbar)
 	Bar:SetStatusBarColor(95/255, 182/255, 255/255,1)
-	Bar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -15)	
+	Bar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 13)
 	Bar.Border = CreateFrame("Frame", nil, Bar)
 	Bar.Border:SetPoint("TOPLEFT", -1, 1)
 	Bar.Border:SetPoint("BOTTOMRIGHT", 1, -1)
@@ -204,7 +204,7 @@ local function BuildCastbar(self)
 	Bar.Icon = Bar:CreateTexture(nil, "ARTWORK")
 	Bar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	Bar.Icon:SetSize(20,20)
-	Bar.Icon:SetPoint("BOTTOMRIGHT", Bar, "BOTTOMLEFT", -8, 0)
+	Bar.Icon:SetPoint("TOPLEFT", Bar, "TOPRIGHT", 8, 0)
 	Bar.Icon.Border = MakeTexBorder()
 	Bar.Icon.Border:SetParent(Bar)
 	Bar.Icon.Border:SetPoint("TOPLEFT", Bar.Icon, -1, 1)
@@ -220,6 +220,7 @@ local function BuildCastbar(self)
 
 	self.Castbar = Bar
 end
+
 
 local function PostCreateIcon(self, Button)
 	Button.Shadow = MakeShadow(Button)
@@ -247,10 +248,9 @@ end
 
 local function BuildBuff(self)
 	Buff = CreateFrame("Frame", nil, self)
-	Buff.onlyShowPlayer = cfg.BuffOnlyShowPlayer
-	Buff:SetPoint("TOPLEFT", self, "TOPRIGHT", 12, 0)
-	Buff.initialAnchor = "TOPLEFT"
-	Buff["growth-x"] = "RIGHT"
+	Buff:SetPoint("TOPRIGHT", self, "TOPLEFT", -12, 0)
+	Buff.initialAnchor = "TOPRIGHT"
+	Buff["growth-x"] = "LEFT"
 	Buff["growth-y"] = "DOWN"
 	Buff.size = 20
 	Buff.num = 18
@@ -267,11 +267,10 @@ local function BuildDebuff(self)
 	Debuff = CreateFrame("Frame", nil, self)
 	Debuff.size = 20
 	Debuff.num = 40
-	Debuff.onlyShowPlayer = cfg.DebuffOnlyShowPlayer
 	Debuff.spacing = 5
 	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
 	Debuff:SetWidth(self:GetWidth())
-	Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -30)
+	Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -5)
 	Debuff.initialAnchor = "TOPLEFT"
 	Debuff["growth-x"] = "RIGHT"
 	Debuff["growth-y"] = "DOWN"
@@ -312,7 +311,7 @@ local function BuildLFDRoleIcon(self)
 	self.LFDRole = LFDRoleIcon
 end
 
-local function BuildTargetFrame(self, ...)
+local function BuildFocusFrame(self, ...)
 	-- RegisterForClicks
 	self.menu = BuildMenu
 	self:RegisterForClicks("AnyDown")
@@ -336,12 +335,12 @@ local function BuildTargetFrame(self, ...)
 	-- BuildCastbar
 	if cfg.ShowCastbar then BuildCastbar(self) end
 	
-	-- BuildBuff
-	if cfg.showTargetBuff then BuildBuff(self) end
-	
+	-- BuildBuff(self)
+	if cfg.showFocusBuff then BuildBuff(self) end
+
 	-- BuildDebuff
-	if cfg.showTargetDebuff then BuildDebuff(self) end
-	
+	if cfg.showFocusDebuff then BuildDebuff(self) end
+		
 	-- BuildRaidMark
 	BuildRaidIcon(self)
 	
@@ -352,7 +351,7 @@ local function BuildTargetFrame(self, ...)
 	BuildLFDRoleIcon(self)
 end
 
-oUF:RegisterStyle("SoraTarget", BuildTargetFrame)
-oUF:SetActiveStyle("SoraTarget")
-SR.TargetFrame = oUF:Spawn("target")
-SR.TargetFrame:SetPoint("CENTER", UIParent, "CENTER", 270, -100)
+oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
+oUF:SetActiveStyle("SoraFocus")
+SR.FocusFrame = oUF:Spawn("focus")
+SR.FocusFrame:SetPoint("BOTTOM", SR.PlayerFrame, "TOP", 0, 250)

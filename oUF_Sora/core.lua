@@ -3,156 +3,12 @@ local oUF = ns.oUF or oUF
   
 local cfg = ns.cfg
 local lib = ns.lib
-  
--- Unit has an Aura
-function hasUnitAura(unit, name)
 
-	local _, _, _, count, _, _, _, caster = UnitAura(unit, name)
-	if caster and caster == "player" then
-		return count
-	end
-end
-
--- Unit has a Debuff
-function hasUnitDebuff(unit, name)
-	
-	local _, _, _, count, _, _, _, _ = UnitDebuff(unit, name)
-	if count then return count
-	end
-end
-			
-local MyPvPUpdate = function(self, event, unit)
-	if unit ~= self.unit then return end
-
-	local pvp = self.MyPvP
-	if pvp then
-		local factionGroup = UnitFactionGroup(unit)
-		-- FFA!
-		if UnitIsPVPFreeForAll(unit) then
-			pvp:SetTexture([[Interface\TargetingFrame\UI-PVP-FFA]])
-			pvp:Show()
-		elseif(UnitIsPVP(unit) and factionGroup) then
-			if factionGroup == 'Horde' then
-				pvp:SetTexture([[Interface\Addons\oUF_Fail\media\Horde]])
-			else
-				pvp:SetTexture([[Interface\Addons\oUF_Fail\media\Alliance]])
-			end
-			pvp:Show()
-		else
-			pvp:Hide()
-		end
-	end
-end
-
-oUF.colors.smooth = {42/255,48/255,50/255, 42/255,48/255,50/255, 42/255,48/255,50/255}
 -----------------------------
 -- STYLE FUNCTIONS
 -----------------------------
 
 local UnitSpecific = {
-
-	player = function(self, ...)
-
-		self.mystyle = "player"
-		
-		-- Size and Scale
-		self:SetScale(cfg.scale)
-		self:SetSize(220, 35)
-
-		-- Generate Bars
-		lib.gen_hpbar(self)
-		lib.gen_portrait(self)
-		lib.gen_ppbar(self)
-		lib.gen_hpstrings(self)
-		lib.gen_highlight(self)
-		lib.gen_RaidMark(self)
-		lib.gen_InfoIcons(self)
-		lib.gen_castbar(self)
-		lib.RogueComboPoints(self)
-
-		self.Health.frequentUpdates = true
-		self.Health.colorSmooth = true
-		self.Health.Smooth = true
-		
-		self.Power.colorPower = true
-		self.Power.Smooth = true
-		self.Power.frequentUpdates = true
-		self.Power.BG.multiplier = 0.2
-
-		lib.genRunes(self)
-		lib.genHolyPower(self)
-		lib.genShards(self)
-		lib.addEclipseBar(self)
-		lib.gen_TotemBar(self)
-		
-	end,
-	
-	--[[target = function(self, ...)
-	
-		self.mystyle = "target"
-		
-		-- Size and Scale
-		self:SetScale(cfg.scale)
-		self:SetSize(220, 35)
-
-		-- Generate Bars
-		lib.gen_hpbar(self)
-		lib.gen_portrait(self)
-		lib.gen_ppbar(self)
-		lib.gen_hpstrings(self)
-		lib.gen_highlight(self)
-		lib.gen_RaidMark(self)
-		lib.gen_InfoIcons(self)
-		lib.gen_castbar(self)
-
-		--style specific stuff
-		self.Health.frequentUpdates = true
-		self.Health.colorSmooth = true
-		self.Health.Smooth = true
-		self.Health.colorTapping = true
-		
-		self.Power.frequentUpdates = true
-		self.Power.Smooth = true
-		self.Power.colorPower = true
-		self.Power.BG.multiplier = 0.2
-
-
-		if cfg.showTargetBuff then	lib.createBuffs(self) end
-		if cfg.showTargetDebuff then lib.createDebuffs(self) end
-
-	end,]]
-	
-	focus = function(self, ...)
-	
-		self.mystyle = "focus"
-		
-		-- Size and Scale
-		self:SetScale(cfg.scale)
-		self:SetSize(220, 35)
-		
-		-- Generate Bars
-		lib.gen_hpbar(self)
-		lib.gen_portrait(self)
-		lib.gen_ppbar(self)
-		lib.gen_hpstrings(self)
-		lib.gen_highlight(self)
-		lib.gen_RaidMark(self)
-		lib.gen_castbar(self)
-
-		--style specific stuff
-		self.Health.frequentUpdates = true
-		self.Health.Smooth = true
-		self.Health.colorSmooth = true
-		
-		self.Power.frequentUpdates = true
-		self.Power.Smooth = true
-		self.Power.colorPower = true
-		self.Power.BG.multiplier = 0.2
-
-		if cfg.showFocusBuff then	lib.createBuffs(self) end
-		if cfg.showFocusDebuff then	lib.createDebuffs(self) end
-		
-	end,
 	
 	targettarget = function(self, ...)
 
@@ -306,11 +162,8 @@ oUF:Factory(function(self)
 
 	-- Single Frames
 	self:SetActiveStyle('Sora')
-	self:Spawn('player'):SetPoint("CENTER", UIParent, "CENTER", -270, -100)
-	--self:Spawn('target'):SetPoint("CENTER", UIParent, "CENTER", 270, -100)
 	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -10) end
 	if cfg.showpet then self:Spawn('pet'):SetPoint("TOPLEFT",oUF_SoraPlayer,"BOTTOMLEFT", 0, -10) end
-	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 250) end
 	if cfg.showfocustarget then self:Spawn('focustarget'):SetPoint("BOTTOMLEFT",oUF_SoraFocus,"TOPLEFT", 0, 10) end
 
 	if cfg.ShowParty or cfg.ShowRaid then
