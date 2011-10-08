@@ -3,10 +3,10 @@ local oUF = ns.oUF or oUF
 local cfg = ns.cfg
 local cast = CreateFrame("Frame")  
 
-  -----------------------------
-  -- FUNCTIONS
-  -----------------------------
-  -- special thanks to Allez for coming up with this solution
+-----------------------------
+-- FUNCTIONS
+-----------------------------
+-- special thanks to Allez for coming up with this solution
 local channelingTicks = {
 	-- warlock
 	[GetSpellInfo(1120)] = 5, -- drain soul
@@ -138,5 +138,6 @@ cast.PostCastFailed = function(self, event, unit, name, rank, castid)
 	end
 	self:Show()
 end
-  --hand the lib to the namespace for further usage
-  ns.cast = cast
+
+--hand the lib to the namespace for further usage
+ns.cast = cast

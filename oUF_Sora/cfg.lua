@@ -47,7 +47,6 @@ cfg.ShowCastbar = true				-- 显示施法条
 
 -- 其他
 cfg.RCheckIcon = true				-- 显示就位确认图标
-cfg.ShowIncHeals = true				-- 显示治疗预估
 cfg.showLFDIcons = true				-- 显示随机副本角色图标
 cfg.scale = 1						-- 其他框体缩放
 
@@ -56,9 +55,10 @@ cfg.Solid = Media.."solid"
 cfg.GlowTex = Media.."glowTex"
 
 cfg.statusbar_texture = Media.."Statusbar"
+cfg.Statusbar = Media.."Statusbar"
 cfg.backdrop_texture = Media.."backdrop"
 cfg.highlight_texture = Media.."raidbg"
-cfg.debuffhighlight_texture = Media.."debuff_highlight"
+cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 cfg.font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 cfg.smallfont = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 

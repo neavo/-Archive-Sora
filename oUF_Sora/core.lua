@@ -68,7 +68,6 @@ local UnitSpecific = {
 		lib.gen_RaidMark(self)
 		lib.gen_InfoIcons(self)
 		lib.gen_castbar(self)
-		lib.gen_mirrorcb(self)
 		lib.RogueComboPoints(self)
 
 		self.Health.frequentUpdates = true
@@ -88,7 +87,7 @@ local UnitSpecific = {
 		
 	end,
 	
-	target = function(self, ...)
+	--[[target = function(self, ...)
 	
 		self.mystyle = "target"
 		
@@ -121,7 +120,7 @@ local UnitSpecific = {
 		if cfg.showTargetBuff then	lib.createBuffs(self) end
 		if cfg.showTargetDebuff then lib.createDebuffs(self) end
 
-	end,
+	end,]]
 	
 	focus = function(self, ...)
 	
@@ -308,7 +307,7 @@ oUF:Factory(function(self)
 	-- Single Frames
 	self:SetActiveStyle('Sora')
 	self:Spawn('player'):SetPoint("CENTER", UIParent, "CENTER", -270, -100)
-	self:Spawn('target'):SetPoint("CENTER", UIParent, "CENTER", 270, -100)
+	--self:Spawn('target'):SetPoint("CENTER", UIParent, "CENTER", 270, -100)
 	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -10) end
 	if cfg.showpet then self:Spawn('pet'):SetPoint("TOPLEFT",oUF_SoraPlayer,"BOTTOMLEFT", 0, -10) end
 	if cfg.showfocus then self:Spawn('focus'):SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 250) end

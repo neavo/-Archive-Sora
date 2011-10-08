@@ -6,7 +6,8 @@
 	<Script file="AuraWatch.lua"/>
 	<Script file="boring_totembar.lua"/>
 	<Script file="Castbar.lua"/>
-	<Script file="Focuser.lua" />
+	<Script file="Focuser.lua"/>
+	<Script file="MirrorTimer.lua"/>
 	<Script file="Movable.lua"/>
 	<Script file="RaidDebuff.lua"/>
 	<Script file="RaidDebuffList.lua"/>

@@ -505,37 +505,6 @@ lib.gen_castbar = function(self)
 	self.Castbar.Time = t
 	self.Castbar.Icon = i
 end
-  
--- mirror castbar!
-lib.gen_mirrorcb = function(f)
-	for _, bar in pairs({'MirrorTimer1','MirrorTimer2','MirrorTimer3',}) do   
-		for i, region in pairs({_G[bar]:GetRegions()}) do
-			if (region.GetTexture and region:GetTexture() == 'SolidTexture') then
-				region:Hide()
-			end
-		end
-		_G[bar..'Border']:Hide()
-		_G[bar]:SetParent(UIParent)
-		_G[bar]:SetScale(1)
-		_G[bar]:SetHeight(18)
-		_G[bar]:SetWidth(250)
-		_G[bar]:SetBackdropColor(.1,.1,.1)
-		_G[bar..'Background'] = _G[bar]:CreateTexture(bar..'Background', 'BACKGROUND', _G[bar])
-		_G[bar..'Background']:SetTexture(cfg.statusbar_texture)
-		_G[bar..'Background']:SetAllPoints(bar)
-		_G[bar..'Background']:SetVertexColor(.15,.15,.15,.75)
-		_G[bar..'Text']:SetFont(cfg.font, 12, "THINOUTLINE")
-		_G[bar..'Text']:ClearAllPoints()
-		_G[bar..'Text']:SetPoint('CENTER', MirrorTimer1StatusBar, 0, 0)
-		_G[bar..'StatusBar']:SetAllPoints(_G[bar])
-		--glowing borders
-		local h = CreateFrame("Frame", nil, _G[bar])
-		h:SetFrameLevel(0)
-		h:SetPoint("TOPLEFT", -1, 1)
-		h:SetPoint("BOTTOMRIGHT", 1, -1)
-		lib.gen_backdrop(h)
-	end
-end  
 
 -- Post Create Icon Function
 local myPostCreateIcon = function(self, button)
