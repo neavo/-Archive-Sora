@@ -443,20 +443,13 @@ local function BuildCombatIcon(self)
 	self.Assistant = AssistantIcon
 end
 
-local function BuildLFDRoleIcon(self)
-	LFDRoleIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	LFDRoleIcon:SetSize(16,16)
-	LFDRoleIcon:SetPoint("LEFT", self.Assistant, "RIGHT")
-	self.LFDRole = LFDRoleIcon
-end
-
 local function BuildPlayerFrame(self, ...)
 	-- RegisterForClicks
 	self.menu = BuildMenu
 	self:RegisterForClicks("AnyDown")
 	
 	-- Set Size and Scale
-	self:SetScale(cfg.scale)
+	self:SetScale(cfg.Scale)
 	self:SetSize(220, 35)
 	
 	-- BuildHealthBar
@@ -482,9 +475,7 @@ local function BuildPlayerFrame(self, ...)
 	
 	-- BuildCombatIcon
 	BuildCombatIcon(self)
-	
-	-- BuildLFDRoleIcon
-	BuildLFDRoleIcon(self)
+
 end
 
 oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)

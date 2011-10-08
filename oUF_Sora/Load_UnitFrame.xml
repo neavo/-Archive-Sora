@@ -9,8 +9,8 @@
 	<Script file="cfg.lua"/>	
 	<Include file="Plugins\Plugins.xml"/>
 	
-	<Script file="lib.lua" />
-	<Script file="core.lua" />
+	<!--Script file="lib.lua" /-->
+	<!--Script file="core.lua" /-->
 	
 	<Include file="Layout\Layout.xml"/>
 </Ui>

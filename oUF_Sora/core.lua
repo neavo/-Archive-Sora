@@ -9,70 +9,6 @@ local lib = ns.lib
 -----------------------------
 
 local UnitSpecific = {
-	
-	targettarget = function(self, ...)
-
-		self.mystyle = "tot"
-		
-		-- Size and Scale
-		self:SetScale(cfg.scale)
-		self:SetSize(60, 14)
-
-		-- Generate Bars
-		lib.gen_hpbar(self)
-		lib.gen_hpstrings(self)
-		lib.gen_highlight(self)
-		lib.gen_RaidMark(self)
-
-		--style specific stuff
-		self.Health.frequentUpdates = true
-		self.Health.colorSmooth = true
-		self.Health.Smooth = true
-
-	end,
-	
-	focustarget = function(self, ...)
-		
-		self.mystyle = "focustarget"
-		
-		-- Size and Scale
-		self:SetScale(cfg.scale)
-		self:SetSize(60, 14)
-
-		-- Generate Bars
-		lib.gen_hpbar(self)
-		lib.gen_hpstrings(self)
-		lib.gen_highlight(self)
-		lib.gen_RaidMark(self)
-		
-		--style specific stuff
-		self.Health.frequentUpdates = true
-		self.Health.colorSmooth = true
-		self.Health.Smooth = true
-	
-	end,
-	
-	pet = function(self, ...)
-		local _, playerClass = UnitClass("player")
-		
-		self.mystyle = "pet"
-		
-		-- Size and Scale
-		self:SetScale(cfg.scale)
-		self:SetSize(60,14)
-
-		-- Generate Bars
-		lib.gen_hpbar(self)
-		lib.gen_hpstrings(self)
-		lib.gen_highlight(self)
-		lib.gen_RaidMark(self)
-		
-		--style specific stuff
-		self.Health.frequentUpdates = true
-		self.Health.colorSmooth = true
-		self.Health.Smooth = true
-
-	end,
 
 	party = function(self, ...)
 				
@@ -162,9 +98,6 @@ oUF:Factory(function(self)
 
 	-- Single Frames
 	self:SetActiveStyle('Sora')
-	if cfg.showtot then self:Spawn('targettarget'):SetPoint("TOPRIGHT",oUF_SoraTarget,"BOTTOMRIGHT", 0, -10) end
-	if cfg.showpet then self:Spawn('pet'):SetPoint("TOPLEFT",oUF_SoraPlayer,"BOTTOMLEFT", 0, -10) end
-	if cfg.showfocustarget then self:Spawn('focustarget'):SetPoint("BOTTOMLEFT",oUF_SoraFocus,"TOPLEFT", 0, 10) end
 
 	if cfg.ShowParty or cfg.ShowRaid then
 		-- Hide the Blizzard raid frames

@@ -128,7 +128,7 @@ end
 local function BuildTags(self)
 	local Name = MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
-	self:Tag(Name, "[Sora:color][name]")
+	self:Tag(Name, "[Sora:level] [Sora:color][name]")
 	Name:SetAlpha(0)
 	local HPTag = MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
@@ -304,20 +304,13 @@ local function BuildCombatIcon(self)
 	self.Assistant = AssistantIcon
 end
 
-local function BuildLFDRoleIcon(self)
-	LFDRoleIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	LFDRoleIcon:SetSize(16,16)
-	LFDRoleIcon:SetPoint("LEFT", self.Assistant, "RIGHT")
-	self.LFDRole = LFDRoleIcon
-end
-
 local function BuildFocusFrame(self, ...)
 	-- RegisterForClicks
 	self.menu = BuildMenu
 	self:RegisterForClicks("AnyDown")
 	
 	-- Set Size and Scale
-	self:SetScale(cfg.scale)
+	self:SetScale(cfg.Scale)
 	self:SetSize(220, 35)
 	
 	-- BuildHealthBar
@@ -346,9 +339,6 @@ local function BuildFocusFrame(self, ...)
 	
 	-- BuildCombatIcon
 	BuildCombatIcon(self)
-	
-	-- BuildLFDRoleIcon
-	BuildLFDRoleIcon(self)
 end
 
 oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
