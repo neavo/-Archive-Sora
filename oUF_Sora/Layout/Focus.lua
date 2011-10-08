@@ -300,7 +300,7 @@ local function BuildCombatIcon(self)
 	
 	local AssistantIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	AssistantIcon:SetSize(16,16)
-	AssistantIcon:SetPoint("LEFT", MasterLooterIcon, "RIGHT")
+	AssistantIcon:SetPoint("TOP", LeaderIcon, "BOTTOM")
 	self.Assistant = AssistantIcon
 end
 

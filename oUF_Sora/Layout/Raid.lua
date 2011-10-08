@@ -125,7 +125,7 @@ local function BuildCombatIcon(self)
 	
 	local AssistantIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	AssistantIcon:SetSize(16,16)
-	AssistantIcon:SetPoint("LEFT", MasterLooterIcon, "RIGHT")
+	AssistantIcon:SetPoint("TOP", LeaderIcon, "BOTTOM")
 	self.Assistant = AssistantIcon
 end
 
@@ -244,7 +244,6 @@ local function BuildAuraWatch(self, ...)
 		Button.cd:SetReverse()
 		Button.count = MakeFontString(Button, 12)
 		Button.count:SetPoint("CENTER", Button, "BOTTOM", 3, 3)
-		local Border = MakeBorder(Button)
 	end
 	AuraWatch.onlyShowPresent = true
 	AuraWatch.anyUnit = true
@@ -351,7 +350,7 @@ if cfg.ShowRaid then
 		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo",
 			"showRaid", cfg.ShowRaid,  
 			"showPlayer", true,
-			"showSolo", true,
+			"showSolo", false,
 			"showParty", true,
 			"xoffset", 7,
 			"groupFilter", "1,2,3,4,5",
