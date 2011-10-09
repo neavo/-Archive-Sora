@@ -45,7 +45,7 @@ local BMFrame = CreateFrame("Frame", "BMFrame", Minimap)
 BMFrame:SetHeight(16)
 BMFrame:SetWidth(Minimap:GetWidth())
 BMFrame:SetPoint("TOP", Minimap, "BOTTOM", 0, -3)
-BMFrame:SetBackdrop( { 
+BMFrame:SetBackdrop({ 
 	edgeFile = cfg.Solid, edgeSize = 1, 
 })
 BMFrame:SetBackdropBorderColor(0,0,0,1)
@@ -60,15 +60,15 @@ BMFrame.Text = BMFrame:CreateFontString(nil, "OVERLAY")
 BMFrame.Text:SetPoint("CENTER", BMFrame,"CENTER", 0, 0)
 BMFrame.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 
--- 底部左边
-local BLFrame = CreateFrame("Frame", nil,BMFrame)
+-- 底部左边(团队菜单)
+local BLFrame = CreateFrame("Frame", nil, BMFrame)
 BLFrame:SetHeight(16)
 BLFrame:SetWidth(16)
 BLFrame:SetPoint("LEFT", BMFrame, "LEFT", 0, 0)
 BLFrame.Text = BLFrame:CreateFontString(nil, "OVERLAY")
 BLFrame.Text:SetPoint("CENTER", BLFrame,"CENTER", 0, 0)
 BLFrame.Text:SetFont(cfg.Font, 9, "THINOUTLINE")
-BLFrame.Text:SetText("I")
+BLFrame.Text:SetText("G")
 BLFrame:SetScript("OnEnter",function(self)
 	BMFrame:SetAlpha(1)
 	BLFrame.Text:SetTextColor(1, 0, 0)
@@ -77,9 +77,22 @@ BLFrame:SetScript("OnLeave",function(self)
 	BMFrame:SetAlpha(0.2)
 	BLFrame.Text:SetTextColor(1, 1, 1)
 end)
+local RaidMenuFrame = CreateFrame("Frame", "RaidMenu", UIParent, "UIDropDownMenuTemplate")
+local RaidMenuList = {
+    {text = "就位确认",
+    func = function() DoReadyCheck() end},
+    {text = "角色检查",
+    func = function() InitiateRolePoll() end},
+    {text = "转化为团队",
+    func = function() ConvertToRaid() end},
+    {text = "转化为小队",
+    func = function() ConvertToParty() end},
+}
 BLFrame:SetScript("OnMouseDown",function(self)
-	
+	EasyMenu(RaidMenuList, RaidMenuFrame, "cursor", 0, 0, "MENU", 2)
+	PlaySound("igMiniMapOpen")
 end)
+DropDownList1:SetClampedToScreen(true)
 
 -- 底部右边(NBB)
 local BRFrame = CreateFrame("Frame",nil,BMFrame)
@@ -97,11 +110,10 @@ end)
 BRFrame:SetScript("OnMouseDown",function(self)
 		if NBBVisible then
 			NBB:Hide()
-			PlaySound("igMiniMapOpen")
 		else
 			NBB:Show()
-			PlaySound("igMiniMapOpen")
 		end
+		PlaySound("igMiniMapOpen")
 end)
 BRFrame.Text = BRFrame:CreateFontString(nil, "OVERLAY")
 BRFrame.Text:SetPoint("CENTER", BRFrame,"CENTER", 0, 0)
