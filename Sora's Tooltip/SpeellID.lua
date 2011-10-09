@@ -28,7 +28,7 @@ end)
 hooksecurefunc("SetItemRef", function(link, text, button, chatFrame)
 	if string.find(link,"^spell:") then
 		local id = string.sub(link,7)
-		self:AddLine(" ")
+		ItemRefTooltip:AddLine(" ")
 		ItemRefTooltip:AddDoubleLine("SpellID:",format("|cff70C0F5%s|r",id))
 		ItemRefTooltip:Show()
 	end
