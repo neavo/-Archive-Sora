@@ -25,7 +25,7 @@ MainBar.Right:SetBackdrop({
 })
 MainBar.Right:SetBackdropBorderColor(0, 0, 0, 0.8)
 MainBar.Right:SetScript("OnMouseDown", function(self)
-	--if not UnitAffectingCombat("player") then
+	if not UnitAffectingCombat("player") then
 		if ChatFrameInScreen == "In" then
 			--local _, _, _, OriginalX, OriginalY = ChatFrame1:GetPoint()
 			local OriginalX, OriginalY = 5, 23
@@ -64,7 +64,7 @@ MainBar.Right:SetScript("OnMouseDown", function(self)
 				end
 			end)		
 		end
-	--end
+	end
 end)
 
 
