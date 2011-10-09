@@ -22,15 +22,15 @@ cfg.ShowRaid = true				-- 显示团队框体
 	cfg.ShowRaidDebuffs = true 	-- 显示RaidDebuff
 cfg.ShowParty = true			-- 显示小队框体
 	cfg.showPartyDebuff = true	-- 显示小队框体Debuff
-cfg.raidScale = 1				-- 团队&小队缩放
+cfg.RaidScale = 1				-- 团队&小队缩放
 
 -- Buff
 cfg.showTargetBuff = true					-- 显示目标框体Buff
 	cfg.BuffOnlyShowPlayer = false			-- 目标框体上只显示玩家的Buff
 cfg.showTargetDebuff = true					-- 显示目标框体Debuff
 	cfg.DebuffOnlyShowPlayer = false		-- 目标框体上只显示玩家的Debuff
-cfg.showFocusDebuff = true					-- 显示焦点框体Buff
-cfg.showFocusBuff = true 					-- 显示焦点框体Debuff
+cfg.ShowFocusDebuff = true					-- 显示焦点框体Buff
+cfg.ShowFocusBuff = true 					-- 显示焦点框体Debuff
 
 -- 施法条
 cfg.ShowCastbar = true				-- 显示施法条

@@ -321,7 +321,7 @@ if cfg.ShowRaid then
 		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", cfg.ShowRaid,  
 			"showPlayer", true, 
-			"showSolo", true, 
+			"showSolo", false, 
 			"showParty", true, 
 			"xoffset", 7, 
 			"groupFilter", "1, 2, 3, 4, 5", 
@@ -337,7 +337,7 @@ if cfg.ShowRaid then
 			self:SetWidth(%d)
 			self:SetHeight(%d)
 			]]):format(cfg.RaidUnitWidth, 20))
-		SR.RaidFrame:SetScale(cfg.raidScale)
+		SR.RaidFrame:SetScale(cfg.RaidScale)
 		SR.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
 	else
 		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
@@ -359,7 +359,7 @@ if cfg.ShowRaid then
 			self:SetWidth(%d)
 			self:SetHeight(%d)
 			]]):format(cfg.RaidUnitWidth, 20))
-		SR.RaidFrame:SetScale(cfg.raidScale)
+		SR.RaidFrame:SetScale(cfg.RaidScale)
 		SR.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
 	end
 end

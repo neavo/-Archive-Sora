@@ -206,7 +206,7 @@ local function BuildPartyFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildDebuff
-	BuildDebuff(self)
+	if cfg.showPartyDebuff then BuildDebuff(self) end
 	
 	-- BuildRaidMark
 	BuildRaidIcon(self)
@@ -233,6 +233,6 @@ if cfg.ShowParty then
 		self:SetWidth(%d)
 		self:SetHeight(%d)
 	]]):format(180, 22))
-	SR.PartyFrame:SetScale(cfg.raidScale)
+	SR.PartyFrame:SetScale(cfg.RaidScale)
 	SR.PartyFrame:SetPoint("TOPLEFT", UIParent, 10, -220)
 end

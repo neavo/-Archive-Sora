@@ -310,10 +310,10 @@ local function BuildFocusFrame(self, ...)
 	if cfg.ShowCastbar then BuildCastbar(self) end
 	
 	-- BuildBuff(self)
-	if cfg.showFocusBuff then BuildBuff(self) end
+	if cfg.ShowFocusBuff then BuildBuff(self) end
 
 	-- BuildDebuff
-	if cfg.showFocusDebuff then BuildDebuff(self) end
+	if cfg.ShowFocusDebuff then BuildDebuff(self) end
 		
 	-- BuildRaidMark
 	BuildRaidIcon(self)
