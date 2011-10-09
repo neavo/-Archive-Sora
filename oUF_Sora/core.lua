@@ -43,37 +43,6 @@ local UnitSpecific = {
 		self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", lib.UpdateThreat)
 	end,
 
-  raid = function(self, ...)
-				
-		self.mystyle = "raid"
-		
-		self.Range = {
-			insideAlpha = 1,
-			outsideAlpha = 0.4,
-		}
-
-		-- Generate Bars
-		lib.gen_hpbar(self)
-		lib.gen_ppbar(self)
-		lib.gen_hpstrings(self)
-		lib.gen_highlight(self)
-		lib.gen_RaidMark(self)
-		lib.ReadyCheck(self)
-		lib.gen_LFDRole(self)
-
-		--style specific stuff
-		self.Health.frequentUpdates = true
-		self.Health.colorSmooth = true
-		self.Power.colorPower = true
-		self.Power.BG.multiplier = 0.2
-		lib.gen_InfoIcons(self)
-		lib.CreateThreatBorder(self)
-		lib.raidDebuffs(self)
-		lib.createAuraWatch(self, unit)
-		self.Health.PostUpdate = lib.PostUpdateRaidFrame
-		self:RegisterEvent("UNIT_THREAT_LIST_UPDATE", lib.UpdateThreat)
-		self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", lib.UpdateThreat)
-	end,
 }	
   
 -- The Shared Style Function

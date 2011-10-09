@@ -5,40 +5,17 @@
 local _, SR = ...
 local oUF = SR.oUF or oUF
 local cfg = SR.cfg
-local cast = SR.cast
 
-local function MakeShadow(Frame)
+local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
 	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", 5, 0)
-	Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	Shadow:SetPoint("TOPLEFT", -Size, Size)
+	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
 	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = 5, 
+		edgeFile = cfg.GlowTex, edgeSize = Size, 
 	})
-	Shadow:SetBackdropBorderColor(0,0,0,1)
+	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
-end
-
-local function MakeTexBorder()
-	local Border = CreateFrame("Frame")
-	Border:SetFrameLevel(1)
-	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
-	})
-	Border:SetBackdropBorderColor(0,0,0,1)
-	return Border
-end
-
-local function MakeBorder(Frame)
-	local Border = CreateFrame("Frame", nil, Frame)
-	Border:SetFrameLevel(1)
-	Border:SetPoint("TOPLEFT", -1, 1)
-	Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
-	})
-	Border:SetBackdropBorderColor(0,0,0,1)
-	return Border
 end
 
 local function MakeFontString(parent, fontsize)
@@ -63,8 +40,7 @@ local function BuildHealthBar(self)
 	Bar:SetHeight(14)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
-	Bar.Shadow = MakeShadow(Bar)
-	Bar.Border = MakeBorder(Bar)
+	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(cfg.Statusbar)
 	Bar.BG:SetAllPoints()

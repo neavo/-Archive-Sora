@@ -5,44 +5,21 @@
 local _, SR = ...
 local oUF = SR.oUF or oUF
 local cfg = SR.cfg
-local cast = SR.cast
 
-local function MakeShadow(Frame)
+local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
 	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", 5, 0)
-	Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	Shadow:SetPoint("TOPLEFT", -Size, Size)
+	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
 	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = 5, 
+		edgeFile = cfg.GlowTex, edgeSize = Size, 
 	})
-	Shadow:SetBackdropBorderColor(0,0,0,1)
+	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
 
-local function MakeTexBorder()
-	local Border = CreateFrame("Frame")
-	Border:SetFrameLevel(1)
-	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
-	})
-	Border:SetBackdropBorderColor(0,0,0,1)
-	return Border
-end
-
-local function MakeBorder(Frame)
-	local Border = CreateFrame("Frame", nil, Frame)
-	Border:SetFrameLevel(1)
-	Border:SetPoint("TOPLEFT", -1, 1)
-	Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
-	})
-	Border:SetBackdropBorderColor(0,0,0,1)
-	return Border
-end
-
-local function MakeFontString(parent, fontsize)
-	local tempText = parent:CreateFontString(nil, "OVERLAY")
+local function MakeFontString(Parent, fontsize)
+	local tempText = Parent:CreateFontString(nil, "OVERLAY")
 	tempText:SetFont(cfg.Font, fontsize, "THINOUTLINE")
 	return tempText
 end
@@ -53,10 +30,7 @@ local function BuildHealthBar(self)
 	Bar:SetHeight(16)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
-	Bar.Shadow = MakeShadow(Bar)
-	Bar.Shadow:SetPoint("TOPLEFT", -5, 5)
-	Bar.Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
-	Bar.Border = MakeBorder(Bar)
+	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(cfg.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -79,10 +53,7 @@ local function BuildPowerBar(self)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
-	Bar.Shadow = MakeShadow(Bar)
-	Bar.Shadow:SetPoint("TOPLEFT", -5, 5)
-	Bar.Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
-	Bar.Border = MakeBorder(Bar)
+	Bar.Shadow = MakeShadow(Bar , 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(cfg.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -114,25 +85,25 @@ end
 
 local function BuildCombatIcon(self)
 	local LeaderIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	LeaderIcon:SetSize(16,16)
+	LeaderIcon:SetSize(16, 16)
 	LeaderIcon:SetPoint("TOPLEFT", self.Health, -7, 9)
 	self.Leader = LeaderIcon
 
 	local MasterLooterIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	MasterLooterIcon:SetSize(16,16)
+	MasterLooterIcon:SetSize(16, 16)
 	MasterLooterIcon:SetPoint("LEFT", LeaderIcon, "RIGHT")
 	self.MasterLooter = MasterLooterIcon
 	
 	local AssistantIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	AssistantIcon:SetSize(16,16)
+	AssistantIcon:SetSize(16, 16)
 	AssistantIcon:SetPoint("TOP", LeaderIcon, "BOTTOM")
 	self.Assistant = AssistantIcon
 end
 
 local function BuildLFDRoleIcon(self)
 	LFDRoleIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	LFDRoleIcon:SetSize(16,16)
-	LFDRoleIcon:SetPoint("BOTTOM", self.Health, "TOP", 15, -7)
+	LFDRoleIcon:SetSize(16, 16)
+	LFDRoleIcon:SetPoint("TOPRIGHT", self.Health, 7, 9)
 	self.LFDRole = LFDRoleIcon
 end
 
@@ -202,42 +173,42 @@ local function BuildAuraWatch(self, ...)
 	local _, Class = UnitClass("player")
 	local AuraWatch = {}
 	local spellIDs = {
-		DEATHKNIGHT = {},
+		DEATHKNIGHT = {}, 
 		DRUID = {
 			33763, -- Lifebloom
 			8936, -- Regrowth
 			774, -- Rejuvenation
 			48438, -- Wild Growth
-		},
+		}, 
 		HUNTER = {
 			34477, -- Misdirection
-		},
+		}, 
 		MAGE = {
 			54646, -- Focus Magic
-		},
+		}, 
 		PALADIN = {
 			53563, -- Beacon of Light
 			25771, -- Forbearance
-		},
+		}, 
 		PRIEST = { 
 			17, -- Power Word: Shield
 			139, -- Renew
 			33076, -- Prayer of Mending
 			6788, -- Weakened Soul
-		},
+		}, 
 		ROGUE = {
 			57934, -- Tricks of the Trade
-		},
+		}, 
 		SHAMAN = {
 			974, -- Earth Shield
 			61295, -- Riptide
-		},
+		}, 
 		WARLOCK = {
 			20707, -- Soulstone Resurrection
-		},
+		}, 
 		WARRIOR = {
 			50720, -- Vigilance
-		},
+		}, 
 	}
 		
 	local function PostCreateIcon(_, Button, ...)
@@ -347,48 +318,48 @@ if cfg.ShowRaid then
 	oUF:RegisterStyle("SoraRaid", BuildRaidFrame)
 	oUF:SetActiveStyle("SoraRaid")
 	if cfg.RaidPartyH then
-		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo",
+		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", cfg.ShowRaid,  
-			"showPlayer", true,
-			"showSolo", false,
-			"showParty", true,
-			"xoffset", 7,
-			"groupFilter", "1,2,3,4,5",
-			"groupBy", "GROUP",
-			"groupingOrder", "1,2,3,4,5",
-			"sortMethod", "INDEX",
-			"maxColumns", 5,
-			"unitsPerColumn", 5,
-			"columnSpacing", 7,
-			"point", "LEFT",
-			"columnAnchorPoint", "TOP",
+			"showPlayer", true, 
+			"showSolo", true, 
+			"showParty", true, 
+			"xoffset", 7, 
+			"groupFilter", "1, 2, 3, 4, 5", 
+			"groupBy", "GROUP", 
+			"groupingOrder", "1, 2, 3, 4, 5", 
+			"sortMethod", "INDEX", 
+			"maxColumns", 5, 
+			"unitsPerColumn", 5, 
+			"columnSpacing", 7, 
+			"point", "LEFT", 
+			"columnAnchorPoint", "TOP", 
 			"oUF-initialConfigFunction", ([[
 			self:SetWidth(%d)
 			self:SetHeight(%d)
 			]]):format(cfg.RaidUnitWidth, 20))
 		SR.RaidFrame:SetScale(cfg.raidScale)
-		SR.RaidFrame:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -370, 135)		
+		SR.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
 	else
-		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo",
+		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", cfg.ShowRaid,  
-			"showPlayer", true,
-			"showSolo", false,
-			"showParty", true,
-			"yoffset", -7,
-			"groupFilter", "1,2,3,4,5",
-			"groupBy", "GROUP",
-			"groupingOrder", "1,2,3,4,5",
-			"sortMethod", "INDEX",
-			"maxColumns", 5,
-			"unitsPerColumn", 5,
-			"columnSpacing", 7,
-			"point", "TOP",
-			"columnAnchorPoint", "LEFT",
+			"showPlayer", true, 
+			"showSolo", false, 
+			"showParty", true, 
+			"yoffset", -7, 
+			"groupFilter", "1,2,3,4,5", 
+			"groupBy", "GROUP", 
+			"groupingOrder", "1,2,3,4,5", 
+			"sortMethod", "INDEX", 
+			"maxColumns", 5, 
+			"unitsPerColumn", 5, 
+			"columnSpacing", 7, 
+			"point", "TOP", 
+			"columnAnchorPoint", "LEFT", 
 			"oUF-initialConfigFunction", ([[
 			self:SetWidth(%d)
 			self:SetHeight(%d)
 			]]):format(cfg.RaidUnitWidth, 20))
 		SR.RaidFrame:SetScale(cfg.raidScale)
-		SR.RaidFrame:SetPoint("TOPLEFT",UIParent,"BOTTOMRIGHT", -370, 135)
+		SR.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
 	end
 end

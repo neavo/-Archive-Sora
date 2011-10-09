@@ -20,7 +20,7 @@ cfg.ShowRaid = true				-- 显示团队框体
 	cfg.RaidPartyH = true		-- 团队框体中各小队横向排列
 	cfg.ShowAuraWatch = true	-- 团队框体中显示边角Hot/技能监视
 	cfg.ShowRaidDebuffs = true 	-- 显示RaidDebuff
-cfg.ShowParty = false			-- 显示小队框体
+cfg.ShowParty = true			-- 显示小队框体
 	cfg.showPartyDebuff = true	-- 显示小队框体Debuff
 cfg.raidScale = 1				-- 团队&小队缩放
 

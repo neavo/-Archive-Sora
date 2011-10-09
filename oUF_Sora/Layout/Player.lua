@@ -7,42 +7,32 @@ local oUF = SR.oUF or oUF
 local cfg = SR.cfg
 local cast = SR.cast
 
-local function MakeShadow(Frame)
+local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
 	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", 5, 0)
-	Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	Shadow:SetPoint("TOPLEFT", -Size, Size)
+	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
 	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = 5, 
+		edgeFile = cfg.GlowTex, edgeSize = Size, 
 	})
-	Shadow:SetBackdropBorderColor(0,0,0,1)
+	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
 
-local function MakeTexBorder()
-	local Border = CreateFrame("Frame")
+local function MakeTexShadow(Parent, Anchor, Size)
+	local Border = CreateFrame("Frame", nil, Parent)
+	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
+	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
 	Border:SetFrameLevel(1)
 	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
+		edgeFile = cfg.GlowTex, edgeSize = Size, 
 	})
-	Border:SetBackdropBorderColor(0,0,0,1)
+	Border:SetBackdropBorderColor(0, 0, 0, 1)
 	return Border
 end
 
-local function MakeBorder(Frame)
-	local Border = CreateFrame("Frame", nil, Frame)
-	Border:SetFrameLevel(1)
-	Border:SetPoint("TOPLEFT", -1, 1)
-	Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
-	})
-	Border:SetBackdropBorderColor(0,0,0,1)
-	return Border
-end
-
-local function MakeFontString(parent, fontsize)
-	local tempText = parent:CreateFontString(nil, "OVERLAY")
+local function MakeFontString(Parent, fontsize)
+	local tempText = Parent:CreateFontString(nil, "OVERLAY")
 	tempText:SetFont(cfg.Font, fontsize, "THINOUTLINE")
 	return tempText
 end
@@ -63,8 +53,7 @@ local function BuildHealthBar(self)
 	Bar:SetHeight(24)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
-	Bar.Shadow = MakeShadow(Bar)
-	Bar.Border = MakeBorder(Bar)
+	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(cfg.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -83,10 +72,9 @@ local function BuildPowerBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
 	Bar:SetStatusBarTexture(cfg.Statusbar)
 	Bar:SetWidth(self:GetWidth())
-	Bar:SetHeight(6)
+	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
-	Bar.Shadow = MakeShadow(Bar)
-	Bar.Border = MakeBorder(Bar)
+	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(cfg.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -106,14 +94,13 @@ local function BuildClassPowerBar(self)
 		local Runes = CreateFrame("Frame")
 		for i= 1, 6 do
 			local Rune = CreateFrame("StatusBar", nil, self)
-			Rune:SetSize((self:GetWidth()-15)/6, 6)
+			Rune:SetSize((self:GetWidth()-15)/6, 3)
 			Rune:SetStatusBarTexture(cfg.Statusbar)			
 			Rune.BG = Rune:CreateTexture(nil, "BACKGROUND")
 			Rune.BG:SetAllPoints()
 			Rune.BG:SetTexture(cfg.Statusbar)
 			Rune.BG:SetVertexColor(0.1, 0.1, 0.1)			
-			Rune.Shadow = MakeShadow(Rune)
-			Rune.Border = MakeBorder(Rune)
+			Rune.Shadow = MakeShadow(Rune, 3)
 			
 			if i == 1 then
 				Rune:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
@@ -128,12 +115,10 @@ local function BuildClassPowerBar(self)
 		local HolyPower = CreateFrame("Frame")
 		for i = 1, 3 do
 			local HolyShard = CreateFrame("StatusBar", nil, self)
-			HolyShard:SetHeight(6)
-			HolyShard:SetWidth((self:GetWidth()-10)/3, 6)
+			HolyShard:SetSize((self:GetWidth()-10)/3, 3)
 			HolyShard:SetStatusBarTexture(cfg.Statusbar)
-			HolyShard:SetStatusBarColor(.9,.95,.33)		
-			HolyShard.Shadow = MakeShadow(HolyShard)
-			HolyShard.Border = MakeBorder(HolyShard)
+			HolyShard:SetStatusBarColor(0.9, 0.95, 0.33)		
+			HolyShard.Shadow = MakeShadow(HolyShard, 3)
 
 			if i == 1 then
 				HolyShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
@@ -164,11 +149,10 @@ local function BuildClassPowerBar(self)
 		local SoulShards = CreateFrame("Frame")
 		for i= 1, 3 do
 			local SoulShard = CreateFrame("StatusBar", nil, self)
-			SoulShard:SetSize((self:GetWidth()-10)/3, 6)
+			SoulShard:SetSize((self:GetWidth()-10)/3, 3)
 			SoulShard:SetStatusBarTexture(cfg.Statusbar)
-			SoulShard:SetStatusBarColor(.86,.44, 1)	
-			SoulShard.Shadow = MakeShadow(SoulShard)
-			SoulShard.Border = MakeBorder(SoulShard)
+			SoulShard:SetStatusBarColor(0.86, 0.44, 1)	
+			SoulShard.Shadow = MakeShadow(SoulShard, 3)
 
 			if i == 1 then
 				SoulShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
@@ -195,10 +179,9 @@ local function BuildClassPowerBar(self)
 	if Class == "DRUID" then
 		local EclipseBar = CreateFrame("Frame", nil, self)
 		EclipseBar:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
-		EclipseBar:SetHeight(6)
+		EclipseBar:SetHeight(3)
 		EclipseBar:SetWidth(self:GetWidth())
-		EclipseBar.Border = MakeBorder(EclipseBar)
-		EclipseBar.Shadow = MakeShadow(EclipseBar)
+		EclipseBar.Shadow = MakeShadow(EclipseBar, 3)
 		EclipseBar.LunarBar = CreateFrame("StatusBar", nil, EclipseBar)
 		EclipseBar.LunarBar:SetPoint("LEFT", 0, 0)
 		EclipseBar.LunarBar:SetSize(EclipseBar:GetWidth(), EclipseBar:GetHeight())
@@ -216,15 +199,15 @@ local function BuildClassPowerBar(self)
 	end
 	if Class == "SHAMAN" then
 		oUF.colors.totems = {
-			{ 233/255, 46/255,   16/255 },	-- fire
-			{ 173/255, 217/255,  25/255 },	-- earth
-			{  35/255, 127/255, 255/255 },	-- water
-			{ 178/255,  53/255, 240/255 },	-- air
+			{ 233/255, 46/255,   16/255 }, 	-- fire
+			{ 173/255, 217/255,  25/255 }, 	-- earth
+			{  35/255, 127/255, 255/255 }, 	-- water
+			{ 178/255,  53/255, 240/255 }, 	-- air
 		}
 		local TotemBar = CreateFrame("Frame", nil, self)
 		for i = 1, 4 do
 			local Totem = CreateFrame("Frame", nil, TotemBar)
-			Totem:SetHeight(6)
+			Totem:SetHeight(3)
 			Totem:SetWidth((self.Health:GetWidth()-15)/4)
 			Totem.StatusBar = CreateFrame("StatusBar", nil, Totem)
 			Totem.StatusBar:SetAllPoints()
@@ -233,14 +216,13 @@ local function BuildClassPowerBar(self)
 			Totem.BG:SetAllPoints()
 			Totem.BG:SetTexture(cfg.Statusbar)
 			Totem.BG:SetVertexColor(0.2, 0.2, 0.2, 0.8)
-			Totem.Shadow = MakeShadow(Totem)
-			Totem.Border = MakeBorder(Totem)
+			Totem.Shadow = MakeShadow(Totem, 3)
 			Totem.Text = MakeFontString(Totem, 8)
 			Totem.Text.Colors = {
-				{173/255, 217/255,  25/255},	-- earth
-				{233/255,  46/255,  16/255},	-- fire
-				{ 35/255, 127/255, 255/255},	-- water
-				{178/255,  53/255, 240/255},	-- air
+				{173/255, 217/255,  25/255}, 	-- earth
+				{233/255,  46/255,  16/255}, 	-- fire
+				{ 35/255, 127/255, 255/255}, 	-- water
+				{178/255,  53/255, 240/255}, 	-- air
 			}
 			Totem.Text:SetPoint("CENTER", 0, 10)
 			Totem.Text:SetTextColor(unpack(Totem.Text.Colors[i]))
@@ -260,11 +242,10 @@ local function BuildClassPowerBar(self)
 		local CPoints = CreateFrame("Frame", nil, self)	
 		for i = 1, MAX_COMBO_POINTS do
 			local CPoint = CreateFrame("StatusBar", nil, self)
-			CPoint:SetSize((self:GetWidth() / 5)-5, 6)
+			CPoint:SetSize((self:GetWidth() / 5)-5, 3)
 			CPoint:SetStatusBarTexture(cfg.Statusbar)
 			CPoint:SetStatusBarColor(1, 0.9, 0)				
-			CPoint.Shadow = MakeShadow(CPoint)
-			CPoint.Border = MakeBorder(CPoint)
+			CPoint.Shadow = MakeShadow(CPoint, 3)
 			if i == 1 then
 				CPoint:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 			else
@@ -289,7 +270,7 @@ local function BuildPortrait(self)
 	Portrait:SetFrameLevel(self.Health:GetFrameLevel()+1)
 	Portrait:RegisterEvent("PLAYER_REGEN_DISABLED")
 	Portrait:RegisterEvent("PLAYER_REGEN_ENABLED")
-	Portrait:SetScript("OnEvent",function(self, event, ...)
+	Portrait:SetScript("OnEvent", function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
 			UIFrameFadeIn(self, 0.5, 0.3, 0)
 		elseif event == "PLAYER_REGEN_ENABLED" then
@@ -317,7 +298,7 @@ local function BuildTags(self)
 	local PowerBar = self.Power
 	PowerBar:RegisterEvent("PLAYER_REGEN_DISABLED")
 	PowerBar:RegisterEvent("PLAYER_REGEN_ENABLED")
-	PowerBar:SetScript("OnEvent",function(self, event, ...)
+	PowerBar:SetScript("OnEvent", function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
 			UIFrameFadeIn(Name, 0.5, 0, 1)
 			UIFrameFadeIn(HPTag, 0.5, 0, 1)
@@ -328,7 +309,7 @@ local function BuildTags(self)
 			UIFrameFadeOut(PPTag, 0.5, 1, 0)	
 		end
 	end)
-	PowerBar:SetScript("OnEnter",function()
+	PowerBar:SetScript("OnEnter", function()
 		if not UnitAffectingCombat("player") then
 			UIFrameFadeIn(self.Portrait, 0.5, 0.3, 0)
 			UIFrameFadeIn(Name, 0.5, 0, 1)
@@ -336,7 +317,7 @@ local function BuildTags(self)
 			UIFrameFadeIn(PPTag, 0.5, 0, 1)
 		end
 	end)
-	PowerBar:SetScript("OnLeave",function()
+	PowerBar:SetScript("OnLeave", function()
 		if not UnitAffectingCombat("player") then
 			UIFrameFadeOut(self.Portrait, 0.5, 0, 0.3)
 			UIFrameFadeOut(Name, 0.5, 1, 0)
@@ -351,7 +332,7 @@ local function BuildCastbar(self)
 	Bar:SetHeight(9)
 	Bar:SetWidth(self:GetWidth()-70)
 	Bar:SetStatusBarTexture(cfg.Statusbar)
-	Bar:SetStatusBarColor(95/255, 182/255, 255/255,1)
+	Bar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
 	if cfg.CastbarAlone then
 		Bar:SetHeight(20)
 		Bar:SetFrameStrata("HIGH")
@@ -360,17 +341,17 @@ local function BuildCastbar(self)
 	else
 		Bar:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -15)
 	end
-	Bar.Border = CreateFrame("Frame", nil, Bar)
-	Bar.Border:SetPoint("TOPLEFT", -1, 1)
-	Bar.Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Bar.Border:SetFrameLevel(1)
-	Bar.Border:SetBackdrop({
+	Bar.Shadow = CreateFrame("Frame", nil, Bar)
+	Bar.Shadow:SetPoint("TOPLEFT", -3, 3)
+	Bar.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
+	Bar.Shadow:SetFrameLevel(1)
+	Bar.Shadow:SetBackdrop({
 		bgFile = cfg.Statusbar, 
-		insets = { left = 1, right = 1, top = 1, bottom = 1},
-		edgeFile = cfg.Solid, edgeSize = 1,
+		insets = { left = 3, right = 3, top = 3, bottom = 3}, 
+		edgeFile = cfg.GlowTex, edgeSize = 3, 
 	})
-	Bar.Border:SetBackdropColor(0,0,0,0.6)
-	Bar.Border:SetBackdropBorderColor(0,0,0,1)
+	Bar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
+	Bar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	
 	Bar.CastingColor = {95/255, 182/255, 255/255}
 	Bar.CompleteColor = {20/255, 208/255, 0/255}
@@ -385,13 +366,10 @@ local function BuildCastbar(self)
 	
 	Bar.Icon = Bar:CreateTexture(nil, "ARTWORK")
 	Bar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	Bar.Icon:SetSize(20,20)
+	Bar.Icon:SetSize(20, 20)
 	Bar.Icon:SetPoint("BOTTOMLEFT", Bar, "BOTTOMRIGHT", 8, 0)
-	Bar.Icon.Border = MakeTexBorder()
-	Bar.Icon.Border:SetParent(Bar)
-	Bar.Icon.Border:SetPoint("TOPLEFT", Bar.Icon, -1, 1)
-	Bar.Icon.Border:SetPoint("BOTTOMRIGHT", Bar.Icon, 1, -1)
-	
+	Bar.Icon.Shadow = MakeTexShadow(Bar, Bar.Icon, 3)
+
 	--latency (only for player unit)
 	Bar.SafeZone = Bar:CreateTexture(nil, "OVERLAY")
 	Bar.SafeZone:SetTexture(cfg.Statusbar)
@@ -423,22 +401,22 @@ end
 
 local function BuildCombatIcon(self)
 	local Resting = self.Health:CreateTexture(nil, "OVERLAY")
-	Resting:SetSize(24,24)
+	Resting:SetSize(24, 24)
 	Resting:SetPoint("RIGHT", self.Health, "LEFT", -3, 0)
 	self.Resting = Resting
 
 	local LeaderIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	LeaderIcon:SetSize(16,16)
-	LeaderIcon:SetPoint("TOPLEFT", self.Health, -2, 2)
+	LeaderIcon:SetSize(16, 16)
+	LeaderIcon:SetPoint("TOPLEFT", self.Health, -7, 9)
 	self.Leader = LeaderIcon
 
 	local MasterLooterIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	MasterLooterIcon:SetSize(16,16)
+	MasterLooterIcon:SetSize(16, 16)
 	MasterLooterIcon:SetPoint("LEFT", LeaderIcon, "RIGHT")
 	self.MasterLooter = MasterLooterIcon
 	
 	local AssistantIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	AssistantIcon:SetSize(16,16)
+	AssistantIcon:SetSize(16, 16)
 	AssistantIcon:SetPoint("TOP", LeaderIcon, "BOTTOM")
 	self.Assistant = AssistantIcon
 end
@@ -450,7 +428,7 @@ local function BuildPlayerFrame(self, ...)
 	
 	-- Set Size and Scale
 	self:SetScale(cfg.Scale)
-	self:SetSize(220, 35)
+	self:SetSize(220, 30)
 	
 	-- BuildHealthBar
 	BuildHealthBar(self)

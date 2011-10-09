@@ -10,5 +10,6 @@
 	<Script file="Focus.lua"/>
 	<Script file="FocusTarget.lua"/>
 	<Script file="Raid.lua"/>
+	<Script file="Party.lua"/>
 	
 </Ui>

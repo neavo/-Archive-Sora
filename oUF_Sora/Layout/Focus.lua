@@ -7,37 +7,27 @@ local oUF = SR.oUF or oUF
 local cfg = SR.cfg
 local cast = SR.cast
 
-local function MakeShadow(Frame)
+local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
 	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", 5, 0)
-	Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
+	Shadow:SetPoint("TOPLEFT", -Size, Size)
+	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
 	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = 5, 
+		edgeFile = cfg.GlowTex, edgeSize = Size, 
 	})
-	Shadow:SetBackdropBorderColor(0,0,0,1)
+	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
 
-local function MakeTexBorder()
-	local Border = CreateFrame("Frame")
+local function MakeTexShadow(Parent, Anchor, Size)
+	local Border = CreateFrame("Frame", nil, Parent)
+	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
+	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
 	Border:SetFrameLevel(1)
 	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
+		edgeFile = cfg.GlowTex, edgeSize = Size, 
 	})
-	Border:SetBackdropBorderColor(0,0,0,1)
-	return Border
-end
-
-local function MakeBorder(Frame)
-	local Border = CreateFrame("Frame", nil, Frame)
-	Border:SetFrameLevel(1)
-	Border:SetPoint("TOPLEFT", -1, 1)
-	Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
-	})
-	Border:SetBackdropBorderColor(0,0,0,1)
+	Border:SetBackdropBorderColor(0, 0, 0, 1)
 	return Border
 end
 
@@ -63,8 +53,7 @@ local function BuildHealthBar(self)
 	Bar:SetHeight(24)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
-	Bar.Shadow = MakeShadow(Bar)
-	Bar.Border = MakeBorder(Bar)
+	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(cfg.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -85,10 +74,9 @@ local function BuildPowerBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
 	Bar:SetStatusBarTexture(cfg.Statusbar)
 	Bar:SetWidth(self:GetWidth())
-	Bar:SetHeight(6)
+	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
-	Bar.Shadow = MakeShadow(Bar)
-	Bar.Border = MakeBorder(Bar)
+	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(cfg.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -114,7 +102,7 @@ local function BuildPortrait(self)
 	Portrait:SetFrameLevel(self.Health:GetFrameLevel()+1)
 	Portrait:RegisterEvent("PLAYER_REGEN_DISABLED")
 	Portrait:RegisterEvent("PLAYER_REGEN_ENABLED")
-	Portrait:SetScript("OnEvent",function(self, event, ...)
+	Portrait:SetScript("OnEvent", function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
 			UIFrameFadeIn(self, 0.5, 0.3, 0)
 		elseif event == "PLAYER_REGEN_ENABLED" then
@@ -142,7 +130,7 @@ local function BuildTags(self)
 	local PowerBar = self.Power
 	PowerBar:RegisterEvent("PLAYER_REGEN_DISABLED")
 	PowerBar:RegisterEvent("PLAYER_REGEN_ENABLED")
-	PowerBar:SetScript("OnEvent",function(self, event, ...)
+	PowerBar:SetScript("OnEvent", function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
 			UIFrameFadeIn(Name, 0.5, 0, 1)
 			UIFrameFadeIn(HPTag, 0.5, 0, 1)
@@ -153,7 +141,7 @@ local function BuildTags(self)
 			UIFrameFadeOut(PPTag, 0.5, 1, 0)	
 		end
 	end)
-	PowerBar:SetScript("OnEnter",function()
+	PowerBar:SetScript("OnEnter", function()
 		if not UnitAffectingCombat("player") then
 			UIFrameFadeIn(self.Portrait, 0.5, 0.3, 0)
 			UIFrameFadeIn(Name, 0.5, 0, 1)
@@ -161,7 +149,7 @@ local function BuildTags(self)
 			UIFrameFadeIn(PPTag, 0.5, 0, 1)
 		end
 	end)
-	PowerBar:SetScript("OnLeave",function()
+	PowerBar:SetScript("OnLeave", function()
 		if not UnitAffectingCombat("player") then
 			UIFrameFadeOut(self.Portrait, 0.5, 0, 0.3)
 			UIFrameFadeOut(Name, 0.5, 1, 0)
@@ -176,19 +164,19 @@ local function BuildCastbar(self)
 	Bar:SetHeight(9)
 	Bar:SetWidth(self:GetWidth()-70)
 	Bar:SetStatusBarTexture(cfg.Statusbar)
-	Bar:SetStatusBarColor(95/255, 182/255, 255/255,1)
+	Bar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
 	Bar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 13)
-	Bar.Border = CreateFrame("Frame", nil, Bar)
-	Bar.Border:SetPoint("TOPLEFT", -1, 1)
-	Bar.Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Bar.Border:SetFrameLevel(1)
-	Bar.Border:SetBackdrop({
+	Bar.Shadow = CreateFrame("Frame", nil, Bar)
+	Bar.Shadow:SetPoint("TOPLEFT", -3, 3)
+	Bar.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
+	Bar.Shadow:SetFrameLevel(1)
+	Bar.Shadow:SetBackdrop({
 		bgFile = cfg.Statusbar, 
-		insets = { left = 1, right = 1, top = 1, bottom = 1},
-		edgeFile = cfg.Solid, edgeSize = 1,
+		insets = { left = 3, right = 3, top = 3, bottom = 3}, 
+		edgeFile = cfg.GlowTex, edgeSize = 3, 
 	})
-	Bar.Border:SetBackdropColor(0,0,0,0.6)
-	Bar.Border:SetBackdropBorderColor(0,0,0,1)
+	Bar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
+	Bar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	
 	Bar.CastingColor = {95/255, 182/255, 255/255}
 	Bar.CompleteColor = {20/255, 208/255, 0/255}
@@ -203,12 +191,9 @@ local function BuildCastbar(self)
 	
 	Bar.Icon = Bar:CreateTexture(nil, "ARTWORK")
 	Bar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	Bar.Icon:SetSize(20,20)
+	Bar.Icon:SetSize(20, 20)
 	Bar.Icon:SetPoint("TOPLEFT", Bar, "TOPRIGHT", 8, 0)
-	Bar.Icon.Border = MakeTexBorder()
-	Bar.Icon.Border:SetParent(Bar)
-	Bar.Icon.Border:SetPoint("TOPLEFT", Bar.Icon, -1, 1)
-	Bar.Icon.Border:SetPoint("BOTTOMRIGHT", Bar.Icon, 1, -1)
+	Bar.Icon.Shadow = MakeTexShadow(Bar, Bar.Icon, 3)
 
 	Bar.OnUpdate = cast.OnCastbarUpdate
 	Bar.PostCastStart = cast.PostCastStart
@@ -221,20 +206,16 @@ local function BuildCastbar(self)
 	self.Castbar = Bar
 end
 
-
 local function PostCreateIcon(self, Button)
-	Button.Shadow = MakeShadow(Button)
-	Button.Border = MakeBorder(Button)
-	
+	Button.Shadow = MakeShadow(Button, 3)
 	Button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	Button.icon:SetAllPoints()
-	
-	Button.count = MakeFontString(Button.Border, 9)
+	Button.count = MakeFontString(Button, 9)
 	Button.count:SetPoint("TOPRIGHT", Button, 3, 0)
 end
   
 local function PostUpdateIcon(self, unit, Button, index, offset, filter, isDebuff)
-	local Caster = select(8,UnitAura(unit, index, Button.filter))
+	local Caster = select(8, UnitAura(unit, index, Button.filter))
 	if Button.debuff then
 		if Caster == "player" or Caster == "vehicle" then
 			Button.icon:SetDesaturated(false)                 
@@ -248,7 +229,7 @@ end
 
 local function BuildBuff(self)
 	Buff = CreateFrame("Frame", nil, self)
-	Buff:SetPoint("TOPRIGHT", self, "TOPLEFT", -12, 0)
+	Buff:SetPoint("TOPRIGHT", self, "TOPLEFT", -8, 0)
 	Buff.initialAnchor = "TOPRIGHT"
 	Buff["growth-x"] = "LEFT"
 	Buff["growth-y"] = "DOWN"
@@ -289,17 +270,17 @@ end
 
 local function BuildCombatIcon(self)
 	local LeaderIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	LeaderIcon:SetSize(16,16)
+	LeaderIcon:SetSize(16, 16)
 	LeaderIcon:SetPoint("TOPLEFT", self.Health, -2, 2)
 	self.Leader = LeaderIcon
 
 	local MasterLooterIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	MasterLooterIcon:SetSize(16,16)
+	MasterLooterIcon:SetSize(16, 16)
 	MasterLooterIcon:SetPoint("LEFT", LeaderIcon, "RIGHT")
 	self.MasterLooter = MasterLooterIcon
 	
 	local AssistantIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	AssistantIcon:SetSize(16,16)
+	AssistantIcon:SetSize(16, 16)
 	AssistantIcon:SetPoint("TOP", LeaderIcon, "BOTTOM")
 	self.Assistant = AssistantIcon
 end
@@ -311,7 +292,7 @@ local function BuildFocusFrame(self, ...)
 	
 	-- Set Size and Scale
 	self:SetScale(cfg.Scale)
-	self:SetSize(220, 35)
+	self:SetSize(220, 30)
 	
 	-- BuildHealthBar
 	BuildHealthBar(self)
@@ -344,4 +325,4 @@ end
 oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
 oUF:SetActiveStyle("SoraFocus")
 SR.FocusFrame = oUF:Spawn("focus")
-SR.FocusFrame:SetPoint("BOTTOM", SR.PlayerFrame, "TOP", 0, 250)
+SR.FocusFrame:SetPoint("TOP", 0, -50)
