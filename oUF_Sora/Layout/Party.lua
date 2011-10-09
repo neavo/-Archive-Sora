@@ -234,5 +234,5 @@ if cfg.ShowParty then
 		self:SetHeight(%d)
 	]]):format(180, 22))
 	SR.PartyFrame:SetScale(cfg.RaidScale)
-	SR.PartyFrame:SetPoint("TOPLEFT", UIParent, 10, -220)
+	SR.PartyFrame:SetPoint("TOPLEFT", UIParent, 10, -250)
 end

@@ -325,4 +325,4 @@ end
 oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
 oUF:SetActiveStyle("SoraFocus")
 SR.FocusFrame = oUF:Spawn("focus")
-SR.FocusFrame:SetPoint("TOP", 0, -50)
+SR.FocusFrame:SetPoint("TOP", 0, -80)

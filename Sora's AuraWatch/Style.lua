@@ -7,7 +7,6 @@ local cfg = SR.AuraWatchConfig
 local class = select(2, UnitClass("player")) 
 local CLASS_COLORS = RAID_CLASS_COLORS[class]
 
-
 -- BuildICON
 function cfg.BuildICON(iconSize)
 	local Frame = CreateFrame("Frame", nil, UIParent)
@@ -19,22 +18,13 @@ function cfg.BuildICON(iconSize)
 	Frame.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92) 
 	
 	Frame.Shadow = CreateFrame("Frame", nil, Frame)
-	Frame.Shadow:SetPoint("TOPLEFT", 1, -4)
-	Frame.Shadow:SetPoint("BOTTOMRIGHT", 4, -4)
+	Frame.Shadow:SetPoint("TOPLEFT", -3, 3)
+	Frame.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
 	Frame.Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex , edgeSize = 5,
+		edgeFile = cfg.GlowTex , edgeSize = 3, 
 	})
-	Frame.Shadow:SetBackdropBorderColor(0,0,0,1)
+	Frame.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	Frame.Shadow:SetFrameLevel(0)
-	
-	Frame.Border = CreateFrame("Frame", nil, Frame)
-	Frame.Border:SetPoint("TOPLEFT", -1, 1)
-	Frame.Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Frame.Border:SetBackdrop({ 
-		edgeFile = cfg.Solid , edgeSize = 1,
-	})
-	Frame.Border:SetBackdropBorderColor(0,0,0,1)
-	Frame.Border:SetFrameLevel(0)
 
 	Frame.Count = Frame:CreateFontString(nil, "OVERLAY") 
 	Frame.Count:SetFont(cfg.Font, 10, "THINOUTLINE") 
@@ -48,7 +38,7 @@ function cfg.BuildICON(iconSize)
 end
 
 -- BuildBAR
-function cfg.BuildBAR(iconSize,barWidth)
+function cfg.BuildBAR(iconSize, barWidth)
 	local Frame = CreateFrame("Frame", nil, UIParent)
 	Frame:SetWidth(barWidth)
 	Frame:SetHeight(iconSize)
@@ -69,7 +59,7 @@ function cfg.BuildBAR(iconSize,barWidth)
 	Frame.Statusbar.Shadow:SetPoint("TOPLEFT", -(3+iconSize), 3)
 	Frame.Statusbar.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
 	Frame.Statusbar.Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex , edgeSize = 3,
+		edgeFile = cfg.GlowTex , edgeSize = 3, 
 	})
 	Frame.Statusbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	Frame.Statusbar.Shadow:SetFrameLevel(0)
@@ -93,5 +83,3 @@ function cfg.BuildBAR(iconSize,barWidth)
 	
 	return Frame
 end
-
-SR.AuraWatchConfig = cfg

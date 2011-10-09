@@ -12,5 +12,6 @@
 	<Script file="Chat.lua"/>
 	<Script file="ChatEmotion.lua"/>
 	<Script file="ChatFramePanels.lua"/>
-	<Script file="Chatbar.lua"/>	
+	<Script file="Chatbar.lua"/>
+	
 </Ui>

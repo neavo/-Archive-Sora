@@ -336,8 +336,8 @@ local function BuildCastbar(self)
 	if cfg.CastbarAlone then
 		Bar:SetHeight(20)
 		Bar:SetFrameStrata("HIGH")
-		Bar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", -3, 10)
-		Bar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", -25, 10)			
+		Bar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 2, 25)
+		Bar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", -30, 25)			
 	else
 		Bar:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -15)
 	end

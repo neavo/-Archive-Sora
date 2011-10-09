@@ -92,7 +92,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
@@ -166,7 +166,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {	
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
@@ -232,7 +232,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
@@ -290,7 +290,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
@@ -418,7 +418,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
@@ -490,7 +490,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
@@ -559,7 +559,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
@@ -633,7 +633,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
@@ -682,7 +682,7 @@ SRAuraList = {
 			Interval = 6,
 			Mode = "ICON",
 			iconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 15},
+			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
