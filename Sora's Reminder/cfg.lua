@@ -8,7 +8,7 @@ ns.cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.
 ns.cfg.Solid = Media.."Solid"
 ns.cfg.GlowTex = Media.."GlowTex"
 ns.cfg.Warning = Media.."Warning.mp3"
-ns.cfg.RaidBuffPos = {"TOPLEFT", Minimap, -5, -35}
+ns.cfg.RaidBuffPos = {"TOPLEFT", Minimap, "BOTTOMLEFT", -5, -35}
 ns.cfg.ClassBuffPos = {"CENTER", UIParent, -150, 150}
 
 
