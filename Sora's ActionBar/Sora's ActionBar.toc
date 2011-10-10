@@ -2,6 +2,7 @@
 ## Title: |cff70C0F5Sora's|r ActionBar
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
+## SavedVariables: ActionBarDB
 
 ## X-Email:neavo7@Gmail.com
 

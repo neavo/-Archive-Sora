@@ -27,7 +27,6 @@ for i=1, 12 do
 end
 
 local API = CreateFrame("Frame")
-
 function API.FadeOut()
 	local Timer = 0
 	local Updater = CreateFrame("Frame")
@@ -62,7 +61,6 @@ function API.FadeOut()
 		end
 	end)
 end
-
 function API.FadeIn()
 	local Timer = 0
 	local Updater = CreateFrame("Frame")
@@ -102,5 +100,5 @@ end
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-SR.LeftBar = API
+local _, ns = ...
+ns.LeftBar = API

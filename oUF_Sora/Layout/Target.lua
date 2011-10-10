@@ -2,10 +2,10 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local oUF = SR.oUF or oUF
-local cfg = SR.cfg
-local cast = SR.cast
+local _, ns = ...
+local oUF = ns.oUF or oUF
+local cfg = ns.cfg
+local cast = ns.cast
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -229,7 +229,7 @@ end
 
 local function BuildBuff(self)
 	Buff = CreateFrame("Frame", nil, self)
-	Buff.onlyShowPlayer = cfg.BuffOnlyShowPlayer
+	Buff.onlyShowPlayer = UnitFrameDB.BuffOnlyShowPlayer
 	Buff:SetPoint("TOPLEFT", self, "TOPRIGHT", 8, 0)
 	Buff.initialAnchor = "TOPLEFT"
 	Buff["growth-x"] = "RIGHT"
@@ -249,7 +249,7 @@ local function BuildDebuff(self)
 	Debuff = CreateFrame("Frame", nil, self)
 	Debuff.size = 20
 	Debuff.num = 40
-	Debuff.onlyShowPlayer = cfg.DebuffOnlyShowPlayer
+	Debuff.onlyShowPlayer = UnitFrameDB.DebuffOnlyShowPlayer
 	Debuff.spacing = 5
 	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
 	Debuff:SetWidth(self:GetWidth())
@@ -280,7 +280,7 @@ local function BuildCombatIcon(self)
 	self.Assistant = Assistant
 	local MasterLooter = self.Health:CreateTexture(nil, "OVERLAY")
 	MasterLooter:SetSize(16, 16)
-	MasterLooter:SetPoint("LEFT", LeaderIcon, "RIGHT")
+	MasterLooter:SetPoint("LEFT", Leader, "RIGHT")
 	self.MasterLooter = MasterLooter
 end
 
@@ -290,7 +290,7 @@ local function BuildTargetFrame(self, ...)
 	self:RegisterForClicks("AnyDown")
 	
 	-- Set Size and Scale
-	self:SetScale(cfg.Scale)
+	self:SetScale(UnitFrameDB.Scale)
 	self:SetSize(220, 30)
 	
 	-- BuildHealthBar
@@ -306,13 +306,13 @@ local function BuildTargetFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if cfg.ShowCastbar then BuildCastbar(self) end
+	if UnitFrameDB.ShowCastbar then BuildCastbar(self) end
 	
 	-- BuildBuff
-	if cfg.showTargetBuff then BuildBuff(self) end
+	if UnitFrameDB.ShowTargetBuff then BuildBuff(self) end
 	
 	-- BuildDebuff
-	if cfg.showTargetDebuff then BuildDebuff(self) end
+	if UnitFrameDB.ShowTargetDebuff then BuildDebuff(self) end
 	
 	-- BuildRaidMark
 	BuildRaidIcon(self)
@@ -321,7 +321,12 @@ local function BuildTargetFrame(self, ...)
 	BuildCombatIcon(self)
 end
 
-oUF:RegisterStyle("SoraTarget", BuildTargetFrame)
-oUF:SetActiveStyle("SoraTarget")
-SR.TargetFrame = oUF:Spawn("target")
-SR.TargetFrame:SetPoint("CENTER", UIParent, "CENTER", 270, -100)
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function(slef, event, addon, ...)
+	oUF:RegisterStyle("SoraTarget", BuildTargetFrame)
+	oUF:SetActiveStyle("SoraTarget")
+	ns.TargetFrame = oUF:Spawn("target")
+	ns.TargetFrame:SetPoint("CENTER", UIParent, "CENTER", 270, -100)
+end)

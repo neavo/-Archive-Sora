@@ -2,9 +2,9 @@
 ## Title: oUF_|cff70C0F5Sora's|r
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
+## SavedVariables: UnitFrameDB
+## SavedVariables: bb08df87101dd7f2161e5b77cf750f753c58ef1b
 
 ## X-Email:neavo7@Gmail.com
-
-## SavedVariables: bb08df87101dd7f2161e5b77cf750f753c58ef1b
 
 Load_UnitFrame.xml

@@ -2,10 +2,10 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local oUF = SR.oUF or oUF
-local cfg = SR.cfg
-local cast = SR.cast
+local _, ns = ...
+local oUF = ns.oUF or oUF
+local cfg = ns.cfg
+local cast = ns.cast
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -278,7 +278,7 @@ local function BuildCombatIcon(self)
 	self.Assistant = Assistant
 	local MasterLooter = self.Health:CreateTexture(nil, "OVERLAY")
 	MasterLooter:SetSize(16, 16)
-	MasterLooter:SetPoint("LEFT", LeaderIcon, "RIGHT")
+	MasterLooter:SetPoint("LEFT", Leader, "RIGHT")
 	self.MasterLooter = MasterLooter
 end
 
@@ -288,7 +288,7 @@ local function BuildFocusFrame(self, ...)
 	self:RegisterForClicks("AnyDown")
 	
 	-- Set Size and Scale
-	self:SetScale(cfg.Scale)
+	self:SetScale(UnitFrameDB.Scale)
 	self:SetSize(220, 30)
 	
 	-- BuildHealthBar
@@ -304,13 +304,13 @@ local function BuildFocusFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if cfg.ShowCastbar then BuildCastbar(self) end
+	if UnitFrameDB.ShowCastbar then BuildCastbar(self) end
 	
 	-- BuildBuff(self)
-	if cfg.ShowFocusBuff then BuildBuff(self) end
+	if UnitFrameDB.ShowFocusBuff then BuildBuff(self) end
 
 	-- BuildDebuff
-	if cfg.ShowFocusDebuff then BuildDebuff(self) end
+	if UnitFrameDB.ShowFocusDebuff then BuildDebuff(self) end
 		
 	-- BuildRaidMark
 	BuildRaidIcon(self)
@@ -319,7 +319,12 @@ local function BuildFocusFrame(self, ...)
 	BuildCombatIcon(self)
 end
 
-oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
-oUF:SetActiveStyle("SoraFocus")
-SR.FocusFrame = oUF:Spawn("focus")
-SR.FocusFrame:SetPoint("TOP", 0, -80)
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function(slef, event, addon, ...)
+	oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
+	oUF:SetActiveStyle("SoraFocus")
+	ns.FocusFrame = oUF:Spawn("focus")
+	ns.FocusFrame:SetPoint("TOP", 0, -80)
+end)

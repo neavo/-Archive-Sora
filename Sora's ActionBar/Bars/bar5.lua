@@ -102,5 +102,5 @@ end
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-SR.RightBar = API
+local _, ns = ...
+ns.RightBar = API

@@ -2,9 +2,9 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local oUF = SR.oUF or oUF
-local cfg = SR.cfg
+local _, ns = ...
+local oUF = ns.oUF or oUF
+local cfg = ns.cfg
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -79,7 +79,7 @@ local function BuildFocusTargetFrame(self, ...)
 	self:RegisterForClicks("AnyDown")
 	
 	-- Set Size and Scale
-	self:SetScale(cfg.Scale)
+	self:SetScale(UnitFrameDB.Scale)
 	self:SetSize(60, 14)
 	
 	-- BuildHealthBar
@@ -93,9 +93,14 @@ local function BuildFocusTargetFrame(self, ...)
 
 end
 
-if cfg.ShowFocusTarget then
-	oUF:RegisterStyle("SoraFocusTarget", BuildFocusTargetFrame)
-	oUF:SetActiveStyle("SoraFocusTarget")
-	SR.FocusTargetFrame = oUF:Spawn("focustarget")
-	SR.FocusTargetFrame:SetPoint("BOTTOMLEFT", SR.FocusFrame, "TOPLEFT", 0, 10)
-end
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function(slef, event, addon, ...)
+	if UnitFrameDB.ShowFocusTarget then
+		oUF:RegisterStyle("SoraFocusTarget", BuildFocusTargetFrame)
+		oUF:SetActiveStyle("SoraFocusTarget")
+		ns.FocusTargetFrame = oUF:Spawn("focustarget")
+		ns.FocusTargetFrame:SetPoint("BOTTOMLEFT", ns.FocusFrame, "TOPLEFT", 0, 10)
+	end
+end)

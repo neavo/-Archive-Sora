@@ -2,9 +2,9 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local oUF = SR.oUF or oUF
-local cfg = SR.cfg
+local _, ns = ...
+local oUF = ns.oUF or oUF
+local cfg = ns.cfg
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -131,7 +131,7 @@ local function BuildCombatIcon(self)
 	self.Assistant = Assistant
 	local MasterLooter = self.Health:CreateTexture(nil, "OVERLAY")
 	MasterLooter:SetSize(16, 16)
-	MasterLooter:SetPoint("LEFT", LeaderIcon, "RIGHT")
+	MasterLooter:SetPoint("LEFT", Leader, "RIGHT")
 	self.MasterLooter = MasterLooter
 end
 
@@ -203,7 +203,7 @@ local function BuildPartyFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildDebuff
-	if cfg.showPartyDebuff then BuildDebuff(self) end
+	if UnitFrameDB.ShowPartyDebuff then BuildDebuff(self) end
 	
 	-- BuildRaidMark
 	BuildRaidIcon(self)
@@ -220,16 +220,21 @@ local function BuildPartyFrame(self, ...)
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
 
-if cfg.ShowParty then
-	oUF:RegisterStyle("SoraParty", BuildPartyFrame)
-	oUF:SetActiveStyle("SoraParty")
-	SR.PartyFrame = oUF:SpawnHeader("oUF_Party", nil, "raid,party,solo", 
-	"showParty", true, 
-	"yoffset", -30, 
-	"oUF-initialConfigFunction", ([[
-		self:SetWidth(%d)
-		self:SetHeight(%d)
-	]]):format(180, 22))
-	SR.PartyFrame:SetScale(cfg.RaidScale)
-	SR.PartyFrame:SetPoint("TOPLEFT", UIParent, 10, -250)
-end
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function(slef, event, addon, ...)
+	if UnitFrameDB.ShowParty then
+		oUF:RegisterStyle("SoraParty", BuildPartyFrame)
+		oUF:SetActiveStyle("SoraParty")
+		ns.PartyFrame = oUF:SpawnHeader("oUF_Party", nil, "raid,party,solo", 
+		"showParty", true, 
+		"yoffset", -30, 
+		"oUF-initialConfigFunction", ([[
+			self:SetWidth(%d)
+			self:SetHeight(%d)
+		]]):format(180, 22))
+		ns.PartyFrame:SetScale(UnitFrameDB.RaidScale)
+		ns.PartyFrame:SetPoint("TOPLEFT", UIParent, 10, -250)
+	end
+end)

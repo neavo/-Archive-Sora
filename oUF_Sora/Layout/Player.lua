@@ -2,10 +2,10 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local oUF = SR.oUF or oUF
-local cfg = SR.cfg
-local cast = SR.cast
+local _, ns = ...
+local oUF = ns.oUF or oUF
+local cfg = ns.cfg
+local cast = ns.cast
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -333,7 +333,7 @@ local function BuildCastbar(self)
 	Bar:SetWidth(self:GetWidth()-70)
 	Bar:SetStatusBarTexture(cfg.Statusbar)
 	Bar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	if cfg.CastbarAlone then
+	if UnitFrameDB.CastbarAlone then
 		Bar:SetHeight(20)
 		Bar:SetFrameStrata("HIGH")
 		Bar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 2, 25)
@@ -413,7 +413,7 @@ local function BuildCombatIcon(self)
 	self.Assistant = Assistant
 	local MasterLooter = self.Health:CreateTexture(nil, "OVERLAY")
 	MasterLooter:SetSize(16, 16)
-	MasterLooter:SetPoint("LEFT", LeaderIcon, "RIGHT")
+	MasterLooter:SetPoint("LEFT", Leader, "RIGHT")
 	self.MasterLooter = MasterLooter
 end
 
@@ -423,7 +423,7 @@ local function BuildPlayerFrame(self, ...)
 	self:RegisterForClicks("AnyDown")
 	
 	-- Set Size and Scale
-	self:SetScale(cfg.Scale)
+	self:SetScale(UnitFrameDB.Scale)
 	self:SetSize(220, 30)
 	
 	-- BuildHealthBar
@@ -442,7 +442,7 @@ local function BuildPlayerFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if cfg.ShowCastbar then BuildCastbar(self) end
+	if UnitFrameDB.ShowCastbar then BuildCastbar(self) end
 	
 	-- BuildRaidMark
 	BuildRaidIcon(self)
@@ -452,7 +452,12 @@ local function BuildPlayerFrame(self, ...)
 
 end
 
-oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)
-oUF:SetActiveStyle("SoraPlayer")
-SR.PlayerFrame = oUF:Spawn("player")
-SR.PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -270, -100)
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function(slef, event, addon, ...)
+	oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)
+	oUF:SetActiveStyle("SoraPlayer")
+	ns.PlayerFrame = oUF:Spawn("player")
+	ns.PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -270, -100)
+end)

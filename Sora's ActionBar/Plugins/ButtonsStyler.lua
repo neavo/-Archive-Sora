@@ -2,8 +2,8 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local cfg = SR.ActionBarConfig
+local _, ns = ...
+local cfg = ns.cfg
  
 local function SetIconTexture(self, crop)
 	if crop == 1 then self:SetTexCoord(.1, .9, .1, .9) end
@@ -17,13 +17,13 @@ local function SetOverlay(self)
 		Shadow:SetPoint("TOPLEFT", -3, 3)
 		Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
 		Shadow:SetBackdrop({edgeFile = cfg.GlowTex , edgeSize = 5})
-		Shadow:SetBackdropBorderColor(0,0,0,1)
+		Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 		Shadow:SetFrameLevel(0)
 		local Border = CreateFrame("Frame", self:GetName().."Border", self)
 		Border:SetPoint("TOPLEFT", 1, -1)
 		Border:SetPoint("BOTTOMRIGHT", -1, 1)
 		Border:SetBackdrop({edgeFile = cfg.Solid , edgeSize = 1})
-		Border:SetBackdropBorderColor(0,0,0,1)
+		Border:SetBackdropBorderColor(0, 0, 0, 1)
 	end
 end
 
@@ -66,27 +66,36 @@ local function ActionButtons(self)
 	_G[self:GetName().."Border"]:Hide()
 	_G[self:GetName().."Flash"]:Hide()
 	local hk = _G[self:GetName().."HotKey"]
-		hk:SetFont(cfg.Font, cfg.HotkeyFontSize, "THINOUTLINE")
-		hk:SetPoint("TOPRIGHT")
+		hk:SetFont(cfg.Font, ActionBarDB.HotkeyFontSize, "THINOUTLINE")
+		if ActionBarDB.HideHotKey then
+			hk:ClearAllPoints()
+		else
+			hk:SetPoint("TOPRIGHT")
+		end
 	local name = _G[self:GetName().."Name"]
-	name:SetFont(cfg.Font, cfg.NameFontSize, "THINOUTLINE")
-	if cfg.HideMacroName then
+	name:SetFont(cfg.Font, ActionBarDB.NameFontSize, "THINOUTLINE")
+	if ActionBarDB.HideMacroName then
 		name:Hide()
  	end
 	local count = _G[self:GetName().."Count"]
-		count:SetFont(cfg.Font, cfg.CountFontSize, "THINOUTLINE")
+		count:SetFont(cfg.Font, ActionBarDB.CountFontSize, "THINOUTLINE")
 	SetTextures(self, 1)
 end
  
 function VehicleButtons(self)
 	for i=1, VEHICLE_MAX_ACTIONBUTTONS do
 		local hk = _G["VehicleMenuBarActionButton"..i.."HotKey"]
-	hk:SetFont(cfg.Font, cfg.HotkeyFontSize, "THINOUTLINE")
-	hk.SetPoint = hk:SetPoint("TOPLEFT")
+	hk:SetFont(cfg.Font, ActionBarDB.HotkeyFontSize, "THINOUTLINE")
+	if ActionBarDB.HideHotKey then
+		hk:ClearAllPoints()
+	else
+		hk.SetPoint = hk:SetPoint("TOPLEFT")
+	end
+
 	end
 end
  
-local function MultiCastSlotButtons(self,slot)
+local function MultiCastSlotButtons(self, slot)
 	self:SetNormalTexture(cfg.Texture)
 	local tex = self:GetNormalTexture()
 	tex:SetVertexColor(cfg.colors.normal.r, cfg.colors.normal.g, cfg.colors.normal.b)
@@ -100,8 +109,12 @@ local function MultiCastSpellButtons(self)
 	_G[self:GetName().."Highlight"]:Hide()
 	SetTextures(self)
 	local hk = _G[self:GetName().."HotKey"]
-	hk:SetFont(cfg.Font, cfg.HotkeyFontSize, "THINOUTLINE")
-	hk:SetPoint("TOPRIGHT")
+	hk:SetFont(cfg.Font, ActionBarDB.HotkeyFontSize, "THINOUTLINE")
+	if ActionBarDB.HideHotKey then
+		hk:ClearAllPoints()
+	else
+		hk:SetPoint("TOPRIGHT")
+	end
 end
 
 local function FlyoutSlotSpells(self, slot, ...)
@@ -176,35 +189,32 @@ end
 -- the default function has a bug and once you move a button the alpha stays at 0.5, this gets fixed here
 local function ActionButtons_fixgrid(button)
 	local nt	= _G[button:GetName().."NormalTexture"]
-	nt:SetVertexColor(cfg.colors.normal.r,cfg.colors.normal.g,cfg.colors.normal.b,1)
+	nt:SetVertexColor(cfg.colors.normal.r, cfg.colors.normal.g, cfg.colors.normal.b, 1)
 end
  
 -- Key-binding shortcuts thx Tuller for this idea
 local function updatehotkey(self, actionButtonType)
 	local replace = string.gsub
-	local hotkey = _G[self:GetName() .. 'HotKey']
-	local	key = hotkey:GetText()
-	key = replace(key, '(s%-)', 'S')
-	key = replace(key, '(a%-)', 'A')
-	key = replace(key, '(c%-)', 'C')
-	key = replace(key, '(Mouse Button )', 'M')
-	key = replace(key, '(Middle Mouse)', 'M3')
-	key = replace(key, '(Mouse Wheel Down)', 'MWD')
-	key = replace(key, '(Mouse Wheel Up)', 'MWU')
-	key = replace(key, '(Num Pad )', 'N')
-	key = replace(key, '(Page Up)', 'PU')
-	key = replace(key, '(Page Down)', 'PD')
-	key = replace(key, '(Spacebar)', 'SpB')
-	key = replace(key, '(Insert)', 'Ins')
-	key = replace(key, '(Home)', 'Hm')
-	key = replace(key, '(Delete)', 'Del')
-	if hotkey:GetText() == _G['RANGE_INDICATOR'] then
-		hotkey:SetText('')
+	local hotkey = _G[self:GetName() .. "HotKey"]
+	local key = hotkey:GetText()
+	key = replace(key, "(s%-)", "S")
+	key = replace(key, "(a%-)", "A")
+	key = replace(key, "(c%-)", "C")
+	key = replace(key, "(Mouse Button )", "M")
+	key = replace(key, "(Middle Mouse)", "M3")
+	key = replace(key, "(Mouse Wheel Down)", "MWD")
+	key = replace(key, "(Mouse Wheel Up)", "MWU")
+	key = replace(key, "(Num Pad )", "N")
+	key = replace(key, "(Page Up)", "PU")
+	key = replace(key, "(Page Down)", "PD")
+	key = replace(key, "(Spacebar)", "SpB")
+	key = replace(key, "(Insert)", "Ins")
+	key = replace(key, "(Home)", "Hm")
+	key = replace(key, "(Delete)", "Del")
+	if hotkey:GetText() == _G["RANGE_INDICATOR"] then
+		hotkey:SetText("")
 	else
 		hotkey:SetText(key)
-	end
-	if cfg.HideHotKey then
-		hotkey:Hide()
 	end
 end
 

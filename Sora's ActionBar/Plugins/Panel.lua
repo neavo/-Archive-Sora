@@ -2,11 +2,10 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local cfg = SR.ActionBarConfig
-
-local RightBar = SR.RightBar
-local LeftBar = SR.LeftBar
+local _, ns = ...
+local cfg = ns.cfg
+local RightBar = ns.RightBar
+local LeftBar = ns.LeftBar
 
 local MainBar = CreateFrame("Frame", nil, UIParent)
 MainBar:SetPoint("TOPLEFT", ActionButton1, "LEFT", -10, -3)
@@ -19,39 +18,43 @@ MainBar:SetBackdrop({
 MainBar:SetBackdropColor(0, 0, 0, 0.2)
 MainBar:SetBackdropBorderColor(0, 0, 0, 1)
 
-if cfg.ShowExtraBar then
-	MainBar.Left = CreateFrame("Frame", nil, MainBar)
-	MainBar.Left:SetPoint("TOPLEFT", MainBar, "TOPLEFT", -11, 0)
-	MainBar.Left:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMLEFT", 2, 0)
-	MainBar.Left:SetBackdrop({
-		edgeFile = cfg.GlowTex, edgeSize = 3, 
-	})
-	MainBar.Left:SetBackdropBorderColor(0, 0, 0, 1)
 
-	MainBar.Left:SetScript("OnMouseDown", function(self)
-		if MultiBarLeftButton1:GetAlpha() < 0.1 then
-			LeftBar.FadeIn()
-		elseif MultiBarLeftButton1:GetAlpha() > 0.9 then
-			LeftBar.FadeOut()
-		end
-	end)
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function(slef, event, ...)
+	if ActionBarDB.ShowExtraBar then
+		MainBar.Left = CreateFrame("Frame", nil, MainBar)
+		MainBar.Left:SetPoint("TOPLEFT", MainBar, "TOPLEFT", -11, 0)
+		MainBar.Left:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMLEFT", 2, 0)
+		MainBar.Left:SetBackdrop({
+			edgeFile = cfg.GlowTex, edgeSize = 3, 
+		})
+		MainBar.Left:SetBackdropBorderColor(0, 0, 0, 1)
 
-	MainBar.Right = CreateFrame("Frame", nil, MainBar)
-	MainBar.Right:SetPoint("TOPRIGHT", MainBar, "TOPRIGHT", 11, 0)
-	MainBar.Right:SetPoint("BOTTOMLEFT", MainBar, "BOTTOMRIGHT", -2, 0)
-	MainBar.Right:SetBackdrop({
-		edgeFile = cfg.GlowTex, edgeSize = 3, 
-	})
-	MainBar.Right:SetBackdropBorderColor(0, 0, 0, 1)
-
-	MainBar.Right:SetScript("OnMouseDown", function(self)
-		if MultiBarRightButton1:GetAlpha() < 0.1 then
-			RightBar.FadeIn()
-		elseif MultiBarRightButton1:GetAlpha() > 0.9 then
-			RightBar.FadeOut()
-		end
-	end)
-else
-	RightBar.FadeOut()
-	LeftBar.FadeOut()
-end
+		MainBar.Left:SetScript("OnMouseDown", function(self)
+			if MultiBarLeftButton1:GetAlpha() < 0.1 then
+				LeftBar.FadeIn()
+			elseif MultiBarLeftButton1:GetAlpha() > 0.9 then
+				LeftBar.FadeOut()
+			end
+		end)
+		MainBar.Right = CreateFrame("Frame", nil, MainBar)
+		MainBar.Right:SetPoint("TOPRIGHT", MainBar, "TOPRIGHT", 11, 0)
+		MainBar.Right:SetPoint("BOTTOMLEFT", MainBar, "BOTTOMRIGHT", -2, 0)
+		MainBar.Right:SetBackdrop({
+			edgeFile = cfg.GlowTex, edgeSize = 3, 
+		})
+		MainBar.Right:SetBackdropBorderColor(0, 0, 0, 1)
+		MainBar.Right:SetScript("OnMouseDown", function(self)
+			if MultiBarRightButton1:GetAlpha() < 0.1 then
+				RightBar.FadeIn()
+			elseif MultiBarRightButton1:GetAlpha() > 0.9 then
+				RightBar.FadeOut()
+			end
+		end)
+	else
+		_G["rABS_MultiBarLeft"]:Hide()
+		_G["rABS_MultiBarRight"]:Hide()
+	end
+end)

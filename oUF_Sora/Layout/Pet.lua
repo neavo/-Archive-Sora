@@ -2,9 +2,9 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local oUF = SR.oUF or oUF
-local cfg = SR.cfg
+local _, ns = ...
+local oUF = ns.oUF or oUF
+local cfg = ns.cfg
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -79,7 +79,7 @@ local function BuildPetFrame(self, ...)
 	self:RegisterForClicks("AnyDown")
 	
 	-- Set Size and Scale
-	self:SetScale(cfg.Scale)
+	self:SetScale(UnitFrameDB.Scale)
 	self:SetSize(60, 14)
 	
 	-- BuildHealthBar
@@ -93,9 +93,14 @@ local function BuildPetFrame(self, ...)
 
 end
 
-if cfg.ShowPet then
-	oUF:RegisterStyle("SoraPet", BuildPetFrame)
-	oUF:SetActiveStyle("SoraPet")
-	SR.PetFrame = oUF:Spawn("pet")
-	SR.PetFrame:SetPoint("TOPLEFT", SR.PlayerFrame, "BOTTOMLEFT", 0, -10)
-end
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function(slef, event, addon, ...)
+	if UnitFrameDB.ShowPet then
+		oUF:RegisterStyle("SoraPet", BuildPetFrame)
+		oUF:SetActiveStyle("SoraPet")
+		ns.PetFrame = oUF:Spawn("pet")
+		ns.PetFrame:SetPoint("TOPLEFT", ns.PlayerFrame, "BOTTOMLEFT", 0, -10)
+	end
+end)

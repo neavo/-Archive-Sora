@@ -2,9 +2,9 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local oUF = SR.oUF or oUF
-local cfg = SR.cfg
+local _, ns = ...
+local oUF = ns.oUF or oUF
+local cfg = ns.cfg
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -93,7 +93,7 @@ local function BuildCombatIcon(self)
 	self.Assistant = Assistant
 	local MasterLooter = self.Health:CreateTexture(nil, "OVERLAY")
 	MasterLooter:SetSize(16, 16)
-	MasterLooter:SetPoint("LEFT", LeaderIcon, "RIGHT")
+	MasterLooter:SetPoint("LEFT", Leader, "RIGHT")
 	self.MasterLooter = MasterLooter
 end
 
@@ -292,71 +292,75 @@ local function BuildRaidFrame(self, ...)
 	BuildThreatBorder(self)
 	
 	-- BuildRaidDebuffs
-	if cfg.ShowRaidDebuffs then BuildRaidDebuffs(self) end
+	if UnitFrameDB.ShowRaidDebuffs then BuildRaidDebuffs(self) end
 	
 	-- BuildAuraWatch
-	if cfg.ShowAuraWatch then BuildAuraWatch(self) end
+	if UnitFrameDB.ShowAuraWatch then BuildAuraWatch(self) end
 	
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
 
-if cfg.ShowParty or cfg.ShowRaid then
-	-- Hide the Blizzard raid frames
-	CompactRaidFrameManager:UnregisterAllEvents()
-	CompactRaidFrameManager.Show = function() end
-	CompactRaidFrameManager:Hide()
-	CompactRaidFrameContainer:UnregisterAllEvents()
-	CompactRaidFrameContainer.Show = function() end
-	CompactRaidFrameContainer:Hide()		
-	CompactRaidFrameContainer:SetParent(UIParent)	
-end
-
-if cfg.ShowRaid then
-	oUF:RegisterStyle("SoraRaid", BuildRaidFrame)
-	oUF:SetActiveStyle("SoraRaid")
-	if cfg.RaidPartyH then
-		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
-			"showRaid", cfg.ShowRaid,  
-			"showPlayer", true, 
-			"showSolo", false, 
-			"showParty", true, 
-			"xoffset", 7, 
-			"groupFilter", "1, 2, 3, 4, 5", 
-			"groupBy", "GROUP", 
-			"groupingOrder", "1, 2, 3, 4, 5", 
-			"sortMethod", "INDEX", 
-			"maxColumns", 5, 
-			"unitsPerColumn", 5, 
-			"columnSpacing", 7, 
-			"point", "LEFT", 
-			"columnAnchorPoint", "TOP", 
-			"oUF-initialConfigFunction", ([[
-			self:SetWidth(%d)
-			self:SetHeight(%d)
-			]]):format(cfg.RaidUnitWidth, 20))
-		SR.RaidFrame:SetScale(cfg.RaidScale)
-		SR.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
-	else
-		SR.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
-			"showRaid", cfg.ShowRaid,  
-			"showPlayer", true, 
-			"showSolo", false, 
-			"showParty", true, 
-			"yoffset", -7, 
-			"groupFilter", "1,2,3,4,5", 
-			"groupBy", "GROUP", 
-			"groupingOrder", "1,2,3,4,5", 
-			"sortMethod", "INDEX", 
-			"maxColumns", 5, 
-			"unitsPerColumn", 5, 
-			"columnSpacing", 7, 
-			"point", "TOP", 
-			"columnAnchorPoint", "LEFT", 
-			"oUF-initialConfigFunction", ([[
-			self:SetWidth(%d)
-			self:SetHeight(%d)
-			]]):format(cfg.RaidUnitWidth, 20))
-		SR.RaidFrame:SetScale(cfg.RaidScale)
-		SR.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_LOGIN")
+Event:SetScript("OnEvent", function(slef, event, addon, ...)
+	if UnitFrameDB.ShowParty or UnitFrameDB.ShowRaid then
+		-- Hide the Blizzard raid frames
+		CompactRaidFrameManager:UnregisterAllEvents()
+		CompactRaidFrameManager.Show = function() end
+		CompactRaidFrameManager:Hide()
+		CompactRaidFrameContainer:UnregisterAllEvents()
+		CompactRaidFrameContainer.Show = function() end
+		CompactRaidFrameContainer:Hide()		
+		CompactRaidFrameContainer:SetParent(UIParent)	
 	end
-end
+	if UnitFrameDB.ShowRaid then
+		oUF:RegisterStyle("SoraRaid", BuildRaidFrame)
+		oUF:SetActiveStyle("SoraRaid")
+		if UnitFrameDB.RaidPartyH then
+			ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
+				"showRaid", UnitFrameDB.ShowRaid,  
+				"showPlayer", true, 
+				"showSolo", false, 
+				"showParty", true, 
+				"xoffset", 7, 
+				"groupFilter", "1, 2, 3, 4, 5", 
+				"groupBy", "GROUP", 
+				"groupingOrder", "1, 2, 3, 4, 5", 
+				"sortMethod", "INDEX", 
+				"maxColumns", 5, 
+				"unitsPerColumn", 5, 
+				"columnSpacing", 7, 
+				"point", "LEFT", 
+				"columnAnchorPoint", "TOP", 
+				"oUF-initialConfigFunction", ([[
+				self:SetWidth(%d)
+				self:SetHeight(%d)
+				]]):format(UnitFrameDB.RaidUnitWidth, 20))
+			ns.RaidFrame:SetScale(UnitFrameDB.RaidScale)
+			ns.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
+		else
+			ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
+				"showRaid", UnitFrameDB.ShowRaid,  
+				"showPlayer", true, 
+				"showSolo", false, 
+				"showParty", true, 
+				"yoffset", -7, 
+				"groupFilter", "1,2,3,4,5", 
+				"groupBy", "GROUP", 
+				"groupingOrder", "1,2,3,4,5", 
+				"sortMethod", "INDEX", 
+				"maxColumns", 5, 
+				"unitsPerColumn", 5, 
+				"columnSpacing", 7, 
+				"point", "TOP", 
+				"columnAnchorPoint", "LEFT", 
+				"oUF-initialConfigFunction", ([[
+				self:SetWidth(%d)
+				self:SetHeight(%d)
+				]]):format(UnitFrameDB.RaidUnitWidth, 20))
+			ns.RaidFrame:SetScale(UnitFrameDB.RaidScale)
+			ns.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
+		end
+	end
+end)

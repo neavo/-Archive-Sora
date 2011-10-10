@@ -2,8 +2,8 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local cfg = SR.ActionBarConfig
+local _, ns = ...
+local cfg = ns.cfg
 
 -- locals and speed
 local _G = _G
