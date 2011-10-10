@@ -2,7 +2,7 @@
 --  命名空间  --
 ----------------
 
-local _,  ns = ...
+local _, ns = ...
 local cfg = ns.cfg
 
 -----------
@@ -18,14 +18,14 @@ Minimap:SetHeight(105)
 
 LFDSearchStatus:SetClampedToScreen(true)
 
-Minimap.Shadow = CreateFrame("Frame", nil,  Minimap)
-Minimap.Shadow:SetPoint("TOPLEFT", -5,  5)
-Minimap.Shadow:SetPoint("BOTTOMRIGHT", 5,  -5)	
+Minimap.Shadow = CreateFrame("Frame", nil, Minimap)
+Minimap.Shadow:SetPoint("TOPLEFT", -4, 4)
+Minimap.Shadow:SetPoint("BOTTOMRIGHT", 4, -4)	
 Minimap.Shadow:SetFrameLevel(0)
 Minimap.Shadow:SetBackdrop({ 
-	edgeFile = cfg.GlowTex,  edgeSize = 6,  
+	edgeFile = cfg.GlowTex, edgeSize = 5, 
 })
-Minimap.Shadow:SetBackdropBorderColor(0,  0,  0,  1)
+Minimap.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 
 ---------------------
 -- hide some stuff --
@@ -51,40 +51,40 @@ MinimapNorthTag:SetAlpha(0)
 -- BG icon
 MiniMapBattlefieldFrame:ClearAllPoints()
 MiniMapBattlefieldFrame:SetScale(0.8)
-MiniMapBattlefieldFrame:SetPoint("TOP", Minimap,  "TOP", 0,  4)
+MiniMapBattlefieldFrame:SetPoint("TOP", Minimap, "TOP", 0, 4)
 
 -- Random Group icon
 MiniMapLFGFrame:ClearAllPoints()
 MiniMapLFGFrameBorder:SetAlpha(0)
-MiniMapLFGFrame:SetPoint("TOP", Minimap,  "TOP", 0,  4)
+MiniMapLFGFrame:SetPoint("TOP", Minimap, "TOP", 0, 4)
 MiniMapLFGFrame:SetFrameStrata("MEDIUM")
 
 -- Instance Difficulty flag
 MiniMapInstanceDifficulty:ClearAllPoints()
-MiniMapInstanceDifficulty:SetPoint("TOPRIGHT", Minimap,  "TOPRIGHT", 0,  4)
+MiniMapInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
 MiniMapInstanceDifficulty:SetScale(0.8)
 MiniMapInstanceDifficulty:SetFrameStrata("LOW")
 
 -- Guild Instance Difficulty flag
 GuildInstanceDifficulty:ClearAllPoints()
-GuildInstanceDifficulty:SetPoint("TOPRIGHT", Minimap,  "TOPRIGHT", 0,  4)
+GuildInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
 GuildInstanceDifficulty:SetScale(0.8)
 GuildInstanceDifficulty:SetFrameStrata("LOW")
 
 -- Invites Icon
 GameTimeCalendarInvitesTexture:ClearAllPoints()
 GameTimeCalendarInvitesTexture:SetParent("Minimap")
-GameTimeCalendarInvitesTexture:SetPoint("TOPRIGHT", Minimap,  "TOPRIGHT", 0,  4)
+GameTimeCalendarInvitesTexture:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
 
 if FeedbackUIButton then
 	FeedbackUIButton:ClearAllPoints()
-	FeedbackUIButton:SetPoint("TOPLEFT", Minimap,  "TOPLEFT", 6,  -6)
+	FeedbackUIButton:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 6, -6)
 	FeedbackUIButton:SetScale(0.8)
 end
 
 if StreamingIcon then
 	StreamingIcon:ClearAllPoints()
-	StreamingIcon:SetPoint("TOPRIGHT", Minimap,  "TOPRIGHT", 8,  8)
+	StreamingIcon:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 8, 8)
 	StreamingIcon:SetScale(0.8)
 end
 
@@ -92,7 +92,7 @@ end
 --   鼠标滚轮缩放  --
 ---------------------
 Minimap:EnableMouseWheel(true)
-Minimap:SetScript("OnMouseWheel", function(self,  z)
+Minimap:SetScript("OnMouseWheel", function(self, z)
 	local c = Minimap:GetZoom()
 	if z > 0 and c < 5 then
 		Minimap:SetZoom(c + 1)
@@ -105,7 +105,7 @@ end)
 -- 小地图右键菜单  --
 ---------------------
 
-local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", UIParent,  "UIDropDownMenuTemplate")
+local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", UIParent, "UIDropDownMenuTemplate")
 local menuList = {
     {text = "角色", 
     func = function() ToggleCharacter("PaperDollFrame") end}, 
@@ -136,13 +136,13 @@ local menuList = {
 	func = function() ToggleFrame(GameMenuFrame) end}, 
 }
 
-Minimap:SetScript("OnMouseUp", function(self,  btn)
+Minimap:SetScript("OnMouseUp", function(self, btn)
 	local position = Minimap:GetPoint()
 	if btn == "RightButton" then
 		if position:match("LEFT") then
-			EasyMenu(menuList,  menuFrame,  "cursor", 0,  0,  "MENU", 2)
+			EasyMenu(menuList, menuFrame, "cursor", 0, 0, "MENU", 2)
 		else
-			EasyMenu(menuList,  menuFrame,  "cursor", -160,  0,  "MENU", 2)
+			EasyMenu(menuList, menuFrame, "cursor", -160, 0, "MENU", 2)
 		end
 	else
 		Minimap_OnClick(self)
@@ -157,24 +157,24 @@ end)
 local g = getfenv(0)
 
 local notbuttons = {
-	["DA_Minimap"] = true,  
-	["TimeManagerClockButton"] = true,  
-	["MinimapZoomIn"] = true,  
-	["MinimapZoomOut"] = true,  
-	["GameTimeFrame"] = true,  
-	["MiniMapTrackingButton"] = true,  
-	["MiniMapTrackingDropDownButton"] = true,  
-	["MiniMapTracking"] = true,  
-	["MiniMapBattlefieldFrame"] = true,  
-	["MiniMapBattlefieldDropDownButton"] = true,  
-	["MiniMapLFGFrame"] = true,  
-	["MiniMapLFGFrameDropDownButton"] = true,  
-	["MiniMapLFGFrameBorder"] = true,  
-	["MiniMapInstanceDifficulty"] = true,  
-	["GuildInstanceDifficulty"] = true,  
-	["MiniMapMailFrame"] = true,  
-	["MiniMapMailIcon"] = true,  
-	["GameTimeCalendarInvitesTexture"] = true,  
+	["DA_Minimap"] = true, 
+	["TimeManagerClockButton"] = true, 
+	["MinimapZoomIn"] = true, 
+	["MinimapZoomOut"] = true, 
+	["GameTimeFrame"] = true, 
+	["MiniMapTrackingButton"] = true, 
+	["MiniMapTrackingDropDownButton"] = true, 
+	["MiniMapTracking"] = true, 
+	["MiniMapBattlefieldFrame"] = true, 
+	["MiniMapBattlefieldDropDownButton"] = true, 
+	["MiniMapLFGFrame"] = true, 
+	["MiniMapLFGFrameDropDownButton"] = true, 
+	["MiniMapLFGFrameBorder"] = true, 
+	["MiniMapInstanceDifficulty"] = true, 
+	["GuildInstanceDifficulty"] = true, 
+	["MiniMapMailFrame"] = true, 
+	["MiniMapMailIcon"] = true, 
+	["GameTimeCalendarInvitesTexture"] = true, 
 }
 
 local addon = CreateFrame("Frame", "NBB", UIParent)
@@ -187,7 +187,7 @@ local isMinimapButton = function(frame)
 end
 
 function addon:findButtons(frame)
-	for i,  child in ipairs({frame:GetChildren()}) do
+	for i, child in ipairs({frame:GetChildren()}) do
 		local name = child:GetName()
 		if isMinimapButton(child) and not self.settings.skip[name] and not notbuttons[name] then
 			self:addButton(child)
@@ -198,7 +198,7 @@ function addon:findButtons(frame)
 end
 
 function addon:findSpecialButtons()
-	for button,  get in pairs(self.settings.special) do
+	for button, get in pairs(self.settings.special) do
 		if g[button] and get == true then
 			self:addButton(g[button])
 		end
@@ -219,7 +219,7 @@ end
 
 -- Delay the scan call with a onupdate handler
 local time = 0
-local onUpdate = function(self,  elapsed)
+local onUpdate = function(self, elapsed)
 	time = time + elapsed
 	if time > 5 then
 		time = 0
@@ -237,15 +237,15 @@ function addon:updatePositions()
 	self:SetHeight(0)
 
 	local prev = self
-	for i,  button in ipairs({self:GetChildren()}) do
+	for i, button in ipairs({self:GetChildren()}) do
 		if button:IsVisible() then
 		
 			if prev == self then 
 				button:ClearAllPoints()
-				button:SetPoint("TOPLEFT", Minimap,  "BOTTOMRIGHT", 10,  0)
+				button:SetPoint("TOPLEFT", Minimap, "BOTTOMRIGHT", 10, 0)
 			else
 				button:ClearAllPoints()
-				button:SetPoint("LEFT", prev,  "RIGHT", 1,  0)
+				button:SetPoint("LEFT", prev, "RIGHT", 1, 0)
 			end
 
 			-- Stop it from being draggable
@@ -278,14 +278,14 @@ end
 NBB:enable({
 	-- Let these buttons stay on the minimap
 	skip = {
-		["MiniMapWorldMapButton"] = true,  
-		["MiniMapBattlefieldFrame"] = true,  
+		["MiniMapWorldMapButton"] = true, 
+		["MiniMapBattlefieldFrame"] = true, 
 		["Zframe"] = true
 	}, 
 
 	-- If a minimap button is not picked
-	-- up automagically,  add it here
+	-- up automagically, add it here
 	special = {
-		["OutfitterMinimapButton"] = true,  
+		["OutfitterMinimapButton"] = true, 
 	}
 })

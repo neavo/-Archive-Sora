@@ -63,12 +63,12 @@ local function BuildBottomRightFrame(BottomFrame)
 		self.Text:SetTextColor(1, 1, 1)
 	end)
 	BottomFrame.Right:SetScript("OnMouseDown", function(self, button, ...)
-			if NBB:IsShown() then
-				NBB:Hide()
-			else
-				NBB:Show()
-			end
-			PlaySound("igMiniMapOpen")
+		if NBB:IsShown() then
+			NBB:Hide()
+		else
+			NBB:Show()
+		end
+		PlaySound("igMiniMapOpen")
 	end)
 	BottomFrame.Right.Text = BottomFrame.Right:CreateFontString(nil, "OVERLAY")
 	BottomFrame.Right.Text:SetPoint("CENTER")
@@ -76,8 +76,66 @@ local function BuildBottomRightFrame(BottomFrame)
 	BottomFrame.Right.Text:SetText("B")
 end
 
+-- BuildButtonTable
+local function BuildButtonTable()
+	local ButtonTable = {}
+	for i = 1, 5 do
+		local Button = CreateFrame("Button", nil, UIParent)
+		Button:SetSize(80, 25)
+		Button:SetBackdrop({
+			bgFile = cfg.Solid, insets = {left = 3, right = 3, top = 3, bottom = 3},
+			edgeFile = cfg.GlowTex, edgeSize = 2
+		})
+		Button:SetBackdropColor(0, 0, 0, 0.3)
+		Button:SetBackdropBorderColor(0, 0, 0, 1)
+		Button.Text = Button:CreateFontString(nil, "OVERLAY")
+		Button.Text:SetPoint("CENTER")
+		Button.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+		Button.HideFrame = CreateFrame("Frame", nil, Button)
+		Button.HideFrame:SetAllPoints()
+		Button.HideFrame:SetFrameLevel(Button:GetFrameLevel()+1)
+		Button.HideFrame:EnableMouse(true)
+		Button.HideFrame:Hide()
+		Button:SetScript("OnEnter", function(self)
+			self.Text:SetTextColor(1, 0, 0)
+		end)
+		Button:SetScript("OnLeave", function(self)
+			self.Text:SetTextColor(1, 1, 1)
+		end)
+		if i == 1 then
+			Button:SetPoint("TOPLEFT", Minimap, "TOPRIGHT", 10, 18)
+			Button.Text:SetText("就位确认")
+			Button:SetScript("OnMouseDown", function(self, button, ...) DoReadyCheck() PlaySound("igMiniMapOpen") end)
+		elseif i == 2 then
+			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -5)
+			Button.Text:SetText("角色检查")
+			Button:SetScript("OnMouseDown", function(self, button, ...) InitiateRolePoll() PlaySound("igMiniMapOpen") end)
+		elseif i == 3 then
+			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -5)
+			Button.Text:SetText("转化为团队")
+			Button:SetScript("OnMouseDown", function(self, button, ...) ConvertToRaid() PlaySound("igMiniMapOpen") end)
+		elseif i == 4 then
+			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -5)
+			Button.Text:SetText("转化为小队")
+			Button:SetScript("OnMouseDown", function(self, button, ...) ConvertToParty() PlaySound("igMiniMapOpen") end)
+		elseif i == 5 then
+			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -5)
+			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonLeft:SetAlpha(0)
+			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonMiddle:SetAlpha(0)
+			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonRight:SetAlpha(0)
+			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetParent(Button)
+			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:ClearAllPoints()
+			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetPoint("CENTER")
+		end
+		Button:SetAlpha(0)
+		tinsert(ButtonTable, Button)
+	end
+	return ButtonTable
+end
+
 -- BuildBottomLeftFrame
 local function BuildBottomLeftFrame(BottomFrame)
+	local ButtonTable = BuildButtonTable()
 	BottomFrame.Left = CreateFrame("Button", nil, BottomFrame)
 	BottomFrame.Left:SetSize(16, 16)
 	BottomFrame.Left:SetPoint("LEFT")
@@ -89,23 +147,24 @@ local function BuildBottomLeftFrame(BottomFrame)
 		BottomFrame:SetAlpha(0.2)
 		self.Text:SetTextColor(1, 1, 1)
 	end)
+	BottomFrame.Left:SetScript("OnMouseDown", function(self, button, ...)
+		if ButtonTable[1]:GetAlpha() > 0.95 then
+			for _, value in pairs(ButtonTable) do
+				UIFrameFadeOut(value, 0.5, 1, 0)
+				value.HideFrame:Show()
+			end
+		else
+			for _, value in pairs(ButtonTable) do
+				UIFrameFadeIn(value, 0.5, 0, 1)
+				value.HideFrame:Hide()
+			end
+		end
+		PlaySound("igMiniMapOpen")
+	end)
 	BottomFrame.Left.Text = BottomFrame.Left:CreateFontString(nil, "OVERLAY")
 	BottomFrame.Left.Text:SetPoint("CENTER")
 	BottomFrame.Left.Text:SetFont(cfg.Font, 9, "THINOUTLINE")
 	BottomFrame.Left.Text:SetText("G")
-	BottomFrame.Left.RaidMenuFrame = CreateFrame("Frame", "RaidMenu", UIParent, "UIDropDownMenuTemplate")
-	BottomFrame.Left:SetScript("OnMouseDown", function(self, button, ...)
-		if button == "RightButton" then
-			EasyMenu({
-				{text = "就位确认", func = function() DoReadyCheck() end}, 
-				{text = "角色检查", func = function() InitiateRolePoll() end}, 
-				{text = "转化为团队", func = function() ConvertToRaid() end}, 
-				{text = "转化为小队", func = function() ConvertToParty() end}}, 
-			self.RaidMenuFrame, "cursor", 0, 0, "MENU", 2)
-		end
-		PlaySound("igMiniMapOpen")
-	end)
-	DropDownList1:SetClampedToScreen(true)
 end
 
 -- BuildExpBar
