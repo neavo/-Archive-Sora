@@ -1,21 +1,28 @@
-﻿----------------------
+﻿----------------
+--  命名空间  --
+----------------
+local _, ns = ...
+ns.cfg = CreateFrame("Frame")
+local Media = "Interface\\AddOns\\Sora's Reminder\\Media\\"
+ns.cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
+ns.cfg.Solid = Media.."Solid"
+ns.cfg.GlowTex = Media.."GlowTex"
+ns.cfg.Warning = Media.."Warning.mp3"
+ns.cfg.RaidBuffPos = {"TOPLEFT", Minimap, -5, -35}
+ns.cfg.ClassBuffPos = {"CENTER", UIParent, -150, 150}
+
+
+----------------------
 --  公用变量和函数  --
 ----------------------
 
-local Media = "Interface\\AddOns\\Sora's Reminder\\Media\\"
 local Default = {
-	["Font"] = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf",
-	["Solid"] = Media.."Solid",
-	["GlowTex"] = Media.."GlowTex",
-	["Warning"] = Media.."Warning.mp3",
 	["RaidBuffSize"] = 18,
 	["RaidBuffSpace"] = 4,
 	["RaidBuffDirection"] = 1,
-	["RaidBuffPos"] = {"TOPLEFT", "Minimap", "BOTTOMLEFT", -5, -35},
 	["ShowOnlyInParty"] = true,
 	["ClassBuffSize"] = 48,
 	["ClassBuffSpace"] = 40,
-	["ClassBuffPos"] = {"CENTER", "UIParent", "CENTER", -150, 150},
 	["ClassBuffSound"] = true,
 }
 

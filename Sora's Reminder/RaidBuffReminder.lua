@@ -3,6 +3,7 @@
 ----------------
 
 local _, ns = ...
+local cfg = ns.cfg
 local RaidBuffList = ns.RaidBuffList
 local Event = CreateFrame("Frame")
 local BuffFrame = {}
@@ -17,7 +18,7 @@ local function Init()
 		Temp.Border = CreateFrame("Frame", nil, Temp)
 		Temp.Border:SetAllPoints(Temp)
 		Temp.Border:SetBackdrop({
-			edgeFile = RDDB.Solid, edgeSize = 1,
+			edgeFile = cfg.Solid, edgeSize = 1,
 		})
 		Temp.Border:SetBackdropBorderColor(0, 0, 0, 1)
 		
@@ -25,7 +26,7 @@ local function Init()
 		Temp.Shadow:SetPoint("TOPLEFT", Temp, "TOPLEFT", 1, -1)
 		Temp.Shadow:SetPoint("BOTTOMRIGHT", Temp, "BOTTOMRIGHT", 5, -5)
 		Temp.Shadow:SetBackdrop({
-			edgeFile = RDDB.GlowTex, edgeSize = 5,
+			edgeFile = cfg.GlowTex, edgeSize = 5,
 		})
 		Temp.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 		Temp.Shadow:SetFrameLevel(0)
@@ -34,13 +35,13 @@ local function Init()
 		Temp.Texture:SetAllPoints()
 		if RDDB.RaidBuffDirection == 1 then
 			if i == 1 then
-				Temp:SetPoint(unpack(RDDB.RaidBuffPos))
+				Temp:SetPoint(unpack(cfg.RaidBuffPos))
 			else
 				Temp:SetPoint("LEFT", BuffFrame[i-1], "RIGHT", RDDB.RaidBuffSpace, 0)
 			end
 		elseif RDDB.RaidBuffDirection == 2 then
 			if i == 1 then
-				Temp:SetPoint(unpack(RDDB.RaidBuffPos))
+				Temp:SetPoint(unpack(cfg.RaidBuffPos))
 			else
 				Temp:SetPoint("TOP", BuffFrame[i-1], "BOTTOM", 0, -RDDB.RaidBuffSpace)
 			end
@@ -65,7 +66,7 @@ local function Init()
 		Temp.Flag.Border:SetPoint("TOPLEFT", Temp.Flag, "TOPLEFT", -1, 1)
 		Temp.Flag.Border:SetPoint("BOTTOMRIGHT", Temp.Flag, "BOTTOMRIGHT", 1, -1)
 		Temp.Flag.Border:SetBackdrop({
-			edgeFile = RDDB.Solid, edgeSize = 1,
+			edgeFile = cfg.Solid, edgeSize = 1,
 		})
 		Temp.Flag.Border:SetBackdropBorderColor(0, 0, 0, 1)
 

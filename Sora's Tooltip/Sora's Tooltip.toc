@@ -2,6 +2,7 @@
 ## Title: |cff70C0F5Sora's|r Tooltip
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
+## SavedVariables: TooltipDB
 
 ## X-Email:neavo7@Gmail.com
 

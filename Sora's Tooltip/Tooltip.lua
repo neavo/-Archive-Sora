@@ -1,9 +1,9 @@
 ﻿----------------
---  命名空间  --
+-- 命名空间 --
 ----------------
 
-local _, SR = ...
-local cfg = SR.TooltipConfig
+local _, ns = ...
+local cfg = ns.cfg
 
 local classification = {
     elite = "精英",
@@ -50,7 +50,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
     local name, unit = self:GetUnit()
 
     if unit then
-        if cfg.HideInCombat and InCombatLockdown() then
+        if TooltipDB.HideInCombat and InCombatLockdown() then
             return self:Hide()
         end
 
@@ -139,7 +139,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
 			GameTooltipStatusBar.BG:SetPoint("TOPLEFT", -1, 1)
 			GameTooltipStatusBar.BG:SetPoint("BOTTOMRIGHT", 1, -1)
 			GameTooltipStatusBar.BG:SetBackdrop({
-				edgeFile = cfg.Solid, edgeSize = 1,
+				edgeFile = TooltipDB.Solid, edgeSize = 1,
 			})
 			GameTooltipStatusBar.BG:SetBackdropBorderColor(0, 0, 0, 1)
 		end
@@ -187,21 +187,21 @@ end)
 local function SetTooltipPosition(tooltip)
 	local X, Y = 0, 0
 	tooltip:ClearAllPoints()
-	if cfg.Cursor then
+	if TooltipDB.Cursor then
 		local CurrentX, CurrentY = GetCursorPosition()
 		local Scale = UIParent:GetEffectiveScale()
 		X, Y = CurrentX/Scale, CurrentY/Scale
 		tooltip:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", X+25, Y+25)
 	else
-		tooltip:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -50, 201)
+		tooltip:SetPoint(unpack(cfg.Position))
 	end
 end
 
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-	if HideInCombat and InCombatLockdown() then
+	if TooltipDB.HideInCombat and InCombatLockdown() then
 		tooltip:Hide()
 	else
-		if cfg.Cursor then
+		if TooltipDB.Cursor then
 			tooltip:SetOwner(parent, "ANCHOR_CURSOR")
 		else
 			tooltip:SetOwner(parent,"ANCHOR_NONE")
@@ -228,7 +228,7 @@ local function setBakdrop(frame)
 	frame:SetBackdrop({
 		bgFile = "Interface\\Buttons\\WHITE8x8", 
 		insets = { left = 2, right = 2, top = 2, bottom = 2 },
-		edgeFile = cfg.Solid, edgeSize = 1,
+		edgeFile = TooltipDB.Solid, edgeSize = 1,
 	})
 	
     frame.freebBak = true
@@ -302,15 +302,15 @@ for i, script in ipairs(itemrefScripts) do
 end
 
 local f = CreateFrame"Frame"
-f:SetScript("OnEvent", function(self, event, ...) if SR[event] then return SR[event](SR, event, ...) end end)
-function SR:RegisterEvent(...) for i=1,select("#", ...) do f:RegisterEvent((select(i, ...))) end end
-function SR:UnregisterEvent(...) for i=1,select("#", ...) do f:UnregisterEvent((select(i, ...))) end end
+f:SetScript("OnEvent", function(self, event, ...) if ns[event] then return ns[event](ns, event, ...) end end)
+function ns:RegisterEvent(...) for i=1,select("#", ...) do f:RegisterEvent((select(i, ...))) end end
+function ns:UnregisterEvent(...) for i=1,select("#", ...) do f:UnregisterEvent((select(i, ...))) end end
 
-SR:RegisterEvent"PLAYER_LOGIN"
-function SR:PLAYER_LOGIN()
+ns:RegisterEvent"PLAYER_LOGIN"
+function ns:PLAYER_LOGIN()
     for i, frame in ipairs(tooltips) do
         setBakdrop(frame)
     end
 
-    SR:UnregisterEvent"PLAYER_LOGIN"
+    ns:UnregisterEvent"PLAYER_LOGIN"
 end

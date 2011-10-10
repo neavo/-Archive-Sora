@@ -1,19 +1,24 @@
-﻿----------------------
+﻿----------------
+--  命名空间  --
+----------------
+local _, ns = ...
+ns.cfg = CreateFrame("Frame")
+local Media = "Interface\\Addons\\Sora's Buff\\Media\\"
+ns.cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
+ns.cfg.GlowTex = Media.."GlowTex"
+ns.cfg.BUFFPos = {"TOPRIGHT", nil, "TOPRIGHT", -5, -5}
+ns.cfg.DEUFFPos = {"TOPRIGHT", nil, "TOPRIGHT", -5, -140}
+
+----------------------
 --  公用变量和函数  --
 ----------------------
 
-local Media = "Interface\\Addons\\Sora's Buff\\Media\\"
 local Default = {
 	["IconSize"] = 24,
 	["Spacing"] = 8,
 	["BuffDirection"] = 1,
 	["DebuffDirection"] = 1,
 	["WarningTime"] = 15,
-	["Font"] = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf",
-	["GlowTex"] = Media.."GlowTex",
-	["Solid"] = Media.."Solid",
-	["BUFFPos"] = {"TOPRIGHT", nil, "TOPRIGHT", -5, -5},
-	["DEUFFPos"] = {"TOPRIGHT", nil, "TOPRIGHT", -5, -140},
 }
 
 ----------------

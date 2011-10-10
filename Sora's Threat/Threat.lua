@@ -1,6 +1,8 @@
-﻿----------------------
---  公用变量和函数  --
-----------------------
+﻿----------------
+--  命名空间  --
+----------------
+local _, ns = ...
+local cfg = ns.cfg
 local ThreatList, ThreatFlag = {}, {}
 local Threat = CreateFrame("Frame")
 
@@ -11,48 +13,48 @@ local function Init()
 	Threat:SetHeight(6)
 	Threat:SetAlpha(0)
 	Threat:SetFrameLevel(1)
-	Threat:SetBackdrop({bgFile = ThreatDB.Statusbar, })
+	Threat:SetBackdrop({bgFile = cfg.Statusbar, })
 	Threat.Border = CreateFrame("Frame", nil, Threat)
 	Threat.Border:SetPoint("TOPLEFT", -1, 1)
 	Threat.Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Threat.Border:SetBackdrop({edgeFile = ThreatDB.Solid, edgeSize = 1})
+	Threat.Border:SetBackdrop({edgeFile = cfg.Solid, edgeSize = 1})
 	Threat.Border:SetBackdropBorderColor(0, 0, 0, 1)
 	Threat.Shadow = CreateFrame("Frame", nil, Threat.Border)
 	Threat.Shadow:SetFrameLevel(0)
 	Threat.Shadow:SetPoint("TOPLEFT", 5, 1)
 	Threat.Shadow:SetPoint("BOTTOMRIGHT", 5, -5)
-	Threat.Shadow:SetBackdrop({edgeFile = ThreatDB.GlowTex, edgeSize = 5})
+	Threat.Shadow:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = 5})
 	Threat.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	-- 创建坦克仇恨标签
 	Threat.FlagT = CreateFrame("Frame", "ThreatFlagTank", Threat)
 	Threat.FlagT:SetWidth(1)
 	Threat.FlagT:SetHeight(Threat:GetHeight())
-	Threat.FlagT:SetBackdrop({ bgFile = ThreatDB.Solid })
+	Threat.FlagT:SetBackdrop({ bgFile = cfg.Solid })
 	Threat.FlagT:SetBackdropColor(0, 0, 0)
 	Threat.FlagT:SetFrameLevel(2)
 	Threat.FlagT.Name = Threat.FlagT:CreateTexture(nil, "OVERLAY")
 	Threat.FlagT.Name:SetHeight(24)
 	Threat.FlagT.Name:SetWidth(24)
-	Threat.FlagT.Name:SetTexture(ThreatDB.ArrowT)
+	Threat.FlagT.Name:SetTexture(cfg.ArrowT)
 	Threat.FlagT.Name:SetPoint("BOTTOM", Threat.FlagT, "TOP", 0, 0)
 	Threat.FlagT.Text = Threat.FlagT:CreateFontString(nil, "OVERLAY")
-	Threat.FlagT.Text:SetFont(ThreatDB.Font, 10, "THINOUTLINE")
+	Threat.FlagT.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 	Threat.FlagT.Text:SetPoint("BOTTOM", Threat.FlagT.Name, "TOP", 0, -8)
 	-- 创建一般仇恨标签
 	for i=1, ThreatDB.ThreatLimited do 
 		Flag = CreateFrame("Frame", nil, Threat)
 		Flag:SetWidth(1)
 		Flag:SetHeight(Threat:GetHeight())
-		Flag:SetBackdrop({ bgFile = ThreatDB.Solid })
+		Flag:SetBackdrop({ bgFile = cfg.Solid })
 		Flag:SetBackdropColor(0, 0, 0)
 		Flag:SetFrameLevel(2)
 		Flag.Name = Flag:CreateTexture(nil, "OVERLAY")
 		Flag.Name:SetHeight(16)
 		Flag.Name:SetWidth(16)
-		Flag.Name:SetTexture(ThreatDB.Arrow)
+		Flag.Name:SetTexture(cfg.Arrow)
 		Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, 0)
 		Flag.Text = Flag:CreateFontString(nil, "OVERLAY")
-		Flag.Text:SetFont(ThreatDB.Font, 10, "THINOUTLINE")
+		Flag.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 		Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, 3)
 		tinsert(ThreatFlag, Flag)
 	end

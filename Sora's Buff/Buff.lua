@@ -1,4 +1,10 @@
-﻿----------------------
+﻿----------------
+--  命名空间  --
+----------------
+local _, ns = ...
+local cfg = ns.cfg
+
+----------------------
 --  公用变量和函数  --
 ----------------------
 
@@ -11,7 +17,7 @@ local function MakeShadow(Frame, Size)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
 	Shadow:SetBackdrop({ 
-		edgeFile = BuffDB.GlowTex, edgeSize = Size, 
+		edgeFile = cfg.GlowTex, edgeSize = Size, 
 	})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
@@ -38,11 +44,11 @@ local function Style(buttonName, i)
 		Duration:ClearAllPoints()
 		Duration:SetParent(Button)
 		Duration:SetPoint("TOP", Button, "BOTTOM", 1, -3)
-		Duration:SetFont(BuffDB.Font, 9, "THINOUTLINE")
+		Duration:SetFont(cfg.Font, 9, "THINOUTLINE")
 		Count:ClearAllPoints()
 		Count:SetParent(Button)
 		Count:SetPoint("BOTTOMRIGHT", Button, 3, -1)
-		Count:SetFont(BuffDB.Font, 8, "THINOUTLINE")
+		Count:SetFont(cfg.Font, 8, "THINOUTLINE")
 	end
 end
 
@@ -96,7 +102,7 @@ local function MakeBuffFrame()
 		Buff:ClearAllPoints()
 		if BuffDB.BuffDirection == 1 then
 			if i == 1 then
-				Buff:SetPoint(unpack(BuffDB.BUFFPos))
+				Buff:SetPoint(unpack(cfg.BUFFPos))
 			elseif i == IconsPerRow + 1 then
 				Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -15)
 			elseif i == IconsPerRow*2 + 1 then
@@ -106,7 +112,7 @@ local function MakeBuffFrame()
 			end
 		elseif BuffDB.BuffDirection == 2 then
 			if i == 1 then
-				Buff:SetPoint(unpack(BuffDB.BUFFPos))
+				Buff:SetPoint(unpack(cfg.BUFFPos))
 			elseif i == IconsPerRow + 1 then
 				Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -15)
 			elseif i == IconsPerRow*2 + 1 then
@@ -129,7 +135,7 @@ local function MakeDebuffFrame(buttonName, i)
 	Border:Hide()
 	if BuffDB.DebuffDirection == 1 then
 		if i == 1 then
-			Debuff:SetPoint(unpack(BuffDB.DEUFFPos))
+			Debuff:SetPoint(unpack(cfg.DEUFFPos))
 		elseif i == IconsPerRow + 1 then
 			Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -15)
 		elseif i < IconsPerRow*2 + 1 then
@@ -137,7 +143,7 @@ local function MakeDebuffFrame(buttonName, i)
 		end
 	elseif BuffDB.DebuffDirection == 2 then
 		if i == 1 then
-			Debuff:SetPoint(unpack(BuffDB.DEUFFPos))
+			Debuff:SetPoint(unpack(cfg.DEUFFPos))
 		elseif i == IconsPerRow + 1 then
 			Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -15)
 		elseif i < IconsPerRow*2 + 1 then

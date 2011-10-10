@@ -1,15 +1,21 @@
-﻿----------------------
+﻿----------------
+--  命名空间  --
+----------------
+local _, ns = ...
+ns.cfg = CreateFrame("Frame")
+local Media = "Interface\\AddOns\\Sora's Threat\\Media\\"
+ns.cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
+ns.cfg.Statusbar = Media.."statusbar"
+ns.cfg.GlowTex = Media.."glowTex"
+ns.cfg.Solid = Media.."solid"
+ns.cfg.ArrowT = Media.."ArrowT"
+ns.cfg.Arrow = Media.."Arrow"
+
+----------------------
 --  公用变量和函数  --
 ----------------------
 
-local Media = "Interface\\AddOns\\Sora's Threat\\Media\\"
 local Default = {
-	["Font"] = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf",
-	["Statusbar"] = Media.."statusbar",
-	["GlowTex"] = Media.."glowTex",
-	["Solid"] = Media.."solid",
-	["ArrowT"] = Media.."ArrowT",
-	["Arrow"] = Media.."Arrow",
 	["Pos"] = {"TOP", "oUF_SoraPlayer", "BOTTOM", 0, -60},	-- 仇恨条位置(已修正, 可以锚在任意框体上, 包括oUF头像)
 	["ThreatBarWidth"] = 210,								-- 仇恨条宽度
 	["NameTextL"] = 3,										-- 姓名长度(单位:字)
