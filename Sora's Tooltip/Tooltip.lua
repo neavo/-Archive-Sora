@@ -139,7 +139,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
 			GameTooltipStatusBar.BG:SetPoint("TOPLEFT", -1, 1)
 			GameTooltipStatusBar.BG:SetPoint("BOTTOMRIGHT", 1, -1)
 			GameTooltipStatusBar.BG:SetBackdrop({
-				edgeFile = TooltipDB.Solid, edgeSize = 1,
+				edgeFile = cfg.Solid, edgeSize = 1,
 			})
 			GameTooltipStatusBar.BG:SetBackdropBorderColor(0, 0, 0, 1)
 		end
@@ -228,7 +228,7 @@ local function setBakdrop(frame)
 	frame:SetBackdrop({
 		bgFile = "Interface\\Buttons\\WHITE8x8", 
 		insets = { left = 2, right = 2, top = 2, bottom = 2 },
-		edgeFile = TooltipDB.Solid, edgeSize = 1,
+		edgeFile = cfg.Solid, edgeSize = 1,
 	})
 	
     frame.freebBak = true
