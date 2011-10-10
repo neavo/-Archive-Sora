@@ -2,11 +2,9 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local cfg = SR.RDConfig
+local _, ns = ...
 
-
-cfg.ClassBuffList = {
+ns.ClassBuffList = {
 	["DRUID"] = {
 		-- 平衡
 		[1] = {
@@ -320,5 +318,3 @@ cfg.ClassBuffList = {
 		},
 	},
 }
-
-SR.RDConfig.ClassBuffList = cfg.ClassBuffList

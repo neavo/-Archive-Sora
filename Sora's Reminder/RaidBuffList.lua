@@ -2,11 +2,9 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local cfg = SR.RDConfig
+local _, ns = ...
 
-
-cfg.BuffList = {
+ns.RaidBuffList = {
 
 	[1] = {
 		-- 合剂
@@ -89,5 +87,3 @@ cfg.BuffList = {
 	},
 	
 }
-
-SR.RDConfig.BuffList = cfg.BuffList

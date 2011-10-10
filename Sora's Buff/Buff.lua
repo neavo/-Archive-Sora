@@ -1,13 +1,6 @@
-﻿----------------
---  命名空间  --
-----------------
-
-local _, SR = ...
-local cfg = SR.BuffConfig
-
---------------------------
---  一些公用变量和函数  --
---------------------------
+﻿----------------------
+--  公用变量和函数  --
+----------------------
 
 local IconsPerRow = 10
 local i = 0
@@ -18,7 +11,7 @@ local function MakeShadow(Frame, Size)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
 	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = Size, 
+		edgeFile = BuffDB.GlowTex, edgeSize = Size, 
 	})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
@@ -37,7 +30,7 @@ local function Style(buttonName, i)
 	local Count 	= _G[buttonName..i.."Count"]
 
 	if Button then
-		Button:SetSize(cfg.IconSize, cfg.IconSize)
+		Button:SetSize(BuffDB.IconSize, BuffDB.IconSize)
 		if not Button.Shadow then
 			Button.Shadow = MakeShadow(Button, 5)
 		end
@@ -45,11 +38,11 @@ local function Style(buttonName, i)
 		Duration:ClearAllPoints()
 		Duration:SetParent(Button)
 		Duration:SetPoint("TOP", Button, "BOTTOM", 1, -3)
-		Duration:SetFont(cfg.Font, 9, "THINOUTLINE")
+		Duration:SetFont(BuffDB.Font, 9, "THINOUTLINE")
 		Count:ClearAllPoints()
 		Count:SetParent(Button)
 		Count:SetPoint("BOTTOMRIGHT", Button, 3, -1)
-		Count:SetFont(cfg.Font, 8, "THINOUTLINE")
+		Count:SetFont(BuffDB.Font, 8, "THINOUTLINE")
 	end
 end
 
@@ -101,25 +94,25 @@ local function MakeBuffFrame()
 		Style("BuffButton", i)
 		local Buff = BuffSort[i]
 		Buff:ClearAllPoints()
-		if cfg.BuffDirection == 1 then
+		if BuffDB.BuffDirection == 1 then
 			if i == 1 then
-				Buff:SetPoint(unpack(cfg.BUFFpos))
+				Buff:SetPoint(unpack(BuffDB.BUFFPos))
 			elseif i == IconsPerRow + 1 then
 				Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -15)
 			elseif i == IconsPerRow*2 + 1 then
 				Buff:SetPoint("TOP", BuffSort[IconsPerRow + 1], "BOTTOM", 0, -15)		
 			elseif i < IconsPerRow*3 + 1 then
-				Buff:SetPoint("RIGHT", BuffSort[i-1], "LEFT", -cfg.Spacing, 0)
+				Buff:SetPoint("RIGHT", BuffSort[i-1], "LEFT", -BuffDB.Spacing, 0)
 			end
-		elseif cfg.BuffDirection == 2 then
+		elseif BuffDB.BuffDirection == 2 then
 			if i == 1 then
-				Buff:SetPoint(unpack(cfg.BUFFpos))
+				Buff:SetPoint(unpack(BuffDB.BUFFPos))
 			elseif i == IconsPerRow + 1 then
 				Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -15)
 			elseif i == IconsPerRow*2 + 1 then
 				Buff:SetPoint("TOP", BuffSort[IconsPerRow + 1], "BOTTOM", 0, -15)		
 			elseif i < IconsPerRow*3 + 1 then
-				Buff:SetPoint("LEFT", BuffSort[i-1], "RIGHT", cfg.Spacing, 0)
+				Buff:SetPoint("LEFT", BuffSort[i-1], "RIGHT", BuffDB.Spacing, 0)
 			end
 		end
 	end
@@ -134,21 +127,21 @@ local function MakeDebuffFrame(buttonName, i)
 	local Pre = _G[buttonName..(i-1)]
 	Debuff:ClearAllPoints()
 	Border:Hide()
-	if cfg.DebuffDirection == 1 then
+	if BuffDB.DebuffDirection == 1 then
 		if i == 1 then
-			Debuff:SetPoint(unpack(cfg.DEUFFpos))
+			Debuff:SetPoint(unpack(BuffDB.DEUFFPos))
 		elseif i == IconsPerRow + 1 then
 			Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -15)
 		elseif i < IconsPerRow*2 + 1 then
-			Debuff:SetPoint("RIGHT", Pre, "LEFT", -cfg.Spacing, 0)
+			Debuff:SetPoint("RIGHT", Pre, "LEFT", -BuffDB.Spacing, 0)
 		end
-	elseif cfg.DebuffDirection == 2 then
+	elseif BuffDB.DebuffDirection == 2 then
 		if i == 1 then
-			Debuff:SetPoint(unpack(cfg.DEUFFpos))
+			Debuff:SetPoint(unpack(BuffDB.DEUFFPos))
 		elseif i == IconsPerRow + 1 then
 			Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -15)
 		elseif i < IconsPerRow*2 + 1 then
-			Debuff:SetPoint("LEFT", Pre, "RIGHT", cfg.Spacing, 0)
+			Debuff:SetPoint("LEFT", Pre, "RIGHT", BuffDB.Spacing, 0)
 		end
 	end
 end
@@ -156,10 +149,10 @@ hooksecurefunc("DebuffButton_UpdateAnchors", MakeDebuffFrame)
 
 -- BUFF即将结束时的提示
 local function FlashOnEnd(self, elapsed)
-	if self.timeLeft > cfg.WarningTime then
+	if self.timeLeft > BuffDB.WarningTime then
 		self.duration:SetTextColor(1, 1, 1)
 		self:SetAlpha(1)
-	elseif self.timeLeft < cfg.WarningTime then
+	elseif self.timeLeft < BuffDB.WarningTime then
 		self.duration:SetTextColor(1, 0, 0)
 		self:SetAlpha(BuffFrame.BuffAlphaValue)
 	else

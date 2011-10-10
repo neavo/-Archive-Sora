@@ -1,7 +1,8 @@
 ﻿## Interface: 40100
-## Title: |cff70C0F5Sora's|r BuffReminder
+## Title: |cff70C0F5Sora's|r Reminder
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
+## SavedVariables: RDDB
 
 ## X-Email:neavo7@Gmail.com
 
