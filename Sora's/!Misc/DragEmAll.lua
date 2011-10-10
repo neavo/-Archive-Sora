@@ -1,4 +1,4 @@
-﻿local addon = CreateFrame("Frame")
+local addon = CreateFrame("Frame")
 
 -- Used to detect 4.0 clients (TOC >= 40000)
 local cata = select(4, GetBuildInfo()) >= 40000
@@ -59,6 +59,7 @@ local frames = {
   --["TicketStatusFrame"] = false,
   ["StaticPopup1"] = false,
   --["GhostFrame"] = false,
+  ["EncounterJournal"] = false,
 
   -- AddOns
   ["LudwigFrame"] = false,
