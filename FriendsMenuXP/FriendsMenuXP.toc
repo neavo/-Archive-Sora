@@ -1,4 +1,4 @@
-## Interface: 40000
+## Interface: 40200
 ## Author: Warbaby @ 聖光之願 <冰封十字軍>
 ## Title: |cFF00FF00[B]|rFriendsMenuXP-玩家菜单增强
 ## Notes: Greatly extends the player drop down menu without secure taint.
