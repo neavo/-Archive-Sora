@@ -1,4 +1,4 @@
-﻿----------------
+﻿ ----------------
 --  命名空间  --
 ----------------
 
@@ -269,20 +269,17 @@ local function BuildRaidIcon(self)
 end
 
 local function BuildCombatIcon(self)
-	local LeaderIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	LeaderIcon:SetSize(16, 16)
-	LeaderIcon:SetPoint("TOPLEFT", self.Health, -2, 2)
-	self.Leader = LeaderIcon
-
-	local MasterLooterIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	MasterLooterIcon:SetSize(16, 16)
-	MasterLooterIcon:SetPoint("LEFT", LeaderIcon, "RIGHT")
-	self.MasterLooter = MasterLooterIcon
-	
-	local AssistantIcon = self.Health:CreateTexture(nil, "OVERLAY")
-	AssistantIcon:SetSize(16, 16)
-	AssistantIcon:SetPoint("TOP", LeaderIcon, "BOTTOM")
-	self.Assistant = AssistantIcon
+	local Leader = self.Health:CreateTexture(nil, "OVERLAY")
+	Leader:SetSize(16, 16)
+	Leader:SetPoint("TOPLEFT", self.Health, -7, 9)
+	self.Leader = Leader
+	local Assistant = self.Health:CreateTexture(nil, "OVERLAY")
+	Assistant:SetAllPoints(Leader)
+	self.Assistant = Assistant
+	local MasterLooter = self.Health:CreateTexture(nil, "OVERLAY")
+	MasterLooter:SetSize(16, 16)
+	MasterLooter:SetPoint("LEFT", LeaderIcon, "RIGHT")
+	self.MasterLooter = MasterLooter
 end
 
 local function BuildFocusFrame(self, ...)
