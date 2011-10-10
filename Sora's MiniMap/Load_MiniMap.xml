@@ -6,9 +6,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Script file="cfg.lua"/>
-	<Script file="Map.lua"/>
 	<Script file="MiniMap.lua"/>
-	<Script file="MiniMapPanels.lua"/>
-	<Script file="bXP.lua"/>		
+	<Script file="MiniMapPanels.lua"/>>		
 	
 </Ui>
