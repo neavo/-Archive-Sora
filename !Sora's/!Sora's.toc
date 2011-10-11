@@ -1,8 +1,8 @@
 ﻿## Interface: 40200
-## Title: |cff70C0F5!Sora's|r Config
+## Title: |cff70C0F5!Sora's|r
 ## Notes: Sora's O(∩_∩)O
-## Notes: Neavo
+## Author: Neavo
 
 ## X-Email:neavo7@Gmail.com
 
-Load_Config.xml
+Sora's.xml

@@ -5,7 +5,6 @@
 
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-	<Script file="cfg.lua"/>
 	<Script file="api.lua"/>
 	<Script file="Topbar.lua"/>
 

@@ -2,8 +2,8 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local cfg = SR.TopBarConfig
+local _, ns = ...
+local cfg = ns.cfg
 
 local function zsub(s,...)
 	local t={...}

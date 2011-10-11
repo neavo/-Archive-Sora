@@ -1,8 +1,0 @@
-﻿
-
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	
-	<Include file="!Misc\Load_Misc.xml"/>
-	<Include file="Topbar\Load_Topbar.xml"/>
-
-</Ui>

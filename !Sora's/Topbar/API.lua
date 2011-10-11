@@ -2,11 +2,8 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local cfg = SR.TopBarConfig
-
-
-
+local _, ns = ...
+local cfg = ns.cfg
 
 --API and Engine by Tukz and Elv
 local addon, engine = ...
