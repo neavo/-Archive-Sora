@@ -125,21 +125,16 @@ local function BuildReadyCheckIcon(self)
 end
 
 local function BuildThreatBorder(self)
-	self.ThreatBorder = CreateFrame("Frame", nil, self)
-	self.ThreatBorder:SetPoint("TOPLEFT", self, -5, 5)
-	self.ThreatBorder:SetPoint("BOTTOMRIGHT", self, 5, -5)
-	self.ThreatBorder:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = 3})
-	self.ThreatBorder:SetFrameLevel(1)
+	self.ThreatBorder = MakeShadow(self, 5)
 	self.ThreatBorder:Hide()
-	
 	local function UpdateThreat(self, event, unit)
 		if self.unit ~= unit then return end
 		local status = UnitThreatSituation(unit)
 		unit = unit or self.unit
 		if status and status > 1 then
 			local r, g, b = GetThreatStatusColor(status)
-				self.ThreatBorder:Show()
-				self.ThreatBorder:SetBackdropBorderColor(r, g, b, 1)
+			self.ThreatBorder:Show()
+			self.ThreatBorder:SetBackdropBorderColor(r, g, b, 1)
 		else
 			self.ThreatBorder:SetBackdropBorderColor(r, g, b, 0)
 			self.ThreatBorder:Hide()
