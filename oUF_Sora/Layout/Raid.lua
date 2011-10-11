@@ -136,32 +136,21 @@ local function BuildThreatBorder(self)
 	self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", UpdateThreat)
 end
 
-local function BuildRaidDebuffs(self)
-	self:SetBackdrop(backdrop)
-	self:SetBackdropColor(0, 0, 0)
-
-	self:SetScript("OnEnter", UnitFrame_OnEnter)
-	self:SetScript("OnLeave", UnitFrame_OnLeave)
-
-	self:RegisterForClicks("AnyUp")
-	
+local function BuildRaidDebuffs(self)	
 	self.RaidDebuffs = CreateFrame("Frame", nil, self)
 	self.RaidDebuffs:SetHeight(18)
 	self.RaidDebuffs:SetWidth(18)
-	self.RaidDebuffs:SetPoint("CENTER", self)
+	self.RaidDebuffs:SetPoint("CENTER")
 	self.RaidDebuffs:SetFrameStrata("HIGH")
-
 	self.RaidDebuffs.icon = self.RaidDebuffs:CreateTexture(nil, "OVERLAY")
 	self.RaidDebuffs.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	self.RaidDebuffs.icon:SetAllPoints(self.RaidDebuffs)
-	
 	self.RaidDebuffs.time = self.RaidDebuffs:CreateFontString(nil, "OVERLAY")
-	self.RaidDebuffs.time:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
+	self.RaidDebuffs.time:SetFont(cfg.Font, 12, "THINOUTLINE")
 	self.RaidDebuffs.time:SetPoint("CENTER", self.RaidDebuffs, "CENTER", 0, 0)
 	self.RaidDebuffs.time:SetTextColor(1, 0.9, 0)
-
 	self.RaidDebuffs.count = self.RaidDebuffs:CreateFontString(nil, "OVERLAY")
-	self.RaidDebuffs.count:SetFont(STANDARD_TEXT_FONT, 8, "OUTLINE")
+	self.RaidDebuffs.count:SetFont(cfg.Font, 8, "OUTLINE")
 	self.RaidDebuffs.count:SetPoint("BOTTOMRIGHT", self.RaidDebuffs, "BOTTOMRIGHT", 2, 0)
 	self.RaidDebuffs.count:SetTextColor(1, 0.9, 0)
 end 
