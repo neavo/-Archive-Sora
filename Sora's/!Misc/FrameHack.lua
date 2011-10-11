@@ -28,7 +28,7 @@ end
 WatchFrameMove() 
 
 
--- 屏蔽系统红字提示 --
+-- 屏蔽系统红字提示
 local Event = CreateFrame("Frame")
 UIErrorsFrame:UnregisterEvent("UI_ERROR_MESSAGE")
 Event.UI_ERROR_MESSAGE = function(self, event, error)
@@ -38,26 +38,32 @@ Event.UI_ERROR_MESSAGE = function(self, event, error)
 end	
 Event:RegisterEvent("UI_ERROR_MESSAGE")
 
---  UI缩放修正  --
+--  自动设置聊天框体和UI缩放
+local function SetChatFrame()
+	FCF_SetLocked(ChatFrame1, nil)
+	FCF_SetChatWindowFontSize(self, ChatFrame1, 11) 
+	ChatFrame1:ClearAllPoints()
+	ChatFrame1:SetPoint("BOTTOMLEFT", 5, 23)
+	ChatFrame1:SetWidth(320)
+	ChatFrame1:SetHeight(100)
+	ChatFrame1:SetUserPlaced(true)
+	for i=1,10 do FCF_SetWindowAlpha(_G["ChatFrame"..i], 0) end
+	FCF_SavePositionAndDimensions(ChatFrame1)
+	FCF_SetLocked(ChatFrame1, 1)
+end
+local function SetUIScale()
+	SetCVar("useUiScale", 1)
+	local scale = 768/string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)")
+	if scale < .64 then
+		UIParent:SetScale(scale)
+	else
+		SetCVar("uiScale", scale)
+	end
+end
 SlashCmdList["AutoSet"] = function()
 	if not UnitAffectingCombat("player") then
-		FCF_SetLocked(ChatFrame1, nil)
-		FCF_SetChatWindowFontSize(self, ChatFrame1, 11) 
-		ChatFrame1:ClearAllPoints()
-		ChatFrame1:SetPoint("BOTTOMLEFT", 5, 23)
-		ChatFrame1:SetWidth(320)
-		ChatFrame1:SetHeight(100)
-		ChatFrame1:SetUserPlaced(true)
-		for i=1,10 do FCF_SetWindowAlpha(_G["ChatFrame"..i], 0) end
-		FCF_SavePositionAndDimensions(ChatFrame1)
-		FCF_SetLocked(ChatFrame1, 1)
-		SetCVar("useUiScale", 1)
-		local scale = 768/string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)")
-		if scale < .64 then
-			UIParent:SetScale(scale)
-		else
-			SetCVar("uiScale", scale)
-		end
+		SetChatFrame()
+		SetUIScale()
 		ReloadUI()
 	end
 end
