@@ -107,41 +107,23 @@ end)
 
 local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", UIParent, "UIDropDownMenuTemplate")
 local menuList = {
-    {text = "角色", func = function() ToggleCharacter("PaperDollFrame") end}, 
-    {text = "技能", func = function() if InCombatLockdown() then return end ToggleFrame(SpellBookFrame) end}, 
-    {text = "天赋", func = function() 
-		if not PlayerTalentFrame then
-			LoadAddOn("Blizzard_TalentUI")
-		end
-		if not GlyphFrame then
-			LoadAddOn("Blizzard_GlyphUI")
-		end
-		PlayerTalentFrame_Toggle()
-	end}, 
-    {text = "成就", func = function() ToggleAchievementFrame() end}, 
-    {text = "任务", func = function() ToggleFrame(QuestLogFrame) end}, 
-    {text = "社交", func = function() ToggleFriendsFrame(1) end}, 
-    {text = "PVP", func = function() ToggleFrame(PVPFrame) end}, 
-    {text = "公会", func = function()
-		if IsInGuild() then
-			if not GuildFrame then
-				LoadAddOn("Blizzard_GuildUI")
-			end
-			GuildFrame_Toggle()
-		end
-	end}, 
-    {text = "帮助", func = function() ToggleHelpFrame() end}, 
-	{text = "日历", 
-    func = function()
+    {text = CHARACTER_BUTTON, func = function() ToggleCharacter("PaperDollFrame") end}, 
+    {text = SPELLBOOK_ABILITIES_BUTTON, func = function() ToggleSpellBook("spell") end}, 
+    {text = TALENTS_BUTTON, func = function() ToggleTalentFrame() end}, 
+    {text = ACHIEVEMENT_BUTTON, func = function() ToggleAchievementFrame() end}, 
+    {text = QUESTLOG_BUTTON, func = function() ToggleFrame(QuestLogFrame) end}, 
+    {text = SOCIAL_BUTTON, func = function() ToggleFriendsFrame(1) end}, 
+    {text = GUILD, func = function() ToggleGuildFrame(1) end}, 
+    {text = PLAYER_V_PLAYER, func = function() ToggleFrame(PVPFrame) end}, 
+    {text = HELP_BUTTON, func = function() ToggleHelpFrame() end}, 
+	{text = "日历", func = function()
 		if not CalendarFrame then LoadAddOn("Blizzard_Calendar") end
-			Calendar_Toggle()
+		Calendar_Toggle()
     end}, 
-    {text = "寻求组队", 
-		func = function() ToggleFrame(LFDParentFrame) end}, 
-	{text = "系统菜单", 
-		func = function() ToggleFrame(GameMenuFrame) end}, 
-    {text = "地城导览手册",
-		func = function() ToggleFrame(EncounterJournal) end},
+    {text = LFG_TITLE, func = function() ToggleFrame(LFDParentFrame) end},
+	{text = LOOKING_FOR_RAID, func = function() ToggleFrame(LFRParentFrame) end},		
+	{text = "系统菜单", func = function() ToggleFrame(GameMenuFrame) end}, 
+    {text = ENCOUNTER_JOURNAL, func = function() ToggleFrame(EncounterJournal) end},
 }
 
 Minimap:SetScript("OnMouseUp", function(self, btn)
