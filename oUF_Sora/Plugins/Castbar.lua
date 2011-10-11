@@ -29,25 +29,24 @@ local channelingTicks = {
 }
 
 local ticks = {}
-
 cast.setBarTicks = function(castBar, ticknum)
 	if ticknum and ticknum > 0 then
 		local delta = castBar:GetWidth() / ticknum
-		for k = 1, ticknum do
-			if not ticks[k] then
-				ticks[k] = castBar:CreateTexture(nil, 'OVERLAY')
-				ticks[k]:SetTexture(cfg.statusbar_texture)
-				ticks[k]:SetVertexColor(0, 0, 0)
-				ticks[k]:SetWidth(1.2)
-				ticks[k]:SetHeight(castBar:GetHeight())
+		for i = 1, ticknum do
+			if not ticks[i] then
+				ticks[i] = castBar:CreateTexture(nil, "OVERLAY")
+				ticks[i]:SetTexture(cfg.Solid)
+				ticks[i]:SetVertexColor(0, 0, 0)
+				ticks[i]:SetWidth(2)
+				ticks[i]:SetHeight(castBar:GetHeight())
 			end
-			ticks[k]:ClearAllPoints()
-			ticks[k]:SetPoint("CENTER", castBar, "LEFT", delta * k, 0 )
-			ticks[k]:Show()
+			ticks[i]:ClearAllPoints()
+			ticks[i]:SetPoint("CENTER", castBar, "LEFT", delta * i, 0 )
+			ticks[i]:Show()
 		end
 	else
-		for k, v in pairs(ticks) do
-			v:Hide()
+		for _, value in pairs(ticks) do
+			value:Hide()
 		end
 	end
 end
@@ -62,15 +61,15 @@ cast.OnCastbarUpdate = function(self, elapsed)
 			self.channeling = nil
 			return
 		end
-		if parent.unit == 'player' then
+		if parent.unit == "player" then
 			if self.delay ~= 0 then
-				self.Time:SetFormattedText('%.1f / |cffff0000%.1f|r', duration, self.casting and self.max + self.delay or self.max - self.delay)
+				self.Time:SetFormattedText("%.1f / |cffff0000%.1f|r", duration, self.casting and self.max + self.delay or self.max - self.delay)
 			else
-				self.Time:SetFormattedText('%.1f / %.1f', duration, self.max)
+				self.Time:SetFormattedText("%.1f / %.1f", duration, self.max)
 				self.Lag:SetFormattedText("%d ms", self.SafeZone.timeDiff * 1000)
 			end
 		else
-			self.Time:SetFormattedText('%.1f / %.1f', duration, self.casting and self.max + self.delay or self.max - self.delay)
+			self.Time:SetFormattedText("%.1f / %.1f", duration, self.casting and self.max + self.delay or self.max - self.delay)
 		end
 		self.duration = duration
 		self:SetValue(duration)
@@ -95,7 +94,7 @@ cast.PostCastStart = function(self, unit, name, rank, text)
 	local interruptcb = {95/255, 182/255, 255/255}
 	self:SetAlpha(1.0)
 	self:SetStatusBarColor(unpack(self.casting and self.CastingColor or self.ChannelingColor))
-	if unit == "player"then
+	if unit == "player" then
 		local sf = self.SafeZone
 		sf.timeDiff = GetTime() - sf.sendTime
 		sf.timeDiff = sf.timeDiff > self.max and self.max or sf.timeDiff
@@ -109,9 +108,9 @@ cast.PostCastStart = function(self, unit, name, rank, text)
 			cast.setBarTicks(self, self.channelingTicks)
 		end
 	elseif (unit == "target" or unit == "focus") and not self.interrupt then
-		self:SetStatusBarColor(interruptcb[1],interruptcb[2],interruptcb[3],1)
+		self:SetStatusBarColor(interruptcb[1], interruptcb[2], interruptcb[3], 1)
 	else
-		self:SetStatusBarColor(pcolor[1], pcolor[2], pcolor[3],1)
+		self:SetStatusBarColor(pcolor[1], pcolor[2], pcolor[3], 1)
 	end
 end
 

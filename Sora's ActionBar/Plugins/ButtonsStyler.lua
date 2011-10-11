@@ -7,43 +7,35 @@ local cfg = ns.cfg
  
 local function SetIconTexture(self, crop)
 	if crop == 1 then self:SetTexCoord(.1, .9, .1, .9) end
-	self:SetPoint("TOPLEFT", 1, -1)
-	self:SetPoint("BOTTOMRIGHT", -1, 1)
+	self:SetPoint("TOPLEFT", 2, -2)
+	self:SetPoint("BOTTOMRIGHT", -2, 2)
 end
 
 local function SetOverlay(self)
-	if self and not _G[self:GetName().."Shadow"] then
-		local Shadow = CreateFrame("Frame", self:GetName().."Shadow", self)
-		Shadow:SetPoint("TOPLEFT", -3, 3)
-		Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
-		Shadow:SetBackdrop({edgeFile = cfg.GlowTex , edgeSize = 5})
-		Shadow:SetBackdropBorderColor(0, 0, 0, 1)
-		Shadow:SetFrameLevel(0)
-		local Border = CreateFrame("Frame", self:GetName().."Border", self)
-		Border:SetPoint("TOPLEFT", 1, -1)
-		Border:SetPoint("BOTTOMRIGHT", -1, 1)
-		Border:SetBackdrop({edgeFile = cfg.Solid , edgeSize = 1})
-		Border:SetBackdropBorderColor(0, 0, 0, 1)
+	if self and not self.Shadow then
+		self.Shadow = CreateFrame("Frame", nil, self)
+		self.Shadow:SetPoint("TOPLEFT", -3, 3)
+		self.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
+		self.Shadow:SetBackdrop({edgeFile = cfg.GlowTex , edgeSize = 5})
+		self.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+		self.Shadow:SetFrameLevel(0)
 	end
 end
 
 local function SetNormalTexture(self)
 	if self then
-		self:SetTexture(cfg.textures_normal)
-		self:SetPoint("TOPLEFT")
-		self:SetPoint("BOTTOMRIGHT")
+		self:SetTexture(cfg.Texture)
+		self:SetAllPoints()
 		self:SetVertexColor(cfg.colors.normal.r, cfg.colors.normal.g, cfg.colors.normal.b)
 	end
 end
 
 local function SetPushedTexture(self)
-
 	self:SetTexture(cfg.Texture)
 	self:SetVertexColor(cfg.colors.pushed.r, cfg.colors.pushed.g, cfg.colors.pushed.b)
 end
 
 local function SetHighlightTexture(self)
-
 	self:SetTexture(cfg.Texture)
 	self:SetVertexColor(cfg.colors.highlight.r, cfg.colors.highlight.g, cfg.colors.highlight.b)
 end
@@ -66,19 +58,17 @@ local function ActionButtons(self)
 	_G[self:GetName().."Border"]:Hide()
 	_G[self:GetName().."Flash"]:Hide()
 	local hk = _G[self:GetName().."HotKey"]
-		hk:SetFont(cfg.Font, ActionBarDB.HotkeyFontSize, "THINOUTLINE")
-		if ActionBarDB.HideHotKey then
-			hk:ClearAllPoints()
-		else
-			hk:SetPoint("TOPRIGHT")
-		end
+	hk:SetFont(cfg.Font, ActionBarDB.HotkeyFontSize, "THINOUTLINE")
+	if ActionBarDB.HideHotKey then
+		hk:ClearAllPoints()
+	else
+		hk:SetPoint("TOPRIGHT")
+	end
 	local name = _G[self:GetName().."Name"]
 	name:SetFont(cfg.Font, ActionBarDB.NameFontSize, "THINOUTLINE")
-	if ActionBarDB.HideMacroName then
-		name:Hide()
- 	end
+	if ActionBarDB.HideMacroName then name:Hide() end
 	local count = _G[self:GetName().."Count"]
-		count:SetFont(cfg.Font, ActionBarDB.CountFontSize, "THINOUTLINE")
+	count:SetFont(cfg.Font, ActionBarDB.CountFontSize, "THINOUTLINE")
 	SetTextures(self, 1)
 end
  
@@ -146,7 +136,13 @@ local function FlyoutPageSpells(self)
 
 local function PetActionButtons()
 	for i = 1, NUM_PET_ACTION_SLOTS do
-		SetTextures(_G["PetActionButton"..i], 1)
+		local Button = _G["PetActionButton"..i]
+		local Shine = _G["PetActionButton"..i.."Shine"]
+		local Border = _G["PetActionButton"..i.."Border"]
+		SetTextures(Button, 1)
+		Shine:ClearAllPoints()
+		Shine:SetAllPoints()
+		Border:Hide()
 	end
 end
 
