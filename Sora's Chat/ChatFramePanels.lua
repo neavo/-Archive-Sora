@@ -125,16 +125,19 @@ local function InitChatbar()
 	Button:SetAttribute("macrotext", "/roll")
 	tinsert(ChatbarTable, Button)
 	
-	ChatFrame1EditBox:SetScript("OnShow", function(self)
-		for _,value in pairs(ChatbarTable) do
-			UIFrameFadeOut(value, 0.5, 0.6, 0)
-		end
-	end)
-	ChatFrame1EditBox:SetScript("OnHide", function(self)
-		for _,value in pairs(ChatbarTable) do
-			UIFrameFadeIn(value, 0.5, 0, 0.6)
-		end
-	end)
+	for i = 1, 10 do
+		local EditBox = _G["ChatFrame"..i.."EditBox"]
+		EditBox:SetScript("OnShow", function(self)
+			for _,value in pairs(ChatbarTable) do
+				UIFrameFadeOut(value, 0.5, 0.6, 0)
+			end
+		end)
+		EditBox:SetScript("OnHide", function(self)
+			for _,value in pairs(ChatbarTable) do
+				UIFrameFadeIn(value, 0.5, 0, 0.6)
+			end
+		end)
+	end
 end
 
 -- InitNewWhisper
