@@ -2,28 +2,22 @@
 --  命名空间  --
 ----------------
 
-local _, SR = ...
-local cfg = SR.MiscConfig
+local _, ns = ...
+local cfg = ns.cfg
 
-local function UpdateGlow(button, id)
+local function UpdateGlow(Button, ItemID)
 	local quality, texture
-	local Border = _G[button:GetName().."NormalTexture"]
+	local Border = _G[Button:GetName().."NormalTexture"]
 	
-	if Border then
-		Border:SetTexture(nil)
-	end
+	if Border then Border:SetTexture(nil) end
 	
-	if id then
-		quality, _, _, _, _, _, _, texture = select(3, GetItemInfo(id))
-	end
+	if ItemID then quality, _, _, _, _, _, _, texture = select(3, GetItemInfo(ItemID)) end
 
-	if not button.Border then
-		button.Border = CreateFrame("Frame", nil, button)
-		button.Border:SetPoint("TOPLEFT", button, "TOPLEFT", 0, 0)
-		button.Border:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 0, 0)
-		button.Border:SetBackdrop({
-			edgeFile = cfg.Solid, edgeSize = 1,
-		})
+	if not Button.Border then
+		Button.Border = CreateFrame("Frame", nil, Button)
+		Button.Border:SetPoint("TOPLEFT")
+		Button.Border:SetPoint("BOTTOMRIGHT")
+		Button.Border:SetBackdrop({edgeFile = cfg.Solid, edgeSize = 1})
 	end
 
 	if texture then
@@ -36,44 +30,41 @@ local function UpdateGlow(button, id)
 				r, g, b = 0, 0, 0
 			end
 		end
-		button.Border:SetBackdropBorderColor(r, g, b)
-		button.Border:Show()
+		Button.Border:SetBackdropBorderColor(r, g, b)
+		Button.Border:Show()
 	else
-		button.Border:Hide()
+		Button.Border:Hide()
 	end
 end
 
-
-local slots = {
+local Slots = {
 	"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
 	"Hands", "Finger0", "Finger1", "Trinket0", "Trinket1", "Back", "MainHand",
 	"SecondaryHand", "Ranged", "Tabard",
 }
 
-local updatechar = function(self)
+local function UpdateChar(self)
 	if CharacterFrame:IsShown() then
-		for key, slotName in ipairs(slots) do
+		for key, value in ipairs(Slots) do
 			local slotID = key % 20
-			local slotFrame = _G["Character"..slotName.."Slot"]
+			local slotFrame = _G["Character"..value.."Slot"]
 			local slotLink = GetInventoryItemLink("player", slotID)
-
 			UpdateGlow(slotFrame, slotLink)
 		end
 	end
 end
 
-local updateinspect = function(self)
+local function UpdateInspect(self)
 	local unit = InspectFrame.unit
 	if InspectFrame:IsShown() and unit then
-		for key, slotName in ipairs(slots) do
+		for key, value in ipairs(Slots) do
 			local slotID = key % 20
-			local slotFrame = _G["Inspect"..slotName.."Slot"]
+			local slotFrame = _G["Inspect"..value.."Slot"]
 			local slotLink = GetInventoryItemLink(unit, slotID)
 			UpdateGlow(slotFrame, slotLink)
 		end
 	end	
 end
-
 
 -- Event
 local Event = CreateFrame("Frame")
@@ -81,22 +72,21 @@ Event:RegisterEvent("ADDON_LOADED")
 Event:RegisterEvent("UNIT_INVENTORY_CHANGED")
 Event:SetScript("OnEvent", function(self, event, addon)
 	if event == "UNIT_INVENTORY_CHANGED" then
-		updatechar()
+		UpdateChar()
 	elseif event == "ADDON_LOADED" then
 		if addon == "Blizzard_InspectUI" then
 			InspectFrame:HookScript("OnShow", function()
 				Event:RegisterEvent("PLAYER_TARGET_CHANGED")
 				Event:RegisterEvent("INSPECT_READY")
-				Event:SetScript("OnEvent", updateinspect)
-				updateinspect()
+				Event:SetScript("OnEvent", UpdateInspect)
+				UpdateInspect()
 			end)
-			InspectFrame:HookScript("OnHide", function()
+			InspectFrame:HookScript("OnHItemIDe", function()
 				Event:UnregisterEvent("PLAYER_TARGET_CHANGED")
 				Event:UnregisterEvent("INSPECT_READY")
 				Event:SetScript("OnEvent", nil)
 			end)
-			Event:UnregisterEvent("ADDON_LOADED")
 		end
 	end
 end)
-CharacterFrame:HookScript("OnShow", updatechar)
+CharacterFrame:HookScript("OnShow", UpdateChar)

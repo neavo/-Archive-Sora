@@ -6,9 +6,7 @@
 
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-	<Include file="BlizzBugsSuck\BlizzBugsSuck.xml"/>
-
-	<Script file="cfg.lua"/>	
+	<Include file="BlizzBugsSuck\BlizzBugsSuck.xml"/>	
 	<Script file="Align.lua"/>
 	<Script file="AlreadyKnown.lua"/>
 	<Script file="AutoRepair.lua"/>
