@@ -4,9 +4,7 @@
 
 local _, ns = ...
 local cargBags = ns.cargBags
-
-local _, SR = ...
-local cfg = SR.BagConfig
+local cfg = ns.BagConfig
 
 
 ----------------
@@ -30,20 +28,20 @@ function Bags:OnInit()
 	
 	-- 玩家背包
 	f.main = MyContainer:New("Main", {
-			Columns = 10,
-			Scale = cfg.Scale,
-			Bags = "bags",
-			Movable = true,
+			Columns = 10, 
+			Scale = cfg.Scale, 
+			Bags = "bags", 
+			Movable = true, 
 	})
 	f.main:SetFilter(onlyBags, true)
 	f.main:SetPoint("RIGHT", -20, 0)
 
 	-- 银行
 	f.bank = MyContainer:New("Bank", {
-			Columns = 13,
-			Scale = cfg.Scale,
-			Bags = "bank",
-			Movable = true,
+			Columns = 13, 
+			Scale = cfg.Scale, 
+			Bags = "bank", 
+			Movable = true, 
 	})
 	f.bank:SetFilter(onlyBank, true) 
 	f.bank:SetPoint("CENTER", -100, 0)
@@ -77,7 +75,7 @@ function MyButton:OnCreate()
 	self.Border:SetPoint("TOPLEFT", self.Icon, 0, 0)
 	self.Border:SetPoint("BOTTOMRIGHT", self.Icon, 0, 0)
 	self.Border:SetBackdrop({
-		edgeFile = cfg.Solid, edgeSize = 1,
+		edgeFile = cfg.Solid, edgeSize = 1, 
 	})
 	self.Border:SetBackdropBorderColor(0, 0, 0, 0)	
 	
@@ -85,8 +83,8 @@ function MyButton:OnCreate()
 	self.BG:SetPoint("TOPLEFT", self.Icon, 0, 0)
 	self.BG:SetPoint("BOTTOMRIGHT", self.Icon, 0, 0)
 	self.BG:SetBackdrop({
-		bgFile = cfg.Solid,
-		insets = { left = 1, right = 1, top = 1, bottom = 1 },
+		bgFile = cfg.Solid, 
+		insets = { left = 1, right = 1, top = 1, bottom = 1 }, 
 	})
 	self.BG:SetBackdropColor(0.2, 0.2, 0.2, 0.7)
 	self.BG:SetFrameLevel(0)
@@ -135,14 +133,14 @@ end
 function MyContainer:OnCreate(name, settings)
     self.Settings = settings
 	self.UpdateDimensions = UpdateDimensions
-
+	
 	self:SetBackdrop({ 
-		bgFile = cfg.bgFile,
+		bgFile = cfg.bgFile, 
 		edgeFile = cfg.edgeFile, edgeSize = 3, 
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
-	self:SetBackdropColor(0,0,0,0.8)
-	self:SetBackdropBorderColor(0,0,0,1)
+	self:SetBackdropColor(0, 0, 0, 0.8)
+	self:SetBackdropBorderColor(0, 0, 0, 1)
 
 	self:SetParent(settings.Parent or Bags)
 	self:SetFrameStrata("HIGH")
@@ -170,7 +168,7 @@ function MyContainer:OnCreate(name, settings)
 	local tagDisplay = self:SpawnPlugin("TagDisplay", "[money]", infoFrame)
 	tagDisplay:SetFontObject("NumberFontNormal")
 	tagDisplay:SetFont(cfg.Font, 12)
-	tagDisplay:SetPoint("RIGHT", infoFrame,"RIGHT",0,0)	
+	tagDisplay:SetPoint("RIGHT", infoFrame, "RIGHT", 0, 0)	
 	-- 信息条插件:搜索栏
 	local searchText = infoFrame:CreateFontString(nil, "OVERLAY")
 	searchText:SetPoint("LEFT", infoFrame, "LEFT", 0, 1)
@@ -179,7 +177,7 @@ function MyContainer:OnCreate(name, settings)
 	local search = self:SpawnPlugin("SearchBar", infoFrame)
 	search.highlightFunction = highlightFunction
 	search.isGlobal = true
-	search:SetPoint("LEFT", infoFrame,"LEFT", 0, 5)
+	search:SetPoint("LEFT", infoFrame, "LEFT", 0, 5)
 	
 	-- 信息条插件:背包栏
 	local bagBar = self:SpawnPlugin("BagBar", settings.Bags)
@@ -193,48 +191,59 @@ function MyContainer:OnCreate(name, settings)
 	
 	-- 背包栏开关按钮
 	self:UpdateDimensions()
-	local bagToggle = CreateFrame("CheckButton", nil, self)
-	bagToggle:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
-	bagToggle:SetWidth(40)
-	bagToggle:SetHeight(20)
-	bagToggle:SetPoint("BOTTOMLEFT",3,7)
-	bagToggle:SetScript("OnClick", function()
-		if(self.BagBar:IsShown()) then
+	local BagToggle = CreateFrame("Button", nil, self)
+	BagToggle:SetSize(40, 20)
+	if IsAddOnLoaded("Aurora") then
+		local F, C = unpack(Aurora)
+		F.Reskin(BagToggle)
+	else
+		BagToggle:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
+	end
+	BagToggle:SetPoint("BOTTOMLEFT", 9, 7)
+	BagToggle:SetScript("OnClick", function()
+		if self.BagBar:IsShown() then
 			self.BagBar:Hide()
 		else
 			self.BagBar:Show()
 		end
-			self:UpdateDimensions()
+		self:UpdateDimensions()
 	end)
-	bagToggle.Text = bagToggle:CreateFontString(nil, "OVERLAY")
-	bagToggle.Text:SetPoint("CENTER", bagToggle)
-	bagToggle.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
-	bagToggle.Text:SetText("背包")
+	BagToggle.Text = BagToggle:CreateFontString(nil, "OVERLAY")
+	BagToggle.Text:SetPoint("CENTER")
+	BagToggle.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+	BagToggle.Text:SetText("背包")
 	
 	-- 背包整理按钮
 	local SortButton = CreateFrame("Button", nil, self)
-	SortButton:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
-	SortButton:SetWidth(70)
-	SortButton:SetHeight(20)
+	SortButton:SetSize(70, 20)
+	if IsAddOnLoaded("Aurora") then
+		local F, C = unpack(Aurora)
+		F.Reskin(SortButton)
+	else
+		SortButton:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
+	end
 	SortButton:SetPoint("BOTTOMRIGHT", -30, 7)
 	SortButton:SetScript("OnClick", function() JPack:Pack() end)
 	SortButton.Text = SortButton:CreateFontString(nil, "OVERLAY")
-	SortButton.Text:SetPoint("CENTER", SortButton)
+	SortButton.Text:SetPoint("CENTER")
 	SortButton.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 	SortButton.Text:SetText("整理背包")
 
 	-- 关闭按钮
-	local closebutton = CreateFrame("Button", nil, self)
-	closebutton:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
-	closebutton:SetFrameLevel(30)
-	closebutton:SetPoint("BOTTOMRIGHT", -5, 9)
-	closebutton:SetSize(20,14)
-	closebutton.Texture = closebutton:CreateFontString(nil, "OVERLAY")
-	closebutton.Texture:SetPoint("CENTER", closebutton, "CENTER",1,0)
-	closebutton.Texture:SetFont(cfg.Font, 14, "THINOUTLINE")
-	closebutton.Texture:SetText("x")
-	closebutton:SetScript( "OnClick", function(self) 
-		CloseAllBags() 
-	end)
+	local CloseButton = CreateFrame("Button", nil, self)
+	CloseButton:SetFrameLevel(3)
+	CloseButton:SetSize(20, 20)
+	if IsAddOnLoaded("Aurora") then
+		local F, C = unpack(Aurora)
+		F.Reskin(CloseButton)
+	else
+		CloseButton:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
+	end
+	CloseButton:SetScript( "OnClick", function(self) CloseAllBags() end)
+	CloseButton:SetPoint("BOTTOMRIGHT", -7, 7)
+	CloseButton.Texture = CloseButton:CreateFontString(nil, "OVERLAY")
+	CloseButton.Texture:SetPoint("CENTER", 1, 1)
+	CloseButton.Texture:SetFont(cfg.Font, 14, "THINOUTLINE")
+	CloseButton.Texture:SetText("x")
 end
 
