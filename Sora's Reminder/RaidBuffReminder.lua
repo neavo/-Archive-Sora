@@ -14,25 +14,18 @@ local function Init()
 		Temp:SetWidth(RDDB.RaidBuffSize)
 		Temp:SetHeight(RDDB.RaidBuffSize)
 		Temp:SetFrameStrata("LOW")
-		
-		Temp.Border = CreateFrame("Frame", nil, Temp)
-		Temp.Border:SetAllPoints(Temp)
-		Temp.Border:SetBackdrop({
-			edgeFile = cfg.Solid, edgeSize = 1,
-		})
-		Temp.Border:SetBackdropBorderColor(0, 0, 0, 1)
-		
 		Temp.Shadow = CreateFrame("Frame", nil, Temp)
-		Temp.Shadow:SetPoint("TOPLEFT", Temp, "TOPLEFT", 1, -1)
-		Temp.Shadow:SetPoint("BOTTOMRIGHT", Temp, "BOTTOMRIGHT", 5, -5)
+		Temp.Shadow:SetPoint("TOPLEFT", Temp, "TOPLEFT", -2, 2)
+		Temp.Shadow:SetPoint("BOTTOMRIGHT", Temp, "BOTTOMRIGHT", 2, -2)
 		Temp.Shadow:SetBackdrop({
-			edgeFile = cfg.GlowTex, edgeSize = 5,
+			edgeFile = cfg.GlowTex, edgeSize = 2,
 		})
 		Temp.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 		Temp.Shadow:SetFrameLevel(0)
 		
-		Temp.Texture = Temp:CreateTexture(nil, "ARTWORK")
-		Temp.Texture:SetAllPoints()
+		Temp.Icon = Temp:CreateTexture(nil, "ARTWORK")
+		Temp.Icon:SetAllPoints()
+		
 		if RDDB.RaidBuffDirection == 1 then
 			if i == 1 then
 				Temp:SetPoint(unpack(cfg.RaidBuffPos))
@@ -114,13 +107,13 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 	for i=1, 5 do
 		if RaidBuffList[i] and RaidBuffList[i][1] then
 			BuffFrame[i]:SetAlpha(1)
-			BuffFrame[i].Texture:SetTexture(select(3, GetSpellInfo(RaidBuffList[i][1])))
+			BuffFrame[i].Icon:SetTexture(select(3, GetSpellInfo(RaidBuffList[i][1])))
 			BuffFrame[i].Overlay:SetAlpha(0.7)
 			BuffFrame[i].Flag:SetAlpha(0)
 			for key, value in pairs(RaidBuffList[i]) do
 				local name = GetSpellInfo(value)
 				if UnitAura("player", name) then
-					BuffFrame[i].Texture:SetTexture(select(3, GetSpellInfo(value)))
+					BuffFrame[i].Icon:SetTexture(select(3, GetSpellInfo(value)))
 					BuffFrame[i]:SetAlpha(1)
 					BuffFrame[i].Overlay:SetAlpha(0)
 					BuffFrame[i].Flag:SetAlpha(1)
@@ -133,13 +126,13 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 	if Flag then
 		if RaidBuffList[6] and RaidBuffList[6][1] then
 			BuffFrame[6]:SetAlpha(1)
-			BuffFrame[6].Texture:SetTexture(select(3, GetSpellInfo(RaidBuffList[6][1])))
+			BuffFrame[6].Icon:SetTexture(select(3, GetSpellInfo(RaidBuffList[6][1])))
 			BuffFrame[6].Overlay:SetAlpha(0.7)
 			BuffFrame[6].Flag:SetAlpha(0)
 			for key, value in pairs(RaidBuffList[6]) do
 				local name = GetSpellInfo(value)
 				if UnitAura("player", name) then
-					BuffFrame[6].Texture:SetTexture(select(3, GetSpellInfo(value)))
+					BuffFrame[6].Icon:SetTexture(select(3, GetSpellInfo(value)))
 					BuffFrame[6]:SetAlpha(1)
 					BuffFrame[6].Overlay:SetAlpha(0)
 					BuffFrame[6].Flag:SetAlpha(1)
@@ -150,13 +143,13 @@ Event:SetScript("OnEvent",function(self, event, unit, ...)
 	else
 		if RaidBuffList[7] and RaidBuffList[7][1] then
 			BuffFrame[6]:SetAlpha(1)
-			BuffFrame[6].Texture:SetTexture(select(3, GetSpellInfo(RaidBuffList[7][1])))
+			BuffFrame[6].Icon:SetTexture(select(3, GetSpellInfo(RaidBuffList[7][1])))
 			BuffFrame[6].Overlay:SetAlpha(0.7)
 			BuffFrame[6].Flag:SetAlpha(0)
 			for key, value in pairs(RaidBuffList[7]) do
 				local name = GetSpellInfo(value)
 				if UnitAura("player", name) then
-					BuffFrame[6].Texture:SetTexture(select(3, GetSpellInfo(value)))
+					BuffFrame[6].Icon:SetTexture(select(3, GetSpellInfo(value)))
 					BuffFrame[6]:SetAlpha(1)
 					BuffFrame[6].Overlay:SetAlpha(0)
 					BuffFrame[6].Flag:SetAlpha(1)
