@@ -130,6 +130,7 @@ local function BuildClassPowerBar(self)
 		self.HolyPower = HolyPower
 		
 		local function Override(self, event, unit, powerType)
+			if self.unit ~= unit or (powerType and powerType ~= "HOLY_POWER") then return end
 			local HolyPower = self.HolyPower
 			if HolyPower.PreUpdate then 
 				HolyPower:PreUpdate(unit) 
@@ -162,6 +163,7 @@ local function BuildClassPowerBar(self)
 		self.SoulShards = SoulShards
 		
 		local function Override(self, event, unit, powerType)
+			if self.unit ~= unit or (powerType and powerType ~= "SOUL_SHARDS") then return end
 			local SoulShards = self.SoulShards
 			for i = 1, SHARD_BAR_NUM_SHARDS do
 				if i <= UnitPower(unit, SPELL_POWER_SOUL_SHARDS) then
