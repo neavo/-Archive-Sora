@@ -108,7 +108,7 @@ end
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("PLAYER_LOGIN")
 Event:SetScript("OnEvent", function(slef, event, addon, ...)
-	if UnitFrameDB.Font then
+	if UnitFrameDB.ShowToT then
 		oUF:RegisterStyle("SoraToT", BuildToTFrame)
 		oUF:SetActiveStyle("SoraToT")
 		ns.ToTFrame = oUF:Spawn("targettarget")
