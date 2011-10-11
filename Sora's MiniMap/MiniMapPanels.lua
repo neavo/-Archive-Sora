@@ -82,12 +82,17 @@ local function BuildButtonTable()
 	for i = 1, 5 do
 		local Button = CreateFrame("Button", nil, UIParent)
 		Button:SetSize(80, 25)
-		Button:SetBackdrop({
-			bgFile = cfg.Solid, insets = {left = 3, right = 3, top = 3, bottom = 3},
-			edgeFile = cfg.GlowTex, edgeSize = 2
-		})
-		Button:SetBackdropColor(0, 0, 0, 0.3)
-		Button:SetBackdropBorderColor(0, 0, 0, 1)
+		if IsAddOnLoaded("Aurora") then
+			local F, C = unpack(select(2, ...))
+			F.Reskin(Button)
+		else
+			Button:SetBackdrop({
+				bgFile = cfg.Solid, insets = {left = 3, right = 3, top = 3, bottom = 3},
+				edgeFile = cfg.GlowTex, edgeSize = 2
+			})
+			Button:SetBackdropColor(0, 0, 0, 0.3)
+			Button:SetBackdropBorderColor(0, 0, 0, 1)
+		end
 		Button.Text = Button:CreateFontString(nil, "OVERLAY")
 		Button.Text:SetPoint("CENTER")
 		Button.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
