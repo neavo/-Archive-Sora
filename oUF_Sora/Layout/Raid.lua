@@ -11,9 +11,7 @@ local function MakeShadow(Frame, Size)
 	Shadow:SetFrameLevel(0)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = Size, 
-	})
+	Shadow:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = Size})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
@@ -22,6 +20,21 @@ local function MakeFontString(Parent, fontsize)
 	local tempText = Parent:CreateFontString(nil, "ARTWORK")
 	tempText:SetFont(cfg.Font, fontsize, "THINOUTLINE")
 	return tempText
+end
+
+local function BuildMenu(self)
+	local unit = self.unit:sub(1, -2)
+	local cunit = self.unit:gsub("^%l", string.upper)
+
+	if cunit == "Vehicle" then
+		cunit = "Pet"
+	end
+
+	if unit == "party" or unit == "partypet" then
+		ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+	elseif _G[cunit.."FrameDropDown"] then
+		ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+	end
 end
 
 local function BuildHealthBar(self)
@@ -52,7 +65,7 @@ local function BuildPowerBar(self)
 	Bar:SetStatusBarTexture(cfg.Statusbar)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
-	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
+	Bar:SetPoint("BOTTOM", 0, -1)
 	Bar.Shadow = MakeShadow(Bar , 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(cfg.Statusbar)
@@ -253,6 +266,11 @@ local function PostUpdateRaidFrame(Health, unit, min, max)
 end
 
 local function BuildRaidFrame(self, ...)
+	-- RegisterForClicks
+	self.menu = BuildMenu
+	self:SetScript("OnEnter", UnitFrame_OnEnter)
+	self:SetScript("OnLeave", UnitFrame_OnLeave)
+	self:RegisterForClicks("AnyUp")
 	
 	self.Range = {insideAlpha = 1, outsideAlpha = 0.4}
 	

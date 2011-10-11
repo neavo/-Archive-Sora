@@ -12,9 +12,7 @@ local function MakeShadow(Frame, Size)
 	Shadow:SetFrameLevel(0)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = Size, 
-	})
+	Shadow:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = Size})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
@@ -24,9 +22,7 @@ local function MakeTexShadow(Parent, Anchor, Size)
 	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
 	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
 	Border:SetFrameLevel(1)
-	Border:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = Size, 
-	})
+	Border:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = Size})
 	Border:SetBackdropBorderColor(0, 0, 0, 1)
 	return Border
 end
@@ -38,11 +34,16 @@ local function MakeFontString(Parent, fontsize)
 end
 
 local function BuildMenu(self)
+	local unit = self.unit:sub(1, -2)
 	local cunit = self.unit:gsub("^%l", string.upper)
 
-	if cunit == "Vehicle" then cunit = "Pet" end
+	if cunit == "Vehicle" then
+		cunit = "Pet"
+	end
 
-	if _G[cunit.."FrameDropDown"] then
+	if unit == "party" or unit == "partypet" then
+		ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+	elseif _G[cunit.."FrameDropDown"] then
 		ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
 	end
 end
@@ -119,7 +120,6 @@ local function BuildClassPowerBar(self)
 			HolyShard:SetStatusBarTexture(cfg.Statusbar)
 			HolyShard:SetStatusBarColor(0.9, 0.95, 0.33)		
 			HolyShard.Shadow = MakeShadow(HolyShard, 3)
-
 			if i == 1 then
 				HolyShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 			else
@@ -134,9 +134,8 @@ local function BuildClassPowerBar(self)
 			if HolyPower.PreUpdate then 
 				HolyPower:PreUpdate(unit) 
 			end	
-			local num = UnitPower(unit, SPELL_POWER_HOLY_POWER)
 			for i = 1, MAX_HOLY_POWER do
-				if i <= num then
+				if i <= UnitPower(unit, SPELL_POWER_HOLY_POWER) then
 					HolyPower[i]:SetAlpha(1)
 				else
 					HolyPower[i]:SetAlpha(0.2)
@@ -153,7 +152,6 @@ local function BuildClassPowerBar(self)
 			SoulShard:SetStatusBarTexture(cfg.Statusbar)
 			SoulShard:SetStatusBarColor(0.86, 0.44, 1)	
 			SoulShard.Shadow = MakeShadow(SoulShard, 3)
-
 			if i == 1 then
 				SoulShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 			else
@@ -165,9 +163,8 @@ local function BuildClassPowerBar(self)
 		
 		local function Override(self, event, unit, powerType)
 			local SoulShards = self.SoulShards
-			local num = UnitPower(unit, SPELL_POWER_SOUL_SHARDS)
 			for i = 1, SHARD_BAR_NUM_SHARDS do
-				if i <= num then
+				if i <= UnitPower(unit, SPELL_POWER_SOUL_SHARDS) then
 					SoulShards[i]:SetAlpha(1)
 				else
 					SoulShards[i]:SetAlpha(0.3)
@@ -420,7 +417,9 @@ end
 local function BuildPlayerFrame(self, ...)
 	-- RegisterForClicks
 	self.menu = BuildMenu
-	self:RegisterForClicks("AnyDown")
+	self:SetScript("OnEnter", UnitFrame_OnEnter)
+	self:SetScript("OnLeave", UnitFrame_OnLeave)
+	self:RegisterForClicks("AnyUp")
 	
 	-- Set Size and Scale
 	self:SetScale(UnitFrameDB.Scale)

@@ -11,37 +11,28 @@ local function MakeShadow(Frame, Size)
 	Shadow:SetFrameLevel(0)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = Size, 
-	})
+	Shadow:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = Size})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
 
-local function MakeBorder(Frame)
-	local Border = CreateFrame("Frame", nil, Frame)
-	Border:SetFrameLevel(1)
-	Border:SetPoint("TOPLEFT", -1, 1)
-	Border:SetPoint("BOTTOMRIGHT", 1, -1)
-	Border:SetBackdrop({ 
-		edgeFile = cfg.Solid, edgeSize = 1, 
-	})
-	Border:SetBackdropBorderColor(0, 0, 0, 1)
-	return Border
-end
-
-local function MakeFontString(parent, fontsize)
-	local tempText = parent:CreateFontString(nil, "OVERLAY")
+local function MakeFontString(Parent, fontsize)
+	local tempText = Parent:CreateFontString(nil, "OVERLAY")
 	tempText:SetFont(cfg.Font, fontsize, "THINOUTLINE")
 	return tempText
 end
 
 local function BuildMenu(self)
+	local unit = self.unit:sub(1, -2)
 	local cunit = self.unit:gsub("^%l", string.upper)
 
-	if cunit == "Vehicle" then cunit = "Pet" end
+	if cunit == "Vehicle" then
+		cunit = "Pet"
+	end
 
-	if _G[cunit.."FrameDropDown"] then
+	if unit == "party" or unit == "partypet" then
+		ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+	elseif _G[cunit.."FrameDropDown"] then
 		ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
 	end
 end
@@ -88,7 +79,9 @@ end
 local function BuildToTFrame(self, ...)
 	-- RegisterForClicks
 	self.menu = BuildMenu
-	self:RegisterForClicks("AnyDown")
+	self:SetScript("OnEnter", UnitFrame_OnEnter)
+	self:SetScript("OnLeave", UnitFrame_OnLeave)
+	self:RegisterForClicks("AnyUp")
 	
 	-- Set Size and Scale
 	self:SetScale(UnitFrameDB.Scale)
