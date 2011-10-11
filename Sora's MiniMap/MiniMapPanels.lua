@@ -81,9 +81,9 @@ local function BuildButtonTable()
 	local ButtonTable = {}
 	for i = 1, 5 do
 		local Button = CreateFrame("Button", nil, UIParent)
-		Button:SetSize(80, 25)
+		Button:SetSize(80, 20)
 		if IsAddOnLoaded("Aurora") then
-			local F, C = unpack(select(2, ...))
+			local F, C = unpack(Aurora)
 			F.Reskin(Button)
 		else
 			Button:SetBackdrop({
@@ -92,6 +92,12 @@ local function BuildButtonTable()
 			})
 			Button:SetBackdropColor(0, 0, 0, 0.3)
 			Button:SetBackdropBorderColor(0, 0, 0, 1)
+			Button:SetScript("OnEnter", function(self)
+				self.Text:SetTextColor(1, 0, 0)
+			end)
+			Button:SetScript("OnLeave", function(self)
+				self.Text:SetTextColor(1, 1, 1)
+			end)
 		end
 		Button.Text = Button:CreateFontString(nil, "OVERLAY")
 		Button.Text:SetPoint("CENTER")
@@ -101,30 +107,25 @@ local function BuildButtonTable()
 		Button.HideFrame:SetFrameLevel(Button:GetFrameLevel()+1)
 		Button.HideFrame:EnableMouse(true)
 		Button.HideFrame:Hide()
-		Button:SetScript("OnEnter", function(self)
-			self.Text:SetTextColor(1, 0, 0)
-		end)
-		Button:SetScript("OnLeave", function(self)
-			self.Text:SetTextColor(1, 1, 1)
-		end)
+
 		if i == 1 then
-			Button:SetPoint("TOPLEFT", Minimap, "TOPRIGHT", 10, 18)
+			Button:SetPoint("TOPLEFT", Minimap, "TOPRIGHT", 10, 15)
 			Button.Text:SetText("就位确认")
 			Button:SetScript("OnMouseDown", function(self, button, ...) DoReadyCheck() PlaySound("igMiniMapOpen") end)
 		elseif i == 2 then
-			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -5)
+			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -10)
 			Button.Text:SetText("角色检查")
 			Button:SetScript("OnMouseDown", function(self, button, ...) InitiateRolePoll() PlaySound("igMiniMapOpen") end)
 		elseif i == 3 then
-			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -5)
+			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -10)
 			Button.Text:SetText("转化为团队")
 			Button:SetScript("OnMouseDown", function(self, button, ...) ConvertToRaid() PlaySound("igMiniMapOpen") end)
 		elseif i == 4 then
-			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -5)
+			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -10)
 			Button.Text:SetText("转化为小队")
 			Button:SetScript("OnMouseDown", function(self, button, ...) ConvertToParty() PlaySound("igMiniMapOpen") end)
 		elseif i == 5 then
-			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -5)
+			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -10)
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonLeft:SetAlpha(0)
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonMiddle:SetAlpha(0)
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonRight:SetAlpha(0)
