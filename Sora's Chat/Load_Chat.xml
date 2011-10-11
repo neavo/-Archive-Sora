@@ -6,7 +6,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Script file="cfg.lua"/>
-	<Script file="AutoSet.lua"/>
 	<Script file="Button.lua"/>
 	<Script file="Channel.lua"/>
 	<Script file="Chat.lua"/>

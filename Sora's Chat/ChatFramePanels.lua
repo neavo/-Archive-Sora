@@ -13,13 +13,11 @@ local function InitChatFramePanel()
 	MainBar:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT", 0, -6)
 	MainBar:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 0, -24)
 	MainBar:SetBackdrop({
-		bgFile = cfg.bgFile, 
+		bgFile = cfg.bgFile, insets = {left = 4, right = 4, top = 4, bottom = 4},
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
-		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
 	MainBar:SetBackdropColor(0, 0, 0, 0.2)
 	MainBar:SetBackdropBorderColor(0, 0, 0, 0.8)
-
 	MainBar.Right = CreateFrame("Frame", nil, MainBar)
 	MainBar.Right:SetPoint("TOPLEFT", MainBar, "TOPRIGHT", 0, 0)
 	MainBar.Right:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMRIGHT", 12, 0)
@@ -82,9 +80,8 @@ local function InitChatbar()
 		local Button = CreateFrame("Button", nil, MainBar)
 		Button:SetWidth((MainBar:GetWidth()-10)/8)
 		Button:SetHeight(12)
-		Button:SetBackdrop( { 
-			bgFile = cfg.Statusbar, 
-			insets = { left = 3, right = 3, top = 3, bottom = 3 }, 
+		Button:SetBackdrop({ 
+			bgFile = cfg.Statusbar, insets = {left = 3, right = 3, top = 3, bottom = 3}, 
 			edgeFile = cfg.GlowTex, edgeSize = 4, 
 		}) 
 		Button:SetBackdropColor(unpack(Color[i]))
@@ -116,8 +113,7 @@ local function InitChatbar()
 	Button:SetWidth((MainBar:GetWidth()-10)/8)
 	Button:SetHeight(12)
 	Button:SetBackdrop({ 
-		bgFile = cfg.Statusbar, 
-		insets = { left = 3, right = 3, top = 3, bottom = 3 }, 
+		bgFile = cfg.Statusbar, insets = {left = 3, right = 3, top = 3, bottom = 3}, 
 		edgeFile = cfg.GlowTex, edgeSize = 4, 
 	})
 	Button:SetBackdropColor(unpack(Color[8]))
