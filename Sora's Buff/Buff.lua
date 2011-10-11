@@ -8,20 +8,8 @@ local cfg = ns.cfg
 --  公用变量和函数  --
 ----------------------
 
-local IconsPerRow = 10
+local IconsPerRow = 12
 local i = 0
-
-local function MakeShadow(Frame, Size)
-	local Shadow = CreateFrame("Frame", nil, Frame)
-	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", -Size, Size)
-	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({ 
-		edgeFile = cfg.GlowTex, edgeSize = Size, 
-	})
-	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
-	return Shadow
-end
 
 ----------------
 --  程序主体  --
@@ -38,7 +26,14 @@ local function Style(buttonName, i)
 	if Button then
 		Button:SetSize(BuffDB.IconSize, BuffDB.IconSize)
 		if not Button.Shadow then
-			Button.Shadow = MakeShadow(Button, 5)
+			Button.Shadow = CreateFrame("Frame", nil, Button)
+			Button.Shadow:SetFrameLevel(0)
+			Button.Shadow:SetPoint("TOPLEFT", -3, 3)
+			Button.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
+			Button.Shadow:SetBackdrop({ 
+				edgeFile = cfg.GlowTex, edgeSize = 3, 
+			})
+			Button.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 		end
 		Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 		Duration:ClearAllPoints()
