@@ -6,7 +6,7 @@
 local C = select(2, ...) --retrieve addon table
 
 --font settings
-C.fontFace = STANDARD_TEXT_FONT  --what font to use
+C.fontFace = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"  --what font to use
 C.fontSize = 20  --the base font size to use at a scale of 1
 
 --display settings
