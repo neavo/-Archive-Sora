@@ -156,19 +156,17 @@ local function BuildLFDRoleIcon(self)
 end
 
 local function BuildThreatBorder(self)
-	self.ThreatBorder = MakeShadow(self, 5)
-	self.ThreatBorder:Hide()
 	local function UpdateThreat(self, event, unit)
 		if self.unit ~= unit then return end
-		local status = UnitThreatSituation(unit)
+		local r, g, b = GetThreatStatusColor(UnitThreatSituation(unit))
 		unit = unit or self.unit
 		if status and status > 1 then
-			local r, g, b = GetThreatStatusColor(status)
-			self.ThreatBorder:Show()
-			self.ThreatBorder:SetBackdropBorderColor(r, g, b, 1)
+			
+			self.Health.Shadow:SetBackdropBorderColor(r, g, b, 0.6)
+			self.Power.Shadow:SetBackdropBorderColor(r, g, b, 0.6)
 		else
-			self.ThreatBorder:SetBackdropBorderColor(r, g, b, 0)
-			self.ThreatBorder:Hide()
+			self.Health.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+			self.Power.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 		end
 	end
 	self:RegisterEvent("UNIT_THREAT_LIST_UPDATE", UpdateThreat)
