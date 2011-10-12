@@ -161,50 +161,57 @@ local function BuildTags(self)
 end
 
 local function BuildCastbar(self)
-	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetHeight(9)
-	Bar:SetWidth(self:GetWidth()-70)
-	Bar:SetStatusBarTexture(cfg.Statusbar)
-	Bar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	Bar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -15)	
-	Bar.Shadow = CreateFrame("Frame", nil, Bar)
-	Bar.Shadow:SetPoint("TOPLEFT", -3, 3)
-	Bar.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
-	Bar.Shadow:SetFrameLevel(1)
-	Bar.Shadow:SetBackdrop({
-		bgFile = cfg.Statusbar, 
-		insets = { left = 3, right = 3, top = 3, bottom = 3}, 
+	local Castbar = CreateFrame("StatusBar", nil, self)
+	Castbar:SetStatusBarTexture(cfg.Statusbar)
+	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
+	if UnitFrameDB.PlayerCastbarAlone then
+		Castbar:SetHeight(14)
+		Castbar:SetWidth(ns.PlayerFrame.Castbar:GetWidth()-45)
+		Castbar:SetPoint("BOTTOM", ns.PlayerFrame.Castbar, "TOP", 12, 5)			
+	else
+		Castbar:SetHeight(10)
+		Castbar:SetWidth(self:GetWidth()-70)
+		Castbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -14)
+	end
+	
+	Castbar.Shadow = MakeShadow(Castbar, 3)
+	Castbar.Shadow:SetBackdrop({
+		bgFile = cfg.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
 	})
-	Bar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
-	Bar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
+	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	
-	Bar.CastingColor = {95/255, 182/255, 255/255}
-	Bar.CompleteColor = {20/255, 208/255, 0/255}
-	Bar.FailColor = {255/255, 12/255, 0/255}
-	Bar.ChannelingColor = {95/255, 182/255, 255/255}
+	Castbar.CastingColor = {95/255, 182/255, 255/255}
+	Castbar.CompleteColor = {20/255, 208/255, 0/255}
+	Castbar.FailColor = {255/255, 12/255, 0/255}
+	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
 
-	Bar.Text = MakeFontString(Bar, 10)
-	Bar.Text:SetPoint("LEFT", 2, 0)
+	Castbar.Text = MakeFontString(Castbar, 10)
+	Castbar.Text:SetPoint("LEFT", 2, 0)
 	
-	Bar.Time = MakeFontString(Bar, 10)
-	Bar.Time:SetPoint("RIGHT", -2, 0)
+	Castbar.Time = MakeFontString(Castbar, 10)
+	Castbar.Time:SetPoint("RIGHT", -2, 0)
 	
-	Bar.Icon = Bar:CreateTexture(nil, "ARTWORK")
-	Bar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	Bar.Icon:SetSize(20, 20)
-	Bar.Icon:SetPoint("BOTTOMRIGHT", Bar, "BOTTOMLEFT", -8, 0)
-	Bar.Icon.Shadow = MakeTexShadow(Bar, Bar.Icon, 3)
+	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
+	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	if UnitFrameDB.PlayerCastbarAlone then
+		Castbar.Icon:SetSize(14, 14)
+	else
+		Castbar.Icon:SetSize(20, 20)
+	end
+	Castbar.Icon:SetPoint("BOTTOMRIGHT", Castbar, "BOTTOMLEFT", -8, 0)
+	Castbar.Icon.Shadow = MakeTexShadow(Castbar, Castbar.Icon, 3)
 
-	Bar.OnUpdate = cast.OnCastbarUpdate
-	Bar.PostCastStart = cast.PostCastStart
-	Bar.PostChannelStart = cast.PostCastStart
-	Bar.PostCastStop = cast.PostCastStop
-	Bar.PostChannelStop = cast.PostChannelStop
-	Bar.PostCastFailed = cast.PostCastFailed
-	Bar.PostCastInterrupted = cast.PostCastFailed
+	Castbar.OnUpdate = cast.OnCastbarUpdate
+	Castbar.PostCastStart = cast.PostCastStart
+	Castbar.PostChannelStart = cast.PostCastStart
+	Castbar.PostCastStop = cast.PostCastStop
+	Castbar.PostChannelStop = cast.PostChannelStop
+	Castbar.PostCastFailed = cast.PostCastFailed
+	Castbar.PostCastInterrupted = cast.PostCastFailed
 
-	self.Castbar = Bar
+	self.Castbar = Castbar
 end
 
 local function PostCreateIcon(self, Button)

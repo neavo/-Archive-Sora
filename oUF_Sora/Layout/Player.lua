@@ -327,68 +327,64 @@ local function BuildTags(self)
 end
 
 local function BuildCastbar(self)
-	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetHeight(9)
-	Bar:SetWidth(self:GetWidth()-70)
-	Bar:SetStatusBarTexture(cfg.Statusbar)
-	Bar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	if UnitFrameDB.CastbarAlone then
-		Bar:SetHeight(20)
-		Bar:SetFrameStrata("HIGH")
-		Bar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 2, 25)
-		Bar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", -30, 25)			
+	local Castbar = CreateFrame("StatusBar", nil, self)
+	Castbar:SetStatusBarTexture(cfg.Statusbar)
+	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
+	if UnitFrameDB.PlayerCastbarAlone then
+		Castbar:SetHeight(20)
+		Castbar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 2, 30)
+		Castbar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", -30, 30)			
 	else
-		Bar:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -15)
+		Castbar:SetHeight(10)
+		Castbar:SetWidth(self:GetWidth()-70)
+		Castbar:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -14)
 	end
-	Bar.Shadow = CreateFrame("Frame", nil, Bar)
-	Bar.Shadow:SetPoint("TOPLEFT", -3, 3)
-	Bar.Shadow:SetPoint("BOTTOMRIGHT", 3, -3)
-	Bar.Shadow:SetFrameLevel(1)
-	Bar.Shadow:SetBackdrop({
-		bgFile = cfg.Statusbar, 
-		insets = { left = 3, right = 3, top = 3, bottom = 3}, 
+	
+	Castbar.Shadow = MakeShadow(Castbar, 3)
+	Castbar.Shadow:SetBackdrop({
+		bgFile = cfg.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
 		edgeFile = cfg.GlowTex, edgeSize = 3, 
 	})
-	Bar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
-	Bar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
+	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	
-	Bar.CastingColor = {95/255, 182/255, 255/255}
-	Bar.CompleteColor = {20/255, 208/255, 0/255}
-	Bar.FailColor = {255/255, 12/255, 0/255}
-	Bar.ChannelingColor = {95/255, 182/255, 255/255}
+	Castbar.CastingColor = {95/255, 182/255, 255/255}
+	Castbar.CompleteColor = {20/255, 208/255, 0/255}
+	Castbar.FailColor = {255/255, 12/255, 0/255}
+	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
 
-	Bar.Text = MakeFontString(Bar, 10)
-	Bar.Text:SetPoint("LEFT", 2, 0)
+	Castbar.Text = MakeFontString(Castbar, 10)
+	Castbar.Text:SetPoint("LEFT", 2, 0)
 	
-	Bar.Time = MakeFontString(Bar, 10)
-	Bar.Time:SetPoint("RIGHT", -2, 0)
+	Castbar.Time = MakeFontString(Castbar, 10)
+	Castbar.Time:SetPoint("RIGHT", -2, 0)
 	
-	Bar.Icon = Bar:CreateTexture(nil, "ARTWORK")
-	Bar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	Bar.Icon:SetSize(20, 20)
-	Bar.Icon:SetPoint("BOTTOMLEFT", Bar, "BOTTOMRIGHT", 8, 0)
-	Bar.Icon.Shadow = MakeTexShadow(Bar, Bar.Icon, 3)
+	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
+	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	Castbar.Icon:SetSize(20, 20)
+	Castbar.Icon:SetPoint("BOTTOMLEFT", Castbar, "BOTTOMRIGHT", 8, 0)
+	Castbar.Icon.Shadow = MakeTexShadow(Castbar, Castbar.Icon, 3)
 
 	--latency (only for player unit)
-	Bar.SafeZone = Bar:CreateTexture(nil, "OVERLAY")
-	Bar.SafeZone:SetTexture(cfg.Statusbar)
-	Bar.SafeZone:SetVertexColor(1, 0.1, 0, .6)
-	Bar.SafeZone:SetPoint("TOPRIGHT")
-	Bar.SafeZone:SetPoint("BOTTOMRIGHT")
-	Bar.Lag = MakeFontString(Bar, 10)
-	Bar.Lag:SetPoint("CENTER", -2, 17)
-	Bar.Lag:Hide()
+	Castbar.SafeZone = Castbar:CreateTexture(nil, "OVERLAY")
+	Castbar.SafeZone:SetTexture(cfg.Statusbar)
+	Castbar.SafeZone:SetVertexColor(1, 0.1, 0, .6)
+	Castbar.SafeZone:SetPoint("TOPRIGHT")
+	Castbar.SafeZone:SetPoint("BOTTOMRIGHT")
+	Castbar.Lag = MakeFontString(Castbar, 10)
+	Castbar.Lag:SetPoint("CENTER", -2, 17)
+	Castbar.Lag:Hide()
 	self:RegisterEvent("UNIT_SPELLCAST_SENT", cast.OnCastSent)
 
-	Bar.OnUpdate = cast.OnCastbarUpdate
-	Bar.PostCastStart = cast.PostCastStart
-	Bar.PostChannelStart = cast.PostCastStart
-	Bar.PostCastStop = cast.PostCastStop
-	Bar.PostChannelStop = cast.PostChannelStop
-	Bar.PostCastFailed = cast.PostCastFailed
-	Bar.PostCastInterrupted = cast.PostCastFailed
+	Castbar.OnUpdate = cast.OnCastbarUpdate
+	Castbar.PostCastStart = cast.PostCastStart
+	Castbar.PostChannelStart = cast.PostCastStart
+	Castbar.PostCastStop = cast.PostCastStop
+	Castbar.PostChannelStop = cast.PostChannelStop
+	Castbar.PostCastFailed = cast.PostCastFailed
+	Castbar.PostCastInterrupted = cast.PostCastFailed
 
-	self.Castbar = Bar
+	self.Castbar = Castbar
 end
 
 local function BuildRaidIcon(self)

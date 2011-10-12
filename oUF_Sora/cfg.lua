@@ -36,7 +36,8 @@ local Default = {
 	["ShowFocusBuff"] = true,					-- 显示焦点框体Debuff
 	-- 施法条
 	["ShowCastbar"] = true,				-- 显示施法条
-	["CastbarAlone"] = false,		-- true : 独立大施法条 false : 依附于玩家头像之下的小施法条
+	["PlayerCastbarAlone"] = false,			-- 玩家施法条独立
+	["TargetCastbarAlone"] = false,			-- 目标施法条独立
 	-- 其他
 	["Scale"] = 1,						-- 其他框体缩放
 }
@@ -161,15 +162,23 @@ local function BuildGUI()
 					get = function() return tostring(UnitFrameDB.RaidScale) end,
 					set = function(_, value) UnitFrameDB.RaidScale = tonumber(value) end,
 				},
+				Scale = {
+					type = "input",
+					name = "其他框体缩放比例：",
+					desc = "请输入其他框体缩放比例：：",
+					order = 14,
+					get = function() return tostring(UnitFrameDB.Scale) end,
+					set = function(_, value) UnitFrameDB.Scale = tonumber(value) end,
+				},
 				Header_3 = {
 					type = "header",
 					name = "Buff&Debuff",
-					order = 14,
+					order = 15,
 				},
 				ShowTargetBuff = {
 					type = "toggle",
 					name = "显示目标框体Buff",
-					order = 15,
+					order = 16,
 					get = function() return UnitFrameDB.ShowTargetBuff end,
 					set = function(_, value) UnitFrameDB.ShowTargetBuff = value end,
 				},
@@ -177,14 +186,14 @@ local function BuildGUI()
 					type = "toggle",
 					name = "目标框体上只显示玩家的Buff",
 					disabled = not UnitFrameDB.ShowTargetBuff,
-					order = 16,
+					order = 17,
 					get = function() return UnitFrameDB.BuffOnlyShowPlayer end,
 					set = function(_, value) UnitFrameDB.BuffOnlyShowPlayer = value end,
 				},
 				ShowTargetDebuff = {
 					type = "toggle",
 					name = "显示目标框体Debuff",
-					order = 17,
+					order = 18,
 					get = function() return UnitFrameDB.ShowTargetDebuff end,
 					set = function(_, value) UnitFrameDB.ShowTargetDebuff = value end,
 				},
@@ -192,73 +201,73 @@ local function BuildGUI()
 					type = "toggle",
 					name = "目标框体上只显示玩家的Debuff",
 					disabled = not UnitFrameDB.ShowTargetDebuff,
-					order = 18,
+					order = 19,
 					get = function() return UnitFrameDB.DebuffOnlyShowPlayer end,
 					set = function(_, value) UnitFrameDB.DebuffOnlyShowPlayer = value end,
 				},
 				ShowFocusBuff = {
 					type = "toggle",
 					name = "显示焦点框体Buff",
-					order = 19,
+					order = 20,
 					get = function() return UnitFrameDB.ShowFocusBuff end,
 					set = function(_, value) UnitFrameDB.ShowFocusBuff = value end,
 				},
 				ShowFocusDebuff = {
 					type = "toggle",
 					name = "显示焦点框体Debuff",
-					order = 20,
+					order = 21,
 					get = function() return UnitFrameDB.ShowFocusDebuff end,
 					set = function(_, value) UnitFrameDB.ShowFocusDebuff = value end,
 				},
 				Header_4 = {
 					type = "header",
 					name = "其他",
-					order = 21,
+					order = 22,
 				},
 				ShowCastbar = {
 					type = "toggle",
 					name = "显示施法条",
-					order = 22,
+					order = 23,
 					get = function() return UnitFrameDB.ShowCastbar end,
 					set = function(_, value) UnitFrameDB.ShowCastbar = value end,
 				},
-				CastbarAlone = {
+				PlayerCastbarAlone = {
 					type = "toggle",
-					name = "独立大施法条",
+					name = "玩家施法条独立",
 					disabled = not UnitFrameDB.ShowCastbar,
-					order = 23,
-					get = function() return UnitFrameDB.CastbarAlone end,
-					set = function(_, value) UnitFrameDB.CastbarAlone = value end,
-				},
-				Scale = {
-					type = "input",
-					name = "其他框体缩放比例：",
-					desc = "请输入其他框体缩放比例：：",
 					order = 24,
-					get = function() return tostring(UnitFrameDB.Scale) end,
-					set = function(_, value) UnitFrameDB.Scale = tonumber(value) end,
+					get = function() return UnitFrameDB.PlayerCastbarAlone end,
+					set = function(_, value) UnitFrameDB.PlayerCastbarAlone = value end,
+				},
+				TargetCastbarAlone = {
+					type = "toggle",
+					name = "目标施法条独立",
+					disabled = not UnitFrameDB.ShowCastbar,
+					order = 25,
+					get = function() return UnitFrameDB.TargetCastbarAlone end,
+					set = function(_, value) UnitFrameDB.TargetCastbarAlone = value end,
 				},
 				SpaceLine_1 = {
 					type = "description",
 					name = "\n\n\n",
-					order = 25,
+					order = 26,
 				},
 				Apply = {
 					type = "execute",
 					name = "重载UI",
-					order = 26,
+					order = 27,
 					func  = function() ReloadUI() end,
 				},
 				Hided = {
 					type = "execute",
 					name = "",
 					disabled  = true,
-					order = 27,
+					order = 28,
 				},
 				ResetToDefault = {
 					type = "execute",
 					name = "恢复到默认设置",
-					order = 28,
+					order = 29,
 					func  = function() ResetToDefault() ReloadUI() end,
 				},
 			},

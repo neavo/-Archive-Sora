@@ -22,7 +22,7 @@ end
 
 -- Sora
 SlashCmdList.Sora = function()
-	LibStub("AceConfigDialog-3.0"):SetDefaultSize("Sora's Config", 750, 500)
+	LibStub("AceConfigDialog-3.0"):SetDefaultSize("Sora's Config", 780, 500)
 	LibStub("AceConfigDialog-3.0"):Open("Sora's Config")
 end
 SLASH_Sora1 = "/Sora"
