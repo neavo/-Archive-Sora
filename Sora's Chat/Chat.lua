@@ -271,7 +271,7 @@ local blacklist = {
 	SPELL_FAILED_NOT_INFRONT,       -- You must be in front of your target
 	SPELL_FAILED_NOT_IN_CONTROL,    -- You are not in control of your actions
 	SPELL_FAILED_MOVING,            -- Can"t do that while moving
-	ERR_ATTACK_FLEEING, 				-- Can"t attack while fleeing.
+	ERR_ATTACK_FLEEING, 			-- Can"t attack while fleeing.
 	ERR_ITEM_COOLDOWN, 				-- Item is not ready yet.
 	ERR_GENERIC_NO_TARGET,          -- You have no target.
 	ERR_ABILITY_COOLDOWN,           -- Ability is not ready yet.
@@ -293,7 +293,5 @@ UIErrorsFrame.AddMessage = function(...)
 	hooks["UIErrorsFrame_AddMessage"](...)
 end
 
---  简化重载插件命令为"/rl"
-
-SLASH_RELOAD1 = "/rl"
-SlashCmdList.RELOAD = ReloadUI()
+SlashCmdList["ReloadUI"] = function() ReloadUI() end
+SLASH_ReloadUI1 = "/rl"
