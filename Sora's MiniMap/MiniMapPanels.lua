@@ -99,10 +99,12 @@ local function BuildButtonTable()
 				self.Text:SetTextColor(1, 1, 1)
 			end)
 		end
+		
 		Button.Text = Button:CreateFontString(nil, "OVERLAY")
 		Button.Text:SetPoint("CENTER")
 		Button.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 		Button.HideFrame = CreateFrame("Frame", nil, Button)
+		
 		Button.HideFrame:SetAllPoints()
 		Button.HideFrame:SetFrameLevel(Button:GetFrameLevel()+1)
 		Button.HideFrame:EnableMouse(true)
@@ -134,7 +136,9 @@ local function BuildButtonTable()
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetWidth(16)
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetParent(Button)
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetPoint("CENTER")
+			Button.HideFrame:SetFrameLevel(CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:GetFrameLevel()+1)
 		end
+		
 		Button:SetAlpha(0)
 		tinsert(ButtonTable, Button)
 	end
