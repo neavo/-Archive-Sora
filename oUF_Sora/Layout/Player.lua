@@ -451,7 +451,7 @@ end
 -- Event
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("PLAYER_LOGIN")
-Event:SetScript("OnEvent", function(slef, event, addon, ...)
+Event:SetScript("OnEvent", function(slef, event, addon, ...)]]
 	oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)
 	oUF:SetActiveStyle("SoraPlayer")
 	ns.PlayerFrame = oUF:Spawn("player")

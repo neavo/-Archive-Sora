@@ -2,6 +2,7 @@
 
 	<Include file = "Lib\Load_Lib.xml"/>
 	
+	<Script file = "Init,lua"/>
 	<Script file = "cfg.lua"/>
 	<Include file = "Config\Load_Config.xml"/>
 	<Include file = "Misc\Load_Misc.xml"/>

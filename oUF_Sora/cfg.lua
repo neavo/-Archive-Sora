@@ -1,6 +1,7 @@
 ﻿----------------
 --  命名空间  --
 ----------------
+local SoraUF = LibStub("AceAddon-3.0"):NewAddon("SoraUF")
 local S, C, L, DB = unpack(select(2, ...))
 local Media = "Interface\\AddOns\\oUF_Sora\\Media\\"
 DB.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
@@ -287,12 +288,8 @@ local function BuildGUI()
 	end
 end
 
--- Event
-local Event = CreateFrame("Frame")
-Event:RegisterEvent("ADDON_LOADED")
-Event:SetScript("OnEvent", function(slef, event, addon, ...)
-	if event == "ADDON_LOADED" and addon == "oUF_Sora" then
-		LoadSettings(UnitFrameDB)
-		BuildGUI()
-	end
-end)
+-- OnInitialize
+function SoraUF:OnInitialize()
+	LoadSettings()
+	BuildGUI()
+end

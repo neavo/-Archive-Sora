@@ -3,9 +3,9 @@
 
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-	<Script file="Init.lua"/>	
 	<Include file="oUF\oUF.xml"/>
 	
+	<Script file="Init.lua"/>		
 	<Script file="cfg.lua"/>
 	<Include file="Plugins\Plugins.xml"/>
 	<Include file="Layout\Layout.xml"/>
