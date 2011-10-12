@@ -156,21 +156,32 @@ local function BuildLFDRoleIcon(self)
 end
 
 local function BuildThreatBorder(self)
-	local function UpdateThreat(self, event, unit)
+	self:RegisterEvent("UNIT_THREAT_LIST_UPDATE", function(self, event, unit, ...)
 		if self.unit ~= unit then return end
-		local r, g, b = GetThreatStatusColor(UnitThreatSituation(unit))
+		local status = UnitThreatSituation(unit)
 		unit = unit or self.unit
 		if status and status > 1 then
-			
+			local r, g, b = GetThreatStatusColor(status)
 			self.Health.Shadow:SetBackdropBorderColor(r, g, b, 0.6)
 			self.Power.Shadow:SetBackdropBorderColor(r, g, b, 0.6)
 		else
 			self.Health.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 			self.Power.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 		end
-	end
-	self:RegisterEvent("UNIT_THREAT_LIST_UPDATE", UpdateThreat)
-	self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", UpdateThreat)
+	end)
+	self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", function(self, event, unit, ...)
+		if self.unit ~= unit then return end
+		local status = UnitThreatSituation(unit)
+		unit = unit or self.unit
+		if status and status > 1 then
+			local r, g, b = GetThreatStatusColor(status)
+			self.Health.Shadow:SetBackdropBorderColor(r, g, b, 0.6)
+			self.Power.Shadow:SetBackdropBorderColor(r, g, b, 0.6)
+		else
+			self.Health.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+			self.Power.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+		end
+	end)
 end
 
 local function PostUpdateRaidFrame(Health, unit, min, max)
