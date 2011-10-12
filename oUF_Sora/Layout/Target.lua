@@ -4,15 +4,14 @@
 
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local cfg = ns.cfg
-local cast = ns.cast
+local S, C, L, DB = unpack(select(2, ...))
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
 	Shadow:SetFrameLevel(0)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({ edgeFile = cfg.GlowTex, edgeSize = Size})
+	Shadow:SetBackdrop({ edgeFile = DB.GlowTex, edgeSize = Size})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
@@ -22,14 +21,14 @@ local function MakeTexShadow(Parent, Anchor, Size)
 	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
 	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
 	Border:SetFrameLevel(1)
-	Border:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = Size})
+	Border:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
 	Border:SetBackdropBorderColor(0, 0, 0, 1)
 	return Border
 end
 
 local function MakeFontString(parent, fontsize)
 	local tempText = parent:CreateFontString(nil, "OVERLAY")
-	tempText:SetFont(cfg.Font, fontsize, "THINOUTLINE")
+	tempText:SetFont(DB.Font, fontsize, "THINOUTLINE")
 	return tempText
 end
 
@@ -50,13 +49,13 @@ end
 
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(cfg.Statusbar)
+	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetHeight(24)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
 	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(cfg.Statusbar)
+	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
 	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
 	Bar.BG.multiplier = 0.2
@@ -73,13 +72,13 @@ end
 
 local function BuildPowerBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(cfg.Statusbar)
+	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
 	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(cfg.Statusbar)
+	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
 	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
 	Bar.BG.multiplier = 0.2
@@ -162,12 +161,12 @@ end
 
 local function BuildCastbar(self)
 	local Castbar = CreateFrame("StatusBar", nil, self)
-	Castbar:SetStatusBarTexture(cfg.Statusbar)
+	Castbar:SetStatusBarTexture(DB.Statusbar)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	if UnitFrameDB.PlayerCastbarAlone then
+	if UnitFrameDB.TargetCastbarAlone then
 		Castbar:SetHeight(14)
-		Castbar:SetWidth(ns.PlayerFrame.Castbar:GetWidth()-45)
-		Castbar:SetPoint("BOTTOM", ns.PlayerFrame.Castbar, "TOP", 12, 5)			
+		Castbar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 34, 60)
+		Castbar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", -20, 60)			
 	else
 		Castbar:SetHeight(10)
 		Castbar:SetWidth(self:GetWidth()-70)
@@ -176,8 +175,8 @@ local function BuildCastbar(self)
 	
 	Castbar.Shadow = MakeShadow(Castbar, 3)
 	Castbar.Shadow:SetBackdrop({
-		bgFile = cfg.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
-		edgeFile = cfg.GlowTex, edgeSize = 3, 
+		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
+		edgeFile = DB.GlowTex, edgeSize = 3, 
 	})
 	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
 	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
@@ -195,7 +194,7 @@ local function BuildCastbar(self)
 	
 	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
 	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	if UnitFrameDB.PlayerCastbarAlone then
+	if UnitFrameDB.TargetCastbarAlone then
 		Castbar.Icon:SetSize(14, 14)
 	else
 		Castbar.Icon:SetSize(20, 20)
@@ -203,13 +202,13 @@ local function BuildCastbar(self)
 	Castbar.Icon:SetPoint("BOTTOMRIGHT", Castbar, "BOTTOMLEFT", -8, 0)
 	Castbar.Icon.Shadow = MakeTexShadow(Castbar, Castbar.Icon, 3)
 
-	Castbar.OnUpdate = cast.OnCastbarUpdate
-	Castbar.PostCastStart = cast.PostCastStart
-	Castbar.PostChannelStart = cast.PostCastStart
-	Castbar.PostCastStop = cast.PostCastStop
-	Castbar.PostChannelStop = cast.PostChannelStop
-	Castbar.PostCastFailed = cast.PostCastFailed
-	Castbar.PostCastInterrupted = cast.PostCastFailed
+	Castbar.OnUpdate = S.OnCastbarUpdate
+	Castbar.PostCastStart = S.PostCastStart
+	Castbar.PostChannelStart = S.PostCastStart
+	Castbar.PostCastStop = S.PostCastStop
+	Castbar.PostChannelStop = S.PostChannelStop
+	Castbar.PostCastFailed = S.PostCastFailed
+	Castbar.PostCastInterrupted = S.PostCastFailed
 
 	self.Castbar = Castbar
 end

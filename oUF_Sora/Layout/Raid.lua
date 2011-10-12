@@ -4,21 +4,21 @@
 
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local cfg = ns.cfg
+local S, C, L, DB = unpack(select(2, ...))
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
 	Shadow:SetFrameLevel(0)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = Size})
+	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
 
 local function MakeFontString(Parent, fontsize)
 	local tempText = Parent:CreateFontString(nil, "ARTWORK")
-	tempText:SetFont(cfg.Font, fontsize, "THINOUTLINE")
+	tempText:SetFont(DB.Font, fontsize, "THINOUTLINE")
 	return tempText
 end
 
@@ -39,13 +39,13 @@ end
 
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(cfg.Statusbar)
+	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetHeight(16)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
 	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(cfg.Statusbar)
+	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
 	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
 	Bar.BG.multiplier = 0.2
@@ -62,13 +62,13 @@ end
 
 local function BuildPowerBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(cfg.Statusbar)
+	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", 0, -1)
 	Bar.Shadow = MakeShadow(Bar , 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(cfg.Statusbar)
+	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
 	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
 	Bar.BG.multiplier = 0.2
@@ -163,89 +163,41 @@ local function BuildRaidDebuffs(self)
 	self.RaidDebuffs.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	self.RaidDebuffs.icon:SetAllPoints(self.RaidDebuffs)
 	self.RaidDebuffs.time = self.RaidDebuffs:CreateFontString(nil, "OVERLAY")
-	self.RaidDebuffs.time:SetFont(cfg.Font, 12, "THINOUTLINE")
+	self.RaidDebuffs.time:SetFont(DB.Font, 12, "THINOUTLINE")
 	self.RaidDebuffs.time:SetPoint("CENTER", self.RaidDebuffs, "CENTER", 0, 0)
 	self.RaidDebuffs.time:SetTextColor(1, 0.9, 0)
 	self.RaidDebuffs.count = self.RaidDebuffs:CreateFontString(nil, "OVERLAY")
-	self.RaidDebuffs.count:SetFont(cfg.Font, 8, "OUTLINE")
+	self.RaidDebuffs.count:SetFont(DB.Font, 8, "OUTLINE")
 	self.RaidDebuffs.count:SetPoint("BOTTOMRIGHT", self.RaidDebuffs, "BOTTOMRIGHT", 2, 0)
 	self.RaidDebuffs.count:SetTextColor(1, 0.9, 0)
 end 
 
-local function BuildAuraWatch(self, ...)
+--[[local function BuildIndicator(self)
 	local _, Class = UnitClass("player")
-	local AuraWatch = {}
-	local spellIDs = {
-		DEATHKNIGHT = {}, 
-		DRUID = {
-			33763, -- Lifebloom
-			8936, -- Regrowth
-			774, -- Rejuvenation
-			48438, -- Wild Growth
-		}, 
-		HUNTER = {
-			34477, -- Misdirection
-		}, 
-		MAGE = {
-			54646, -- Focus Magic
-		}, 
-		PALADIN = {
-			53563, -- Beacon of Light
-			25771, -- Forbearance
-		}, 
-		PRIEST = { 
-			17, -- Power Word: Shield
-			139, -- Renew
-			33076, -- Prayer of Mending
-			6788, -- Weakened Soul
-		}, 
-		ROGUE = {
-			57934, -- Tricks of the Trade
-		}, 
-		SHAMAN = {
-			974, -- Earth Shield
-			61295, -- Riptide
-		}, 
-		WARLOCK = {
-			20707, -- Soulstone Resurrection
-		}, 
-		WARRIOR = {
-			50720, -- Vigilance
-		}, 
-	}
-		
-	local function PostCreateIcon(_, Button, ...)
-		Button.cd:SetReverse()
-		Button.count = MakeFontString(Button, 12)
-		Button.count:SetPoint("CENTER", Button, "BOTTOM", 3, 3)
-	end
-	AuraWatch.onlyShowPresent = true
-	AuraWatch.anyUnit = true
-	AuraWatch.PostCreateIcon = PostCreateIcon
-	-- Set any other AuraWatch settings
-	AuraWatch.icons = {}
+	self.IndicatorTL = self.Health:CreateFontString(nil, "OVERLAY")
+	self.IndicatorTL:ClearAllPoints()
+	self.IndicatorTL:SetPoint("TOPLEFT")
+	self.IndicatorTL:SetFont(DB.Indicator, 8, "THINOUTLINE")
+	self:Tag(self.IndicatorTL, ns.classIndicators[Class]["TL"])
 
-	for i, sid in pairs(spellIDs[Class]) do
-		local icon = CreateFrame("Frame", nil, self)
-		icon.spellID = sid
-		-- set the dimensions and positions
-		icon:SetWidth(12)
-		icon:SetHeight(12)
-		icon:SetFrameLevel(5)
-		if i == 1 then
-			icon:SetPoint("TOPLEFT", self, "TOPLEFT", -1, 1)
-		elseif i == 2 then
-			icon:SetPoint("TOPRIGHT", self, "TOPRIGHT", 1, 1)
-		elseif i == 3 then
-			icon:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", -1, -1)
-		elseif i == 4 then
-			icon:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 1, -1)
-		end
-		
-		AuraWatch.icons[sid] = icon
-	end
-	self.AuraWatch = AuraWatch
-end
+	self.IndicatorTR = self.Health:CreateFontString(nil, "OVERLAY")
+	self.IndicatorTR:ClearAllPoints()
+	self.IndicatorTR:SetPoint("TOPRIGHT")
+	self.IndicatorTR:SetFont(DB.Indicator, 8, "THINOUTLINE")
+	self:Tag(self.IndicatorTR, ns.classIndicators[Class]["TR"])
+
+	self.IndicatorBL = self.Health:CreateFontString(nil, "OVERLAY")
+	self.IndicatorBL:ClearAllPoints()
+	self.IndicatorBL:SetPoint("BOTTOMLEFT")
+	self.IndicatorBL:SetFont(DB.Indicator, 8, "THINOUTLINE")
+	self:Tag(self.IndicatorBL, ns.classIndicators[Class]["BL"])	
+
+	self.IndicatorBR = self.Health:CreateFontString(nil, "OVERLAY")
+	self.IndicatorBR:ClearAllPoints()
+	self.IndicatorBR:SetPoint("BOTTOMRIGHT")
+	self.IndicatorBR:SetFont(DB.Symbol, 8, "THINOUTLINE")
+	self:Tag(self.IndicatorBR, ns.classIndicators[Class]["BR"])
+end]]
 
 local function PostUpdateRaidFrame(Health, unit, min, max)
 	local disconnnected = not UnitIsConnected(unit)
@@ -306,7 +258,7 @@ local function BuildRaidFrame(self, ...)
 	if UnitFrameDB.ShowRaidDebuffs then BuildRaidDebuffs(self) end
 	
 	-- BuildAuraWatch
-	if UnitFrameDB.ShowAuraWatch then BuildAuraWatch(self) end
+	--if UnitFrameDB.ShowAuraWatch then BuildIndicator(self) end
 	
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
@@ -332,7 +284,7 @@ Event:SetScript("OnEvent", function(slef, event, addon, ...)
 			ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 				"showRaid", UnitFrameDB.ShowRaid,  
 				"showPlayer", true, 
-				"showSolo", false, 
+				"showSolo", true, 
 				"showParty", true, 
 				"xoffset", 7, 
 				"groupFilter", "1, 2, 3, 4, 5", 

@@ -4,15 +4,14 @@
 
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local cfg = ns.cfg
-local cast = ns.cast
+local S, C, L, DB = unpack(select(2, ...))
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
 	Shadow:SetFrameLevel(0)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = Size})
+	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
@@ -22,14 +21,14 @@ local function MakeTexShadow(Parent, Anchor, Size)
 	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
 	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
 	Border:SetFrameLevel(1)
-	Border:SetBackdrop({edgeFile = cfg.GlowTex, edgeSize = Size})
+	Border:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
 	Border:SetBackdropBorderColor(0, 0, 0, 1)
 	return Border
 end
 
 local function MakeFontString(Parent, fontsize)
 	local tempText = Parent:CreateFontString(nil, "OVERLAY")
-	tempText:SetFont(cfg.Font, fontsize, "THINOUTLINE")
+	tempText:SetFont(DB.Font, fontsize, "THINOUTLINE")
 	return tempText
 end
 
@@ -50,13 +49,13 @@ end
 
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(cfg.Statusbar)
+	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetHeight(24)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
 	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(cfg.Statusbar)
+	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
 	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
 	Bar.BG.multiplier = 0.2
@@ -71,13 +70,13 @@ end
 
 local function BuildPowerBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(cfg.Statusbar)
+	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
 	Bar.Shadow = MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(cfg.Statusbar)
+	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
 	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
 	Bar.BG.multiplier = 0.2
@@ -96,10 +95,10 @@ local function BuildClassPowerBar(self)
 		for i= 1, 6 do
 			local Rune = CreateFrame("StatusBar", nil, self)
 			Rune:SetSize((self:GetWidth()-15)/6, 3)
-			Rune:SetStatusBarTexture(cfg.Statusbar)			
+			Rune:SetStatusBarTexture(DB.Statusbar)			
 			Rune.BG = Rune:CreateTexture(nil, "BACKGROUND")
 			Rune.BG:SetAllPoints()
-			Rune.BG:SetTexture(cfg.Statusbar)
+			Rune.BG:SetTexture(DB.Statusbar)
 			Rune.BG:SetVertexColor(0.1, 0.1, 0.1)			
 			Rune.Shadow = MakeShadow(Rune, 3)
 			
@@ -117,7 +116,7 @@ local function BuildClassPowerBar(self)
 		for i = 1, 3 do
 			local HolyShard = CreateFrame("StatusBar", nil, self)
 			HolyShard:SetSize((self:GetWidth()-10)/3, 3)
-			HolyShard:SetStatusBarTexture(cfg.Statusbar)
+			HolyShard:SetStatusBarTexture(DB.Statusbar)
 			HolyShard:SetStatusBarColor(0.9, 0.95, 0.33)		
 			HolyShard.Shadow = MakeShadow(HolyShard, 3)
 			if i == 1 then
@@ -150,7 +149,7 @@ local function BuildClassPowerBar(self)
 		for i= 1, 3 do
 			local SoulShard = CreateFrame("StatusBar", nil, self)
 			SoulShard:SetSize((self:GetWidth()-10)/3, 3)
-			SoulShard:SetStatusBarTexture(cfg.Statusbar)
+			SoulShard:SetStatusBarTexture(DB.Statusbar)
 			SoulShard:SetStatusBarColor(0.86, 0.44, 1)	
 			SoulShard.Shadow = MakeShadow(SoulShard, 3)
 			if i == 1 then
@@ -184,12 +183,12 @@ local function BuildClassPowerBar(self)
 		EclipseBar.LunarBar = CreateFrame("StatusBar", nil, EclipseBar)
 		EclipseBar.LunarBar:SetPoint("LEFT", 0, 0)
 		EclipseBar.LunarBar:SetSize(EclipseBar:GetWidth(), EclipseBar:GetHeight())
-		EclipseBar.LunarBar:SetStatusBarTexture(cfg.Statusbar)
+		EclipseBar.LunarBar:SetStatusBarTexture(DB.Statusbar)
 		EclipseBar.LunarBar:SetStatusBarColor(0, 0.1, 0.7)
 		EclipseBar.SolarBar = CreateFrame("StatusBar", nil, EclipseBar)
 		EclipseBar.SolarBar:SetPoint("LEFT", EclipseBar.LunarBar:GetStatusBarTexture(), "RIGHT", 0, 0)
 		EclipseBar.SolarBar:SetSize(EclipseBar:GetWidth(), EclipseBar:GetHeight())
-		EclipseBar.SolarBar:SetStatusBarTexture(cfg.Statusbar)
+		EclipseBar.SolarBar:SetStatusBarTexture(DB.Statusbar)
 		EclipseBar.SolarBar:SetStatusBarColor(1, 1, 0.13)
 		EclipseBar.Text = MakeFontString(EclipseBar.SolarBar, 9)
 		EclipseBar.Text:SetPoint("LEFT", EclipseBar.LunarBar:GetStatusBarTexture(), "RIGHT", -1, 0)
@@ -210,10 +209,10 @@ local function BuildClassPowerBar(self)
 			Totem:SetWidth((self.Health:GetWidth()-15)/4)
 			Totem.StatusBar = CreateFrame("StatusBar", nil, Totem)
 			Totem.StatusBar:SetAllPoints()
-			Totem.StatusBar:SetStatusBarTexture(cfg.Statusbar)	
+			Totem.StatusBar:SetStatusBarTexture(DB.Statusbar)	
 			Totem.BG = Totem:CreateTexture(nil, "BACKGROUND")
 			Totem.BG:SetAllPoints()
-			Totem.BG:SetTexture(cfg.Statusbar)
+			Totem.BG:SetTexture(DB.Statusbar)
 			Totem.BG:SetVertexColor(0.2, 0.2, 0.2, 0.8)
 			Totem.Shadow = MakeShadow(Totem, 3)
 			Totem.Text = MakeFontString(Totem, 8)
@@ -242,7 +241,7 @@ local function BuildClassPowerBar(self)
 		for i = 1, MAX_COMBO_POINTS do
 			local CPoint = CreateFrame("StatusBar", nil, self)
 			CPoint:SetSize((self:GetWidth() / 5)-5, 3)
-			CPoint:SetStatusBarTexture(cfg.Statusbar)
+			CPoint:SetStatusBarTexture(DB.Statusbar)
 			CPoint:SetStatusBarColor(1, 0.9, 0)				
 			CPoint.Shadow = MakeShadow(CPoint, 3)
 			if i == 1 then
@@ -328,7 +327,7 @@ end
 
 local function BuildCastbar(self)
 	local Castbar = CreateFrame("StatusBar", nil, self)
-	Castbar:SetStatusBarTexture(cfg.Statusbar)
+	Castbar:SetStatusBarTexture(DB.Statusbar)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
 	if UnitFrameDB.PlayerCastbarAlone then
 		Castbar:SetHeight(20)
@@ -342,8 +341,8 @@ local function BuildCastbar(self)
 	
 	Castbar.Shadow = MakeShadow(Castbar, 3)
 	Castbar.Shadow:SetBackdrop({
-		bgFile = cfg.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
-		edgeFile = cfg.GlowTex, edgeSize = 3, 
+		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
+		edgeFile = DB.GlowTex, edgeSize = 3, 
 	})
 	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
 	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
@@ -367,22 +366,22 @@ local function BuildCastbar(self)
 
 	--latency (only for player unit)
 	Castbar.SafeZone = Castbar:CreateTexture(nil, "OVERLAY")
-	Castbar.SafeZone:SetTexture(cfg.Statusbar)
+	Castbar.SafeZone:SetTexture(DB.Statusbar)
 	Castbar.SafeZone:SetVertexColor(1, 0.1, 0, .6)
 	Castbar.SafeZone:SetPoint("TOPRIGHT")
 	Castbar.SafeZone:SetPoint("BOTTOMRIGHT")
 	Castbar.Lag = MakeFontString(Castbar, 10)
 	Castbar.Lag:SetPoint("CENTER", -2, 17)
 	Castbar.Lag:Hide()
-	self:RegisterEvent("UNIT_SPELLCAST_SENT", cast.OnCastSent)
+	self:RegisterEvent("UNIT_SPELLCAST_SENT", S.OnCastSent)
 
-	Castbar.OnUpdate = cast.OnCastbarUpdate
-	Castbar.PostCastStart = cast.PostCastStart
-	Castbar.PostChannelStart = cast.PostCastStart
-	Castbar.PostCastStop = cast.PostCastStop
-	Castbar.PostChannelStop = cast.PostChannelStop
-	Castbar.PostCastFailed = cast.PostCastFailed
-	Castbar.PostCastInterrupted = cast.PostCastFailed
+	Castbar.OnUpdate = S.OnCastbarUpdate
+	Castbar.PostCastStart = S.PostCastStart
+	Castbar.PostChannelStart = S.PostCastStart
+	Castbar.PostCastStop = S.PostCastStop
+	Castbar.PostChannelStop = S.PostChannelStop
+	Castbar.PostCastFailed = S.PostCastFailed
+	Castbar.PostCastInterrupted = S.PostCastFailed
 
 	self.Castbar = Castbar
 end

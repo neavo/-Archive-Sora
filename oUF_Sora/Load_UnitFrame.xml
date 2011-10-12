@@ -3,10 +3,10 @@
 
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-	<!--  oUF核心,勿动  -->
+	<Script file="Init.lua"/>	
 	<Include file="oUF\oUF.xml"/>
 	
-	<Script file="cfg.lua"/>	
+	<Script file="cfg.lua"/>
 	<Include file="Plugins\Plugins.xml"/>
 	<Include file="Layout\Layout.xml"/>
 </Ui>

@@ -1,5 +1,4 @@
-﻿local addon, ns = ...
-local cfg = ns.cfg
+﻿local S, C, L, DB = unpack(select(2, ...))
 
 for _, VALUE in pairs({"MirrorTimer1","MirrorTimer2","MirrorTimer3"}) do   
 	for _, value in pairs({_G[VALUE]:GetRegions()}) do
@@ -15,13 +14,13 @@ for _, VALUE in pairs({"MirrorTimer1","MirrorTimer2","MirrorTimer3"}) do
 	
 	Bar:SetHeight(18)
 	Bar:SetWidth(250)
-	Text:SetFont(cfg.Font, 12, "THINOUTLINE")
+	Text:SetFont(DB.Font, 12, "THINOUTLINE")
 	Text:ClearAllPoints()
 	Text:SetPoint("CENTER", Bar, 0, 0)
 	StatusBar:SetAllPoints(Bar)
 	
 	local BG = Bar:CreateTexture(VALUE.."Background", "BACKGROUND", Bar)
-	BG:SetTexture(cfg.Statusbar)
+	BG:SetTexture(DB.Statusbar)
 	BG:SetAllPoints(VALUE)
 	BG:SetVertexColor(0.1, 0.1, 0.1, 0.75)
 	
@@ -30,7 +29,7 @@ for _, VALUE in pairs({"MirrorTimer1","MirrorTimer2","MirrorTimer3"}) do
 	Border:SetPoint("TOPLEFT", -1, 1)
 	Border:SetPoint("BOTTOMRIGHT", 1, -1)
 	Border:SetBackdrop({
-		edgeFile = cfg.Solid, edgeSize = 1, 
+		edgeFile = DB.Solid, edgeSize = 1, 
 	})
 	Border:SetBackdropBorderColor(0, 0, 0, 0.8)
 end

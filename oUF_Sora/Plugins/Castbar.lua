@@ -1,13 +1,11 @@
-﻿local addon, ns = ...
-local oUF = ns.oUF or oUF
-local cfg = ns.cfg
-local cast = CreateFrame("Frame")  
+﻿----------------
+--  命名空间  --
+----------------
 
------------------------------
--- FUNCTIONS
------------------------------
+local S, C, L, DB = unpack(select(2, ...))
+
 -- special thanks to Allez for coming up with this solution
-local channelingTicks = {
+local Ticks = {
 	-- warlock
 	[GetSpellInfo(1120)] = 5, -- drain soul
 	[GetSpellInfo(689)] = 5, -- drain life
@@ -29,7 +27,7 @@ local channelingTicks = {
 }
 
 local ticks = {}
-cast.setBarTicks = function(castBar, ticknum)
+local SetBarTicks = function(castBar, ticknum)
 	if ticknum and ticknum > 0 then
 		local delta = castBar:GetWidth() / ticknum
 		for i = 1, ticknum do
@@ -51,7 +49,7 @@ cast.setBarTicks = function(castBar, ticknum)
 	end
 end
 
-cast.OnCastbarUpdate = function(self, elapsed)
+S.OnCastbarUpdate = function(self, elapsed)
 	local currentTime = GetTime()
 	if self.casting or self.channeling then
 		local parent = self:GetParent()
@@ -84,12 +82,12 @@ cast.OnCastbarUpdate = function(self, elapsed)
 	end
 end
 
-cast.OnCastSent = function(self, event, unit, spell, rank)
+S.OnCastSent = function(self, event, unit, spell, rank)
 	if self.unit ~= unit or not self.Castbar.SafeZone then return end
 	self.Castbar.SafeZone.sendTime = GetTime()
 end
 
-cast.PostCastStart = function(self, unit, name, rank, text)
+S.PostCastStart = function(self, unit, name, rank, text)
 	local pcolor = {255/255, 128/255, 128/255}
 	local interruptcb = {95/255, 182/255, 255/255}
 	self:SetAlpha(1.0)
@@ -101,11 +99,11 @@ cast.PostCastStart = function(self, unit, name, rank, text)
 		sf:SetWidth(self:GetWidth() * sf.timeDiff / self.max)
 		sf:Show()
 		if self.casting then
-			cast.setBarTicks(self, 0)
+			SetBarTicks(self, 0)
 		else
 			local spell = UnitChannelInfo(unit)
-			self.channelingTicks = channelingTicks[spell] or 0
-			cast.setBarTicks(self, self.channelingTicks)
+			self.Ticks = Ticks[spell] or 0
+			SetBarTicks(self, self.Ticks)
 		end
 	elseif (unit == "target" or unit == "focus") and not self.interrupt then
 		self:SetStatusBarColor(interruptcb[1], interruptcb[2], interruptcb[3], 1)
@@ -114,7 +112,7 @@ cast.PostCastStart = function(self, unit, name, rank, text)
 	end
 end
 
-cast.PostCastStop = function(self, unit, name, rank, castid)
+S.PostCastStop = function(self, unit, name, rank, castid)
 	if not self.fadeOut then 
 		self:SetStatusBarColor(unpack(self.CompleteColor))
 		self.fadeOut = true
@@ -123,13 +121,13 @@ cast.PostCastStop = function(self, unit, name, rank, castid)
 	self:Show()
 end
 
-cast.PostChannelStop = function(self, unit, name, rank)
+S.PostChannelStop = function(self, unit, name, rank)
 	self.fadeOut = true
 	self:SetValue(0)
 	self:Show()
 end
 
-cast.PostCastFailed = function(self, event, unit, name, rank, castid)
+S.PostCastFailed = function(self, event, unit, name, rank, castid)
 	self:SetStatusBarColor(unpack(self.FailColor))
 	self:SetValue(self.max)
 	if not self.fadeOut then
@@ -137,6 +135,3 @@ cast.PostCastFailed = function(self, event, unit, name, rank, castid)
 	end
 	self:Show()
 end
-
---hand the lib to the namespace for further usage
-ns.cast = cast

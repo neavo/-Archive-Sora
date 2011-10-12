@@ -1,13 +1,14 @@
 ﻿----------------
 --  命名空间  --
 ----------------
-local _, ns = ...
-ns.cfg = CreateFrame("Frame")
+local S, C, L, DB = unpack(select(2, ...))
 local Media = "Interface\\AddOns\\oUF_Sora\\Media\\"
-ns.cfg.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
-ns.cfg.Solid = Media.."Solid"
-ns.cfg.GlowTex = Media.."GlowTex"
-ns.cfg.Statusbar = Media.."Statusbar"
+DB.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
+DB.Solid = Media.."Solid"
+DB.GlowTex = Media.."GlowTex"
+DB.Statusbar = Media.."Statusbar"
+DB.Indicator = Media.."Indicator.ttf"
+DB.Symbol = Media.."Symbol.ttf"
 
 ----------------------
 --  公用变量和函数  --
@@ -58,16 +59,16 @@ end
 
 -- ResetToDefault
 local function ResetToDefault()
-	UnitFrameDB = {}
+	wipe(UnitFrameDB)
 	LoadSettings()
 end
 
 -- BuildGUI
 local function BuildGUI()
 	if Modules then
-		Modules["oUF_Sora"] =  {
+		Modules["UnitFrame"] =  {
 			type = "group",
-			name = "oUF_|cff70C0F5Sora's|r",
+			name = "|cff70C0F5单位框体|r",
 			args = {
 				Header_1 = {
 					type = "header",
@@ -95,90 +96,15 @@ local function BuildGUI()
 					get = function() return UnitFrameDB.ShowFocusTarget end,
 					set = function(_, value) UnitFrameDB.ShowFocusTarget = value end,
 				},
-				Header_2 = {
-					type = "header",
-					name = "团队&小队",
-					order = 5,
-				},
-				ShowRaid = {
-					type = "toggle",
-					name = "显示团队框体",
-					order = 6,
-					get = function() return UnitFrameDB.ShowRaid end,
-					set = function(_, value) UnitFrameDB.ShowRaid = value end,
-				},
-				RaidPartyH = {
-					type = "toggle",
-					name = "横向各小队排列",
-					disabled = not UnitFrameDB.ShowRaid,
-					order = 7,
-					get = function() return UnitFrameDB.RaidPartyH end,
-					set = function(_, value) UnitFrameDB.RaidPartyH = value end,
-				},
-				ShowAuraWatch = {
-					type = "toggle",
-					name = "边角Hot/技能监视",
-					disabled = not UnitFrameDB.ShowRaid,
-					order = 8,
-					get = function() return UnitFrameDB.ShowAuraWatch end,
-					set = function(_, value) UnitFrameDB.ShowAuraWatch = value end,
-				},
-				ShowRaidDebuffs = {
-					type = "toggle",
-					name = "显示RaidDebuff",
-					disabled = not UnitFrameDB.ShowRaid,
-					order = 9,
-					get = function() return UnitFrameDB.ShowRaidDebuffs end,
-					set = function(_, value) UnitFrameDB.ShowRaidDebuffs = value end,
-				},
-				ShowParty = {
-					type = "toggle",
-					name = "显示小队框体",
-					order = 10,
-					get = function() return UnitFrameDB.ShowParty end,
-					set = function(_, value) UnitFrameDB.ShowParty = value end,
-				},
-				ShowPartyDebuff = {
-					type = "toggle",
-					name = "显示小队Debuff",
-					disabled = not UnitFrameDB.ShowParty,
-					order = 11,
-					get = function() return UnitFrameDB.ShowPartyDebuff end,
-					set = function(_, value) UnitFrameDB.ShowPartyDebuff = value end,
-				},
-				RaidUnitWidth = {
-					type = "input",
-					name = "团队框体单位宽度：",
-					desc = "请输入团队框体单位宽度",
-					order = 12,
-					get = function() return tostring(UnitFrameDB.RaidUnitWidth) end,
-					set = function(_, value) UnitFrameDB.RaidUnitWidth = tonumber(value) end,
-				},
-				RaidScale = {
-					type = "input",
-					name = "团队&小队缩放比例：",
-					desc = "请输入团队&小队缩放比例：",
-					order = 13,
-					get = function() return tostring(UnitFrameDB.RaidScale) end,
-					set = function(_, value) UnitFrameDB.RaidScale = tonumber(value) end,
-				},
-				Scale = {
-					type = "input",
-					name = "其他框体缩放比例：",
-					desc = "请输入其他框体缩放比例：：",
-					order = 14,
-					get = function() return tostring(UnitFrameDB.Scale) end,
-					set = function(_, value) UnitFrameDB.Scale = tonumber(value) end,
-				},
 				Header_3 = {
 					type = "header",
 					name = "Buff&Debuff",
-					order = 15,
+					order = 5,
 				},
 				ShowTargetBuff = {
 					type = "toggle",
 					name = "显示目标框体Buff",
-					order = 16,
+					order = 6,
 					get = function() return UnitFrameDB.ShowTargetBuff end,
 					set = function(_, value) UnitFrameDB.ShowTargetBuff = value end,
 				},
@@ -186,14 +112,14 @@ local function BuildGUI()
 					type = "toggle",
 					name = "目标框体上只显示玩家的Buff",
 					disabled = not UnitFrameDB.ShowTargetBuff,
-					order = 17,
+					order = 7,
 					get = function() return UnitFrameDB.BuffOnlyShowPlayer end,
 					set = function(_, value) UnitFrameDB.BuffOnlyShowPlayer = value end,
 				},
 				ShowTargetDebuff = {
 					type = "toggle",
 					name = "显示目标框体Debuff",
-					order = 18,
+					order = 8,
 					get = function() return UnitFrameDB.ShowTargetDebuff end,
 					set = function(_, value) UnitFrameDB.ShowTargetDebuff = value end,
 				},
@@ -201,33 +127,33 @@ local function BuildGUI()
 					type = "toggle",
 					name = "目标框体上只显示玩家的Debuff",
 					disabled = not UnitFrameDB.ShowTargetDebuff,
-					order = 19,
+					order = 9,
 					get = function() return UnitFrameDB.DebuffOnlyShowPlayer end,
 					set = function(_, value) UnitFrameDB.DebuffOnlyShowPlayer = value end,
 				},
 				ShowFocusBuff = {
 					type = "toggle",
 					name = "显示焦点框体Buff",
-					order = 20,
+					order = 10,
 					get = function() return UnitFrameDB.ShowFocusBuff end,
 					set = function(_, value) UnitFrameDB.ShowFocusBuff = value end,
 				},
 				ShowFocusDebuff = {
 					type = "toggle",
 					name = "显示焦点框体Debuff",
-					order = 21,
+					order = 11,
 					get = function() return UnitFrameDB.ShowFocusDebuff end,
 					set = function(_, value) UnitFrameDB.ShowFocusDebuff = value end,
 				},
-				Header_4 = {
+				Header_3 = {
 					type = "header",
 					name = "其他",
-					order = 22,
+					order = 12,
 				},
 				ShowCastbar = {
 					type = "toggle",
 					name = "显示施法条",
-					order = 23,
+					order = 13,
 					get = function() return UnitFrameDB.ShowCastbar end,
 					set = function(_, value) UnitFrameDB.ShowCastbar = value end,
 				},
@@ -235,7 +161,7 @@ local function BuildGUI()
 					type = "toggle",
 					name = "玩家施法条独立",
 					disabled = not UnitFrameDB.ShowCastbar,
-					order = 24,
+					order = 14,
 					get = function() return UnitFrameDB.PlayerCastbarAlone end,
 					set = function(_, value) UnitFrameDB.PlayerCastbarAlone = value end,
 				},
@@ -243,34 +169,120 @@ local function BuildGUI()
 					type = "toggle",
 					name = "目标施法条独立",
 					disabled = not UnitFrameDB.ShowCastbar,
-					order = 25,
+					order = 15,
 					get = function() return UnitFrameDB.TargetCastbarAlone end,
 					set = function(_, value) UnitFrameDB.TargetCastbarAlone = value end,
+				},
+				Scale = {
+					type = "input",
+					name = "其他框体缩放比例：",
+					desc = "请输入其他框体缩放比例：",
+					order = 16,
+					get = function() return tostring(UnitFrameDB.Scale) end,
+					set = function(_, value) UnitFrameDB.Scale = tonumber(value) end,
 				},
 				SpaceLine_1 = {
 					type = "description",
 					name = "\n\n\n",
-					order = 26,
+					order = 17,
 				},
 				Apply = {
 					type = "execute",
 					name = "重载UI",
-					order = 27,
+					order = 18,
 					func  = function() ReloadUI() end,
 				},
 				Hided = {
 					type = "execute",
 					name = "",
 					disabled  = true,
-					order = 28,
+					order = 19,
 				},
 				ResetToDefault = {
 					type = "execute",
 					name = "恢复到默认设置",
-					order = 29,
+					order = 20,
 					func  = function() ResetToDefault() ReloadUI() end,
 				},
-			},
+			}
+		}
+		Modules["Raid"] =  {
+			type = "group",
+			name = "|cff70C0F5团队框体|r",
+			args = {
+				Header_1 = {
+					type = "header",
+					name = "团队",
+					order = 1,
+				},			
+				ShowRaid = {
+					type = "toggle",
+					name = "显示团队框体",
+					order = 2,
+					get = function() return UnitFrameDB.ShowRaid end,
+					set = function(_, value) UnitFrameDB.ShowRaid = value end,
+				},
+				RaidPartyH = {
+					type = "toggle",
+					name = "横向各小队排列",
+					disabled = not UnitFrameDB.ShowRaid,
+					order = 3,
+					get = function() return UnitFrameDB.RaidPartyH end,
+					set = function(_, value) UnitFrameDB.RaidPartyH = value end,
+				},
+				ShowAuraWatch = {
+					type = "toggle",
+					name = "边角Hot/技能监视",
+					disabled = not UnitFrameDB.ShowRaid,
+					order = 4,
+					get = function() return UnitFrameDB.ShowAuraWatch end,
+					set = function(_, value) UnitFrameDB.ShowAuraWatch = value end,
+				},
+				ShowRaidDebuffs = {
+					type = "toggle",
+					name = "显示RaidDebuff",
+					disabled = not UnitFrameDB.ShowRaid,
+					order = 5,
+					get = function() return UnitFrameDB.ShowRaidDebuffs end,
+					set = function(_, value) UnitFrameDB.ShowRaidDebuffs = value end,
+				},
+				RaidUnitWidth = {
+					type = "input",
+					name = "团队框体单位宽度：",
+					desc = "请输入团队框体单位宽度",
+					order = 6,
+					get = function() return tostring(UnitFrameDB.RaidUnitWidth) end,
+					set = function(_, value) UnitFrameDB.RaidUnitWidth = tonumber(value) end,
+				},
+				Header_2 = {
+					type = "header",
+					name = "小队",
+					order = 7,
+				},	
+				ShowParty = {
+					type = "toggle",
+					name = "显示小队框体",
+					order = 8,
+					get = function() return UnitFrameDB.ShowParty end,
+					set = function(_, value) UnitFrameDB.ShowParty = value end,
+				},
+				ShowPartyDebuff = {
+					type = "toggle",
+					name = "显示小队Debuff",
+					disabled = not UnitFrameDB.ShowParty,
+					order = 9,
+					get = function() return UnitFrameDB.ShowPartyDebuff end,
+					set = function(_, value) UnitFrameDB.ShowPartyDebuff = value end,
+				},
+				RaidScale = {
+					type = "input",
+					name = "团队&小队缩放比例：",
+					desc = "请输入团队&小队缩放比例：",
+					order = 10,
+					get = function() return tostring(UnitFrameDB.RaidScale) end,
+					set = function(_, value) UnitFrameDB.RaidScale = tonumber(value) end,
+				},
+			}
 		}
 	end
 end
