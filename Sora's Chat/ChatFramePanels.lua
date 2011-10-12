@@ -109,7 +109,7 @@ local function InitChatbar()
 		tinsert(ChatbarTable, Button)
 	end
 
-	local Button = CreateFrame("Button", nil, Chatbar, "SecureActionButtonTemplate")
+	local Button = CreateFrame("Button", nil, MainBar, "SecureActionButtonTemplate")
 	Button:SetWidth((MainBar:GetWidth()-10)/8)
 	Button:SetHeight(12)
 	Button:SetBackdrop({ 
