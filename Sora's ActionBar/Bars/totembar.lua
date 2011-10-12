@@ -3,7 +3,7 @@
 ----------------
 
 local _, SR = ...
-local cfg = SR.ActionBarConfig
+local cfg = SR.cfg
 
 local myclass = select(2, UnitClass("player"))
 
