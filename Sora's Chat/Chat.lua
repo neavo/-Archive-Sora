@@ -11,14 +11,14 @@ CHAT_FONT_HEIGHTS = { 8, 9, 10, 11, 12, 13, 14, 15, 16}
 local tscol = "64C2F5"						-- Timestamp coloring
 local TimeStampsCopy = true					-- Enables special time stamps in chat allowing you to copy the specific line from your chat window by clicking the stamp
 local LinkHover = {}; LinkHover.show = {	-- enable (true) or disable (false) LinkHover functionality for different things in chat
-	["achievement"] = true,
-	["enchant"]     = true,
-	["glyph"]       = true,
-	["item"]        = true,
-	["quest"]       = true,
-	["spell"]       = true,
-	["talent"]      = true,
-	["unit"]        = true,}
+	["achievement"] = true, 
+	["enchant"]     = true, 
+	["glyph"]       = true, 
+	["item"]        = true, 
+	["quest"]       = true, 
+	["spell"]       = true, 
+	["talent"]      = true, 
+	["unit"]        = true, }
 
 -- 打开输入框回到上次对话
 ChatTypeInfo["SAY"].sticky        = 1 -- 说
@@ -33,16 +33,22 @@ ChatTypeInfo["CHANNEL"].sticky 	  = 0 -- 频道
 -- 聊天标签
 CHAT_FRAME_FADE_OUT_TIME = 0 					-- 聊天窗口褪色时间
 CHAT_TAB_HIDE_DELAY = 0     					-- 聊天标签弹出延时
-CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA = 0.2  	-- 鼠标停留时,标签透明度
-CHAT_FRAME_TAB_NORMAL_NOMOUSE_ALPHA = 0       	-- 鼠标离开时,标签透明度 (修改这里能一直显示)
-CHAT_FRAME_TAB_SELECTED_MOUSEOVER_ALPHA = 1   	-- 鼠标停留时,选择标签时透明度
-CHAT_FRAME_TAB_SELECTED_NOMOUSE_ALPHA = 0     	-- 鼠标离开时,选择标签时透明度
-CHAT_FRAME_TAB_ALERTING_MOUSEOVER_ALPHA = 0 	-- 鼠标停留时,标签闪动时透明度
-CHAT_FRAME_TAB_ALERTING_NOMOUSE_ALPHA = 0     	-- 鼠标离开时,标签闪动时透明度
+CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA = 0.2  	-- 鼠标停留时, 标签透明度
+CHAT_FRAME_TAB_NORMAL_NOMOUSE_ALPHA = 0       	-- 鼠标离开时, 标签透明度 (修改这里能一直显示)
+CHAT_FRAME_TAB_SELECTED_MOUSEOVER_ALPHA = 1   	-- 鼠标停留时, 选择标签时透明度
+CHAT_FRAME_TAB_SELECTED_NOMOUSE_ALPHA = 0     	-- 鼠标离开时, 选择标签时透明度
+CHAT_FRAME_TAB_ALERTING_MOUSEOVER_ALPHA = 0 	-- 鼠标停留时, 标签闪动时透明度
+CHAT_FRAME_TAB_ALERTING_NOMOUSE_ALPHA = 0     	-- 鼠标离开时, 标签闪动时透明度
 
 do
+	local function kill(frame)
+		if frame.UnregisterAllEvents then frame:UnregisterAllEvents()
+		end
+		frame.Show = function() end
+		frame:Hide()
+	end
+
 	-- Buttons Hiding/moving 
-	local kill = function(f) f:Hide() end
 	ChatFrameMenuButton:Hide()
 	ChatFrameMenuButton:SetScript("OnShow", kill)
 	FriendsMicroButton:Hide()
@@ -51,58 +57,71 @@ do
 	for i=1, 10 do
 		local cf = _G[format("%s%d", "ChatFrame", i)]
 		
+		-- 渐隐
+		cf:SetFading(false)
 		-- 间距
 		cf:SetSpacing(2)
 	
 		-- Hide chat textures
-		for j = 1, #CHAT_FRAME_TEXTURES do
-			_G["ChatFrame"..i..CHAT_FRAME_TEXTURES[j]]:SetTexture(nil)
-		end
+		for j = 1, #CHAT_FRAME_TEXTURES do _G["ChatFrame"..i..CHAT_FRAME_TEXTURES[j]]:SetTexture(nil) end
 		--Unlimited chatframes resizing
-		cf:SetMinResize(0,0)
-		cf:SetMaxResize(0,0)
+		cf:SetMinResize(0, 0)
+		cf:SetMaxResize(0, 0)
 	
 		--Allow the chat frame to move to the end of the screen
 		cf:SetClampedToScreen(false)
-		cf:SetClampRectInsets(0,0,0,0)
+		cf:SetClampRectInsets(0, 0, 0, 0)
 		
 		-- 聊天框体标签
-		_G["ChatFrame"..i.."Tab"]:SetScale(0.8)
-		_G["ChatFrame"..i.."TabMiddle"]:SetTexture(nil)
-		_G["ChatFrame"..i.."TabRight"]:SetTexture(nil)
-		_G["ChatFrame"..i.."TabLeft"]:SetTexture(nil)
-		_G["ChatFrame"..i.."TabSelectedMiddle"]:SetTexture(nil)
-		_G["ChatFrame"..i.."TabSelectedRight"]:SetTexture(nil)
-		_G["ChatFrame"..i.."TabSelectedLeft"]:SetTexture(nil)
-		_G["ChatFrame"..i.."TabHighlightMiddle"]:SetTexture(nil)
-		_G["ChatFrame"..i.."TabHighlightRight"]:SetTexture(nil)
-		_G["ChatFrame"..i.."TabHighlightLeft"]:SetTexture(nil)
+		_G["ChatFrame"..i.."TabText"].SetTextColor = function() end
+		_G["ChatFrame"..i.."TabText"]:SetFont(cfg.Font, 10, "THINOUTLINE")
+		
+		kill(_G["ChatFrame"..i.."TabLeft"])
+		kill(_G["ChatFrame"..i.."TabMiddle"])
+		kill(_G["ChatFrame"..i.."TabRight"])
+		kill(_G["ChatFrame"..i.."TabSelectedLeft"])
+		kill(_G["ChatFrame"..i.."TabSelectedMiddle"])
+		kill(_G["ChatFrame"..i.."TabSelectedRight"])
+		kill(_G["ChatFrame"..i.."TabHighlightLeft"])
+		kill(_G["ChatFrame"..i.."TabHighlightMiddle"])
+		kill(_G["ChatFrame"..i.."TabHighlightRight"])
+		kill(_G["ChatFrame"..i.."TabSelectedLeft"])
+		kill(_G["ChatFrame"..i.."TabSelectedMiddle"])
+		kill(_G["ChatFrame"..i.."TabSelectedRight"])
+		kill(_G["ChatFrame"..i.."TabGlow"])
+		
+		local Tab = _G["ChatFrame"..i.."Tab"]
+		Tab.leftSelectedTexture:Hide()
+		Tab.middleSelectedTexture:Hide()
+		Tab.rightSelectedTexture:Hide()
+		Tab.leftSelectedTexture.Show = Tab.leftSelectedTexture.Hide
+		Tab.middleSelectedTexture.Show = Tab.middleSelectedTexture.Hide
+		Tab.rightSelectedTexture.Show = Tab.rightSelectedTexture.Hide
 		
 		--EditBox Module
-		local ebParts = {'Left', 'Mid', 'Right'}
-		local eb = _G['ChatFrame'..i..'EditBox']
+		local ebParts = {"Left", "Mid", "Right"}
+		local EditBox = _G["ChatFrame"..i.."EditBox"]
 		for _, ebPart in ipairs(ebParts) do
-			_G['ChatFrame'..i..'EditBox'..ebPart]:SetTexture(nil)
-			local ebed = _G['ChatFrame'..i..'EditBoxFocus'..ebPart]
+			_G["ChatFrame"..i.."EditBox"..ebPart]:SetTexture(nil)
+			local ebed = _G["ChatFrame"..i.."EditBoxFocus"..ebPart]
 			ebed:SetTexture(nil)
 		end
 		_G["ChatFrame"..i.."EditBoxLanguage"]:ClearAllPoints()
-		eb:SetAltArrowKeyMode(false)
-		eb:ClearAllPoints()
-		eb:SetTextColor(0,0,0)
-		eb:SetFont( cfg.Font, 11, "THINOUTLINE")
-		eb:SetPoint("TOPLEFT", cf, "BOTTOMLEFT", -8, -6)
-		eb:SetPoint("BOTTOMRIGHT", cf, "BOTTOMRIGHT", 8, -22)
-		eb:EnableMouse(false)
+		EditBox:SetAltArrowKeyMode(false)
+		EditBox:ClearAllPoints()
+		EditBox:SetFont(cfg.Font, 11, "THINOUTLINE")
+		EditBox:SetPoint("TOPLEFT", cf, "BOTTOMLEFT", -8, -6)
+		EditBox:SetPoint("BOTTOMRIGHT", cf, "BOTTOMRIGHT", 8, -22)
+		EditBox:EnableMouse(false)
 		
 		-- 聊天框缩放按钮
 		local resize = _G["ChatFrame"..i.."ResizeButton"]
-		resize:SetPoint("BOTTOMRIGHT", cf, "BOTTOMRIGHT", 5,-9) 
+		resize:SetPoint("BOTTOMRIGHT", cf, "BOTTOMRIGHT", 5, -9) 
 		resize:SetScale(.7)  --大小
 		resize:SetAlpha(.8)  --透明度
 	
 		--Remove scroll buttons
-		local bf = _G['ChatFrame'..i..'ButtonFrame']
+		local bf = _G["ChatFrame"..i.."ButtonFrame"]
 		bf:Hide()
 		bf:SetScript("OnShow",  kill)
 	
@@ -115,18 +134,18 @@ end
 ---------------- > Enable/Disable mouse for editbox
 eb_mouseon = function()
 	for i =1, 10 do
-		local eb = _G['ChatFrame'..i..'EditBox']
+		local eb = _G["ChatFrame"..i.."EditBox"]
 		eb:EnableMouse(true)
 	end
 end
 eb_mouseoff = function()
 	for i =1, 10 do
-		local eb = _G['ChatFrame'..i..'EditBox']
+		local eb = _G["ChatFrame"..i.."EditBox"]
 		eb:EnableMouse(false)
 	end
 end
-hooksecurefunc("ChatFrame_OpenChat",eb_mouseon)
-hooksecurefunc("ChatEdit_SendText",eb_mouseoff)
+hooksecurefunc("ChatFrame_OpenChat", eb_mouseon)
+hooksecurefunc("ChatEdit_SendText", eb_mouseoff)
 
 
 --  快速翻页
@@ -166,16 +185,16 @@ ChatFrame_AddMessageEventFilter("CHAT_MSG_DND", function(msg) return true end)
 local _AddMessage = ChatFrame1.AddMessage
 local _SetItemRef = SetItemRef
 local blacklist = {
-	[ChatFrame2] = true,
+	[ChatFrame2] = true, 
 }
 
-local ts = '|cff68ccef|HyCopy|h%s|h|r %s'
+local ts = "|cff68ccef|HyCopy|h%s|h|r %s"
 local AddMessage = function(self, text, ...)
-	if(type(text) == 'string') then
+	if(type(text) == "string") then
         if showtime then
-          text = format(ts, date'%H:%M', text)  --text = format(ts, date'%H:%M:%S', text)
+          text = format(ts, date"%H:%M", text)  --text = format(ts, date"%H:%M:%S", text)
         else
-	  text = format(ts, '★', text)
+	  text = format(ts, "★", text)
        end
 end
 
@@ -183,7 +202,7 @@ end
 end
 
 for i=1, NUM_CHAT_WINDOWS do
-	local cf = _G['ChatFrame'..i]
+	local cf = _G["ChatFrame"..i]
 	if(not blacklist[cf]) then
 		cf.AddMessage = AddMessage
 	end
@@ -212,9 +231,9 @@ local MouseIsOver = function(frame)
 end
 
 local borderManipulation = function(...)
-	for l = 1, select('#', ...) do
+	for l = 1, select("#", ...) do
 		local obj = select(l, ...)
-		if(obj:GetObjectType() == 'FontString' and MouseIsOver(obj)) then
+		if(obj:GetObjectType() == "FontString" and MouseIsOver(obj)) then
 			return obj:GetText()
 		end
 	end
@@ -222,12 +241,12 @@ end
 
 local eb = ChatFrame1EditBox
 SetItemRef = function(link, text, button, ...)
-	if(link:sub(1, 5) ~= 'yCopy') then return _SetItemRef(link, text, button, ...) end
+	if(link:sub(1, 5) ~= "yCopy") then return _SetItemRef(link, text, button, ...) end
 
 	local text = borderManipulation(SELECTED_CHAT_FRAME:GetRegions())
 	if(text) then
-		text = text:gsub('|c%x%x%x%x%x%x%x%x(.-)|r', '%1')
-		text = text:gsub('|H.-|h(.-)|h', '%1')
+		text = text:gsub("|c%x%x%x%x%x%x%x%x(.-)|r", "%1")
+		text = text:gsub("|H.-|h(.-)|h", "%1")
 
 		eb:Insert(text)
 		eb:Show()
@@ -252,8 +271,8 @@ local blacklist = {
 	SPELL_FAILED_NOT_INFRONT,       -- You must be in front of your target
 	SPELL_FAILED_NOT_IN_CONTROL,    -- You are not in control of your actions
 	SPELL_FAILED_MOVING,            -- Can"t do that while moving
-	ERR_ATTACK_FLEEING,				-- Can"t attack while fleeing.
-	ERR_ITEM_COOLDOWN,				-- Item is not ready yet.
+	ERR_ATTACK_FLEEING, 				-- Can"t attack while fleeing.
+	ERR_ITEM_COOLDOWN, 				-- Item is not ready yet.
 	ERR_GENERIC_NO_TARGET,          -- You have no target.
 	ERR_ABILITY_COOLDOWN,           -- Ability is not ready yet.
 	ERR_OUT_OF_ENERGY,              -- Not enough energy
@@ -268,7 +287,7 @@ local blacklist = {
 
 hooks["UIErrorsFrame_AddMessage"] = UIErrorsFrame.AddMessage
 UIErrorsFrame.AddMessage = function(...)
-	for k,v in ipairs(blacklist) do
+	for k, v in ipairs(blacklist) do
 		if v==arg1 then return end
 	end
 	hooks["UIErrorsFrame_AddMessage"](...)
@@ -277,4 +296,4 @@ end
 --  简化重载插件命令为"/rl"
 
 SLASH_RELOAD1 = "/rl"
-SlashCmdList.RELOAD = ReloadUI
+SlashCmdList.RELOAD = ReloadUI()
