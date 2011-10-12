@@ -54,7 +54,7 @@ end
 local function SetUIScale()
 	SetCVar("useUiScale", 1)
 	local scale = 768/string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)")
-	if scale < .64 then
+	if scale < 0.64 then
 		UIParent:SetScale(scale)
 	else
 		SetCVar("uiScale", scale)
