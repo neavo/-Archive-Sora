@@ -3,32 +3,6 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
 
-local function MakeShadow(Frame, Size)
-	local Shadow = CreateFrame("Frame", nil, Frame)
-	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", -Size, Size)
-	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
-	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
-	return Shadow
-end
-
-local function MakeTexShadow(Parent, Anchor, Size)
-	local Border = CreateFrame("Frame", nil, Parent)
-	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
-	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
-	Border:SetFrameLevel(1)
-	Border:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
-	Border:SetBackdropBorderColor(0, 0, 0, 1)
-	return Border
-end
-
-local function MakeFontString(parent, fontsize)
-	local tempText = parent:CreateFontString(nil, "OVERLAY")
-	tempText:SetFont(DB.Font, fontsize, "THINOUTLINE")
-	return tempText
-end
-
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
 	local cunit = self.unit:gsub("^%l", string.upper)
@@ -50,7 +24,7 @@ local function BuildHealthBar(self)
 	Bar:SetHeight(24)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
-	Bar.Shadow = MakeShadow(Bar, 3)
+	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -73,7 +47,7 @@ local function BuildPowerBar(self)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
-	Bar.Shadow = MakeShadow(Bar, 3)
+	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -111,15 +85,15 @@ local function BuildPortrait(self)
 end
 
 local function BuildTags(self)
-	local Name = MakeFontString(self.Health, 11)
+	local Name = S.MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
 	self:Tag(Name, "[Sora:level] [Sora:color][name]")
 	Name:SetAlpha(0)
-	local HPTag = MakeFontString(self.Health, 11)
+	local HPTag = S.MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
 	self:Tag(HPTag, "[Sora:color][Sora:hp]")
 	HPTag:SetAlpha(0)
-	local PPTag = MakeFontString(self.Power, 9)
+	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
 	self:Tag(PPTag, "[Sora:pp]")
 	PPTag:SetAlpha(0)
@@ -164,7 +138,7 @@ local function BuildCastbar(self)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
 	Castbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 14)
 	
-	Castbar.Shadow = MakeShadow(Castbar, 3)
+	Castbar.Shadow = S.MakeShadow(Castbar, 3)
 	Castbar.Shadow:SetBackdrop({
 		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
 		edgeFile = DB.GlowTex, edgeSize = 3, 
@@ -177,17 +151,17 @@ local function BuildCastbar(self)
 	Castbar.FailColor = {255/255, 12/255, 0/255}
 	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
 
-	Castbar.Text = MakeFontString(Castbar, 10)
+	Castbar.Text = S.MakeFontString(Castbar, 10)
 	Castbar.Text:SetPoint("LEFT", 2, 0)
 	
-	Castbar.Time = MakeFontString(Castbar, 10)
+	Castbar.Time = S.MakeFontString(Castbar, 10)
 	Castbar.Time:SetPoint("RIGHT", -2, 0)
 	
 	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
 	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	Castbar.Icon:SetSize(20, 20)
 	Castbar.Icon:SetPoint("TOPLEFT", Castbar, "TOPRIGHT", 8, 0)
-	Castbar.Icon.Shadow = MakeTexShadow(Castbar, Castbar.Icon, 3)
+	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
 
 	Castbar.OnUpdate = S.OnCastbarUpdate
 	Castbar.PostCastStart = S.PostCastStart
@@ -201,10 +175,10 @@ local function BuildCastbar(self)
 end
 
 local function PostCreateIcon(self, Button)
-	Button.Shadow = MakeShadow(Button, 3)
+	Button.Shadow = S.MakeShadow(Button, 3)
 	Button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	Button.icon:SetAllPoints()
-	Button.count = MakeFontString(Button, 9)
+	Button.count = S.MakeFontString(Button, 9)
 	Button.count:SetPoint("TOPRIGHT", Button, 3, 0)
 end
   

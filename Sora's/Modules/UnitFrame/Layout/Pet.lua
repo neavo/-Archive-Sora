@@ -3,22 +3,6 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
 
-local function MakeShadow(Frame, Size)
-	local Shadow = CreateFrame("Frame", nil, Frame)
-	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", -Size, Size)
-	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
-	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
-	return Shadow
-end
-
-local function MakeFontString(parent, fontsize)
-	local tempText = parent:CreateFontString(nil, "OVERLAY")
-	tempText:SetFont(DB.Font, fontsize, "THINOUTLINE")
-	return tempText
-end
-
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
 	local cunit = self.unit:gsub("^%l", string.upper)
@@ -40,7 +24,7 @@ local function BuildHealthBar(self)
 	Bar:SetHeight(14)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
-	Bar.Shadow = MakeShadow(Bar, 3)
+	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -58,10 +42,10 @@ local function BuildHealthBar(self)
 end
 
 local function BuildTags(self)
-	local Name = MakeFontString(self.Health, 9)
+	local Name = S.MakeFontString(self.Health, 9)
 	Name:SetPoint("LEFT", 0, 5)
 	self:Tag(Name, "[name]")
-	local HPTag = MakeFontString(self.Health, 7)
+	local HPTag = S.MakeFontString(self.Health, 7)
 	HPTag:SetPoint("RIGHT", self.Health, 7, -5)
 	self:Tag(HPTag, "[Sora:hp]")
 end

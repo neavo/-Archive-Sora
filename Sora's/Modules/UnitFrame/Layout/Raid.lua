@@ -3,22 +3,6 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
 
-local function MakeShadow(Frame, Size)
-	local Shadow = CreateFrame("Frame", nil, Frame)
-	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", -Size, Size)
-	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
-	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
-	return Shadow
-end
-
-local function MakeFontString(Parent, fontsize)
-	local tempText = Parent:CreateFontString(nil, "ARTWORK")
-	tempText:SetFont(DB.Font, fontsize, "THINOUTLINE")
-	return tempText
-end
-
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
 	local cunit = self.unit:gsub("^%l", string.upper)
@@ -40,7 +24,7 @@ local function BuildHealthBar(self)
 	Bar:SetHeight(16)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
-	Bar.Shadow = MakeShadow(Bar, 3)
+	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -63,7 +47,7 @@ local function BuildPowerBar(self)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", 0, -1)
-	Bar.Shadow = MakeShadow(Bar , 3)
+	Bar.Shadow = S.MakeShadow(Bar , 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -78,10 +62,10 @@ local function BuildPowerBar(self)
 end
 
 local function BuildTags(self)
-	local Name = MakeFontString(self.Health, 9)
+	local Name = S.MakeFontString(self.Health, 9)
 	Name:SetPoint("CENTER", 0, 0)
 	self:Tag(Name, "[Sora:color][name]")
-	local DeadInfo = MakeFontString(self.Health, 7)
+	local DeadInfo = S.MakeFontString(self.Health, 7)
 	DeadInfo:SetPoint("CENTER", 0, -10)
 	self:Tag(DeadInfo, "[Sora:info]")
 end

@@ -3,32 +3,6 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
 
-local function MakeShadow(Frame, Size)
-	local Shadow = CreateFrame("Frame", nil, Frame)
-	Shadow:SetFrameLevel(0)
-	Shadow:SetPoint("TOPLEFT", -Size, Size)
-	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
-	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
-	return Shadow
-end
-
-local function MakeTexShadow(Parent, Anchor, Size)
-	local Border = CreateFrame("Frame", nil, Parent)
-	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
-	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
-	Border:SetFrameLevel(1)
-	Border:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
-	Border:SetBackdropBorderColor(0, 0, 0, 1)
-	return Border
-end
-
-local function MakeFontString(Parent, fontsize)
-	local tempText = Parent:CreateFontString(nil, "OVERLAY")
-	tempText:SetFont(DB.Font, fontsize, "THINOUTLINE")
-	return tempText
-end
-
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
 	local cunit = self.unit:gsub("^%l", string.upper)
@@ -50,7 +24,7 @@ local function BuildHealthBar(self)
 	Bar:SetHeight(24)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
-	Bar.Shadow = MakeShadow(Bar, 3)
+	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -71,7 +45,7 @@ local function BuildPowerBar(self)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
 	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
-	Bar.Shadow = MakeShadow(Bar, 3)
+	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
 	Bar.BG:SetAllPoints()
@@ -97,7 +71,7 @@ local function BuildClassPowerBar(self)
 			Rune.BG:SetAllPoints()
 			Rune.BG:SetTexture(DB.Statusbar)
 			Rune.BG:SetVertexColor(0.1, 0.1, 0.1)			
-			Rune.Shadow = MakeShadow(Rune, 3)
+			Rune.Shadow = S.MakeShadow(Rune, 3)
 			
 			if i == 1 then
 				Rune:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
@@ -115,7 +89,7 @@ local function BuildClassPowerBar(self)
 			HolyShard:SetSize((self:GetWidth()-10)/3, 3)
 			HolyShard:SetStatusBarTexture(DB.Statusbar)
 			HolyShard:SetStatusBarColor(0.9, 0.95, 0.33)		
-			HolyShard.Shadow = MakeShadow(HolyShard, 3)
+			HolyShard.Shadow = S.MakeShadow(HolyShard, 3)
 			if i == 1 then
 				HolyShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 			else
@@ -148,7 +122,7 @@ local function BuildClassPowerBar(self)
 			SoulShard:SetSize((self:GetWidth()-10)/3, 3)
 			SoulShard:SetStatusBarTexture(DB.Statusbar)
 			SoulShard:SetStatusBarColor(0.86, 0.44, 1)	
-			SoulShard.Shadow = MakeShadow(SoulShard, 3)
+			SoulShard.Shadow = S.MakeShadow(SoulShard, 3)
 			if i == 1 then
 				SoulShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 			else
@@ -176,7 +150,7 @@ local function BuildClassPowerBar(self)
 		EclipseBar:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
 		EclipseBar:SetHeight(3)
 		EclipseBar:SetWidth(self:GetWidth())
-		EclipseBar.Shadow = MakeShadow(EclipseBar, 3)
+		EclipseBar.Shadow = S.MakeShadow(EclipseBar, 3)
 		EclipseBar.LunarBar = CreateFrame("StatusBar", nil, EclipseBar)
 		EclipseBar.LunarBar:SetPoint("LEFT", 0, 0)
 		EclipseBar.LunarBar:SetSize(EclipseBar:GetWidth(), EclipseBar:GetHeight())
@@ -187,7 +161,7 @@ local function BuildClassPowerBar(self)
 		EclipseBar.SolarBar:SetSize(EclipseBar:GetWidth(), EclipseBar:GetHeight())
 		EclipseBar.SolarBar:SetStatusBarTexture(DB.Statusbar)
 		EclipseBar.SolarBar:SetStatusBarColor(1, 1, 0.13)
-		EclipseBar.Text = MakeFontString(EclipseBar.SolarBar, 9)
+		EclipseBar.Text = S.MakeFontString(EclipseBar.SolarBar, 9)
 		EclipseBar.Text:SetPoint("LEFT", EclipseBar.LunarBar:GetStatusBarTexture(), "RIGHT", -1, 0)
 		self:Tag(EclipseBar.Text, "[pereclipse]")
 		self.EclipseBar = EclipseBar
@@ -211,8 +185,8 @@ local function BuildClassPowerBar(self)
 			Totem.BG:SetAllPoints()
 			Totem.BG:SetTexture(DB.Statusbar)
 			Totem.BG:SetVertexColor(0.2, 0.2, 0.2, 0.8)
-			Totem.Shadow = MakeShadow(Totem, 3)
-			Totem.Text = MakeFontString(Totem, 8)
+			Totem.Shadow = S.MakeShadow(Totem, 3)
+			Totem.Text = S.MakeFontString(Totem, 8)
 			Totem.Text.Colors = {
 				{173/255, 217/255,  25/255}, 	-- earth
 				{233/255,  46/255,  16/255}, 	-- fire
@@ -240,7 +214,7 @@ local function BuildClassPowerBar(self)
 			CPoint:SetSize((self:GetWidth() / 5)-5, 3)
 			CPoint:SetStatusBarTexture(DB.Statusbar)
 			CPoint:SetStatusBarColor(1, 0.9, 0)				
-			CPoint.Shadow = MakeShadow(CPoint, 3)
+			CPoint.Shadow = S.MakeShadow(CPoint, 3)
 			if i == 1 then
 				CPoint:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
 			else
@@ -277,15 +251,15 @@ local function BuildPortrait(self)
 end
 
 local function BuildTags(self)
-	local Name = MakeFontString(self.Health, 11)
+	local Name = S.MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
 	self:Tag(Name, "[Sora:color][name]")
 	Name:SetAlpha(0)
-	local HPTag = MakeFontString(self.Health, 11)
+	local HPTag = S.MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
 	self:Tag(HPTag, "[Sora:color][Sora:hp]")
 	HPTag:SetAlpha(0)
-	local PPTag = MakeFontString(self.Power, 9)
+	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
 	self:Tag(PPTag, "[Sora:pp]")
 	PPTag:SetAlpha(0)
@@ -336,7 +310,7 @@ local function BuildCastbar(self)
 		Castbar:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -14)
 	end
 	
-	Castbar.Shadow = MakeShadow(Castbar, 3)
+	Castbar.Shadow = S.MakeShadow(Castbar, 3)
 	Castbar.Shadow:SetBackdrop({
 		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
 		edgeFile = DB.GlowTex, edgeSize = 3, 
@@ -349,17 +323,17 @@ local function BuildCastbar(self)
 	Castbar.FailColor = {255/255, 12/255, 0/255}
 	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
 
-	Castbar.Text = MakeFontString(Castbar, 10)
+	Castbar.Text = S.MakeFontString(Castbar, 10)
 	Castbar.Text:SetPoint("LEFT", 2, 0)
 	
-	Castbar.Time = MakeFontString(Castbar, 10)
+	Castbar.Time = S.MakeFontString(Castbar, 10)
 	Castbar.Time:SetPoint("RIGHT", -2, 0)
 	
 	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
 	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	Castbar.Icon:SetSize(20, 20)
 	Castbar.Icon:SetPoint("BOTTOMLEFT", Castbar, "BOTTOMRIGHT", 8, 0)
-	Castbar.Icon.Shadow = MakeTexShadow(Castbar, Castbar.Icon, 3)
+	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
 
 	--latency (only for player unit)
 	Castbar.SafeZone = Castbar:CreateTexture(nil, "OVERLAY")
@@ -367,7 +341,7 @@ local function BuildCastbar(self)
 	Castbar.SafeZone:SetVertexColor(1, 0.1, 0, .6)
 	Castbar.SafeZone:SetPoint("TOPRIGHT")
 	Castbar.SafeZone:SetPoint("BOTTOMRIGHT")
-	Castbar.Lag = MakeFontString(Castbar, 10)
+	Castbar.Lag = S.MakeFontString(Castbar, 10)
 	Castbar.Lag:SetPoint("CENTER", -2, 17)
 	Castbar.Lag:Hide()
 	self:RegisterEvent("UNIT_SPELLCAST_SENT", S.OnCastSent)
