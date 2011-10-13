@@ -2,7 +2,7 @@
 local _, _, _, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):NewAddon("Sora")
 
-local Media = "InterFace\\AddOns\\!Sora's\\Media\\"
+local Media = "InterFace\\AddOns\\Sora's\\Media\\"
 DB.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 DB.GlowTex = Media.."GlowTex"
 DB.Statusbar = Media.."Statusbar"

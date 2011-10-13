@@ -3,6 +3,7 @@
 	<Script file = "Init.lua"/>
 	<Script file = "cfg.lua"/>
 	<Include file = "ActionBar\Load_ActionBar.xml"/>
+	<Include file = "Aurora\Load_Aurora.xml"/>
 	<Include file = "Misc\Load_Misc.xml"/>
 	<Include file = "Skin\Load_Skin.xml"/>
 	<Include file = "Topbar\Load_Topbar.xml"/>

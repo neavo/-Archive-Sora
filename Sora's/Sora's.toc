@@ -1,5 +1,5 @@
 ﻿## Interface: 40200
-## Title: |cff70C0F5!Sora's|r
+## Title: |cff70C0F5Sora's|r
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
 ## RequiredDeps: !Sora's_Config
