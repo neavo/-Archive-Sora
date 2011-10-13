@@ -2,6 +2,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -239,21 +240,16 @@ local function BuildPartyFrame(self, ...)
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
 
--- Event
-local Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_LOGIN")
-Event:SetScript("OnEvent", function(slef, event, addon, ...)
-	if UnitFrameDB.ShowParty then
-		oUF:RegisterStyle("SoraParty", BuildPartyFrame)
-		oUF:SetActiveStyle("SoraParty")
-		ns.PartyFrame = oUF:SpawnHeader("oUF_Party", nil, "raid,party,solo", 
-		"showParty", true, 
-		"yoffset", -30, 
-		"oUF-initialConfigFunction", ([[
-			self:SetWidth(%d)
-			self:SetHeight(%d)
-		]]):format(180, 22))
-		ns.PartyFrame:SetScale(UnitFrameDB.RaidScale)
-		ns.PartyFrame:SetPoint("TOPLEFT", UIParent, 10, -250)
-	end
-end)
+if UnitFrameDB.ShowParty then
+	oUF:RegisterStyle("SoraParty", BuildPartyFrame)
+	oUF:SetActiveStyle("SoraParty")
+	ns.PartyFrame = oUF:SpawnHeader("oUF_Party", nil, "raid,party,solo", 
+	"showParty", true, 
+	"yoffset", -30, 
+	"oUF-initialConfigFunction", ([[
+		self:SetWidth(%d)
+		self:SetHeight(%d)
+	]]):format(180, 22))
+	ns.PartyFrame:SetScale(UnitFrameDB.RaidScale)
+	ns.PartyFrame:SetPoint("TOPLEFT", UIParent, 10, -250)
+end

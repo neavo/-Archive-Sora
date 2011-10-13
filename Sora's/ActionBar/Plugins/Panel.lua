@@ -54,7 +54,5 @@ local function BuildExtraBar(MainBar)
 	end
 end
 
-function Sora:OnInitialize()
-	local MainBar = BuildMainBar()
-	BuildExtraBar(MainBar)
-end
+local MainBar = BuildMainBar()
+BuildExtraBar(MainBar)

@@ -2,6 +2,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -260,67 +261,63 @@ local function BuildRaidFrame(self, ...)
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
 
--- Event
-local Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_LOGIN")
-Event:SetScript("OnEvent", function(slef, event, addon, ...)
-	if UnitFrameDB.ShowParty or UnitFrameDB.ShowRaid then
-		-- Hide the Blizzard raid frames
-		CompactRaidFrameManager:UnregisterAllEvents()
-		CompactRaidFrameManager.Show = function() end
-		CompactRaidFrameManager:Hide()
-		CompactRaidFrameContainer:UnregisterAllEvents()
-		CompactRaidFrameContainer.Show = function() end
-		CompactRaidFrameContainer:Hide()		
-		CompactRaidFrameContainer:SetParent(UIParent)	
+
+if UnitFrameDB.ShowParty or UnitFrameDB.ShowRaid then
+	-- Hide the Blizzard raid frames
+	CompactRaidFrameManager:UnregisterAllEvents()
+	CompactRaidFrameManager.Show = function() end
+	CompactRaidFrameManager:Hide()
+	CompactRaidFrameContainer:UnregisterAllEvents()
+	CompactRaidFrameContainer.Show = function() end
+	CompactRaidFrameContainer:Hide()		
+	CompactRaidFrameContainer:SetParent(UIParent)	
+end
+if UnitFrameDB.ShowRaid then
+	oUF:RegisterStyle("SoraRaid", BuildRaidFrame)
+	oUF:SetActiveStyle("SoraRaid")
+	if UnitFrameDB.RaidPartyH then
+		ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
+			"showRaid", UnitFrameDB.ShowRaid,  
+			"showPlayer", true, 
+			"showSolo", false, 
+			"showParty", true, 
+			"xoffset", 7, 
+			"groupFilter", "1, 2, 3, 4, 5", 
+			"groupBy", "GROUP", 
+			"groupingOrder", "1, 2, 3, 4, 5", 
+			"sortMethod", "INDEX", 
+			"maxColumns", 5, 
+			"unitsPerColumn", 5, 
+			"columnSpacing", 7, 
+			"point", "LEFT", 
+			"columnAnchorPoint", "TOP", 
+			"oUF-initialConfigFunction", ([[
+			self:SetWidth(%d)
+			self:SetHeight(%d)
+			]]):format(UnitFrameDB.RaidUnitWidth, 20))
+		ns.RaidFrame:SetScale(UnitFrameDB.RaidScale)
+		ns.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
+	else
+		ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
+			"showRaid", UnitFrameDB.ShowRaid,  
+			"showPlayer", true, 
+			"showSolo", false, 
+			"showParty", true, 
+			"yoffset", -7, 
+			"groupFilter", "1,2,3,4,5", 
+			"groupBy", "GROUP", 
+			"groupingOrder", "1,2,3,4,5", 
+			"sortMethod", "INDEX", 
+			"maxColumns", 5, 
+			"unitsPerColumn", 5, 
+			"columnSpacing", 7, 
+			"point", "TOP", 
+			"columnAnchorPoint", "LEFT", 
+			"oUF-initialConfigFunction", ([[
+			self:SetWidth(%d)
+			self:SetHeight(%d)
+			]]):format(UnitFrameDB.RaidUnitWidth, 20))
+		ns.RaidFrame:SetScale(UnitFrameDB.RaidScale)
+		ns.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
 	end
-	if UnitFrameDB.ShowRaid then
-		oUF:RegisterStyle("SoraRaid", BuildRaidFrame)
-		oUF:SetActiveStyle("SoraRaid")
-		if UnitFrameDB.RaidPartyH then
-			ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
-				"showRaid", UnitFrameDB.ShowRaid,  
-				"showPlayer", true, 
-				"showSolo", true, 
-				"showParty", true, 
-				"xoffset", 7, 
-				"groupFilter", "1, 2, 3, 4, 5", 
-				"groupBy", "GROUP", 
-				"groupingOrder", "1, 2, 3, 4, 5", 
-				"sortMethod", "INDEX", 
-				"maxColumns", 5, 
-				"unitsPerColumn", 5, 
-				"columnSpacing", 7, 
-				"point", "LEFT", 
-				"columnAnchorPoint", "TOP", 
-				"oUF-initialConfigFunction", ([[
-				self:SetWidth(%d)
-				self:SetHeight(%d)
-				]]):format(UnitFrameDB.RaidUnitWidth, 20))
-			ns.RaidFrame:SetScale(UnitFrameDB.RaidScale)
-			ns.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
-		else
-			ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
-				"showRaid", UnitFrameDB.ShowRaid,  
-				"showPlayer", true, 
-				"showSolo", false, 
-				"showParty", true, 
-				"yoffset", -7, 
-				"groupFilter", "1,2,3,4,5", 
-				"groupBy", "GROUP", 
-				"groupingOrder", "1,2,3,4,5", 
-				"sortMethod", "INDEX", 
-				"maxColumns", 5, 
-				"unitsPerColumn", 5, 
-				"columnSpacing", 7, 
-				"point", "TOP", 
-				"columnAnchorPoint", "LEFT", 
-				"oUF-initialConfigFunction", ([[
-				self:SetWidth(%d)
-				self:SetHeight(%d)
-				]]):format(UnitFrameDB.RaidUnitWidth, 20))
-			ns.RaidFrame:SetScale(UnitFrameDB.RaidScale)
-			ns.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
-		end
-	end
-end)
+end

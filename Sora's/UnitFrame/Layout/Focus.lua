@@ -2,6 +2,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -315,12 +316,7 @@ local function BuildFocusFrame(self, ...)
 	BuildCombatIcon(self)
 end
 
--- Event
-local Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_LOGIN")
-Event:SetScript("OnEvent", function(slef, event, addon, ...)
-	oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
-	oUF:SetActiveStyle("SoraFocus")
-	ns.FocusFrame = oUF:Spawn("focus")
-	ns.FocusFrame:SetPoint("TOP", 0, -100)
-end)
+oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
+oUF:SetActiveStyle("SoraFocus")
+ns.FocusFrame = oUF:Spawn("focus")
+ns.FocusFrame:SetPoint("TOP", 0, -100)
