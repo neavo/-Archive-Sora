@@ -2,7 +2,6 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -99,6 +98,6 @@ end
 if UnitFrameDB.ShowPet then
 	oUF:RegisterStyle("SoraPet", BuildPetFrame)
 	oUF:SetActiveStyle("SoraPet")
-	ns.PetFrame = oUF:Spawn("pet")
-	ns.PetFrame:SetPoint("TOPLEFT", ns.PlayerFrame, "BOTTOMLEFT", 0, -10)
+	DB.PetFrame = oUF:Spawn("pet")
+	DB.PetFrame:SetPoint("TOPLEFT", DB.PlayerFrame, "BOTTOMLEFT", 0, -10)
 end

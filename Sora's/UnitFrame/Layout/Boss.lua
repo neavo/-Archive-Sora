@@ -8,7 +8,7 @@ local function MakeShadow(Frame, Size)
 	Shadow:SetFrameLevel(0)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
-	Shadow:SetBackdrop({ edgeFile = DB.GlowTex, edgeSize = Size})
+	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
 	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
 	return Shadow
 end
@@ -158,17 +158,11 @@ end
 
 local function BuildCastbar(self)
 	local Castbar = CreateFrame("StatusBar", nil, self)
+	Castbar:SetHeight(10)
+	Castbar:SetWidth(self:GetWidth()-70)
 	Castbar:SetStatusBarTexture(DB.Statusbar)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	if UnitFrameDB.TargetCastbarAlone then
-		Castbar:SetHeight(14)
-		Castbar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 34, 60)
-		Castbar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", -20, 60)			
-	else
-		Castbar:SetHeight(10)
-		Castbar:SetWidth(self:GetWidth()-70)
-		Castbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -14)
-	end
+	Castbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 14)
 	
 	Castbar.Shadow = MakeShadow(Castbar, 3)
 	Castbar.Shadow:SetBackdrop({
@@ -191,12 +185,8 @@ local function BuildCastbar(self)
 	
 	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
 	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	if UnitFrameDB.TargetCastbarAlone then
-		Castbar.Icon:SetSize(14, 14)
-	else
-		Castbar.Icon:SetSize(20, 20)
-	end
-	Castbar.Icon:SetPoint("BOTTOMRIGHT", Castbar, "BOTTOMLEFT", -8, 0)
+	Castbar.Icon:SetSize(20, 20)
+	Castbar.Icon:SetPoint("TOPLEFT", Castbar, "TOPRIGHT", 8, 0)
 	Castbar.Icon.Shadow = MakeTexShadow(Castbar, Castbar.Icon, 3)
 
 	Castbar.OnUpdate = S.OnCastbarUpdate
@@ -211,9 +201,9 @@ local function BuildCastbar(self)
 end
 
 local function PostCreateIcon(self, Button)
-	Button.Shadow = MakeShadow(Button, 3)	
+	Button.Shadow = MakeShadow(Button, 3)
 	Button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	Button.icon:SetAllPoints()	
+	Button.icon:SetAllPoints()
 	Button.count = MakeFontString(Button, 9)
 	Button.count:SetPoint("TOPRIGHT", Button, 3, 0)
 end
@@ -233,10 +223,9 @@ end
 
 local function BuildBuff(self)
 	Buff = CreateFrame("Frame", nil, self)
-	Buff.onlyShowPlayer = UnitFrameDB.BuffOnlyShowPlayer
-	Buff:SetPoint("TOPLEFT", self, "TOPRIGHT", 8, 0)
-	Buff.initialAnchor = "TOPLEFT"
-	Buff["growth-x"] = "RIGHT"
+	Buff:SetPoint("TOPRIGHT", self, "TOPLEFT", -8, 0)
+	Buff.initialAnchor = "TOPRIGHT"
+	Buff["growth-x"] = "LEFT"
 	Buff["growth-y"] = "DOWN"
 	Buff.size = 20
 	Buff.num = 18
@@ -252,12 +241,11 @@ end
 local function BuildDebuff(self)
 	Debuff = CreateFrame("Frame", nil, self)
 	Debuff.size = 20
-	Debuff.num = 27
-	Debuff.onlyShowPlayer = UnitFrameDB.DebuffOnlyShowPlayer
+	Debuff.num = 23
 	Debuff.spacing = 5
 	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
 	Debuff:SetWidth(self:GetWidth())
-	Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -30)
+	Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -5)
 	Debuff.initialAnchor = "TOPLEFT"
 	Debuff["growth-x"] = "RIGHT"
 	Debuff["growth-y"] = "DOWN"
@@ -288,7 +276,7 @@ local function BuildCombatIcon(self)
 	self.MasterLooter = MasterLooter
 end
 
-local function BuildTargetFrame(self, ...)
+local function BuildBossFrame(self, ...)
 	-- RegisterForClicks
 	self.menu = BuildMenu
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
@@ -314,12 +302,12 @@ local function BuildTargetFrame(self, ...)
 	-- BuildCastbar
 	if UnitFrameDB.ShowCastbar then BuildCastbar(self) end
 	
-	-- BuildBuff
-	if UnitFrameDB.ShowTargetBuff then BuildBuff(self) end
-	
+	-- BuildBuff(self)
+	if UnitFrameDB.ShowBossBuff then BuildBuff(self) end
+
 	-- BuildDebuff
-	if UnitFrameDB.ShowTargetDebuff then BuildDebuff(self) end
-	
+	if UnitFrameDB.ShowBossDebuff then BuildDebuff(self) end
+		
 	-- BuildRaidMark
 	BuildRaidIcon(self)
 	
@@ -327,7 +315,16 @@ local function BuildTargetFrame(self, ...)
 	BuildCombatIcon(self)
 end
 
-oUF:RegisterStyle("SoraTarget", BuildTargetFrame)
-oUF:SetActiveStyle("SoraTarget")
-DB.TargetFrame = oUF:Spawn("target")
-DB.TargetFrame:SetPoint("CENTER", UIParent, "CENTER", 270, -100)
+if true then
+	oUF:RegisterStyle("SoraBoss", BuildBossFrame)
+	oUF:SetActiveStyle("SoraBoss")
+	DB.BossFrame = {}
+	for i = 1, MAX_BOSS_FRAMES do
+		DB.BossFrame[i] = oUF:Spawn("boss"..i)
+		if i == 1 then
+			DB.BossFrame[i]:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -50, -200)
+		else
+			DB.BossFrame[i]:SetPoint("TOP", DB.BossFrame[i-1], "BOTTOM", 0, -60)
+		end
+	end
+end

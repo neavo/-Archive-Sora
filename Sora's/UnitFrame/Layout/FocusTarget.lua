@@ -2,7 +2,6 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -99,6 +98,6 @@ end
 if UnitFrameDB.ShowFocusTarget then
 	oUF:RegisterStyle("SoraFocusTarget", BuildFocusTargetFrame)
 	oUF:SetActiveStyle("SoraFocusTarget")
-	ns.FocusTargetFrame = oUF:Spawn("focustarget")
-	ns.FocusTargetFrame:SetPoint("BOTTOMLEFT", ns.FocusFrame, "TOPLEFT", 0, 10)
+	DB.FocusTargetFrame = oUF:Spawn("focustarget")
+	DB.FocusTargetFrame:SetPoint("BOTTOMLEFT", DB.FocusFrame, "TOPLEFT", 0, 10)
 end

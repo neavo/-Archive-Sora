@@ -2,7 +2,6 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -242,7 +241,7 @@ end
 local function BuildDebuff(self)
 	Debuff = CreateFrame("Frame", nil, self)
 	Debuff.size = 20
-	Debuff.num = 40
+	Debuff.num = 27
 	Debuff.spacing = 5
 	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
 	Debuff:SetWidth(self:GetWidth())
@@ -318,5 +317,5 @@ end
 
 oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
 oUF:SetActiveStyle("SoraFocus")
-ns.FocusFrame = oUF:Spawn("focus")
-ns.FocusFrame:SetPoint("TOP", 0, -100)
+DB.FocusFrame = oUF:Spawn("focus")
+DB.FocusFrame:SetPoint("TOP", 0, -100)

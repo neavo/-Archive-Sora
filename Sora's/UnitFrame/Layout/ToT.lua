@@ -2,7 +2,6 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -99,6 +98,6 @@ end
 if UnitFrameDB.ShowToT then
 	oUF:RegisterStyle("SoraToT", BuildToTFrame)
 	oUF:SetActiveStyle("SoraToT")
-	ns.ToTFrame = oUF:Spawn("targettarget")
-	ns.ToTFrame:SetPoint("TOPRIGHT", ns.TargetFrame, "BOTTOMRIGHT", 0, -10)
+	DB.ToTFrame = oUF:Spawn("targettarget")
+	DB.ToTFrame:SetPoint("TOPRIGHT", DB.TargetFrame, "BOTTOMRIGHT", 0, -10)
 end

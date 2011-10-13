@@ -11,5 +11,6 @@
 	<Script file="FocusTarget.lua"/>
 	<Script file="Raid.lua"/>
 	<Script file="Party.lua"/>
+	<Script file="Boss.lua"/>
 	
 </Ui>

@@ -2,7 +2,6 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -448,5 +447,5 @@ end
 
 oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)
 oUF:SetActiveStyle("SoraPlayer")
-ns.PlayerFrame = oUF:Spawn("player")
-ns.PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -270, -100)
+DB.PlayerFrame = oUF:Spawn("player")
+DB.PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -270, -100)

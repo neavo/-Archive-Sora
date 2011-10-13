@@ -2,7 +2,6 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, _, _, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 local function MakeShadow(Frame, Size)
 	local Shadow = CreateFrame("Frame", nil, Frame)
@@ -276,7 +275,7 @@ if UnitFrameDB.ShowRaid then
 	oUF:RegisterStyle("SoraRaid", BuildRaidFrame)
 	oUF:SetActiveStyle("SoraRaid")
 	if UnitFrameDB.RaidPartyH then
-		ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
+		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  
 			"showPlayer", true, 
 			"showSolo", false, 
@@ -295,10 +294,10 @@ if UnitFrameDB.ShowRaid then
 			self:SetWidth(%d)
 			self:SetHeight(%d)
 			]]):format(UnitFrameDB.RaidUnitWidth, 20))
-		ns.RaidFrame:SetScale(UnitFrameDB.RaidScale)
-		ns.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
+		DB.RaidFrame:SetScale(UnitFrameDB.RaidScale)
+		DB.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
 	else
-		ns.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
+		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  
 			"showPlayer", true, 
 			"showSolo", false, 
@@ -317,7 +316,7 @@ if UnitFrameDB.ShowRaid then
 			self:SetWidth(%d)
 			self:SetHeight(%d)
 			]]):format(UnitFrameDB.RaidUnitWidth, 20))
-		ns.RaidFrame:SetScale(UnitFrameDB.RaidScale)
-		ns.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
+		DB.RaidFrame:SetScale(UnitFrameDB.RaidScale)
+		DB.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
 	end
 end

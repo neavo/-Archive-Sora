@@ -11,28 +11,31 @@ function C.UnitFrame.LoadSettings()
 		["ShowToT"] = true,				-- 显示"目标的目标"框体
 		["ShowPet"] = true,				-- 显示"宠物"框体
 		["ShowFocusTarget"] = true,		-- 显示"焦点目标"框体
+		["ShowBoss"] = false,			-- 显示"Boss"框体
 		-- 团队&小队
 		["ShowRaid"] = true,			-- 显示团队框体
-		["RaidUnitWidth"] = 67,		-- 团队框体单位宽度
-		["RaidPartyH"] = true,		-- 团队框体中各小队横向排列
-		["ShowAuraWatch"] = true,	-- 团队框体中显示边角Hot/技能监视
+		["RaidUnitWidth"] = 67,			-- 团队框体单位宽度
+		["RaidPartyH"] = true,			-- 团队框体中各小队横向排列
+		["ShowAuraWatch"] = true,		-- 团队框体中显示边角Hot/技能监视
 		["ShowRaidDebuffs"] = true, 	-- 显示RaidDebuff
 		["ShowParty"] = false,			-- 显示小队框体
-		["ShowPartyDebuff"] = true,	-- 显示小队框体Debuff
+		["ShowPartyDebuff"] = true,		-- 显示小队框体Debuff
 		["RaidScale"] = 1,				-- 团队&小队缩放
-		-- Buff
-		["ShowTargetBuff"] = true,					-- 显示目标框体Buff
-		["BuffOnlyShowPlayer"] = false,			-- 目标框体上只显示玩家的Buff
-		["ShowTargetDebuff"] = true,					-- 显示目标框体Debuff
-		["DebuffOnlyShowPlayer"] = false,		-- 目标框体上只显示玩家的Debuff
-		["ShowFocusDebuff"] = true,					-- 显示焦点框体Buff
-		["ShowFocusBuff"] = true,					-- 显示焦点框体Debuff
+		-- Buff&Debuff
+		["ShowTargetBuff"] = true,				-- 显示目标框体Buff
+			["BuffOnlyShowPlayer"] = false,			-- 目标框体上只显示玩家的Buff
+		["ShowTargetDebuff"] = true,			-- 显示目标框体Debuff
+			["DebuffOnlyShowPlayer"] = false,		-- 目标框体上只显示玩家的Debuff
+		["ShowFocusDebuff"] = true,				-- 显示焦点框体Buff
+		["ShowFocusBuff"] = true,				-- 显示焦点框体Debuff
+		["ShowBossDebuff"] = true,				-- 显示Boss框体Buff
+		["ShowBossBuff"] = true,				-- 显示Boss框体Debuff
 		-- 施法条
 		["ShowCastbar"] = true,				-- 显示施法条
-		["PlayerCastbarAlone"] = false,			-- 玩家施法条独立
-		["TargetCastbarAlone"] = false,			-- 目标施法条独立
+		["PlayerCastbarAlone"] = false,		-- 玩家施法条独立
+		["TargetCastbarAlone"] = false,		-- 目标施法条独立
 		-- 其他
-		["Scale"] = 1,						-- 其他框体缩放
+		["Scale"] = 1,		-- 其他框体缩放
 	}
 	if not UnitFrameDB then UnitFrameDB = {} end
 	for key, value in pairs(Default) do
@@ -74,22 +77,29 @@ function C.UnitFrame.BuildGUI()
 					get = function() return UnitFrameDB.ShowPet end,
 					set = function(_, value) UnitFrameDB.ShowPet = value end,
 				},
-				ShowFocusTarget = {
+				ShowBoss = {
 					type = "toggle",
 					name = "显示\"焦点目标\"框体",
 					order = 4,
+					get = function() return UnitFrameDB.ShowBoss end,
+					set = function(_, value) UnitFrameDB.ShowBoss = value end,
+				},
+				ShowFocusTarget = {
+					type = "toggle",
+					name = "显示\"焦点目标\"框体",
+					order = 5,
 					get = function() return UnitFrameDB.ShowFocusTarget end,
 					set = function(_, value) UnitFrameDB.ShowFocusTarget = value end,
 				},
-				Header_3 = {
+				Header_2 = {
 					type = "header",
 					name = "Buff&Debuff",
-					order = 5,
+					order = 6,
 				},
 				ShowTargetBuff = {
 					type = "toggle",
 					name = "显示目标框体Buff",
-					order = 6,
+					order = 7,
 					get = function() return UnitFrameDB.ShowTargetBuff end,
 					set = function(_, value) UnitFrameDB.ShowTargetBuff = value end,
 				},
@@ -97,14 +107,14 @@ function C.UnitFrame.BuildGUI()
 					type = "toggle",
 					name = "目标框体上只显示玩家的Buff",
 					disabled = not UnitFrameDB.ShowTargetBuff,
-					order = 7,
+					order = 8,
 					get = function() return UnitFrameDB.BuffOnlyShowPlayer end,
 					set = function(_, value) UnitFrameDB.BuffOnlyShowPlayer = value end,
 				},
 				ShowTargetDebuff = {
 					type = "toggle",
 					name = "显示目标框体Debuff",
-					order = 8,
+					order = 9,
 					get = function() return UnitFrameDB.ShowTargetDebuff end,
 					set = function(_, value) UnitFrameDB.ShowTargetDebuff = value end,
 				},
@@ -112,33 +122,47 @@ function C.UnitFrame.BuildGUI()
 					type = "toggle",
 					name = "目标框体上只显示玩家的Debuff",
 					disabled = not UnitFrameDB.ShowTargetDebuff,
-					order = 9,
+					order = 10,
 					get = function() return UnitFrameDB.DebuffOnlyShowPlayer end,
 					set = function(_, value) UnitFrameDB.DebuffOnlyShowPlayer = value end,
 				},
 				ShowFocusBuff = {
 					type = "toggle",
 					name = "显示焦点框体Buff",
-					order = 10,
+					order = 11,
 					get = function() return UnitFrameDB.ShowFocusBuff end,
 					set = function(_, value) UnitFrameDB.ShowFocusBuff = value end,
 				},
 				ShowFocusDebuff = {
 					type = "toggle",
 					name = "显示焦点框体Debuff",
-					order = 11,
+					order = 12,
 					get = function() return UnitFrameDB.ShowFocusDebuff end,
 					set = function(_, value) UnitFrameDB.ShowFocusDebuff = value end,
+				},
+				ShowBossBuff = {
+					type = "toggle",
+					name = "显示焦点框体Buff",
+					order = 13,
+					get = function() return UnitFrameDB.ShowBossBuff end,
+					set = function(_, value) UnitFrameDB.ShowBossBuff = value end,
+				},
+				ShowBossDebuff = {
+					type = "toggle",
+					name = "显示焦点框体Debuff",
+					order = 14,
+					get = function() return UnitFrameDB.ShowBossDebuff end,
+					set = function(_, value) UnitFrameDB.ShowBossDebuff = value end,
 				},
 				Header_3 = {
 					type = "header",
 					name = "其他",
-					order = 12,
+					order = 15,
 				},
 				ShowCastbar = {
 					type = "toggle",
 					name = "显示施法条",
-					order = 13,
+					order = 16,
 					get = function() return UnitFrameDB.ShowCastbar end,
 					set = function(_, value) UnitFrameDB.ShowCastbar = value end,
 				},
@@ -146,7 +170,7 @@ function C.UnitFrame.BuildGUI()
 					type = "toggle",
 					name = "玩家施法条独立",
 					disabled = not UnitFrameDB.ShowCastbar,
-					order = 14,
+					order = 17,
 					get = function() return UnitFrameDB.PlayerCastbarAlone end,
 					set = function(_, value) UnitFrameDB.PlayerCastbarAlone = value end,
 				},
@@ -154,7 +178,7 @@ function C.UnitFrame.BuildGUI()
 					type = "toggle",
 					name = "目标施法条独立",
 					disabled = not UnitFrameDB.ShowCastbar,
-					order = 15,
+					order = 18,
 					get = function() return UnitFrameDB.TargetCastbarAlone end,
 					set = function(_, value) UnitFrameDB.TargetCastbarAlone = value end,
 				},
@@ -162,7 +186,7 @@ function C.UnitFrame.BuildGUI()
 					type = "input",
 					name = "其他框体缩放比例：",
 					desc = "请输入其他框体缩放比例：",
-					order = 16,
+					order = 19,
 					get = function() return tostring(UnitFrameDB.Scale) end,
 					set = function(_, value) UnitFrameDB.Scale = tonumber(value) end,
 				},
