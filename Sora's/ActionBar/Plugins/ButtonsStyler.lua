@@ -9,7 +9,7 @@ local function SetIconTexture(self, crop)
 end
 local function SetNormalTexture(self)
 	if self then
-		self:SetTexture(DB.Texture)
+		self:SetTexture(DB.Button)
 		self:SetAllPoints()
 		self:SetVertexColor(DB.Colors.normal.r, DB.Colors.normal.g, DB.Colors.normal.b)
 	end
@@ -24,15 +24,15 @@ local function SetNormalTexture(self)
 	end
 end
 local function SetPushedTexture(self)
-	self:SetTexture(DB.Texture)
+	self:SetTexture(DB.Button)
 	self:SetVertexColor(DB.Colors.pushed.r, DB.Colors.pushed.g, DB.Colors.pushed.b)
 end
 local function SetHighlightTexture(self)
-	self:SetTexture(DB.Texture)
+	self:SetTexture(DB.Button)
 	self:SetVertexColor(DB.Colors.highlight.r, DB.Colors.highlight.g, DB.Colors.highlight.b)
 end
 local function SetCheckedTexture(self)
-	self:SetTexture(DB.Texture)
+	self:SetTexture(DB.Button)
 	self:SetVertexColor(DB.Colors.checked.r, DB.Colors.checked.g, DB.Colors.checked.b)
 end
 local function SetStyle(self, checked)
@@ -113,7 +113,7 @@ SpellFlyout:HookScript("OnShow", function(self)
 		if _G["SpellFlyoutButton"..i] then
 			local self = _G["SpellFlyoutButton"..i]
 			local tex = self:GetNormalTexture()
-			self:SetNormalTexture(DB.Texture)
+			self:SetNormalTexture(DB.Button)
 			SetStyle(self)
 		end
 
@@ -123,7 +123,7 @@ end)
 -- Totem Bar
 if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 	local function MultiCastSlotButtons(self, slot)
-		self:SetNormalTexture(DB.Texture)
+		self:SetNormalTexture(DB.Button)
 		local tex = self:GetNormalTexture()
 		tex:SetVertexColor(DB.Colors.normal.r, DB.Colors.normal.g, DB.Colors.normal.b)
 		SetHighlightTexture(self:GetHighlightTexture())
@@ -152,7 +152,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 	hooksecurefunc("MultiCastFlyoutFrame_LoadSlotSpells", function(self, slot, ...)
 		local numSpells = select("#", ...) + 1
 		for i = 1, numSpells do
-			self.buttons[i]:SetNormalTexture(DB.Texture)
+			self.buttons[i]:SetNormalTexture(DB.Button)
 			local IconTexture, HighlightTexture, NormalTexture = self.buttons[i]:GetRegions()
 			if i ~= 1 then
 				SetIconTexture(IconTexture, 1)
@@ -167,7 +167,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 	hooksecurefunc("MultiCastFlyoutFrame_LoadPageSpells", function(self)
 		for key, value in next, TOTEM_MULTI_CAST_SUMMON_SPELLS do
 			if IsSpellKnown(value) then
-				self.buttons[key]:SetNormalTexture(DB.Texture)
+				self.buttons[key]:SetNormalTexture(DB.Button)
 				local IconTexture, HighlightTexture, NormalTexture = self.buttons[key]:GetRegions()
 				SetIconTexture(IconTexture, 1)
 				SetHighlightTexture(HighlightTexture)
