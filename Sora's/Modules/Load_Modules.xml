@@ -1,0 +1,13 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Include file = "ActionBar\Load_ActionBar.xml"/>
+	<Include file = "Bags\Load_Bags.xml"/>
+	<Include file = "Buff\Load_Buff.xml"/>
+	<Include file = "Chat\Load_Chat.xml"/>
+	<Include file = "Nameplate\Load_Nameplate.xml"/>
+	<Include file = "Reminder\Load_Reminder.xml"/>
+	<Include file = "Threat\Load_Threat.xml"/>
+	<Include file = "Tooltip\Load_Tooltip.xml"/>
+	<Include file = "UnitFrame\Load_UnitFrame.xml"/>
+
+</Ui>
