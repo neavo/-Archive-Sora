@@ -1,0 +1,11 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Script file = "Init.lua"/>
+	<Script file = "cfg.lua"/>
+	<Include file = "ActionBar\Load_ActionBar.xml"/>
+	<Include file = "Misc\Load_Misc.xml"/>
+	<Include file = "Skin\Load_Skin.xml"/>
+	<Include file = "Topbar\Load_Topbar.xml"/>
+	<Include file = "UnitFrame\Load_UnitFrame.xml"/>
+
+</Ui>

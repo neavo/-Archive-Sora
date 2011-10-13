@@ -1,9 +1,5 @@
-﻿----------------
---  命名空间  --
-----------------
-
-local _, ns = ...
-local cfg = ns.cfg
+﻿-- Engines
+local _, _, _, DB = unpack(select(2, ...))
 
 local function UpdateGlow(Button, ItemID)
 	local quality, texture
@@ -17,7 +13,7 @@ local function UpdateGlow(Button, ItemID)
 		Button.Border = CreateFrame("Frame", nil, Button)
 		Button.Border:SetPoint("TOPLEFT")
 		Button.Border:SetPoint("BOTTOMRIGHT")
-		Button.Border:SetBackdrop({edgeFile = cfg.Solid, edgeSize = 1})
+		Button.Border:SetBackdrop({edgeFile = DB.Solid, edgeSize = 1})
 	end
 
 	if texture then

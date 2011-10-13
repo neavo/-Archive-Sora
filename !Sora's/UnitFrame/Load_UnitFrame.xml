@@ -1,0 +1,11 @@
+﻿
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Include file="oUF\oUF.xml"/>
+	
+	<Include file="Plugins\Plugins.xml"/>
+	<Include file="Layout\Layout.xml"/>
+	
+</Ui>

@@ -1,9 +1,4 @@
-----------------
---  命名空间  --
-----------------
-
-local _, ns = ...
-local cfg = ns.cfg
+local _, _, _, DB = unpack(select(2, ...))
 
 local function zsub(s,...)
 	local t={...}
@@ -44,7 +39,7 @@ for i = 1,4 do
 	
 	topinfo[i].Status = CreateFrame("StatusBar", "TopInfoBarStatus"..i, topinfo[i])
 	topinfo[i].Status:SetFrameLevel(12)
-	topinfo[i].Status:SetStatusBarTexture(cfg.Statusbar)
+	topinfo[i].Status:SetStatusBarTexture(DB.Statusbar)
 	topinfo[i].Status:SetMinMaxValues(0, 100)
 	topinfo[i].Status:SetStatusBarColor(0, 0.4, 1, 0.6)
 	topinfo[i].Status:Point("TOPLEFT", topinfo[i], "TOPLEFT", 2, -2)
@@ -52,7 +47,7 @@ for i = 1,4 do
 	topinfo[i].Status:SetValue(100)
 	
 	topinfo[i].Text = topinfo[i].Status:CreateFontString(nil, "OVERLAY")
-	topinfo[i].Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+	topinfo[i].Text:SetFont(DB.Font, 10, "THINOUTLINE")
 	topinfo[i].Text:Point("CENTER", topinfo[i], "CENTER", 0, -8)
 	topinfo[i].Text:SetShadowColor(0, 0, 0, 0.4)
 	topinfo[i].Text:SetShadowOffset(1.25, -1.25)
@@ -344,7 +339,7 @@ local function updateCurrency()
 
 			frame.Status = CreateFrame("StatusBar", "CurrencyDataStatus"..id, frame)
 			frame.Status:SetFrameLevel(12)
-			frame.Status:SetStatusBarTexture(cfg.Statusbar)
+			frame.Status:SetStatusBarTexture(DB.Statusbar)
 			frame.Status:SetMinMaxValues(0, max)
 			frame.Status:SetValue(amount)
 			frame.Status:SetStatusBarColor(0, 0.4, 1, 0.6)
@@ -352,7 +347,7 @@ local function updateCurrency()
 			frame.Status:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
 
 			frame.Text = frame.Status:CreateFontString(nil, "OVERLAY")
-			frame.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+			frame.Text:SetFont(DB.Font, 10, "THINOUTLINE")
 			frame.Text:Point("CENTER", frame, "CENTER", 0, 2)
 			frame.Text:Width(frame:GetWidth() - 4)
 			frame.Text:SetShadowColor(0, 0, 0)
@@ -421,7 +416,7 @@ topinfo[4].Status:SetMinMaxValues(0,99999)
 local Clock = CreateFrame("Frame", nil, UIParent)
 Clock.Text = Clock:CreateFontString(nil, "OVERLAY")
 Clock.Text:SetPoint("TOP", UIParent, "TOP", 0, -10)
-Clock.Text:SetFont(cfg.Font, 14, "THINOUTLINE")
+Clock.Text:SetFont(DB.Font, 14, "THINOUTLINE")
 Clock:SetAllPoints(Clock.Text)
 Clock:RegisterEvent("PLAYER_ENTERING_WORLD")
 Clock:SetScript("OnEvent",function(self, event, ...)
@@ -489,7 +484,7 @@ end)
 -- NewMail
 local NewMail = UIParent:CreateFontString(nil, "OVERLAY")
 NewMail:SetPoint("TOP", Clock, "BOTTOM", 4, -5)
-NewMail:SetFont(cfg.Font,14,"THINOUTLINE")	
+NewMail:SetFont(DB.Font,14,"THINOUTLINE")	
 NewMail:SetText("|cff55FF55新邮件！|r")
 
 -- OnEnterWorld

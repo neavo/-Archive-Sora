@@ -1,24 +1,9 @@
-﻿----------------
---  命名空间  --
-----------------
+﻿local S, C, L, DB = unpack(select(2, ...))
 
-local _, ns = ...
-local cfg = ns.cfg
-
---API and Engine by Tukz and Elv
-local addon, engine = ...
-engine[1] = {} -- E, functions, constants
-engine[2] = {} -- C, config
-engine[3] = {} -- L, localization
-engine[4] = {} -- DB, database, post config load
-
-RayUI = engine 
-
-local R = unpack(select(2, ...))
-_, R.myclass = UnitClass("player")
-R.level = UnitLevel("player")
-R.myname = UnitName("player")
-R.myrealm = GetRealmName()
+_, S.myclass = UnitClass("player")
+S.level = UnitLevel("player")
+S.myname = UnitName("player")
+S.myrealm = GetRealmName()
 RoleUpdater = CreateFrame("Frame")
 
 local function CheckRole(self, event, unit)
@@ -30,22 +15,22 @@ local function CheckRole(self, event, unit)
 	else
 		resilience = false
 	end
-	if ((R.myclass == "PALADIN" and tree == 2) or 
-	(R.myclass == "WARRIOR" and tree == 3) or 
-	(R.myclass == "DEATHKNIGHT" and tree == 1)) and
+	if ((S.myclass == "PALADIN" and tree == 2) or 
+	(S.myclass == "WARRIOR" and tree == 3) or 
+	(S.myclass == "DEATHKNIGHT" and tree == 1)) and
 	resilience == false or
-	(R.myclass == "DRUID" and tree == 2 and GetBonusBarOffset() == 3) then
-		R.Role = "Tank"
+	(S.myclass == "DRUID" and tree == 2 and GetBonusBarOffset() == 3) then
+		S.Role = "Tank"
 	else
 		local playerint = select(2, UnitStat("player", 4))
 		local playeragi	= select(2, UnitStat("player", 2))
 		local base, posBuff, negBuff = UnitAttackPower("player");
 		local playerap = base + posBuff + negBuff;
 
-		if (((playerap > playerint) or (playeragi > playerint)) and not (R.myclass == "SHAMAN" and tree ~= 1 and tree ~= 3) and not (UnitBuff("player", GetSpellInfo(24858)) or UnitBuff("player", GetSpellInfo(65139)))) or R.myclass == "ROGUE" or R.myclass == "HUNTER" or (R.myclass == "SHAMAN" and tree == 2) then
-			R.Role = "Melee"
+		if (((playerap > playerint) or (playeragi > playerint)) and not (S.myclass == "SHAMAN" and tree ~= 1 and tree ~= 3) and not (UnitBuff("player", GetSpellInfo(24858)) or UnitBuff("player", GetSpellInfo(65139)))) or S.myclass == "ROGUE" or S.myclass == "HUNTER" or (S.myclass == "SHAMAN" and tree == 2) then
+			S.Role = "Melee"
 		else
-			R.Role = "Caster"
+			S.Role = "Caster"
 		end
 	end
 end	
@@ -63,14 +48,14 @@ local function scale(x)
 	return mult*math.floor(x/mult+.5)
 end
 
-function R.RGBToHex(r, g, b)
+function S.RGBToHex(r, g, b)
 	r = r <= 1 and r >= 0 and r or 0
 	g = g <= 1 and g >= 0 and g or 0
 	b = b <= 1 and b >= 0 and b or 0
 	return string.format("|cff%02x%02x%02x", r*255, g*255, b*255)
 end
 
-function R.ShortValue(v)
+function S.ShortValue(v)
 	if v >= 1e6 then
 		return ("%.1fm"):format(v / 1e6):gsub("%.?0+([km])$", "%1")
 	elseif v >= 1e3 or v <= -1e3 then
@@ -117,7 +102,7 @@ local function CreateShadow(f, t)
 	shadow:Point("TOPRIGHT", 3, 3)
 	shadow:Point("BOTTOMRIGHT", 3, -3)
 	shadow:SetBackdrop({
-		edgeFile = cfg.GlowTex, 
+		edgeFile = DB.GlowTex, 
 		edgeSize = scale(5),
 		insets = { left = scale(4), right = scale(4), top = scale(4), bottom = scale(4) }
 	})
@@ -128,7 +113,7 @@ end
 
 local function SetTemplate(f, t, texture)
 	f:SetBackdrop({
-	  bgFile = cfg.Statusbar,
+	  bgFile = DB.Statusbar,
 	})
 	f:SetBackdropColor( .05,.05,.05, .9)
 	f:SetBackdropBorderColor(0, 0, 0, 1)

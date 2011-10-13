@@ -1,8 +1,3 @@
---[[
-	Curation settings for tullaCC
---]]
-
-
 local C = select(2, ...) --retrieve addon table
 
 --font settings
