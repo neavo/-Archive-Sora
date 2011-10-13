@@ -89,7 +89,7 @@ function C.Nameplate.BuildGUI()
 					name = "进入/离开战斗自动开启/关闭姓名板",
 					width = "double",
 					order = 7,
-					get = function() return NameplateDB.CombatToggleend end,
+					get = function() return NameplateDB.CombatToggle end,
 					set = function(_, value) NameplateDB.CombatToggle = value end,
 				},
 			}
