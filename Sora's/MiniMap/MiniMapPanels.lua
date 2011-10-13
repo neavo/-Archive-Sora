@@ -100,11 +100,9 @@ local function BuildButtonTable()
 		Button.Text:SetPoint("CENTER")
 		Button.Text:SetFont(DB.Font, 10, "THINOUTLINE")
 		Button.HideFrame = CreateFrame("Frame", nil, Button)
-		
 		Button.HideFrame:SetAllPoints()
 		Button.HideFrame:SetFrameLevel(Button:GetFrameLevel()+1)
 		Button.HideFrame:EnableMouse(true)
-		Button.HideFrame:Hide()
 
 		if i == 1 then
 			Button:SetPoint("TOPLEFT", Minimap, "TOPRIGHT", 10, 15)
