@@ -2,7 +2,7 @@
 --  命名空间  --
 ----------------
 
-local S, C, L, DB = unpack(select(2, ...))
+local S, _, _, DB = unpack(select(2, ...))
 
 -- special thanks to Allez for coming up with this solution
 local Ticks = {
@@ -33,7 +33,7 @@ local SetBarTicks = function(castBar, ticknum)
 		for i = 1, ticknum do
 			if not ticks[i] then
 				ticks[i] = castBar:CreateTexture(nil, "OVERLAY")
-				ticks[i]:SetTexture(cfg.Solid)
+				ticks[i]:SetTexture(DB.Solid)
 				ticks[i]:SetVertexColor(0, 0, 0)
 				ticks[i]:SetWidth(2)
 				ticks[i]:SetHeight(castBar:GetHeight())
