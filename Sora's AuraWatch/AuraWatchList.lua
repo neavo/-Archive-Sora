@@ -716,7 +716,7 @@ SRAuraList = {
 				{spellID = 81162, unitId = "player", Filter = "BUFF"},
 				-- 符文刃舞
 				{spellID = 81256, unitId = "player", Filter = "BUFF"},
-				--暗影灌注
+				-- 暗影灌注
 				{spellID = 91342, unitId = "pet", Filter = "BUFF"}, 
 			},
 		},

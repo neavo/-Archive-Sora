@@ -45,10 +45,10 @@ end
 
 -- Pos
 local function Pos()
-	for key,VALUE in pairs(Aura) do
+	for key, VALUE in pairs(Aura) do
 		local value = AuraList[key]
 		local Pre = nil
-		for i = 1,#VALUE do
+		for i = 1, #VALUE do
 			local frame = VALUE[i]
 			if i == 1 then
 				frame:SetPoint(unpack(value.Pos))
@@ -70,28 +70,26 @@ end
 local Timer = 0
 local function OnUpdate(self, elapsed)
 	Timer = self.Filter == "CD" and self.expires+self.duration-GetTime() or self.expires-GetTime()
-	if self.Time then
-		if Timer < -1 then
-			self.Time:SetText("N/A")
-			self.Statusbar:SetMinMaxValues(0,1) 
-			self.Statusbar:SetValue(1)
-		elseif Timer < 60 then
-			self.Time:SetFormattedText("%.1f", Timer)
-			self.Statusbar:SetMinMaxValues(0, self.duration) 
-			self.Statusbar:SetValue(Timer)
-		else
-			self.Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60)
-			self.Statusbar:SetMinMaxValues(0, self.duration) 
-			self.Statusbar:SetValue(Timer)
-		end
+	if Timer < -1 then
+		if self.Time then self.Time:SetText("N/A") end
+		self.Statusbar:SetMinMaxValues(0, 1) 
+		self.Statusbar:SetValue(1)
+	elseif Timer < 60 then
+		if self.Time then self.Time:SetFormattedText("%.1f", Timer) end
+		self.Statusbar:SetMinMaxValues(0, self.duration) 
+		self.Statusbar:SetValue(Timer)
+	else
+		if self.Time then self.Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
+		self.Statusbar:SetMinMaxValues(0, self.duration) 
+		self.Statusbar:SetValue(Timer)
 	end
 end
 
--- updateBuff
-local function updateBuff(frame, value, idName)
+-- UpdateBuff
+local function UpdateBuff(Frame, value, idName)
 	local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.unitId, idName)
 	
-	-- 判断施法者和层数阈值
+	-- 过滤施法者和层数阈值
 	if value.Caster and caster and value.Caster:lower() ~= caster:lower() then
 		return
 	end
@@ -99,30 +97,27 @@ local function updateBuff(frame, value, idName)
 		return
 	end
 	
-	-- 更新图标
-	frame:Show()
-	frame.Icon:SetTexture(icon)
-	frame.Count:SetText(count > 1 and count or "")
-	if frame.Cooldown then
-		CooldownFrame_SetTimer(frame.Cooldown, expires-duration, duration, 1)
-	end
+	Frame:Show()
+	Frame.Icon:SetTexture(icon)
+	Frame.Count:SetText(count > 1 and count or "")
 	
-	-- 更新计时条
-	if frame.Time then
-		frame.Filter = value.Filter
-		frame.duration = duration
-		frame.expires = expires
-		frame.Spellname:SetText(name)
-		frame:SetScript("OnUpdate",OnUpdate)
+	if Frame.Cooldown then CooldownFrame_SetTimer(Frame.Cooldown, expires-duration, duration, 1) end
+	
+	if Frame.Spellname then Frame.Spellname:SetText(name) end
+	
+	if Frame.Statusbar then
+		Frame.Filter = value.Filter
+		Frame.duration = duration
+		Frame.expires = expires
+		Frame:SetScript("OnUpdate", OnUpdate)
 	end
-
 end
 
--- updateDebuff
-local function updateDebuff(frame, value, idName)
+-- UpdateDebuff
+local function UpdateDebuff(Frame, value, idName)
 	local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, idName)
 	
-	-- 判断施法者和层数阈值
+	-- 过滤施法者和层数阈值
 	if value.Caster and caster and value.Caster:lower() ~= caster:lower() or not caster then
 		return
 	end
@@ -130,104 +125,99 @@ local function updateDebuff(frame, value, idName)
 		return
 	end
 	
-	-- 更新图标
-	frame:Show()
-	frame.Icon:SetTexture(icon)
-	frame.Count:SetText(count > 1 and count or "")
-	if frame.Cooldown then
-		CooldownFrame_SetTimer(frame.Cooldown, expires-duration, duration, 1)
-	end
+	Frame:Show()
+	Frame.Icon:SetTexture(icon)
+	Frame.Count:SetText(count > 1 and count or "")
 	
-	-- 更新计时条
-	if frame.Time then
-		frame.Filter = value.Filter
-		frame.duration = duration
-		frame.expires = expires
-		frame.Spellname:SetText(name)
-		frame:SetScript("OnUpdate",OnUpdate)
+	if Frame.Cooldown then CooldownFrame_SetTimer(Frame.Cooldown, expires-duration, duration, 1) end
+	
+	if Frame.Spellname then Frame.Spellname:SetText(name) end
+	
+	if Frame.Statusbar then
+		Frame.Filter = value.Filter
+		Frame.duration = duration
+		Frame.expires = expires
+		Frame:SetScript("OnUpdate", OnUpdate)
 	end
-
 end
 
--- updateCD
-local function updateCD(frame, value, idName)
-	start, duration = GetSpellCooldown(idName)
-	_, _, icon = GetSpellInfo(value.spellID)
+-- UpdateCD
+local function UpdateCD(Frame, value, idName)
+	local start, duration = GetSpellCooldown(idName)
+	local _, _, icon = GetSpellInfo(value.spellID)
 
 	-- 更新图标
-	frame:Show()	
-	frame.Icon:SetTexture(icon)
-	if frame.Cooldown then
-		frame.Cooldown:SetReverse(false)
-		CooldownFrame_SetTimer(frame.Cooldown, start , duration, 1)
+	Frame:Show()	
+	Frame.Icon:SetTexture(icon)
+	if Frame.Cooldown then
+		Frame.Cooldown:SetReverse(false)
+		CooldownFrame_SetTimer(Frame.Cooldown, start , duration, 1)
 	end
 	
-	-- 更新计时条
-	if frame.Time then
-		frame.Filter = value.Filter
-		frame.duration = duration
-		frame.expires = start
-		frame.Spellname:SetText(idName)	
-		frame:SetScript("OnUpdate",OnUpdate)
+	if Frame.Spellname then Frame.Spellname:SetText(name) end
+	
+	if Frame.Statusbar then
+		Frame.Filter = value.Filter
+		Frame.duration = duration
+		Frame.expires = start
+		Frame:SetScript("OnUpdate", OnUpdate)
 	end
-
 end
 
--- updateItemCD
-local function updateItemCD(frame, value, idName)
-	start, duration = GetItemCooldown(value.itemID)
-	name, _, _, _, _, _, _, _, _, icon = GetItemInfo(value.itemID)
+-- UpdateItemCD
+local function UpdateItemCD(Frame, value, idName)
+	local start, duration = GetItemCooldown(value.itemID)
+	local name, _, _, _, _, _, _, _, _, icon = GetItemInfo(value.itemID)
 
 	-- 更新图标
-	frame:Show()
-	frame.Icon:SetTexture(icon)
-	if frame.Cooldown then
-		frame.Cooldown:SetReverse(false)
-		CooldownFrame_SetTimer(frame.Cooldown, start , duration, 1)
+	Frame:Show()
+	Frame.Icon:SetTexture(icon)
+	if Frame.Cooldown then
+		Frame.Cooldown:SetReverse(false)
+		CooldownFrame_SetTimer(Frame.Cooldown, start , duration, 1)
 	end
 	
-	-- 更新计时条
-	if frame.Time then
-		frame.Filter = value.Filter
-		frame.duration = duration
-		frame.expires = start
-		frame.Spellname:SetText(idName)	
-		frame:SetScript("OnUpdate",OnUpdate)
-	end
+	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	
+	if Frame.Statusbar then
+		Frame.Filter = value.Filter
+		Frame.duration = duration
+		Frame.expires = start
+		Frame:SetScript("OnUpdate", OnUpdate)
+	end
 end
 
 -- Update
 local function Update()
 
 	-- 重置旧的Aura
-	for KEY,VALUE in pairs(Aura) do
+	for KEY, VALUE in pairs(Aura) do
 		for i = 1, Arg[KEY] do
 			VALUE[i]:Hide()
-			VALUE[i]:SetScript("OnUpdate",nil)		
+			VALUE[i]:SetScript("OnUpdate", nil)		
 		end
 	end
 	-- 更新新的Aura
-	for KEY,VALUE in pairs(Aura) do
+	for KEY, VALUE in pairs(Aura) do
 		Arg[KEY] = 1
-		for key,value in pairs(AuraList[KEY].List) do
+		for key, value in pairs(AuraList[KEY].List) do
 			local frame = VALUE[Arg[KEY]]
 			if value.spellID then
 				local idName = GetSpellInfo(value.spellID)
 				if value.Filter:lower() == "buff" and UnitBuff(value.unitId, idName) then
-					updateBuff(frame, value, idName)
+					UpdateBuff(frame, value, idName)
 					Arg[KEY] = Arg[KEY] + 1
 				elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, idName) then
-					updateDebuff(frame, value, idName)
+					UpdateDebuff(frame, value, idName)
 					Arg[KEY] = Arg[KEY] + 1
-				elseif value.Filter:lower() == "cd" and GetSpellCooldown(idName) and select(2,GetSpellCooldown(idName)) > 1.5 then
-					updateCD(frame, value, idName)
+				elseif value.Filter:lower() == "cd" and GetSpellCooldown(idName) and select(2, GetSpellCooldown(idName)) > 1.5 then
+					UpdateCD(frame, value, idName)
 					Arg[KEY] = Arg[KEY] + 1
 				end
 			elseif value.itemID then
 				idName = GetItemInfo(value.itemID)
-				if select(2,GetItemCooldown(value.itemID)) > 1.5 then
-					updateItemCD(frame, value, idName)
+				if select(2, GetItemCooldown(value.itemID)) > 1.5 then
+					UpdateItemCD(frame, value, idName)
 					Arg[KEY] = Arg[KEY] + 1
 				end
 			end
@@ -239,7 +229,7 @@ end
 -- Event
 Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("PLAYER_ENTERING_WORLD")
-Event:SetScript("OnEvent",function(self, event, ...)
+Event:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		Init()
 	elseif event == "PLAYER_ENTERING_WORLD" then
@@ -247,7 +237,7 @@ Event:SetScript("OnEvent",function(self, event, ...)
 	end
 end)
 Event.Timer = 0
-Event:SetScript("OnUpdate",function(self,elapsed)
+Event:SetScript("OnUpdate", function(self, elapsed)
 	self.Timer = self.Timer + elapsed
 	if self.Timer > 0.5 then
 		self.Timer = 0
@@ -262,10 +252,10 @@ SlashCmdList.SRAuraWatch = function()
 	if testFlag then
 		testFlag = false
 		Event:SetScript("OnUpdate", nil)
-		for _,VALUE in pairs(Aura) do
-			for _,value in pairs(VALUE) do
+		for _, VALUE in pairs(Aura) do
+			for _, value in pairs(VALUE) do
 				value:Hide()
-				value:SetScript("OnUpdate",nil)		
+				value:SetScript("OnUpdate", nil)		
 				
 				local name, _, icon = GetSpellInfo(118)
 				
@@ -293,20 +283,20 @@ SlashCmdList.SRAuraWatch = function()
 		end
 	else
 		testFlag = true
-		Event:SetScript("OnUpdate",function(self,elapsed)
+		Event:SetScript("OnUpdate", function(self, elapsed)
 			self.Timer = self.Timer + elapsed
 			if self.Timer > 0.5 then
 				self.Timer = 0
 				Update()
 			end	
 		end)
-		for _,VALUE in pairs(Aura) do
-			for _,value in pairs(VALUE) do
+		for _, VALUE in pairs(Aura) do
+			for _, value in pairs(VALUE) do
 				if value.Count then
 					value.Count:SetText(nil)
 				end
 				value:Hide()
-				value:SetScript("OnUpdate",nil)		
+				value:SetScript("OnUpdate", nil)		
 			end
 		end
 	end

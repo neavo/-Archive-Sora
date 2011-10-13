@@ -7,35 +7,41 @@ C.UnitFrame = CreateFrame("Frame")
 -- LoadSettings
 function C.UnitFrame.LoadSettings()
 	local Default = {
-		-- 单位
-		["ShowToT"] = true,				-- 显示"目标的目标"框体
-		["ShowPet"] = true,				-- 显示"宠物"框体
-		["ShowFocusTarget"] = true,		-- 显示"焦点目标"框体
-		["ShowBoss"] = false,			-- 显示"Boss"框体
-		-- 团队&小队
-		["ShowRaid"] = true,			-- 显示团队框体
-		["RaidUnitWidth"] = 67,			-- 团队框体单位宽度
-		["RaidPartyH"] = true,			-- 团队框体中各小队横向排列
-		["ShowAuraWatch"] = true,		-- 团队框体中显示边角Hot/技能监视
-		["ShowRaidDebuffs"] = true, 	-- 显示RaidDebuff
-		["ShowParty"] = false,			-- 显示小队框体
-		["ShowPartyDebuff"] = true,		-- 显示小队框体Debuff
-		["RaidScale"] = 1,				-- 团队&小队缩放
-		-- Buff&Debuff
-		["ShowTargetBuff"] = true,				-- 显示目标框体Buff
-			["BuffOnlyShowPlayer"] = false,			-- 目标框体上只显示玩家的Buff
-		["ShowTargetDebuff"] = true,			-- 显示目标框体Debuff
-			["DebuffOnlyShowPlayer"] = false,		-- 目标框体上只显示玩家的Debuff
-		["ShowFocusDebuff"] = true,				-- 显示焦点框体Buff
-		["ShowFocusBuff"] = true,				-- 显示焦点框体Debuff
-		["ShowBossDebuff"] = true,				-- 显示Boss框体Buff
-		["ShowBossBuff"] = true,				-- 显示Boss框体Debuff
-		-- 施法条
-		["ShowCastbar"] = true,				-- 显示施法条
-		["PlayerCastbarAlone"] = false,		-- 玩家施法条独立
-		["TargetCastbarAlone"] = false,		-- 目标施法条独立
+		-- 玩家框体
+		["ShowPet"] = true,
+		["ShowPlayerCastbar"] = true,
+			["PlayerCastbarAlone"] = false,
+		-- 目标框体
+		["ShowToT"] = true,
+		["ShowTargetCastbar"] = true,
+			["TargetCastbarAlone"] = false,
+		["ShowTargetBuff"] = true,
+			["ShowTargetBuffOnlyPlayer"] = false,
+		["ShowTargetDebuff"] = true,
+			["ShowTargetDebuffOnlyPlayer"] = false,
+		-- 焦点框体
+		["ShowFocusTarget"] = true,
+		["ShowFocusCastbar"] = true,
+		["ShowFocusDebuff"] = true,
+		["ShowFocusBuff"] = true,
+		-- Boss框体
+		["ShowBoss"] = false,
+			["ShowBossTarget"] = false,
+			["ShowBossCastbar"] = true,
+			["ShowBossDebuff"] = true,
+			["ShowBossBuff"] = true,
 		-- 其他
-		["Scale"] = 1,		-- 其他框体缩放
+		["Scale"] = 1,
+		-- 团队框体
+		["ShowRaid"] = true,
+			["RaidUnitWidth"] = 67,
+			["RaidPartyH"] = true,
+			["ShowRaidDebuffs"] = true,
+		-- 小队框体
+		["ShowParty"] = false,
+			["ShowPartyDebuff"] = true,
+		--其他
+		["RaidScale"] = 1,
 	}
 	if not UnitFrameDB then UnitFrameDB = {} end
 	for key, value in pairs(Default) do
@@ -60,133 +66,189 @@ function C.UnitFrame.BuildGUI()
 			args = {
 				Header_1 = {
 					type = "header",
-					name = "单位",
+					name = "玩家框体",
 					order = 1,
-				},
-				ShowToT = {
-					type = "toggle",
-					name = "显示\"目标的目标\"框体",
-					order = 2,
-					get = function() return UnitFrameDB.ShowToT end,
-					set = function(_, value) UnitFrameDB.ShowToT = value end,
 				},
 				ShowPet = {
 					type = "toggle",
-					name = "显示\"宠物\"框体",
-					order = 3,
+					name = "显示宠物框体",
+					order = 2,
 					get = function() return UnitFrameDB.ShowPet end,
 					set = function(_, value) UnitFrameDB.ShowPet = value end,
 				},
-				ShowBoss = {
+				ShowPlayerCastbar = {
 					type = "toggle",
-					name = "显示\"焦点目标\"框体",
-					order = 4,
-					get = function() return UnitFrameDB.ShowBoss end,
-					set = function(_, value) UnitFrameDB.ShowBoss = value end,
+					name = "显示施法条",
+					order = 3,
+					get = function() return UnitFrameDB.ShowPlayerCastbar end,
+					set = function(_, value) UnitFrameDB.ShowPlayerCastbar = value end,
 				},
-				ShowFocusTarget = {
+				PlayerCastbarAlone = {
 					type = "toggle",
-					name = "显示\"焦点目标\"框体",
-					order = 5,
-					get = function() return UnitFrameDB.ShowFocusTarget end,
-					set = function(_, value) UnitFrameDB.ShowFocusTarget = value end,
+					name = "玩家施法条独立",
+					disabled = not UnitFrameDB.ShowPlayerCastbar,
+					order = 4,
+					get = function() return UnitFrameDB.PlayerCastbarAlone end,
+					set = function(_, value) UnitFrameDB.PlayerCastbarAlone = value end,
 				},
 				Header_2 = {
 					type = "header",
-					name = "Buff&Debuff",
+					name = "目标框体",
+					order = 5,
+				},
+				ShowToT = {
+					type = "toggle",
+					name = "显示目标的目标框体",
 					order = 6,
+					get = function() return UnitFrameDB.ShowToT end,
+					set = function(_, value) UnitFrameDB.ShowToT = value end,
+				},
+				ShowTargetCastbar = {
+					type = "toggle",
+					name = "显示施法条",
+					order = 7,
+					get = function() return UnitFrameDB.ShowTargetCastbar end,
+					set = function(_, value) UnitFrameDB.ShowTargetCastbar = value end,
+				},
+				TargetCastbarAlone = {
+					type = "toggle",
+					name = "目标施法条独立",
+					disabled = not UnitFrameDB.TargetCastbarAlone,
+					order = 8,
+					get = function() return UnitFrameDB.TargetCastbarAlone end,
+					set = function(_, value) UnitFrameDB.TargetCastbarAlone = value end,
 				},
 				ShowTargetBuff = {
 					type = "toggle",
 					name = "显示目标框体Buff",
-					order = 7,
+					order = 9,
 					get = function() return UnitFrameDB.ShowTargetBuff end,
 					set = function(_, value) UnitFrameDB.ShowTargetBuff = value end,
 				},
-				BuffOnlyShowPlayer = {
+				ShowTargetBuffOnlyPlayer = {
 					type = "toggle",
-					name = "目标框体上只显示玩家的Buff",
+					name = "只显示玩家释放的Buff",
 					disabled = not UnitFrameDB.ShowTargetBuff,
-					order = 8,
-					get = function() return UnitFrameDB.BuffOnlyShowPlayer end,
-					set = function(_, value) UnitFrameDB.BuffOnlyShowPlayer = value end,
+					order = 10,
+					get = function() return UnitFrameDB.ShowTargetBuffOnlyPlayer end,
+					set = function(_, value) UnitFrameDB.ShowTargetBuffOnlyPlayer = value end,
 				},
 				ShowTargetDebuff = {
 					type = "toggle",
 					name = "显示目标框体Debuff",
-					order = 9,
+					order = 11,
 					get = function() return UnitFrameDB.ShowTargetDebuff end,
 					set = function(_, value) UnitFrameDB.ShowTargetDebuff = value end,
 				},
-				DebuffOnlyShowPlayer = {
+				ShowTargetDebuffOnlyPlayer = {
 					type = "toggle",
-					name = "目标框体上只显示玩家的Debuff",
+					name = "只显示释放玩家的Debuff",
 					disabled = not UnitFrameDB.ShowTargetDebuff,
-					order = 10,
-					get = function() return UnitFrameDB.DebuffOnlyShowPlayer end,
-					set = function(_, value) UnitFrameDB.DebuffOnlyShowPlayer = value end,
+					order = 12,
+					get = function() return UnitFrameDB.ShowTargetDebuffOnlyPlayer end,
+					set = function(_, value) UnitFrameDB.ShowTargetDebuffOnlyPlayer = value end,
+				},
+				Header_3 = {
+					type = "header",
+					name = "焦点框体",
+					order = 13,
+				},
+				ShowFocusTarget = {
+					type = "toggle",
+					name = "显示焦点目标框体",
+					order = 14,
+					get = function() return UnitFrameDB.ShowFocusTarget end,
+					set = function(_, value) UnitFrameDB.ShowFocusTarget = value end,
+				},
+				ShowFocusCastbar = {
+					type = "toggle",
+					name = "显示施法条",
+					order = 15,
+					get = function() return UnitFrameDB.ShowFocusCastbar end,
+					set = function(_, value) UnitFrameDB.ShowFocusCastbar = value end,
 				},
 				ShowFocusBuff = {
 					type = "toggle",
 					name = "显示焦点框体Buff",
-					order = 11,
+					order = 16,
 					get = function() return UnitFrameDB.ShowFocusBuff end,
 					set = function(_, value) UnitFrameDB.ShowFocusBuff = value end,
 				},
 				ShowFocusDebuff = {
 					type = "toggle",
 					name = "显示焦点框体Debuff",
-					order = 12,
+					order = 17,
 					get = function() return UnitFrameDB.ShowFocusDebuff end,
 					set = function(_, value) UnitFrameDB.ShowFocusDebuff = value end,
 				},
+				Header_4 = {
+					type = "header",
+					name = "Boss框体",
+					order = 18,
+				},
+				ShowBoss = {
+					type = "toggle",
+					name = "显示Boss框体",
+					order = 19,
+					get = function() return UnitFrameDB.ShowBoss end,
+					set = function(_, value)
+						if value then
+							UnitFrameDB.ShowBoss = value
+						else
+							UnitFrameDB.ShowBoss = value
+							UnitFrameDB.ShowBossTarget = value							
+						end
+					end,
+				},
+				ShowBossTarget = {
+					type = "toggle",
+					name = "显示Boss目标框体",
+					disabled = not UnitFrameDB.ShowBoss,
+					order = 20,
+					get = function() return UnitFrameDB.ShowBossTarget end,
+					set = function(_, value)
+						if not value then
+							UnitFrameDB.ShowBossTarget = value
+						else
+							UnitFrameDB.ShowBoss = value
+							UnitFrameDB.ShowBossTarget = value							
+						end 
+					end,
+				},
+				ShowBossCastbar = {
+					type = "toggle",
+					name = "显示施法条",
+					disabled = not UnitFrameDB.ShowBoss,
+					order = 21,
+					get = function() return UnitFrameDB.ShowBossCastbar end,
+					set = function(_, value) UnitFrameDB.ShowBossCastbar = value end,
+				},
 				ShowBossBuff = {
 					type = "toggle",
-					name = "显示焦点框体Buff",
-					order = 13,
+					name = "显示Boss框体Buff",
+					disabled = not UnitFrameDB.ShowBoss,
+					order = 22,
 					get = function() return UnitFrameDB.ShowBossBuff end,
 					set = function(_, value) UnitFrameDB.ShowBossBuff = value end,
 				},
 				ShowBossDebuff = {
 					type = "toggle",
-					name = "显示焦点框体Debuff",
-					order = 14,
+					name = "显示Boss框体Debuff",
+					disabled = not UnitFrameDB.ShowBoss,
+					order = 23,
 					get = function() return UnitFrameDB.ShowBossDebuff end,
 					set = function(_, value) UnitFrameDB.ShowBossDebuff = value end,
 				},
-				Header_3 = {
+				Header_5 = {
 					type = "header",
 					name = "其他",
-					order = 15,
-				},
-				ShowCastbar = {
-					type = "toggle",
-					name = "显示施法条",
-					order = 16,
-					get = function() return UnitFrameDB.ShowCastbar end,
-					set = function(_, value) UnitFrameDB.ShowCastbar = value end,
-				},
-				PlayerCastbarAlone = {
-					type = "toggle",
-					name = "玩家施法条独立",
-					disabled = not UnitFrameDB.ShowCastbar,
-					order = 17,
-					get = function() return UnitFrameDB.PlayerCastbarAlone end,
-					set = function(_, value) UnitFrameDB.PlayerCastbarAlone = value end,
-				},
-				TargetCastbarAlone = {
-					type = "toggle",
-					name = "目标施法条独立",
-					disabled = not UnitFrameDB.ShowCastbar,
-					order = 18,
-					get = function() return UnitFrameDB.TargetCastbarAlone end,
-					set = function(_, value) UnitFrameDB.TargetCastbarAlone = value end,
+					order = 24,
 				},
 				Scale = {
 					type = "input",
-					name = "其他框体缩放比例：",
-					desc = "请输入其他框体缩放比例：",
-					order = 19,
+					name = "单位框体缩放比例：",
+					desc = "请输入单位框体缩放比例：",
+					order = 25,
 					get = function() return tostring(UnitFrameDB.Scale) end,
 					set = function(_, value) UnitFrameDB.Scale = tonumber(value) end,
 				},
@@ -198,57 +260,13 @@ function C.UnitFrame.BuildGUI()
 			args = {
 				Header_1 = {
 					type = "header",
-					name = "团队",
+					name = "小队框体",
 					order = 1,
-				},			
-				ShowRaid = {
-					type = "toggle",
-					name = "显示团队框体",
-					order = 2,
-					get = function() return UnitFrameDB.ShowRaid end,
-					set = function(_, value) UnitFrameDB.ShowRaid = value end,
-				},
-				RaidPartyH = {
-					type = "toggle",
-					name = "横向各小队排列",
-					disabled = not UnitFrameDB.ShowRaid,
-					order = 3,
-					get = function() return UnitFrameDB.RaidPartyH end,
-					set = function(_, value) UnitFrameDB.RaidPartyH = value end,
-				},
-				ShowAuraWatch = {
-					type = "toggle",
-					name = "边角Hot/技能监视",
-					disabled = not UnitFrameDB.ShowRaid,
-					order = 4,
-					get = function() return UnitFrameDB.ShowAuraWatch end,
-					set = function(_, value) UnitFrameDB.ShowAuraWatch = value end,
-				},
-				ShowRaidDebuffs = {
-					type = "toggle",
-					name = "显示RaidDebuff",
-					disabled = not UnitFrameDB.ShowRaid,
-					order = 5,
-					get = function() return UnitFrameDB.ShowRaidDebuffs end,
-					set = function(_, value) UnitFrameDB.ShowRaidDebuffs = value end,
-				},
-				RaidUnitWidth = {
-					type = "input",
-					name = "团队框体单位宽度：",
-					desc = "请输入团队框体单位宽度",
-					order = 6,
-					get = function() return tostring(UnitFrameDB.RaidUnitWidth) end,
-					set = function(_, value) UnitFrameDB.RaidUnitWidth = tonumber(value) end,
-				},
-				Header_2 = {
-					type = "header",
-					name = "小队",
-					order = 7,
 				},	
 				ShowParty = {
 					type = "toggle",
 					name = "显示小队框体",
-					order = 8,
+					order = 2,
 					get = function() return UnitFrameDB.ShowParty end,
 					set = function(_, value) UnitFrameDB.ShowParty = value end,
 				},
@@ -256,10 +274,51 @@ function C.UnitFrame.BuildGUI()
 					type = "toggle",
 					name = "显示小队Debuff",
 					disabled = not UnitFrameDB.ShowParty,
-					order = 9,
+					order = 3,
 					get = function() return UnitFrameDB.ShowPartyDebuff end,
 					set = function(_, value) UnitFrameDB.ShowPartyDebuff = value end,
 				},
+				Header_2 = {
+					type = "header",
+					name = "团队框体",
+					order = 4,
+				},			
+				ShowRaid = {
+					type = "toggle",
+					name = "显示团队框体",
+					order = 5,
+					get = function() return UnitFrameDB.ShowRaid end,
+					set = function(_, value) UnitFrameDB.ShowRaid = value end,
+				},
+				RaidPartyH = {
+					type = "toggle",
+					name = "各小队排列横向",
+					disabled = not UnitFrameDB.ShowRaid,
+					order = 6,
+					get = function() return UnitFrameDB.RaidPartyH end,
+					set = function(_, value) UnitFrameDB.RaidPartyH = value end,
+				},
+				ShowRaidDebuffs = {
+					type = "toggle",
+					name = "显示RaidDebuff",
+					disabled = not UnitFrameDB.ShowRaid,
+					order = 7,
+					get = function() return UnitFrameDB.ShowRaidDebuffs end,
+					set = function(_, value) UnitFrameDB.ShowRaidDebuffs = value end,
+				},
+				RaidUnitWidth = {
+					type = "input",
+					name = "团队框体单位宽度：",
+					desc = "请输入团队框体单位宽度",
+					order = 8,
+					get = function() return tostring(UnitFrameDB.RaidUnitWidth) end,
+					set = function(_, value) UnitFrameDB.RaidUnitWidth = tonumber(value) end,
+				},
+				Header_3 = {
+					type = "header",
+					name = "其他",
+					order = 9,
+				},	
 				RaidScale = {
 					type = "input",
 					name = "团队&小队缩放比例：",
