@@ -1,5 +1,5 @@
 ﻿-- Engines
-local _, _, _, DB = unpack(select(2, ...))
+local S, _, _, DB = unpack(select(2, ...))
 
 -- InitMiniMapTracking
 local function InitMiniMapTracking(TopFrame)
@@ -78,24 +78,7 @@ local function BuildButtonTable()
 	for i = 1, 5 do
 		local Button = CreateFrame("Button", nil, UIParent)
 		Button:SetSize(80, 20)
-		if IsAddOnLoaded("Aurora") then
-			local F, C = unpack(Aurora)
-			F.Reskin(Button)
-		else
-			Button:SetBackdrop({
-				bgFile = DB.Solid, insets = {left = 3, right = 3, top = 3, bottom = 3},
-				edgeFile = DB.GlowTex, edgeSize = 2
-			})
-			Button:SetBackdropColor(0, 0, 0, 0.3)
-			Button:SetBackdropBorderColor(0, 0, 0, 1)
-			Button:SetScript("OnEnter", function(self)
-				self.Text:SetTextColor(1, 0, 0)
-			end)
-			Button:SetScript("OnLeave", function(self)
-				self.Text:SetTextColor(1, 1, 1)
-			end)
-		end
-		
+		S.Reskin(Button)
 		Button.Text = Button:CreateFontString(nil, "OVERLAY")
 		Button.Text:SetPoint("CENTER")
 		Button.Text:SetFont(DB.Font, 10, "THINOUTLINE")
