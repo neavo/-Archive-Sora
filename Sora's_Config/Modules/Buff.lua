@@ -25,7 +25,7 @@ end
 -- ResetToDefault
 function C.Buff.ResetToDefault()
 	BuffDB = {}
-	LoadSettings()
+	C.Buff.LoadSettings()
 end
 
 -- BuildGUI
@@ -33,7 +33,7 @@ function C.Buff.BuildGUI()
 	if Modules then
 		Modules["Buff"] =  {
 			type = "group",
-			name = "|cff70C0F5BUFF|r",
+			name = "BUFF",
 			args = {
 				IconSize = {
 					type = "input",

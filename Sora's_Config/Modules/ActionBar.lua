@@ -25,7 +25,7 @@ end
 -- ResetToDefault
 function C.ActionBar.ResetToDefault()
 	wipe(ActionBarDB)
-	LoadSettings()
+	C.ActionBar.LoadSettings()
 end
 
 -- BuildGUI
@@ -33,7 +33,7 @@ function C.ActionBar.BuildGUI()
 	if Modules then
 		Modules["ActionBar"] =  {
 			type = "group",
-			name = "|cff70C0F5动作条|r ",
+			name = "动作条",
 			args = {
 				HideHotKey = {
 					type = "toggle",

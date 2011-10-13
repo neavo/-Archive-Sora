@@ -21,7 +21,7 @@ end
 -- ResetToDefault
 function C.Tooltip.ResetToDefault()
 	wipe(TooltipDB)
-	LoadSettings()
+	C.Tooltip.LoadSettings()
 end
 
 -- BuildGUI
@@ -29,7 +29,7 @@ function C.Tooltip.BuildGUI()
 	if Modules then
 		Modules["Tooltip"] =  {
 			type = "group",
-			name = "|cff70C0F5鼠标提示|r",
+			name = "鼠标提示",
 			args = {
 				Cursor = {
 					type = "toggle",

@@ -45,7 +45,7 @@ end
 -- ResetToDefault
 function C.UnitFrame.ResetToDefault()
 	wipe(UnitFrameDB)
-	LoadSettings()
+	C.UnitFrame.LoadSettings()
 end
 
 -- BuildGUI
@@ -53,7 +53,7 @@ function C.UnitFrame.BuildGUI()
 	if Modules then
 		Modules["UnitFrame"] =  {
 			type = "group",
-			name = "|cff70C0F5单位框体|r",
+			name = "单位框体",
 			args = {
 				Header_1 = {
 					type = "header",
@@ -170,7 +170,7 @@ function C.UnitFrame.BuildGUI()
 		}
 		Modules["Raid"] =  {
 			type = "group",
-			name = "|cff70C0F5团队框体|r",
+			name = "团队框体",
 			args = {
 				Header_1 = {
 					type = "header",

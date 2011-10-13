@@ -2,10 +2,10 @@
 local S, C, _, _ = unpack(select(2, ...))
 
 -- BuildClass
-C.Nameplates = CreateFrame("Frame")
+C.Nameplate = CreateFrame("Frame")
 
 -- LoadSettings
-function C.Nameplates.LoadSettings()
+function C.Nameplate.LoadSettings()
 	local Default = {
 		["Fontsize"] = 10,						-- 姓名板字体大小
 		["HPHeight"] = 5,						-- 姓名板血条高度
@@ -24,17 +24,17 @@ function C.Nameplates.LoadSettings()
 end
 
 -- ResetToDefault
-function C.Nameplates.ResetToDefault()
+function C.Nameplate.ResetToDefault()
 	wipe(NameplateDB)
-	LoadSettings()
+	C.Nameplate.LoadSettings()
 end
 
 -- BuildGUI
-function C.Nameplates.BuildGUI()
+function C.Nameplate.BuildGUI()
 	if Modules then
-		Modules["Nameplates"] =  {
+		Modules["Nameplate"] =  {
 			type = "group",
-			name = "|cff70C0F5姓名板|r",
+			name = "姓名板",
 			args = {
 				Fontsize = {
 					type = "input",
@@ -86,7 +86,7 @@ function C.Nameplates.BuildGUI()
 				},
 				CombatToggle = {
 					type = "toggle",
-					name = "进入/离开战斗自动开启/关闭姓名板：",
+					name = "进入/离开战斗自动开启/关闭姓名板",
 					width = "double",
 					order = 7,
 					get = function() return NameplateDB.CombatToggleend end,
