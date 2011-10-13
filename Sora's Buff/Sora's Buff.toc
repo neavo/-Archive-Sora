@@ -1,9 +1,0 @@
-﻿## Interface: 40200
-## Title: |cff70C0F5Sora's|r Buff
-## Notes: Sora's O(∩_∩)O
-## Author: Neavo
-## SavedVariables: BuffDB
-
-## X-Email:neavo7@Gmail.com
-
-Load_Buff.xml

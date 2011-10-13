@@ -1,9 +1,0 @@
-﻿## Interface: 40200
-## Title: |cff70C0F5!Sora's|r Config
-## Notes: Sora's O(∩_∩)O
-## Author: Neavo
-## SavedVariables: SoraInited, UnitFrameDB, ActionBarDB
-
-## X-Email:neavo7@Gmail.com
-
-Load_Config.xml

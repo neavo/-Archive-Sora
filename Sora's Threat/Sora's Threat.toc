@@ -1,9 +1,0 @@
-﻿## Interface: 40200
-## Title: |cff70C0F5Sora's|r Threat
-## Notes: Sora's O(∩_∩)O
-## Author: Neavo
-## SavedVariables: ThreatDB
-
-## X-Email:neavo7@Gmail.com
-
-Load_Threat.xml
