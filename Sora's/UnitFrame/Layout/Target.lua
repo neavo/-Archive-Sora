@@ -233,7 +233,7 @@ end
 
 local function BuildBuff(self)
 	Buff = CreateFrame("Frame", nil, self)
-	Buff.onlyShowPlayer = UnitFrameDB.BuffOnlyShowPlayer
+	Buff.onlyShowPlayer = UnitFrameDB.ShowTargetBuffOnlyPlayer
 	Buff:SetPoint("TOPLEFT", self, "TOPRIGHT", 8, 0)
 	Buff.initialAnchor = "TOPLEFT"
 	Buff["growth-x"] = "RIGHT"
@@ -253,7 +253,7 @@ local function BuildDebuff(self)
 	Debuff = CreateFrame("Frame", nil, self)
 	Debuff.size = 20
 	Debuff.num = 27
-	Debuff.onlyShowPlayer = UnitFrameDB.DebuffOnlyShowPlayer
+	Debuff.onlyShowPlayer = UnitFrameDB.ShowTargetDebuffOnlyPlayer
 	Debuff.spacing = 5
 	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
 	Debuff:SetWidth(self:GetWidth())
@@ -312,7 +312,7 @@ local function BuildTargetFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if UnitFrameDB.ShowCastbar then BuildCastbar(self) end
+	if UnitFrameDB.ShowTargetCastbar then BuildCastbar(self) end
 	
 	-- BuildBuff
 	if UnitFrameDB.ShowTargetBuff then BuildBuff(self) end

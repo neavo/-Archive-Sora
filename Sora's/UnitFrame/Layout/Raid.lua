@@ -167,34 +167,7 @@ local function BuildRaidDebuffs(self)
 	self.RaidDebuffs.count:SetFont(DB.Font, 8, "OUTLINE")
 	self.RaidDebuffs.count:SetPoint("BOTTOMRIGHT", self.RaidDebuffs, "BOTTOMRIGHT", 2, 0)
 	self.RaidDebuffs.count:SetTextColor(1, 0.9, 0)
-end 
-
---[[local function BuildIndicator(self)
-	local _, Class = UnitClass("player")
-	self.IndicatorTL = self.Health:CreateFontString(nil, "OVERLAY")
-	self.IndicatorTL:ClearAllPoints()
-	self.IndicatorTL:SetPoint("TOPLEFT")
-	self.IndicatorTL:SetFont(DB.Indicator, 8, "THINOUTLINE")
-	self:Tag(self.IndicatorTL, ns.classIndicators[Class]["TL"])
-
-	self.IndicatorTR = self.Health:CreateFontString(nil, "OVERLAY")
-	self.IndicatorTR:ClearAllPoints()
-	self.IndicatorTR:SetPoint("TOPRIGHT")
-	self.IndicatorTR:SetFont(DB.Indicator, 8, "THINOUTLINE")
-	self:Tag(self.IndicatorTR, ns.classIndicators[Class]["TR"])
-
-	self.IndicatorBL = self.Health:CreateFontString(nil, "OVERLAY")
-	self.IndicatorBL:ClearAllPoints()
-	self.IndicatorBL:SetPoint("BOTTOMLEFT")
-	self.IndicatorBL:SetFont(DB.Indicator, 8, "THINOUTLINE")
-	self:Tag(self.IndicatorBL, ns.classIndicators[Class]["BL"])	
-
-	self.IndicatorBR = self.Health:CreateFontString(nil, "OVERLAY")
-	self.IndicatorBR:ClearAllPoints()
-	self.IndicatorBR:SetPoint("BOTTOMRIGHT")
-	self.IndicatorBR:SetFont(DB.Symbol, 8, "THINOUTLINE")
-	self:Tag(self.IndicatorBR, ns.classIndicators[Class]["BR"])
-end]]
+end
 
 local function PostUpdateRaidFrame(Health, unit, min, max)
 	local disconnnected = not UnitIsConnected(unit)
@@ -253,9 +226,6 @@ local function BuildRaidFrame(self, ...)
 	
 	-- BuildRaidDebuffs
 	if UnitFrameDB.ShowRaidDebuffs then BuildRaidDebuffs(self) end
-	
-	-- BuildAuraWatch
-	--if UnitFrameDB.ShowAuraWatch then BuildIndicator(self) end
 	
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end

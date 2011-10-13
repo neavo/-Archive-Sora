@@ -300,7 +300,7 @@ local function BuildFocusFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if UnitFrameDB.ShowCastbar then BuildCastbar(self) end
+	if UnitFrameDB.ShowFocusCastbar then BuildCastbar(self) end
 	
 	-- BuildBuff(self)
 	if UnitFrameDB.ShowFocusBuff then BuildBuff(self) end

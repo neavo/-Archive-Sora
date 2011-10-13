@@ -300,7 +300,7 @@ local function BuildBossFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if UnitFrameDB.ShowCastbar then BuildCastbar(self) end
+	if UnitFrameDB.ShowBossCastbar then BuildCastbar(self) end
 	
 	-- BuildBuff(self)
 	if UnitFrameDB.ShowBossBuff then BuildBuff(self) end
@@ -315,7 +315,7 @@ local function BuildBossFrame(self, ...)
 	BuildCombatIcon(self)
 end
 
-if true then
+if UnitFrameDB.ShowBoss then
 	oUF:RegisterStyle("SoraBoss", BuildBossFrame)
 	oUF:SetActiveStyle("SoraBoss")
 	DB.BossFrame = {}

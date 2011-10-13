@@ -435,7 +435,7 @@ local function BuildPlayerFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if UnitFrameDB.ShowCastbar then BuildCastbar(self) end
+	if UnitFrameDB.ShowPlayerCastbar then BuildCastbar(self) end
 	
 	-- BuildRaidMark
 	BuildRaidIcon(self)
