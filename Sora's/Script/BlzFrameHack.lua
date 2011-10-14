@@ -7,7 +7,6 @@ for i = 1, MAX_PARTY_MEMBERS do
 end
 UIParent:UnregisterEvent("RAID_ROSTER_UPDATE")
 
-
 -- 隐藏BOSS框体
 for i = 1, 4 do
 	local BossFrame = _G["Boss"..i.."TargetFrame"]
@@ -34,3 +33,9 @@ Event.UI_ERROR_MESSAGE = function(self, event, error)
 	end
 end	
 Event:RegisterEvent("UI_ERROR_MESSAGE")
+
+-- 实名好友弹窗位置修正
+BNToastFrame:HookScript("OnShow", function(self)
+	self:ClearAllPoints()
+	self:SetPoint("BOTTOMLEFT", ChatFrame1Tab, "TOPLEFT", 0, 0)
+end)
