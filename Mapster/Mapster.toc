@@ -2,7 +2,7 @@
 ## Notes: Simple Map Mod
 ## Notes-zhCN: 简单实用的地图模块
 ## Notes-frFR: Simples modifications de la carte.
-## Title: Mapster
+## Title: |cff0080ffMapster|r 世界地图增强
 ## Author: Nevcairiel
 ## SavedVariables: MapsterDB
 ## X-Category: Map

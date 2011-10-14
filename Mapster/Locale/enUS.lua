@@ -16,6 +16,7 @@ L["Adjust the size of the Player Arrow on the Map for better visibility."] = tru
 L["Alpha"] = true
 L["BattleMap"] = true
 L["Battlegrounds"] = true
+L["Special Zones"] = true
 L["Blobs & Panels"] = true
 L["Cataclysm Instances"] = true
 L["Cataclysm Raids"] = true
@@ -71,6 +72,8 @@ L["The transparency of the minimized map."] = true
 L["Turn on debugging for the FogClear Module."] = true
 L["Wrath Instances"] = true
 L["Wrath Raids"] = true
+L["TBC Instances"] = true
+L["TBC Raids"] = true
 L["You can change the transparency of the world map to allow you to continue seeing the world environment while your map is open for navigation."] = true
 L["You can control the accuracy of the coordinates, e.g. if you need very exact coordinates you can set this to 2."] = true
 

@@ -1195,9 +1195,9 @@ errata.Hyjal_terrain1 = errata.Hyjal
 local db
 local defaults = {
 	profile = {
-		colorR = 1,
-		colorG = 1,
-		colorB = 1,
+		colorR = 0.5,
+		colorG = 0.5,
+		colorB = 0.5,
 		colorA = 1,
 		debug = false
 	},
