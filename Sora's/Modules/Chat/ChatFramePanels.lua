@@ -1,5 +1,5 @@
 ﻿-- Engines
-local _, _, _, DB = unpack(select(2, ...))
+local S, _, _, DB = unpack(select(2, ...))
 local ChatbarTable = {}
 local IsChatFrameInScreen, NewWhisper = true, false
 local MainBar = CreateFrame("Frame", nil, UIParent)
@@ -14,11 +14,10 @@ local function InitChatFramePanel()
 	})
 	MainBar:SetBackdropColor(0, 0, 0, 0.2)
 	MainBar:SetBackdropBorderColor(0, 0, 0, 0.8)
-	MainBar.Right = CreateFrame("Frame", nil, MainBar)
-	MainBar.Right:SetPoint("TOPLEFT", MainBar, "TOPRIGHT", 0, 0)
-	MainBar.Right:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMRIGHT", 12, 0)
-	MainBar.Right:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = 3})
-	MainBar.Right:SetBackdropBorderColor(0, 0, 0, 0.8)
+	MainBar.Right = CreateFrame("Button", nil, MainBar)
+	MainBar.Right:SetPoint("TOPLEFT", MainBar, "TOPRIGHT", 2, -1)
+	MainBar.Right:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMRIGHT", 10, 1)
+	S.Reskin(MainBar.Right)
 	MainBar.Right:SetScript("OnMouseDown", function(self)
 		if not UnitAffectingCombat("player") then
 			if IsChatFrameInScreen then

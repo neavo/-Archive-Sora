@@ -4,7 +4,7 @@ local S, _, _, DB = unpack(select(2, ...))
 DB.ActionBar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate") 
 DB.ActionBar:SetWidth(26*18+3*17)
 DB.ActionBar:SetHeight(26*2+5)
-DB.ActionBar:SetPoint("BOTTOM", UIParent, 0, 10)
+DB.ActionBar:SetPoint("BOTTOM", UIParent, 0, 20)
   
 local Page = {
 	["DRUID"] = "[bonusbar:1, nostealth] 7; [bonusbar:1, stealth] 8; [bonusbar:2] 8; [bonusbar:3] 9; [bonusbar:4] 10;", 

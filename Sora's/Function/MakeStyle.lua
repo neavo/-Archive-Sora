@@ -26,3 +26,13 @@ function S.MakeFontString(Parent, FontSize)
 	Text:SetFont(DB.Font, FontSize, "THINOUTLINE")
 	return Text
 end
+
+function S.SVal(Val)
+    if Val >= 1e6 then
+        return ("%.1fm"):format(Val/1e6):gsub("%.?0+([km])$", "%1")
+    elseif Val >= 1e4 then
+        return ("%.1fk"):format(Val/1e3):gsub("%.?0+([km])$", "%1")
+    else
+        return Val
+    end
+end

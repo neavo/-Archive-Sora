@@ -136,8 +136,8 @@ local function BuildCastbar(self)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
 	if UnitFrameDB.TargetCastbarAlone then
 		Castbar:SetHeight(14)
-		Castbar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 34, 60)
-		Castbar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", -20, 60)			
+		Castbar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton4, "TOPLEFT", 54, 60)
+		Castbar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton10, "TOPRIGHT", -40, 60)			
 	else
 		Castbar:SetHeight(10)
 		Castbar:SetWidth(self:GetWidth()-70)

@@ -1,58 +1,80 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
--- BuildMainBar()
-local function BuildMainBar()
-	local MainBar = CreateFrame("Frame", nil, UIParent)
-	MainBar:SetPoint("TOPLEFT", ActionButton1, "LEFT", -10, -3)
-	MainBar:SetPoint("BOTTOMRIGHT", ActionButton12, "BOTTOMRIGHT", 10, -7)
-	MainBar:SetBackdrop({
-		bgFile = DB.bgFile, insets = {left = 4, right = 4, top = 4, bottom = 4},
-		edgeFile = DB.GlowTex, edgeSize = 3, 
-	})
-	MainBar:SetBackdropColor(0, 0, 0, 0.2)
-	MainBar:SetBackdropBorderColor(0, 0, 0, 1)
-	return MainBar
+-- BuildExpBar
+local function BuildExpBar()
+	local Bar = CreateFrame("StatusBar", nil, UIParent)
+	Bar:SetStatusBarTexture(DB.Statusbar)
+	Bar:SetPoint("TOPLEFT", MultiBarBottomRightButton3, "BOTTOMLEFT", -10, -8)
+	Bar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton9, "BOTTOMRIGHT", 10, -15)
+	Bar.Rest = CreateFrame("StatusBar", nil, Bar)
+	Bar.Rest:SetAllPoints()
+	Bar.Rest:SetStatusBarTexture(DB.Statusbar)
+	Bar.Rest:SetFrameLevel(Bar:GetFrameLevel()-1)
+	Bar.Text = S.MakeFontString(Bar, 10)
+	Bar.Text:SetPoint("CENTER")
+	Bar.Text:SetAlpha(0)
+	Bar.Shadow = S.MakeShadow(Bar, 3)
+	Bar:SetStatusBarTexture(DB.Statusbar)
+	Bar:RegisterEvent("PLAYER_XP_UPDATE")
+	Bar:RegisterEvent("PLAYER_LEVEL_UP")
+	Bar:RegisterEvent("UPDATE_EXHAUSTION")
+	Bar:RegisterEvent("UPDATE_FACTION")
+	Bar:SetScript("OnEnter",function(self) self.Text:SetAlpha(1) end)
+	Bar:SetScript("OnLeave",function(self) self.Text:SetAlpha(0) end)
+	Bar:SetScript("OnEvent", function(self)
+		local currXP = UnitXP("player")
+		local playerMaxXP = UnitXPMax("player")
+		local exhaustionXP  = GetXPExhaustion("player")
+		local name, standingID, barMin, barMax, barValue = GetWatchedFactionInfo()
+		if UnitLevel("player") == MAX_PLAYER_LEVEL or IsXPUserDisabled == true then
+			if name then
+				self:SetStatusBarColor(FACTION_BAR_COLORS[standingID].r, FACTION_BAR_COLORS[standingID].g, FACTION_BAR_COLORS[standingID].b, 1)
+				self:SetMinMaxValues(barMin, barMax)
+				self.Rest:SetMinMaxValues(barMin, barMax)
+				self:SetValue(barValue)
+				self.Rest:SetValue(0)
+				self.Text:SetText(barValue-barMin.." / "..barMax-barMin.."    "..floor(((barValue-barMin)/(barMax-barMin))*1000)/10 .."% | ".. name.. "(".._G["FACTION_STANDING_LABEL"..standingID]..")")
+				self:Show()
+			else
+				self:Hide()
+			end
+		else
+			self:SetStatusBarColor(0.4, 0.1, 0.6, 1)
+			self.Rest:SetStatusBarColor(0.2, 0.4, 0.8, 1)
+			self:SetMinMaxValues(0, playerMaxXP)
+			self.Rest:SetMinMaxValues(0, playerMaxXP)
+			if exhaustionXP then
+				self.Text:SetText(S.SVal(currXP).." / "..S.SVal(playerMaxXP).."    "..floor((currXP/playerMaxXP)*1000)/10 .."%" .. " (+"..S.SVal(exhaustionXP )..")")
+				if exhaustionXP+currXP >= playerMaxXP then
+					self:SetValue(currXP)
+					self.Rest:SetValue(playerMaxXP)
+				else
+					self:SetValue(currXP)
+					self.Rest:SetValue(exhaustionXP+currXP)
+				end
+			else
+				self:SetValue(currXP)
+				self.Rest:SetValue(0)
+				self.Text:SetText(S.SVal(currXP).." / "..S.SVal(playerMaxXP).."    "..floor((currXP/playerMaxXP)*1000)/10 .."%")
+			end
+		end
+	end)
 end
 
--- BuildExtraBar
-local function BuildExtraBar(MainBar)
-	if ActionBarDB.ShowExtraBar then
-		MainBar.Left = CreateFrame("Frame", nil, MainBar)
-		MainBar.Left:SetPoint("TOPLEFT", MainBar, "TOPLEFT", -11, 0)
-		MainBar.Left:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMLEFT", 2, 0)
-		MainBar.Left:SetBackdrop({
-			edgeFile = DB.GlowTex, edgeSize = 3, 
-		})
-		MainBar.Left:SetBackdropBorderColor(0, 0, 0, 1)
-
-		MainBar.Left:SetScript("OnMouseDown", function(self)
-			if MultiBarLeftButton1:GetAlpha() < 0.1 then
-				S.LeftBarFadeIn()
-			elseif MultiBarLeftButton1:GetAlpha() > 0.9 then
-				S.LeftBarFadeOut()
-			end
-		end)
-		MainBar.Right = CreateFrame("Frame", nil, MainBar)
-		MainBar.Right:SetPoint("TOPRIGHT", MainBar, "TOPRIGHT", 11, 0)
-		MainBar.Right:SetPoint("BOTTOMLEFT", MainBar, "BOTTOMRIGHT", -2, 0)
-		MainBar.Right:SetBackdrop({
-			edgeFile = DB.GlowTex, edgeSize = 3, 
-		})
-		MainBar.Right:SetBackdropBorderColor(0, 0, 0, 1)
-		MainBar.Right:SetScript("OnMouseDown", function(self)
-			if MultiBarRightButton1:GetAlpha() < 0.1 then
-				S.RightBarFadeIn()
-			elseif MultiBarRightButton1:GetAlpha() > 0.9 then
-				S.RightBarFadeOut()
-			end
-		end)
-	else
-		_G["rABS_MultiBarLeft"]:Hide()
-		_G["rABS_MultiBarRight"]:Hide()
-	end
+-- BuildExtraBarButton
+local function BuildExtraBarButton()
+	local LeftButton = CreateFrame("Button", nil, UIParent)
+	LeftButton:SetSize(26, 9)
+	S.Reskin(LeftButton)
+	LeftButton:SetPoint("TOP", MultiBarBottomRightButton1, "BOTTOM", 0, -7)
+	LeftButton:SetScript("OnMouseDown", function(self) S.LeftBarFade() end)
+	local RightButton = CreateFrame("Button", nil, UIParent)
+	RightButton:SetSize(26, 9)
+	S.Reskin(RightButton)
+	RightButton:SetPoint("TOP", MultiBarBottomRightButton7, "BOTTOM", 0, -7)
+	RightButton:SetScript("OnMouseDown", function(self) S.RightBarFade() end)
 end
 
-local MainBar = BuildMainBar()
-BuildExtraBar(MainBar)
+BuildExpBar()
+BuildExtraBarButton()

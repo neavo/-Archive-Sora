@@ -51,7 +51,7 @@ function cfg.BuildICON(iconSize)
 	Frame.Statusbar.BG = Frame.Statusbar:CreateTexture(nil, "BACKGROUND")
 	Frame.Statusbar.BG:SetAllPoints() 
 	Frame.Statusbar.BG:SetTexture(cfg.Statusbar)
-	Frame.Statusbar.BG:SetVertexColor(0.1, 0.1, 0.1, 0.2)
+	Frame.Statusbar.BG:SetVertexColor(0.1, 0.1, 0.1, 0.6)
 	
 	return Frame
 end
@@ -82,11 +82,6 @@ function cfg.BuildBAR(iconSize, barWidth)
 
 	Frame.Statusbar.Shadow = MakeShadow(Frame.Statusbar, 3)
 
-	Frame.Statusbar.BG = Frame.Statusbar:CreateTexture(nil, "BACKGROUND")
-	Frame.Statusbar.BG:SetAllPoints() 
-	Frame.Statusbar.BG:SetTexture(cfg.Statusbar)
-	Frame.Statusbar.BG:SetVertexColor(0.1, 0.1, 0.1, 0.2) 
-	
 	Frame.Count = Frame:CreateFontString(nil, "OVERLAY") 
 	Frame.Count:SetFont(cfg.Font, 9, "THINOUTLINE") 
 	Frame.Count:SetPoint("BOTTOMRIGHT", Frame.Icon, "BOTTOMRIGHT", 3, -1) 
