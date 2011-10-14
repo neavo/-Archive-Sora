@@ -1,17 +1,30 @@
-﻿local bar = CreateFrame("Frame","rABS_MultiBarBottomRight",UIParent, "SecureHandlerStateTemplate")
-bar:SetWidth(26*12+3*11)
-bar:SetHeight(26)
-bar:SetPoint("BOTTOMLEFT", MultiBarBottomLeftButton1, "TOPLEFT", 0, 5)
-MultiBarBottomRight:SetParent(bar)
+﻿-- Engines
+local S, _, _, DB = unpack(select(2, ...))
+MultiBarBottomRight:SetParent(DB.ActionBar)
 
 for i=1, 12 do
-	local button = _G["MultiBarBottomRightButton"..i]
-	button:SetSize(26, 26)
-	button:ClearAllPoints()
+	local Button = _G["MultiBarBottomRightButton"..i]
+	Button:SetSize(26, 26)
+	Button:ClearAllPoints()	
 	if i == 1 then
-		button:SetPoint("BOTTOMLEFT", bar, 0,0)
-	else
-		local previous = _G["MultiBarBottomRightButton"..i-1]      
-		button:SetPoint("LEFT", previous, "RIGHT", 3, 0)
+		Button:SetPoint("BOTTOMLEFT", DB.ActionBar)
+	elseif i <= 3 then
+		local Pre = _G["MultiBarBottomRightButton"..i-1]      
+		Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)
+	elseif i == 4 then
+		Button:SetPoint("BOTTOMLEFT", DB.ActionBar, 0, 26+5)
+	elseif i <= 6 then
+		local Pre = _G["MultiBarBottomRightButton"..i-1]      
+		Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)	
+	elseif i == 7 then
+		Button:SetPoint("BOTTOMRIGHT", DB.ActionBar)
+	elseif i <= 9 then
+		local Pre = _G["MultiBarBottomRightButton"..i-1]      
+		Button:SetPoint("RIGHT", Pre, "LEFT", -3, 0)
+	elseif i == 10 then
+		Button:SetPoint("BOTTOMRIGHT", DB.ActionBar, 0, 26+5)
+	elseif i <= 12 then
+		local Pre = _G["MultiBarBottomRightButton"..i-1]      
+		Button:SetPoint("RIGHT", Pre, "LEFT", -3, 0)	
 	end
 end

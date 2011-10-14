@@ -1,38 +1,38 @@
-﻿local bar = CreateFrame("Frame","rABS_PetBar",UIParent, "SecureHandlerStateTemplate")
-bar:SetWidth(20*NUM_PET_ACTION_SLOTS+1*(NUM_PET_ACTION_SLOTS-1))
-bar:SetHeight(20)
-bar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", 0, 3)
-PetActionBarFrame:SetParent(bar)
-PetActionBarFrame:EnableMouse(false)
+﻿-- Engines
+local S, _, _, DB = unpack(select(2, ...))
+
+PetActionBarFrame:SetParent(DB.ActionBar)
 
 for i=1, NUM_PET_ACTION_SLOTS do
-	local button = _G["PetActionButton"..i]
-	local cd = _G["PetActionButton"..i.."Cooldown"]
-		button:SetSize(20, 20)
-		button:ClearAllPoints()
+	local Button = _G["PetActionButton"..i]
+	Button:SetSize(26, 26)
+	Button:ClearAllPoints()
 	if i == 1 then
-		button:SetPoint("BOTTOMLEFT", bar, 0,0)
+		Button:SetPoint("BOTTOM", MultiBarBottomLeftButton6, "TOP", 0, 5)
 	else
-		local previous = _G["PetActionButton"..i-1]      
-		button:SetPoint("LEFT", previous, "RIGHT", 1, 0)
+		local Pre = _G["PetActionButton"..i-1]      
+		Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)
 	end
-	cd:SetAllPoints(button)
+	_G["PetActionButton"..i.."Cooldown"]:SetAllPoints(Button)
 end
 
-local function lighton(alpha)
-	if PetActionBarFrame:IsShown() then
-		for i=1, NUM_PET_ACTION_SLOTS do
-			local pb = _G["PetActionButton"..i]
-			pb:SetAlpha(alpha)
-		end
-	end
-end    
-bar:EnableMouse(true)
-bar:SetScript("OnEnter", function(self) lighton(1) end)
-bar:SetScript("OnLeave", function(self) lighton(0.3) end)  
 for i=1, NUM_PET_ACTION_SLOTS do
-	local pb = _G["PetActionButton"..i]
-	pb:SetAlpha(0.3)
-	pb:HookScript("OnEnter", function(self) lighton(1) end)
-	pb:HookScript("OnLeave", function(self) lighton(0.3) end)
+	local Button = _G["PetActionButton"..i]
+	Button:SetAlpha(0.3)
+	Button:HookScript("OnEnter", function(self) 
+		if PetActionBarFrame:IsShown() then
+			for i = 1, NUM_PET_ACTION_SLOTS do
+				local Button = _G["PetActionButton"..i]
+				Button:SetAlpha(1)
+			end
+		end
+	end)
+	Button:HookScript("OnLeave",function(self) 
+		if PetActionBarFrame:IsShown() then
+			for i = 1, NUM_PET_ACTION_SLOTS do
+				local Button = _G["PetActionButton"..i]
+				Button:SetAlpha(0.3)
+			end
+		end
+	end)
 end 

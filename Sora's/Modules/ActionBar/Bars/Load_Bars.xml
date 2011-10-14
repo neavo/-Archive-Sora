@@ -1,19 +1,14 @@
-﻿<!-- -->
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-
-
-
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-
-	<Script file="hideblizz.lua"/>
-	<Script file="bar1.lua"/>
-	<Script file="bar2.lua"/>
-	<Script file="bar3.lua"/>
-	<Script file="bar4.lua"/>
-	<Script file="bar5.lua"/>
-	<Script file="stancebar.lua"/>
-	<Script file="petbar.lua"/>
-	<Script file="totembar.lua"/>
-	<Script file="vehicleexit.lua"/>
+	<Script file = "hideblizz.lua"/>
+	<Script file = "Bar1.lua"/>
+	<Script file = "Bar2.lua"/>
+	<Script file = "Bar3.lua"/>
+	<Script file = "Bar4.lua"/>
+	<Script file = "Bar5.lua"/>
+	<Script file = "Stancebar.lua"/>
+	<Script file = "Petbar.lua"/>
+	<Script file = "Totembar.lua"/>
+	<Script file = "VehicleExit.lua"/>
 	
 </Ui>

@@ -6,18 +6,18 @@ local myclass = select(2, UnitClass("player"))
 -- styling totembar
 if myclass == "SHAMAN" then
 	local TotemBar = CreateFrame("Frame", "holder_TotemBar", UIParent, "SecureHandlerStateTemplate")
-	TotemBar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton1, "TOPLEFT", 0, 3)
+	TotemBar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton4, "TOPLEFT", 0, 5)
 	local tN = { 2, 1, 3, 4 }
 	local TotemButtons = {
-		MultiCastActionPage1,
-		MultiCastActionPage2,
-		MultiCastActionPage3,
-		MultiCastSlotButton1,
-		MultiCastSlotButton2,
-		MultiCastSlotButton3,
-		MultiCastSlotButton4,
-		MultiCastFlyoutFrame,
-		MultiCastFlyoutButton,
+		MultiCastActionPage1, 
+		MultiCastActionPage2, 
+		MultiCastActionPage3, 
+		MultiCastSlotButton1, 
+		MultiCastSlotButton2, 
+		MultiCastSlotButton3, 
+		MultiCastSlotButton4, 
+		MultiCastFlyoutFrame, 
+		MultiCastFlyoutButton, 
 	}
  	if MultiCastActionBarFrame then
 		TotemBar:SetSize(_G['MultiCastActionBarFrame']:GetWidth(), _G['MultiCastActionBarFrame']:GetHeight()) 
@@ -35,27 +35,27 @@ if myclass == "SHAMAN" then
 			f:SetParent(TotemBar);
 		end
 		MultiCastSummonSpellButton:ClearAllPoints();
-		MultiCastSummonSpellButton:SetPoint("BOTTOMLEFT",TotemBar,"BOTTOMLEFT",0,3);
-		MultiCastSummonSpellButton:SetSize(20,20)
+		MultiCastSummonSpellButton:SetPoint("BOTTOMLEFT", TotemBar, "BOTTOMLEFT", 0, 3);
+		MultiCastSummonSpellButton:SetSize(26, 26)
 		for i = 1, 12 do
 			local b = _G["MultiCastSlotButton"..i]
 			local b2 = _G["MultiCastActionButton"..i]
-			b2:SetSize(20,20)
+			b2:SetSize(26, 26)
 			if i <= 4 then
 				local b = _G["MultiCastSlotButton"..i]
 				b:ClearAllPoints()
-				b:SetSize(20,20)
-				b:SetPoint("TOPLEFT",b2,"TOPLEFT")
+				b:SetSize(26, 26)
+				b:SetPoint("TOPLEFT", b2, "TOPLEFT")
 			end
  			if i == 1 or i == 5 or i == 9 then 
-				b2:SetPoint("LEFT",MultiCastSummonSpellButton,"RIGHT",1,0)
+				b2:SetPoint("LEFT", MultiCastSummonSpellButton, "RIGHT", 3, 0)
 			else
-				b2:SetPoint("LEFT",_G["MultiCastActionButton"..(i-1)],"RIGHT",1,0)
+				b2:SetPoint("LEFT", _G["MultiCastActionButton"..(i-1)], "RIGHT", 3, 0)
 			end
 		end
 		MultiCastRecallSpellButton:ClearAllPoints();
-		MultiCastRecallSpellButton:SetPoint("TOPLEFT",MultiCastSummonSpellButton,"TOPRIGHT", 1*5+20*4-2, 0)
-		MultiCastRecallSpellButton:SetSize(20,20)
+		MultiCastRecallSpellButton:SetPoint("TOPLEFT", MultiCastSummonSpellButton, "TOPRIGHT", 3*5+26*4-2, 0)
+		MultiCastRecallSpellButton:SetSize(26, 26)
 	end
 	-- right click to destroy totem
 	local function TotemBar_Destroy(self, button)
@@ -106,10 +106,10 @@ if myclass == "SHAMAN" then
 		end
 	end
 	local tcol = {
-		[1] = {r=.5,g=.7,b=.3}, -- earth
-		[2] = {r=.8,g=.4,b=.2}, -- fire
-		[3] = {r=.3,g=.7,b=.8}, -- water
-		[4] = {r=.8,g=.5,b=.9}, -- air
+		[1] = {r=.5, g=.7, b=.3}, -- earth
+		[2] = {r=.8, g=.4, b=.2}, -- fire
+		[3] = {r=.3, g=.7, b=.8}, -- water
+		[4] = {r=.8, g=.5, b=.9}, -- air
 	}
 	for i = 1, #tN do
 		local btn = _G["MultiCastSlotButton"..i]
@@ -119,15 +119,15 @@ if myclass == "SHAMAN" then
 		h:SetFrameStrata("MEDIUM")
 		h:SetFrameLevel(10)
 		h.bg = h:CreateTexture(nil, "BACKGROUND")
-		h.bg:SetPoint("BOTTOM",h,"BOTTOM")
-		h.bg:SetSize(h:GetHeight()-2,h:GetHeight()/3)
+		h.bg:SetPoint("BOTTOM", h, "BOTTOM")
+		h.bg:SetSize(h:GetHeight()-2, h:GetHeight()/3)
 		h.bg:SetTexture(0, 0, 0)
 		h.bg:SetAlpha(0.6)
 		h.t = h:CreateFontString(nil, "OVERLAY")
 		h.t:SetPoint("CENTER", h.bg, "CENTER", 0, 0)
 		h.t:SetWidth(h:GetWidth()+2)
 		h.t:SetFont(DB.Font, 8, "THINOUTLINE")
-		h.t:SetTextColor(tcol[i].r,tcol[i].g,tcol[i].b)
+		h.t:SetTextColor(tcol[i].r, tcol[i].g, tcol[i].b)
 		h:SetScript("OnEvent", TotemBar.OnEvent)
 		h:SetScript("OnUpdate", TotemBar.OnUpdate)
 		h:SetScript("OnHide", function(self) self.start = nil self.duration = nil end)

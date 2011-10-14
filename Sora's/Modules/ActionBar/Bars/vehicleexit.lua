@@ -1,4 +1,4 @@
-﻿local bar = CreateFrame("Frame","rABS_VehicleExit",UIParent, "SecureHandlerStateTemplate")
+﻿local bar = CreateFrame("Frame", "rABS_VehicleExit", UIParent, "SecureHandlerStateTemplate")
 bar:SetHeight(36)
 bar:SetWidth(36)
 bar:SetPoint("CENTER", ActionButton8, "CENTER", 0, 0)
@@ -18,7 +18,7 @@ veb:RegisterEvent("UNIT_ENTERING_VEHICLE")
 veb:RegisterEvent("UNIT_ENTERED_VEHICLE")
 veb:RegisterEvent("UNIT_EXITING_VEHICLE")
 veb:RegisterEvent("UNIT_EXITED_VEHICLE")
-veb:SetScript("OnEvent", function(self,event,...)
+veb:SetScript("OnEvent", function(self, event, ...)
 	local arg1 = ...
 	if (event=="UNIT_ENTERING_VEHICLE" or event=="UNIT_ENTERED_VEHICLE") and arg1 == "player" then
 		veb:Show()
