@@ -14,7 +14,6 @@
 	<Script file="CombatAlert.lua"/>
 	<Script file="DragEmAll.lua"/>
 	<Script file="Durability.lua"/>
-	<Script file="FrameHack.lua"/>
 	<Script file="Glow.lua"/>
 	<Script file="HoverTips.lua"/>
 	<Script file="Mail.lua"/>

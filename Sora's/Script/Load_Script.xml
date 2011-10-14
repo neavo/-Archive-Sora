@@ -1,6 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
+	<Script file = "AutoSet.lua"/>
 	<Script file = "AutoWipeMemory.lua"/>
-	<Script file = "BNToastFrame.lua"/>
+	<Script file = "BlzFrameHack.lua"/>
 
 </Ui>

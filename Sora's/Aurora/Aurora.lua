@@ -78,14 +78,14 @@ local r, g, b = RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLA
 local function StartGlow(f)
 	f:SetBackdropColor(r, g, b, .1)
 	f:SetBackdropBorderColor(r, g, b)
-	S.CreatePulse(f.glow)
+	S.CreatePulse(S.glow)
 end
 
 local function StopGlow(f)
 	f:SetBackdropColor(0, 0, 0, 0)
 	f:SetBackdropBorderColor(0, 0, 0)
-	f.glow:SetScript("OnUpdate", nil)
-	f.glow:SetAlpha(0)
+	S.glow:SetScript("OnUpdate", nil)
+	S.glow:SetAlpha(0)
 end
 
 S.Reskin = function(f)
@@ -112,15 +112,15 @@ S.Reskin = function(f)
 	tex:SetTexture(C.media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
-	f.glow = CreateFrame("Frame", nil, f)
-	f.glow:SetBackdrop({
+	S.glow = CreateFrame("Frame", nil, f)
+	S.glow:SetBackdrop({
 		edgeFile = C.media.glow,
 		edgeSize = 5,
 	})
-	f.glow:SetPoint("TOPLEFT", -6, 6)
-	f.glow:SetPoint("BOTTOMRIGHT", 6, -6)
-	f.glow:SetBackdropBorderColor(r, g, b)
-	f.glow:SetAlpha(0)
+	S.glow:SetPoint("TOPLEFT", -6, 6)
+	S.glow:SetPoint("BOTTOMRIGHT", 6, -6)
+	S.glow:SetBackdropBorderColor(r, g, b)
+	S.glow:SetAlpha(0)
 
 	f:HookScript("OnEnter", StartGlow)
  	f:HookScript("OnLeave", StopGlow)
@@ -352,6 +352,50 @@ Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
 	if addon == "Sora's" then
 
+		-- LootFrame
+		LootFramePortraitOverlay:Hide()
+		select(2, LootFrame:GetRegions()):Hide()
+		S.ReskinClose(LootCloseButton, "CENTER", LootFrame, "TOPRIGHT", -81, -26)
+
+		LootFrame.bg = CreateFrame("Frame", nil, LootFrame)
+		LootFrame.bg:SetFrameLevel(LootFrame:GetFrameLevel()-1)
+		LootFrame.bg:SetPoint("TOPLEFT", LootFrame, "TOPLEFT", 20, -12)
+		LootFrame.bg:SetPoint("BOTTOMRIGHT", LootFrame, "BOTTOMRIGHT", -66, 12)
+
+		S.CreateBD(LootFrame.bg)
+
+		select(3, LootFrame:GetRegions()):SetPoint("TOP", LootFrame.bg, "TOP", 0, -8)
+
+		for i = 1, LOOTFRAME_NUMBUTTONS do
+			local bu = _G["LootButton"..i]
+			local ic = _G["LootButton"..i.."IconTexture"]
+			_G["LootButton"..i.."IconQuestTexture"]:SetAlpha(0)
+			local _, _, _, _, _, _, _, bg = bu:GetRegions()
+
+			bu:SetNormalTexture("")
+			bu:SetPushedTexture("")
+
+			local bd = CreateFrame("Frame", nil, bu)
+			bd:SetPoint("TOPLEFT")
+			bd:SetPoint("BOTTOMRIGHT", 126, 0)
+			bd:SetFrameLevel(bu:GetFrameLevel()-1)
+			S.CreateBD(bd, .25)
+
+			ic:SetTexCoord(.08, .92, .08, .92)
+			ic.bg = S.CreateBG(ic)
+
+			bg:Hide()
+		end
+
+		hooksecurefunc("LootFrame_UpdateButton", function(index)
+			local ic = _G["LootButton"..index.."IconTexture"]
+			if select(6, GetLootSlotInfo(index)) then
+				ic.bg:SetVertexColor(1, 0, 0)
+			else
+				ic.bg:SetVertexColor(0, 0, 0)
+			end
+		end)
+		
 		-- [[ Headers ]]
 
 		local header = {"GameMenuFrame", "InterfaceOptionsFrame", "AudioOptionsFrame", "VideoOptionsFrame", "ChatConfigFrame", "ColorPickerFrame"}
