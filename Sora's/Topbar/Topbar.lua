@@ -52,19 +52,6 @@ for i = 1,4 do
 	topinfo[i].Text:SetShadowColor(0, 0, 0, 0.4)
 	topinfo[i].Text:SetShadowOffset(1.25, -1.25)
 	
-	topinfo[i].showed = false
-	topinfo[i].timer = 0
-	topinfo[i]:SetScript("OnShow", function(self)
-		self.timer = 0
-		self.showed = false
-		self:SetAlpha(0)
-		self:SetScript("OnUpdate", function(self, elasped)
-			self.timer = self.timer + elasped
-			self:SetAlpha(self.timer)
-			if self.timer>0.5 then self.showed = true end
-		end)
-	end)
-	topinfo[i]:Hide()
 end
 
 -- Ping 
@@ -481,12 +468,6 @@ Clock:SetScript("OnUpdate",function(self,elapsed)
 	end
 end)
 
--- NewMail
-local NewMail = UIParent:CreateFontString(nil, "OVERLAY")
-NewMail:SetPoint("TOP", Clock, "BOTTOM", 4, -5)
-NewMail:SetFont(DB.Font,14,"THINOUTLINE")	
-NewMail:SetText("|cff55FF55新邮件！|r")
-
 -- OnEnterWorld
 local OnEnterWorld = CreateFrame("Frame")
 OnEnterWorld:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -503,23 +484,14 @@ Updater:RegisterEvent("PLAYER_HONOR_GAIN")
 Updater:SetScript("OnEvent", updateCurrency)
 Updater:SetScript("OnUpdate",function(self,elapsed)
 	UpdaterTimer = UpdaterTimer + elapsed
-	if UpdaterTimer > 3 then
+	if UpdaterTimer > 1 then
 		UpdaterTimer = 0
-		
 		-- Gold
 		local Gold = GetMoney()
 		topinfo[4].Text:SetText(("%d |cffffd700G|r %d |cffc7c7cfS|r"):format(Gold/100/100, (Gold/100)%100))	
 		topinfo[4].Status:SetValue(Gold/100/100)
-		
-		-- NewMail
-		if HasNewMail() then
-			NewMail:Show()
-		else
-			NewMail:Hide()
-		end
 	end
 end)
-
 
 hooksecurefunc("BackpackTokenFrame_Update", updateCurrency)
 
