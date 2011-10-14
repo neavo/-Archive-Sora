@@ -309,7 +309,7 @@ if UnitFrameDB.ShowRaid then
 		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  
 			"showPlayer", true, 
-			"showSolo", true, 
+			"showSolo", false, 
 			"showParty", true, 
 			"xoffset", 7, 
 			"groupFilter", "1, 2, 3, 4, 5", 
