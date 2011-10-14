@@ -100,7 +100,7 @@ local function BuildTags(self)
 	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
 	if UnitFrameDB.ShortTargetTags then
-		self:Tag(HPTag, "[Sora:pp]")
+		self:Tag(PPTag, "[Sora:pp]")
 	else
 		self:Tag(PPTag, "[curpp] | [perpp]%")
 	end
