@@ -1,5 +1,6 @@
 ﻿-- Engines
-local _, _, _, DB = unpack(select(2, ...))
+local S, _, _, DB = unpack(select(2, ...))
+local NewMail = false
 
 Minimap:SetMaskTexture("Interface\\Buttons\\WHITE8x8")
 Minimap:SetFrameStrata("BACKGROUND")
@@ -10,12 +11,26 @@ Minimap:SetHeight(105)
 
 LFDSearchStatus:SetClampedToScreen(true)
 
-Minimap.Shadow = CreateFrame("Frame", nil, Minimap)
-Minimap.Shadow:SetPoint("TOPLEFT", -4, 4)
-Minimap.Shadow:SetPoint("BOTTOMRIGHT", 4, -4)	
-Minimap.Shadow:SetFrameLevel(0)
-Minimap.Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = 5})
-Minimap.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+Minimap.Shadow = S.MakeShadow(Minimap, 4)
+Minimap.Shadow.Timer = 0
+Minimap.Shadow:RegisterEvent("UPDATE_PENDING_MAIL")
+Minimap.Shadow:RegisterEvent("MAIL_CLOSED")
+Minimap.Shadow:SetScript("OnEvent",function(self, event, ... ) NewMail = HasNewMail() and true or false end)
+Minimap.Shadow:SetScript("OnUpdate",function(self,elapsed)
+	self.Timer = self.Timer + elapsed
+	if self.Timer > 1.2 then
+		self.Timer = 0
+		if NewMail then
+			self:SetBackdropBorderColor(120/255, 255/255, 120/255, 1)
+			UIFrameFadeOut(self, 1.2, 1, 0)
+		else
+			self:SetAlpha(1)
+			self:SetBackdropBorderColor(0, 0, 0, 1)
+		end
+	end
+end)
+
+
 
 ---------------------
 -- hide some stuff --
@@ -85,9 +100,9 @@ Minimap:EnableMouseWheel(true)
 Minimap:SetScript("OnMouseWheel", function(self, z)
 	local c = Minimap:GetZoom()
 	if z > 0 and c < 5 then
-		Minimap:SetZoom(c + 1)
+		Minimap:SetZoom(c+1)
 	elseif z < 0 and c > 0 then
-		Minimap:SetZoom(c - 1)
+		Minimap:SetZoom(c-1)
 	end
 end)
 
@@ -115,7 +130,6 @@ local menuList = {
 	{text = "系统菜单", func = function() ToggleFrame(GameMenuFrame) end}, 
     {text = ENCOUNTER_JOURNAL, func = function() ToggleFrame(EncounterJournal) end},
 }
-
 Minimap:SetScript("OnMouseUp", function(self, btn)
 	local position = Minimap:GetPoint()
 	if btn == "RightButton" then
