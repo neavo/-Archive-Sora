@@ -4,10 +4,9 @@
 	<Script file = "cfg.lua"/>
 	<Include file = "Function\Load_Function.xml"/>
 	<Include file = "Aurora\Load_Aurora.xml"/>
-	<Include file = "Loot\Load_Loot.xml"/>
-	<Include file = "MiniMap\Load_MiniMap.xml"/>
 	<Include file = "Misc\Load_Misc.xml"/>
 	<Include file = "Modules\Load_Modules.xml"/>
+	<Include file = "Script\Load_Script.xml"/>
 	<Include file = "Skin\Load_Skin.xml"/>
 	<Include file = "Topbar\Load_Topbar.xml"/>
 

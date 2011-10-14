@@ -48,7 +48,7 @@ Modules = {
 
 -- ShowConfig
 local function ShowConfig()
-	LibStub("AceConfigDialog-3.0"):SetDefaultSize("Sora's Config", 740, 500)
+	LibStub("AceConfigDialog-3.0"):SetDefaultSize("Sora's Config", 760, 500)
 	LibStub("AceConfigDialog-3.0"):Open("Sora's Config")
 end
 

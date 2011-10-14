@@ -91,13 +91,21 @@ local function BuildTags(self)
 	Name:SetAlpha(0)
 	local HPTag = S.MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
-	self:Tag(HPTag, "[Sora:color][Sora:hp]")
+	if UnitFrameDB.ShortFocusTags then
+		self:Tag(HPTag, "[Sora:color][Sora:hp]")
+	else
+		self:Tag(HPTag, "[Sora:color][curhp] | [perhp]%")		
+	end
 	HPTag:SetAlpha(0)
 	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
-	self:Tag(PPTag, "[Sora:pp]")
+	if UnitFrameDB.ShortFocusTags then
+		self:Tag(HPTag, "[Sora:pp]")
+	else
+		self:Tag(PPTag, "[curpp] | [perpp]%")
+	end
 	PPTag:SetAlpha(0)
-
+	
 	local PowerBar = self.Power
 	PowerBar:RegisterEvent("PLAYER_REGEN_DISABLED")
 	PowerBar:RegisterEvent("PLAYER_REGEN_ENABLED")

@@ -153,6 +153,81 @@ local function BuildRaidDebuffs(self)
 	self.RaidDebuffs.count:SetTextColor(1, 0.9, 0)
 end
 
+local function BuildAuraWatch(self, ...)
+	local _, Class = UnitClass("player")
+	local AuraWatch = {}
+	local spellIDs = {
+		DEATHKNIGHT = {}, 
+		DRUID = {
+			33763, -- Lifebloom
+			8936, -- Regrowth
+			774, -- Rejuvenation
+			48438, -- Wild Growth
+		}, 
+		HUNTER = {
+			34477, -- Misdirection
+		}, 
+		MAGE = {
+			54646, -- Focus Magic
+		}, 
+		PALADIN = {
+			53563, -- Beacon of Light
+			25771, -- Forbearance
+		}, 
+		PRIEST = { 
+			17, -- Power Word: Shield
+			139, -- Renew
+			33076, -- Prayer of Mending
+			6788, -- Weakened Soul
+		}, 
+		ROGUE = {
+			57934, -- Tricks of the Trade
+		}, 
+		SHAMAN = {
+			974, -- Earth Shield
+			61295, -- Riptide
+		}, 
+		WARLOCK = {
+			20707, -- Soulstone Resurrection
+		}, 
+		WARRIOR = {
+			50720, -- Vigilance
+		}, 
+	}
+		
+	local function PostCreateIcon(_, Button, ...)
+		Button.cd:SetReverse()
+		Button.count = S.MakeFontString(Button, 12)
+		Button.count:SetPoint("CENTER", Button, "BOTTOM", 3, 3)
+	end
+	AuraWatch.onlyShowPresent = true
+	AuraWatch.anyUnit = true
+	AuraWatch.PostCreateIcon = PostCreateIcon
+	-- Set any other AuraWatch settings
+	AuraWatch.icons = {}
+
+	for i, sid in pairs(spellIDs[Class]) do
+		local icon = CreateFrame("Frame", nil, self)
+		icon.spellID = sid
+		-- set the dimensions and positions
+		icon:SetWidth(12)
+		icon:SetHeight(12)
+		icon:SetFrameLevel(5)
+		if i == 1 then
+			icon:SetPoint("TOPLEFT", self, "TOPLEFT", -1, 1)
+		elseif i == 2 then
+			icon:SetPoint("TOPRIGHT", self, "TOPRIGHT", 1, 1)
+		elseif i == 3 then
+			icon:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", -1, -1)
+		elseif i == 4 then
+			icon:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 1, -1)
+		end
+		
+		AuraWatch.icons[sid] = icon
+	end
+	self.AuraWatch = AuraWatch
+end
+
 local function PostUpdateRaidFrame(Health, unit, min, max)
 	local disconnnected = not UnitIsConnected(unit)
 	local dead = UnitIsDead(unit)
@@ -208,12 +283,14 @@ local function BuildRaidFrame(self, ...)
 	-- BuildThreatBorder
 	BuildThreatBorder(self)
 	
+	-- BuildAuraWatch
+	BuildAuraWatch(self)
+	
 	-- BuildRaidDebuffs
 	if UnitFrameDB.ShowRaidDebuffs then BuildRaidDebuffs(self) end
 	
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
-
 
 if UnitFrameDB.ShowParty or UnitFrameDB.ShowRaid then
 	-- Hide the Blizzard raid frames
@@ -232,7 +309,7 @@ if UnitFrameDB.ShowRaid then
 		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  
 			"showPlayer", true, 
-			"showSolo", false, 
+			"showSolo", true, 
 			"showParty", true, 
 			"xoffset", 7, 
 			"groupFilter", "1, 2, 3, 4, 5", 
