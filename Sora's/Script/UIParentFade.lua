@@ -5,7 +5,7 @@ Event:SetScript("OnEvent", function(self, elasped)
 	UIParent:SetAlpha(0)
 	self:SetScript("OnUpdate", function(self, elasped)
 		Timer = Timer + elasped
-		if Timer > 6 then
+		if Timer > 4 then
 			UIFrameFadeIn(UIParent, 2, 0, 1)
 			self:SetScript("OnUpdate", nil)
 		end

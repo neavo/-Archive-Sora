@@ -7,6 +7,7 @@
 	<Include file = "Loot\Load_Loot.xml"/>
 	<Include file = "MiniMap\Load_MiniMap.xml"/>
 	<Include file = "Nameplate\Load_Nameplate.xml"/>
+	<Include file = "Quest\Load_Quest.xml"/>
 	<Include file = "Reminder\Load_Reminder.xml"/>
 	<Include file = "Threat\Load_Threat.xml"/>
 	<Include file = "Tooltip\Load_Tooltip.xml"/>
