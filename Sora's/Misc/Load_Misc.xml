@@ -1,10 +1,4 @@
-﻿<!-- 
--->
-
-
-
-
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Include file="BlizzBugsSuck\BlizzBugsSuck.xml"/>	
 	<Script file="Align.lua"/>

@@ -3,5 +3,6 @@
 	<Script file = "AutoSet.lua"/>
 	<Script file = "AutoWipeMemory.lua"/>
 	<Script file = "BlzFrameHack.lua"/>
+	<Script file = "ClearFont.lua"/>
 
 </Ui>
