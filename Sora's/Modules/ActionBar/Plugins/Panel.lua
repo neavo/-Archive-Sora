@@ -67,15 +67,15 @@ end
 -- BuildExtraBarButton
 local function BuildExtraBarButton()
 	local LeftButton = CreateFrame("Button", nil, UIParent)
-	LeftButton:SetSize(26, 9)
+	LeftButton:SetSize(MultiBarBottomRightButton1:GetWidth(), 9)
 	S.Reskin(LeftButton)
 	LeftButton:SetPoint("TOP", MultiBarBottomRightButton1, "BOTTOM", 0, -7)
-	LeftButton:SetScript("OnMouseDown", function(self) S.LeftBarFade() end)
+	LeftButton:SetScript("OnClick", function(self) S.LeftBarFade() end)
 	local RightButton = CreateFrame("Button", nil, UIParent)
-	RightButton:SetSize(26, 9)
+	RightButton:SetSize(MultiBarBottomRightButton7:GetWidth(), 9)
 	S.Reskin(RightButton)
 	RightButton:SetPoint("TOP", MultiBarBottomRightButton7, "BOTTOM", 0, -7)
-	RightButton:SetScript("OnMouseDown", function(self) S.RightBarFade() end)
+	RightButton:SetScript("OnClick", function(self) S.RightBarFade() end)
 end
 
 BuildExpBar()

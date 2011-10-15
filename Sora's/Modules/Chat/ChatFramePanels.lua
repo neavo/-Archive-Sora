@@ -49,8 +49,7 @@ local function InitChatFramePanel()
 			end
 		end
 	end)
-	MainBar.Button.Text = MainBar.Button:CreateFontString(nil, "ARTWORK")
-	MainBar.Button.Text:SetFont(DB.Font, 11, "THINOUTLINE")
+	MainBar.Button.Text = S.MakeFontString(MainBar.Button, 12)
 	MainBar.Button.Text:SetText("您有新的密语~")
 	MainBar.Button.Text:SetTextColor(1, 0.5, 1, 1)
 	MainBar.Button.Text:SetPoint("LEFT", MainBar.Button, "RIGHT", 5, 0)
@@ -165,13 +164,9 @@ Event:SetScript("OnUpdate", function(self, elapsed)
 	if self.Timer > 1.5 then
 		self.Timer = 0
 		if not IsChatFrameInScreen and NewWhisper then
-			MainBar.Button:SetBackdropBorderColor(1, 0.5, 1, 1)
-			MainBar.Button.Text:SetAlpha(1)
-			UIFrameFadeOut(MainBar.Button, 1.2, 1, 0)
+			UIFrameFadeOut(MainBar.Button.Text, 1.2, 1, 0)
 		else
 			NewWhisper = false
-			MainBar.Button:SetAlpha(1)
-			MainBar.Button:SetBackdropBorderColor(0, 0, 0, 1)
 			MainBar.Button.Text:SetAlpha(0)
 		end
 	end
