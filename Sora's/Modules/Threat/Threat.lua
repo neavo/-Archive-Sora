@@ -2,57 +2,49 @@
 local _, _, _, DB = unpack(select(2, ...))
 local ThreatList, ThreatFlag = {}, {}
 
--- 初始化
-local function Init()
-	-- 创建主框体
-	Threat = CreateFrame("Frame", nil, UIParent)
-	Threat:SetWidth(ThreatDB.ThreatBarWidth)
-	Threat:SetHeight(8)
-	Threat:SetFrameLevel(0)
-	Threat:SetBackdrop({
-		bgFile = DB.ThreatBar, insets = {left = 3, right = 3, top = 3, bottom = 3},
-		edgeFile = DB.GlowTex, edgeSize = 3
-	})
-	Threat:SetBackdropBorderColor(0, 0, 0, 1)
-	Threat:SetAlpha(0)
-	-- 创建坦克仇恨标签
-	Threat.FlagT = CreateFrame("Frame", "ThreatFlagTank", Threat)
-	Threat.FlagT:SetWidth(1)
-	Threat.FlagT:SetHeight(Threat:GetHeight()-6)
-	Threat.FlagT:SetBackdrop({ bgFile = DB.Solid })
-	Threat.FlagT:SetBackdropColor(0, 0, 0)
-	Threat.FlagT:SetFrameLevel(2)
-	Threat.FlagT.Name = Threat.FlagT:CreateTexture(nil, "OVERLAY")
-	Threat.FlagT.Name:SetHeight(24)
-	Threat.FlagT.Name:SetWidth(24)
-	Threat.FlagT.Name:SetTexture(DB.ArrowT)
-	Threat.FlagT.Name:SetPoint("BOTTOM", Threat.FlagT, "TOP", 0, 0)
-	Threat.FlagT.Text = Threat.FlagT:CreateFontString(nil, "OVERLAY")
-	Threat.FlagT.Text:SetFont(DB.Font, 10, "THINOUTLINE")
-	Threat.FlagT.Text:SetPoint("BOTTOM", Threat.FlagT.Name, "TOP", 0, -8)
-	-- 创建一般仇恨标签
-	for i=1, ThreatDB.ThreatLimited do 
-		Flag = CreateFrame("Frame", nil, Threat)
-		Flag:SetWidth(1)
-		Flag:SetHeight(Threat:GetHeight()-6)
-		Flag:SetBackdrop({ bgFile = DB.Solid })
-		Flag:SetBackdropColor(0, 0, 0)
-		Flag:SetFrameLevel(2)
-		Flag.Name = Flag:CreateTexture(nil, "OVERLAY")
-		Flag.Name:SetHeight(16)
-		Flag.Name:SetWidth(16)
-		Flag.Name:SetTexture(DB.Arrow)
-		Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, 0)
-		Flag.Text = Flag:CreateFontString(nil, "OVERLAY")
-		Flag.Text:SetFont(DB.Font, 10, "THINOUTLINE")
-		Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, 3)
-		tinsert(ThreatFlag, Flag)
-	end
-end
-
--- 设置锚点
-local function Pos()
-	Threat:SetPoint(unpack(DB.ThreatPos))
+-- 创建主框体
+local Threat = CreateFrame("Frame", nil, UIParent)
+Threat:SetWidth(ThreatDB.ThreatBarWidth)
+Threat:SetHeight(8)
+Threat:SetFrameLevel(0)
+Threat:SetBackdrop({
+	bgFile = DB.ThreatBar, insets = {left = 3, right = 3, top = 3, bottom = 3},
+	edgeFile = DB.GlowTex, edgeSize = 3
+})
+Threat:SetBackdropBorderColor(0, 0, 0, 1)
+Threat:SetAlpha(0)
+-- 创建坦克仇恨标签
+Threat.FlagT = CreateFrame("Frame", "ThreatFlagTank", Threat)
+Threat.FlagT:SetWidth(1)
+Threat.FlagT:SetHeight(Threat:GetHeight()-6)
+Threat.FlagT:SetBackdrop({ bgFile = DB.Solid })
+Threat.FlagT:SetBackdropColor(0, 0, 0)
+Threat.FlagT:SetFrameLevel(2)
+Threat.FlagT.Name = Threat.FlagT:CreateTexture(nil, "OVERLAY")
+Threat.FlagT.Name:SetHeight(24)
+Threat.FlagT.Name:SetWidth(24)
+Threat.FlagT.Name:SetTexture(DB.ArrowT)
+Threat.FlagT.Name:SetPoint("BOTTOM", Threat.FlagT, "TOP", 0, 0)
+Threat.FlagT.Text = Threat.FlagT:CreateFontString(nil, "OVERLAY")
+Threat.FlagT.Text:SetFont(DB.Font, 10, "THINOUTLINE")
+Threat.FlagT.Text:SetPoint("BOTTOM", Threat.FlagT.Name, "TOP", 0, -8)
+-- 创建一般仇恨标签
+for i=1, ThreatDB.ThreatLimited do 
+	local Flag = CreateFrame("Frame", nil, Threat)
+	Flag:SetWidth(1)
+	Flag:SetHeight(Threat:GetHeight()-6)
+	Flag:SetBackdrop({ bgFile = DB.Solid })
+	Flag:SetBackdropColor(0, 0, 0)
+	Flag:SetFrameLevel(2)
+	Flag.Name = Flag:CreateTexture(nil, "OVERLAY")
+	Flag.Name:SetHeight(16)
+	Flag.Name:SetWidth(16)
+	Flag.Name:SetTexture(DB.Arrow)
+	Flag.Name:SetPoint("TOP", Flag, "BOTTOM", 0, 0)
+	Flag.Text = Flag:CreateFontString(nil, "OVERLAY")
+	Flag.Text:SetFont(DB.Font, 10, "THINOUTLINE")
+	Flag.Text:SetPoint("TOP", Flag.Name, "BOTTOM", 1, 3)
+	tinsert(ThreatFlag, Flag)
 end
 
 -- 更新仇恨列表
@@ -179,17 +171,14 @@ end
 
 -- Event
 local Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("PLAYER_ENTERING_WORLD")
 Event:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 Event:RegisterEvent("PLAYER_TARGET_CHANGED")
 Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 Event:RegisterEvent("PLAYER_REGEN_ENABLED")
 Event:SetScript("OnEvent", function(self, event, ...)
-	if event == "PLAYER_LOGIN" then
-		Init()
-	elseif event == "PLAYER_ENTERING_WORLD" then
-		Pos()
+	if event == "PLAYER_ENTERING_WORLD" then
+		Threat:SetPoint(unpack(DB.ThreatPos))
 	elseif event == "PLAYER_REGEN_DISABLED" then
 		if shouldShow() then
 			if Threat:GetAlpha() < 0.1 then

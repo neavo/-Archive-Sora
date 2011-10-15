@@ -20,19 +20,15 @@ for i=1, NUM_PET_ACTION_SLOTS do
 	local Button = _G["PetActionButton"..i]
 	Button:SetAlpha(0.3)
 	Button:HookScript("OnEnter", function(self) 
-		if PetActionBarFrame:IsShown() then
-			for i = 1, NUM_PET_ACTION_SLOTS do
-				local Button = _G["PetActionButton"..i]
-				Button:SetAlpha(1)
-			end
+		for i = 1, NUM_PET_ACTION_SLOTS do
+			local Button = _G["PetActionButton"..i]
+			Button:SetAlpha(1)
 		end
 	end)
 	Button:HookScript("OnLeave",function(self) 
-		if PetActionBarFrame:IsShown() then
-			for i = 1, NUM_PET_ACTION_SLOTS do
-				local Button = _G["PetActionButton"..i]
-				Button:SetAlpha(0.3)
-			end
+		for i = 1, NUM_PET_ACTION_SLOTS do
+			local Button = _G["PetActionButton"..i]
+			Button:SetAlpha(0.3)
 		end
 	end)
 end 

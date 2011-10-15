@@ -183,9 +183,8 @@ function MyContainer:OnCreate(name, settings)
 	
 	-- 背包栏开关按钮
 	self:UpdateDimensions()
-	local BagToggle = CreateFrame("Button", nil, self)
+	local BagToggle = S.MakeButton(self)
 	BagToggle:SetSize(40, 20)
-	S.Reskin(BagToggle)
 	BagToggle:SetPoint("BOTTOMLEFT", 9, 7)
 	BagToggle:SetScript("OnClick", function()
 		if self.BagBar:IsShown() then
@@ -201,9 +200,8 @@ function MyContainer:OnCreate(name, settings)
 	BagToggle.Text:SetText("背包")
 	
 	-- 背包整理按钮
-	local SortButton = CreateFrame("Button", nil, self)
+	local SortButton = S.MakeButton(self)
 	SortButton:SetSize(70, 20)
-	S.Reskin(SortButton)
 	SortButton:SetPoint("BOTTOMRIGHT", -30, 7)
 	SortButton:SetScript("OnClick", function() JPack:Pack() end)
 	SortButton.Text = SortButton:CreateFontString(nil, "OVERLAY")
@@ -212,10 +210,9 @@ function MyContainer:OnCreate(name, settings)
 	SortButton.Text:SetText("整理背包")
 
 	-- 关闭按钮
-	local CloseButton = CreateFrame("Button", nil, self)
-	CloseButton:SetFrameLevel(3)
+	local CloseButton = S.MakeButton(self)
+	--CloseButton:SetFrameLevel(3)
 	CloseButton:SetSize(20, 20)
-	S.Reskin(CloseButton)
 	CloseButton:SetScript( "OnClick", function(self) CloseAllBags() end)
 	CloseButton:SetPoint("BOTTOMRIGHT", -7, 7)
 	CloseButton.Texture = CloseButton:CreateFontString(nil, "OVERLAY")

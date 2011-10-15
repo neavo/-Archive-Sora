@@ -14,10 +14,9 @@ local function InitChatFramePanel()
 	})
 	MainBar:SetBackdropColor(0, 0, 0, 0.2)
 	MainBar:SetBackdropBorderColor(0, 0, 0, 0.8)
-	MainBar.Button = CreateFrame("Button", nil, MainBar)
+	MainBar.Button = S.MakeButton(MainBar)
 	MainBar.Button:SetPoint("TOPLEFT", MainBar, "TOPRIGHT", 2, -1)
 	MainBar.Button:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMRIGHT", 10, 1)
-	S.Reskin(MainBar.Button)
 	MainBar.Button:SetScript("OnMouseDown", function(self)
 		if not UnitAffectingCombat("player") then
 			if IsChatFrameInScreen then

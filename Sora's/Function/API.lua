@@ -1,8 +1,8 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
 
-function S.MakeShadow(Frame, Size)
-	local Shadow = CreateFrame("Frame", nil, Frame)
+function S.MakeShadow(Parent, Size)
+	local Shadow = CreateFrame("Frame", nil, Parent)
 	Shadow:SetFrameLevel(0)
 	Shadow:SetPoint("TOPLEFT", -Size, Size)
 	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
@@ -12,13 +12,13 @@ function S.MakeShadow(Frame, Size)
 end
 
 function S.MakeTexShadow(Parent, Anchor, Size)
-	local Border = CreateFrame("Frame", nil, Parent)
-	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
-	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
-	Border:SetFrameLevel(1)
-	Border:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
-	Border:SetBackdropBorderColor(0, 0, 0, 1)
-	return Border
+	local Shadow = CreateFrame("Frame", nil, Parent)
+	Shadow:SetPoint("TOPLEFT", Anchor, -Size, Size)
+	Shadow:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
+	Shadow:SetFrameLevel(1)
+	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
+	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+	return Shadow
 end
 
 function S.MakeFontString(Parent, FontSize)
@@ -76,7 +76,11 @@ function S.FormatMemory(Memory)
 	end	
 end
 
-
+function S.MakeButton(Parent)
+	local Button = CreateFrame("Button", nil, Parent)
+	S.Reskin(Button)
+	return Button
+end
 
 
 
