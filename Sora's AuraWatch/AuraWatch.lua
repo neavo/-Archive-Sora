@@ -26,11 +26,11 @@ local function Init()
 	for _, value in pairs(AuraList) do
 		local tempTable = {}
 		for i = 1, #(value.List) do
-			local temp = nil
+			local temp
 			if value.Mode:lower() == "icon" then
 				temp = BuildICON(value.iconSize)
 			elseif value.Mode:lower() == "bar" then
-				temp = cfg.BuildBAR(value.iconSize, value.barWidth)
+				temp = BuildBAR(value.iconSize, value.barWidth)
 			end
 			temp:Hide()
 			table.insert(tempTable, temp)
@@ -38,7 +38,6 @@ local function Init()
 		table.insert(Arg, 0)
 		table.insert(Aura, tempTable)
 	end
-	
 	cfg.AuraList = AuraList
 	cfg.Aura = Aura
 end
@@ -90,12 +89,9 @@ local function UpdateBuff(Frame, value, idName)
 	local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.unitId, idName)
 	
 	-- 过滤施法者和层数阈值
-	if value.Caster and caster and value.Caster:lower() ~= caster:lower() then
-		return
-	end
-	if value.Stack and count and value.Stack > count then
-		return
-	end
+	if not name then return end
+	if value.Caster and caster and value.Caster:lower() ~= caster:lower() then return end
+	if value.Stack and count and value.Stack > count then return end
 	
 	Frame:Show()
 	Frame.Icon:SetTexture(icon)
@@ -118,12 +114,9 @@ local function UpdateDebuff(Frame, value, idName)
 	local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, idName)
 	
 	-- 过滤施法者和层数阈值
-	if value.Caster and caster and value.Caster:lower() ~= caster:lower() or not caster then
-		return
-	end
-	if value.Stack and count and value.Stack > count then
-		return
-	end
+	if not name then return end
+	if value.Caster and caster and value.Caster:lower() ~= caster:lower() or not caster then return end
+	if value.Stack and count and value.Stack > count then return end
 	
 	Frame:Show()
 	Frame.Icon:SetTexture(icon)
@@ -201,23 +194,23 @@ local function Update()
 	for KEY, VALUE in pairs(Aura) do
 		Arg[KEY] = 1
 		for key, value in pairs(AuraList[KEY].List) do
-			local frame = VALUE[Arg[KEY]]
+			local Frame = VALUE[Arg[KEY]]
 			if value.spellID then
 				local idName = GetSpellInfo(value.spellID)
 				if value.Filter:lower() == "buff" and UnitBuff(value.unitId, idName) then
-					UpdateBuff(frame, value, idName)
+					UpdateBuff(Frame, value, idName)
 					Arg[KEY] = Arg[KEY] + 1
 				elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, idName) then
-					UpdateDebuff(frame, value, idName)
+					UpdateDebuff(Frame, value, idName)
 					Arg[KEY] = Arg[KEY] + 1
 				elseif value.Filter:lower() == "cd" and GetSpellCooldown(idName) and select(2, GetSpellCooldown(idName)) > 1.5 then
-					UpdateCD(frame, value, idName)
+					UpdateCD(Frame, value, idName)
 					Arg[KEY] = Arg[KEY] + 1
 				end
 			elseif value.itemID then
 				idName = GetItemInfo(value.itemID)
 				if select(2, GetItemCooldown(value.itemID)) > 1.5 then
-					UpdateItemCD(frame, value, idName)
+					UpdateItemCD(Frame, value, idName)
 					Arg[KEY] = Arg[KEY] + 1
 				end
 			end
