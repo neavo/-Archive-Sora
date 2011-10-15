@@ -4,5 +4,6 @@
 	<Script file = "AutoWipeMemory.lua"/>
 	<Script file = "BlzFrameHack.lua"/>
 	<Script file = "ClearFont.lua"/>
+	<Script file = "UIParentFade.lua"/>
 
 </Ui>

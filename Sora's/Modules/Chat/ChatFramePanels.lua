@@ -14,11 +14,11 @@ local function InitChatFramePanel()
 	})
 	MainBar:SetBackdropColor(0, 0, 0, 0.2)
 	MainBar:SetBackdropBorderColor(0, 0, 0, 0.8)
-	MainBar.Right = CreateFrame("Button", nil, MainBar)
-	MainBar.Right:SetPoint("TOPLEFT", MainBar, "TOPRIGHT", 2, -1)
-	MainBar.Right:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMRIGHT", 10, 1)
-	S.Reskin(MainBar.Right)
-	MainBar.Right:SetScript("OnMouseDown", function(self)
+	MainBar.Button = CreateFrame("Button", nil, MainBar)
+	MainBar.Button:SetPoint("TOPLEFT", MainBar, "TOPRIGHT", 2, -1)
+	MainBar.Button:SetPoint("BOTTOMRIGHT", MainBar, "BOTTOMRIGHT", 10, 1)
+	S.Reskin(MainBar.Button)
+	MainBar.Button:SetScript("OnMouseDown", function(self)
 		if not UnitAffectingCombat("player") then
 			if IsChatFrameInScreen then
 				local Anchor, _, _, OriginalX, OriginalY = ChatFrame1:GetPoint()
@@ -49,12 +49,12 @@ local function InitChatFramePanel()
 			end
 		end
 	end)
-	MainBar.Right.Text = MainBar.Right:CreateFontString(nil, "ARTWORK")
-	MainBar.Right.Text:SetFont(DB.Font, 11, "THINOUTLINE")
-	MainBar.Right.Text:SetText("您有新的密语~")
-	MainBar.Right.Text:SetTextColor(1, 0.5, 1, 1)
-	MainBar.Right.Text:SetPoint("LEFT", MainBar.Right, "RIGHT", 5, 0)
-	MainBar.Right.Text:SetAlpha(0)
+	MainBar.Button.Text = MainBar.Button:CreateFontString(nil, "ARTWORK")
+	MainBar.Button.Text:SetFont(DB.Font, 11, "THINOUTLINE")
+	MainBar.Button.Text:SetText("您有新的密语~")
+	MainBar.Button.Text:SetTextColor(1, 0.5, 1, 1)
+	MainBar.Button.Text:SetPoint("LEFT", MainBar.Button, "RIGHT", 5, 0)
+	MainBar.Button.Text:SetAlpha(0)
 end
 
 -- InitChatbar
@@ -165,14 +165,14 @@ Event:SetScript("OnUpdate", function(self, elapsed)
 	if self.Timer > 1.5 then
 		self.Timer = 0
 		if not IsChatFrameInScreen and NewWhisper then
-			MainBar.Right:SetBackdropBorderColor(1, 0.5, 1, 1)
-			MainBar.Right.Text:SetAlpha(1)
-			UIFrameFadeOut(MainBar.Right, 1.2, 1, 0)
+			MainBar.Button:SetBackdropBorderColor(1, 0.5, 1, 1)
+			MainBar.Button.Text:SetAlpha(1)
+			UIFrameFadeOut(MainBar.Button, 1.2, 1, 0)
 		else
 			NewWhisper = false
-			MainBar.Right:SetAlpha(1)
-			MainBar.Right:SetBackdropBorderColor(0, 0, 0, 0.8)
-			MainBar.Right.Text:SetAlpha(0)
+			MainBar.Button:SetAlpha(1)
+			MainBar.Button:SetBackdropBorderColor(0, 0, 0, 1)
+			MainBar.Button.Text:SetAlpha(0)
 		end
 	end
 end)

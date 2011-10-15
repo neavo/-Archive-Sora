@@ -1,7 +1,7 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
 
--- InitMiniMapTracking
+-- BuildTopFrame
 local function InitMiniMapTracking(TopFrame)
 	MiniMapTrackingBackground:Hide()
 	MiniMapTrackingButton:SetAlpha(0)
@@ -12,8 +12,6 @@ local function InitMiniMapTracking(TopFrame)
 	MiniMapTracking:SetPoint("LEFT", 3, 0)
 	MiniMapTracking:SetScale(0.7)
 end
-
--- BuildTopFrame
 local function BuildTopFrame()
 	local TopFrame = CreateFrame("Button", nil, UIParent)
 	TopFrame:SetSize(Minimap:GetWidth()+2, 16)
@@ -33,11 +31,10 @@ local function BuildTopFrame()
 			self.Text:SetText(GetMinimapZoneText())
 		end
 	end)
-	
 	InitMiniMapTracking(TopFrame)
 end
 
--- BuildBottomRightFrame
+-- BuildBottomFrame
 local function BuildBottomRightFrame(BottomFrame)
 	BottomFrame.Right = CreateFrame("Button", nil, BottomFrame)
 	BottomFrame.Right:SetSize(16, 16)
@@ -63,8 +60,6 @@ local function BuildBottomRightFrame(BottomFrame)
 	BottomFrame.Right.Text:SetFont(DB.Font, 9, "THINOUTLINE")
 	BottomFrame.Right.Text:SetText("B")
 end
-
--- BuildButtonTable
 local function BuildButtonTable()
 	local ButtonTable = {}
 	for i = 1, 5 do
@@ -113,8 +108,6 @@ local function BuildButtonTable()
 	end
 	return ButtonTable
 end
-
--- BuildBottomLeftFrame
 local function BuildBottomLeftFrame(BottomFrame)
 	local ButtonTable = BuildButtonTable()
 	BottomFrame.Left = CreateFrame("Button", nil, BottomFrame)
@@ -147,8 +140,6 @@ local function BuildBottomLeftFrame(BottomFrame)
 	BottomFrame.Left.Text:SetFont(DB.Font, 9, "THINOUTLINE")
 	BottomFrame.Left.Text:SetText("G")
 end
-
--- BuildBottomFrame
 local function BuildBottomFrame()
 	local BottomFrame = CreateFrame("Button", nil, UIParent)
 	BottomFrame:SetSize(Minimap:GetWidth()+2, 16)
@@ -175,16 +166,5 @@ local function BuildBottomFrame()
 	BuildBottomLeftFrame(BottomFrame)
 end
 
--- Event
-Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_LOGIN")
-Event:SetScript("OnEvent", function(self, event, ...)
-	if event == "PLAYER_LOGIN" then
-		BuildTopFrame()
-		BuildBottomFrame()
-	end
-end)
-
-
-
-
+BuildTopFrame()
+BuildBottomFrame()
