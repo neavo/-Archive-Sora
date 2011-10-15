@@ -4,7 +4,10 @@ local _, class = UnitClass("player")
 local r, g, b = RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b
 local alpha = 0.5
 DB.Aurora = {}
-DB.Aurora.media = {
+
+DB.Aurora.classcolours = RAID_CLASS_COLORS
+
+DB.Aurora.Media = {
 	["backdrop"] = "Interface\\ChatFrame\\ChatFrameBackground",
 	["checked"] = "Interface\\AddOns\\Sora's\\Media\\CheckButtonHilight",
 	["glow"] = "Interface\\AddOns\\Sora's\\Media\\glow",
@@ -14,8 +17,8 @@ S.dummy = function() end
 
 S.CreateBD = function(f, a)
 	f:SetBackdrop({
-		bgFile = DB.Aurora.media.backdrop, 
-		edgeFile = DB.Aurora.media.backdrop, 
+		bgFile = DB.Aurora.Media.backdrop, 
+		edgeFile = DB.Aurora.Media.backdrop, 
 		edgeSize = 1, 
 	})
 	f:SetBackdropColor(0, 0, 0, a or alpha)
@@ -29,7 +32,7 @@ S.CreateBG = function(frame)
 	local bg = f:CreateTexture(nil, "BACKGROUND")
 	bg:SetPoint("TOPLEFT", frame, -1, 1)
 	bg:SetPoint("BOTTOMRIGHT", frame, 1, -1)
-	bg:SetTexture(DB.Aurora.media.backdrop)
+	bg:SetTexture(DB.Aurora.Media.backdrop)
 	bg:SetVertexColor(0, 0, 0)
 
 	return bg
@@ -40,7 +43,7 @@ S.CreateSD = function(parent, size, r, g, b, alpha, offset)
 	sd.size = size or 5
 	sd.offset = offset or 0
 	sd:SetBackdrop({
-		edgeFile = DB.Aurora.media.glow,
+		edgeFile = DB.Aurora.Media.glow,
 		edgeSize = sd.size,
 	})
 	sd:SetPoint("TOPLEFT", parent, -sd.size - 1 - sd.offset, sd.size + 1 + sd.offset)
@@ -104,12 +107,12 @@ S.Reskin = function(f)
 	local tex = f:CreateTexture(nil, "BACKGROUND")
 	tex:SetPoint("TOPLEFT")
 	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(DB.Aurora.media.backdrop)
+	tex:SetTexture(DB.Aurora.Media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	S.glow = CreateFrame("Frame", nil, f)
 	S.glow:SetBackdrop({
-		edgeFile = DB.Aurora.media.glow,
+		edgeFile = DB.Aurora.Media.glow,
 		edgeSize = 5,
 	})
 	S.glow:SetPoint("TOPLEFT", -6, 6)
@@ -130,7 +133,7 @@ S.CreateTab = function(f)
 	bg:SetFrameLevel(f:GetFrameLevel()-1)
 	S.CreateBD(bg)
 
-	f:SetHighlightTexture(DB.Aurora.media.backdrop)
+	f:SetHighlightTexture(DB.Aurora.Media.backdrop)
 	local hl = f:GetHighlightTexture()
 	hl:SetPoint("TOPLEFT", 9, -4)
 	hl:SetPoint("BOTTOMRIGHT", -9, 1)
@@ -158,7 +161,7 @@ S.ReskinScroll = function(f)
 	local tex = f:CreateTexture(nil, "BACKGROUND")
 	tex:SetPoint("TOPLEFT", bu.bg)
 	tex:SetPoint("BOTTOMRIGHT", bu.bg)
-	tex:SetTexture(DB.Aurora.media.backdrop)
+	tex:SetTexture(DB.Aurora.Media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	local up = _G[frame.."ScrollUpButton"]
@@ -170,12 +173,12 @@ S.ReskinScroll = function(f)
 	S.Reskin(up)
 	S.Reskin(down)
 	
-	up:SetDisabledTexture(DB.Aurora.media.backdrop)
+	up:SetDisabledTexture(DB.Aurora.Media.backdrop)
 	local dis1 = up:GetDisabledTexture()
 	dis1:SetVertexColor(0, 0, 0, .3)
 	dis1:SetDrawLayer("OVERLAY")
 	
-	down:SetDisabledTexture(DB.Aurora.media.backdrop)
+	down:SetDisabledTexture(DB.Aurora.Media.backdrop)
 	local dis2 = down:GetDisabledTexture()
 	dis2:SetVertexColor(0, 0, 0, .3)
 	dis2:SetDrawLayer("OVERLAY")
@@ -212,7 +215,7 @@ S.ReskinDropDown = function(f)
 
 	S.Reskin(down)
 	
-	down:SetDisabledTexture(DB.Aurora.media.backdrop)
+	down:SetDisabledTexture(DB.Aurora.Media.backdrop)
 	local dis = down:GetDisabledTexture()
 	dis:SetVertexColor(0, 0, 0, .3)
 	dis:SetDrawLayer("OVERLAY")
@@ -232,7 +235,7 @@ S.ReskinDropDown = function(f)
 	local tex = bg:CreateTexture(nil, "BACKGROUND")
 	tex:SetPoint("TOPLEFT")
 	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(DB.Aurora.media.backdrop)
+	tex:SetTexture(DB.Aurora.Media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 end
 
@@ -256,7 +259,7 @@ S.ReskinClose = function(f, a1, p, a2, x, y)
 	local tex = f:CreateTexture(nil, "BACKGROUND")
 	tex:SetPoint("TOPLEFT")
 	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(DB.Aurora.media.backdrop)
+	tex:SetTexture(DB.Aurora.Media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	local text = f:CreateFontString(nil, "OVERLAY")
@@ -279,7 +282,7 @@ S.ReskinInput = function(f, height, width)
 	local tex = f:CreateTexture(nil, "BACKGROUND")
 	tex:SetPoint("TOPLEFT")
 	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(DB.Aurora.media.backdrop)
+	tex:SetTexture(DB.Aurora.Media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	if height then f:SetHeight(height) end
@@ -290,7 +293,7 @@ S.ReskinArrow = function(f, direction)
 	f:SetSize(18, 18)
 	S.Reskin(f)
 	
-	f:SetDisabledTexture(DB.Aurora.media.backdrop)
+	f:SetDisabledTexture(DB.Aurora.Media.backdrop)
 	local dis = f:GetDisabledTexture()
 	dis:SetVertexColor(0, 0, 0, .3)
 	dis:SetDrawLayer("OVERLAY")
@@ -309,7 +312,7 @@ end
 S.ReskinCheck = function(f)
 	f:SetNormalTexture("")
 	f:SetPushedTexture("")
-	f:SetHighlightTexture(DB.Aurora.media.backdrop)
+	f:SetHighlightTexture(DB.Aurora.Media.backdrop)
 	local hl = f:GetHighlightTexture()
 	hl:SetPoint("TOPLEFT", 5, -5)
 	hl:SetPoint("BOTTOMRIGHT", -5, 5)
@@ -324,7 +327,7 @@ S.ReskinCheck = function(f)
 	local tex = f:CreateTexture(nil, "BACKGROUND")
 	tex:SetPoint("TOPLEFT", 5, -5)
 	tex:SetPoint("BOTTOMRIGHT", -5, 5)
-	tex:SetTexture(DB.Aurora.media.backdrop)
+	tex:SetTexture(DB.Aurora.Media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 end
 
