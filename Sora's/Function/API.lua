@@ -1,232 +1,85 @@
-﻿local S, C, L, DB = unpack(select(2, ...))
+﻿-- Engines
+local S, _, _, DB = unpack(select(2, ...))
 
-_, S.myclass = UnitClass("player")
-S.level = UnitLevel("player")
-S.myname = UnitName("player")
-S.myrealm = GetRealmName()
-RoleUpdater = CreateFrame("Frame")
+function S.MakeShadow(Frame, Size)
+	local Shadow = CreateFrame("Frame", nil, Frame)
+	Shadow:SetFrameLevel(0)
+	Shadow:SetPoint("TOPLEFT", -Size, Size)
+	Shadow:SetPoint("BOTTOMRIGHT", Size, -Size)
+	Shadow:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
+	Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+	return Shadow
+end
 
-local function CheckRole(self, event, unit)
-	local tree = GetPrimaryTalentTree()
-	local resilience
-	local resilperc = GetCombatRatingBonus(COMBAT_RATING_RESILIENCE_PLAYER_DAMAGE_TAKEN)
-	if resilperc > GetDodgeChance() and resilperc > GetParryChance() then
-		resilience = true
-	else
-		resilience = false
-	end
-	if ((S.myclass == "PALADIN" and tree == 2) or 
-	(S.myclass == "WARRIOR" and tree == 3) or 
-	(S.myclass == "DEATHKNIGHT" and tree == 1)) and
-	resilience == false or
-	(S.myclass == "DRUID" and tree == 2 and GetBonusBarOffset() == 3) then
-		S.Role = "Tank"
-	else
-		local playerint = select(2, UnitStat("player", 4))
-		local playeragi	= select(2, UnitStat("player", 2))
-		local base, posBuff, negBuff = UnitAttackPower("player");
-		local playerap = base + posBuff + negBuff;
+function S.MakeTexShadow(Parent, Anchor, Size)
+	local Border = CreateFrame("Frame", nil, Parent)
+	Border:SetPoint("TOPLEFT", Anchor, -Size, Size)
+	Border:SetPoint("BOTTOMRIGHT", Anchor, Size, -Size)
+	Border:SetFrameLevel(1)
+	Border:SetBackdrop({edgeFile = DB.GlowTex, edgeSize = Size})
+	Border:SetBackdropBorderColor(0, 0, 0, 1)
+	return Border
+end
 
-		if (((playerap > playerint) or (playeragi > playerint)) and not (S.myclass == "SHAMAN" and tree ~= 1 and tree ~= 3) and not (UnitBuff("player", GetSpellInfo(24858)) or UnitBuff("player", GetSpellInfo(65139)))) or S.myclass == "ROGUE" or S.myclass == "HUNTER" or (S.myclass == "SHAMAN" and tree == 2) then
-			S.Role = "Melee"
-		else
-			S.Role = "Caster"
+function S.MakeFontString(Parent, FontSize)
+	local Text = Parent:CreateFontString(nil, "OVERLAY")
+	Text:SetFont(DB.Font, FontSize, "THINOUTLINE")
+	return Text
+end
+
+function S.SVal(Val)
+    if Val >= 1e6 then
+        return ("%.1fm"):format(Val/1e6):gsub("%.?0+([km])$", "%1")
+    elseif Val >= 1e4 then
+        return ("%.1fk"):format(Val/1e3):gsub("%.?0+([km])$", "%1")
+    else
+        return Val
+    end
+end
+
+function S.ToHex(r, g, b)
+	if r then
+		if type(r) == "table" then
+			if r.r then r, g, b = r.r, r.g, r.b else r, g, b = unpack(r) end
 		end
+		return ("|cff%02x%02x%02x"):format(r*255, g*255, b*255)
 	end
-end	
-RoleUpdater:RegisterEvent("PLAYER_ENTERING_WORLD")
-RoleUpdater:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-RoleUpdater:RegisterEvent("PLAYER_TALENT_UPDATE")
-RoleUpdater:RegisterEvent("CHARACTER_POINTS_CHANGED")
-RoleUpdater:RegisterEvent("UNIT_INVENTORY_CHANGED")
-RoleUpdater:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
-RoleUpdater:SetScript("OnEvent", CheckRole)
-CheckRole()
-
-local mult = 768/string.match(GetCVar("gxResolution"), "%d+x(%d+)")/UIParent:GetScale()
-local function scale(x)
-	return mult*math.floor(x/mult+.5)
 end
 
-function S.RGBToHex(r, g, b)
-	r = r <= 1 and r >= 0 and r or 0
-	g = g <= 1 and g >= 0 and g or 0
-	b = b <= 1 and b >= 0 and b or 0
-	return string.format("|cff%02x%02x%02x", r*255, g*255, b*255)
-end
-
-function S.ShortValue(v)
-	if v >= 1e6 then
-		return ("%.1fm"):format(v / 1e6):gsub("%.?0+([km])$", "%1")
-	elseif v >= 1e3 or v <= -1e3 then
-		return ("%.1fk"):format(v / 1e3):gsub("%.?0+([km])$", "%1")
+function S.FormatTime(Time)
+	local Day = floor(Time/86400)
+	local Hour = floor((Time-Day*86400)/3600)
+	local Minute = floor((Time-Day*86400-Hour*3600)/60)
+	local Second = floor((Time-Day*86400-Hour*3600-Minute*60)/60)
+	if Time > 86400 then
+		return Day.."d "..Hour.."m"		
+	elseif Time > 3600 then
+		return Hour.."h "..Minute.."m"
+	elseif Time < 3600 and Time > 60 then
+		return Minute.."m "..Second.."s"
+	elseif Time < 60 and Time > 0 then	
+		return Second.."s"
 	else
-		return v
+		return "N/A"
 	end
 end
 
-local function Size(frame, width, height)
-	frame:SetSize(scale(width), scale(height or width))
+function S.FormatMemory(Memory)
+	local M = format("%.2f", Memory/1024)
+	local K = floor(Memory-floor(Memory/1024))
+	if Memory > 1024 then
+		return M.."m "	
+	elseif Memory > 0 and Memory < 1024 then
+		return K.."k"
+	else
+		return "N/A"
+	end	
 end
 
-local function Width(frame, width)
-	frame:SetWidth(scale(width))
-end
 
-local function Height(frame, height)
-	frame:SetHeight(scale(height))
-end
 
-local function Point(obj, arg1, arg2, arg3, arg4, arg5)
-	-- anyone has a more elegant way for this?
-	if type(arg1)=="number" then arg1 = scale(arg1) end
-	if type(arg2)=="number" then arg2 = scale(arg2) end
-	if type(arg3)=="number" then arg3 = scale(arg3) end
-	if type(arg4)=="number" then arg4 = scale(arg4) end
-	if type(arg5)=="number" then arg5 = scale(arg5) end
 
-	obj:SetPoint(arg1, arg2, arg3, arg4, arg5)
-end
 
-local function CreateShadow(f, t)
-	if f.shadow then return end
-	
-	borderr, borderg, borderb, bordera = 0, 0, 0, 1
-	backdropr, backdropg, backdropb, backdropa = 05,.05,.05, .9
-	
-	local shadow = CreateFrame("Frame", nil, f)
-	shadow:SetFrameLevel(1)
-	shadow:SetFrameStrata(f:GetFrameStrata())
-	shadow:Point("TOPLEFT", -3, 3)
-	shadow:Point("BOTTOMRIGHT", 3, -3)
-	shadow:Point("TOPRIGHT", 3, 3)
-	shadow:Point("BOTTOMRIGHT", 3, -3)
-	shadow:SetBackdrop({
-		edgeFile = DB.GlowTex, 
-		edgeSize = scale(5),
-		insets = { left = scale(4), right = scale(4), top = scale(4), bottom = scale(4) }
-	})
-	shadow:SetBackdropColor( backdropr, backdropg, backdropb, backdropa )
-	shadow:SetBackdropBorderColor( borderr, borderg, borderb, bordera )
-	f.shadow = shadow
-end
 
-local function SetTemplate(f, t, texture)
-	f:SetBackdrop({
-	  bgFile = DB.Statusbar,
-	})
-	f:SetBackdropColor( .05,.05,.05, .9)
-	f:SetBackdropBorderColor(0, 0, 0, 1)
-end
 
-local function StyleButton(b, c) 
-	local name = b:GetName()
 
-	local button          = _G[name]
-	local icon            = _G[name.."Icon"]
-	local count           = _G[name.."Count"]
-	local border          = _G[name.."Border"]
-	local hotkey          = _G[name.."HotKey"]
-	local cooldown        = _G[name.."Cooldown"]
-	local nametext        = _G[name.."Name"]
-	local flash           = _G[name.."Flash"]
-	local normaltexture   = _G[name.."NormalTexture"]
-	local icontexture     = _G[name.."IconTexture"]
-
-	local hover = b:CreateTexture("frame", nil, self) -- hover
-	hover:SetTexture(1,1,1,0.3)
-	hover:SetHeight(button:GetHeight())
-	hover:SetWidth(button:GetWidth())
-	hover:Point("TOPLEFT",button, 2 , -2)
-	hover:Point("BOTTOMRIGHT",button, -2, 2)
-	button:SetHighlightTexture(hover)
-
-	local pushed = b:CreateTexture("frame", nil, self) -- pushed
-	pushed:SetTexture(0.9,0.8,0.1,0.3)
-	pushed:SetHeight(button:GetHeight())
-	pushed:SetWidth(button:GetWidth())
-	pushed:Point("TOPLEFT",button,2,-2)
-	pushed:Point("BOTTOMRIGHT",button,-2,2)
-	button:SetPushedTexture(pushed)
-
-	if cooldown then
-		cooldown:ClearAllPoints()
-		cooldown:Point("TOPLEFT",button,2,-2)
-		cooldown:Point("BOTTOMRIGHT",button,-2,2)
-	end
-
-	if c then
-		local checked = b:CreateTexture("frame", nil, self) -- checked
-		checked:SetTexture(23/255,132/255,209/255,0.3)
-		checked:SetHeight(button:GetHeight())
-		checked:SetWidth(button:GetWidth())
-		checked:Point("TOPLEFT",button,2,-2)
-		checked:Point("BOTTOMRIGHT",button,-2,2)
-		checked:SetAlpha(0.3)
-		button:SetCheckedTexture(checked)
-	end
-end
-
-local function CreatePanel(f, t, w, h, a1, p, a2, x, y)
-	local sh = scale(h)
-	local sw = scale(w)
-	f:SetFrameLevel(1)
-	f:SetHeight(sh)
-	f:SetWidth(sw)
-	f:SetFrameStrata("BACKGROUND")
-	f:SetPoint(a1, p, a2, scale(x), scale(y))
-	if t ~= "Transparent" then
-		f:SetTemplate(t)
-	end
-	f:CreateShadow(t)
-end
-
-local function Kill(object)
-	if object.IsProtected then 
-		if object:IsProtected() then
-			error("Attempted to kill a protected object: <"..object:GetName()..">")
-		end
-	end
-	if object.UnregisterAllEvents then
-		object:UnregisterAllEvents()
-	end
-	object.Show = noop
-	object:Hide()
-end
-
-local function FadeIn(f)
-	UIFrameFadeIn(f, .4, f:GetAlpha(), 1)
-end
-	
-local function FadeOut(f)
-	UIFrameFadeOut(f, .4, f:GetAlpha(), 0)
-end
-
-local function addapi(object)
-	local mt = getmetatable(object).__index
-	if not object.Size then mt.Size = Size end
-	if not object.Point then mt.Point = Point end
-	if not object.SetTemplate then mt.SetTemplate = SetTemplate end
-	if not object.CreatePanel then mt.CreatePanel = CreatePanel end
-	if not object.CreateShadow then mt.CreateShadow = CreateShadow end
-	if not object.Kill then mt.Kill = Kill end
-	if not object.StyleButton then mt.StyleButton = StyleButton end
-	if not object.Width then mt.Width = Width end
-	if not object.Height then mt.Height = Height end
-	if not object.FadeIn then mt.FadeIn = FadeIn end
-	if not object.FadeOut then mt.FadeOut = FadeOut end
-end
-local handled = {["Frame"] = true}
-local object = CreateFrame("Frame")
-addapi(object)
-addapi(object:CreateTexture())
-addapi(object:CreateFontString())
-object = EnumerateFrames()
-while object do
-	if not handled[object:GetObjectType()] then
-		addapi(object)
-		handled[object:GetObjectType()] = true
-	end
-
-	object = EnumerateFrames(object)
-end
