@@ -5,7 +5,7 @@ local Sora = LibStub("AceAddon-3.0"):NewAddon("Sora")
 local Media = "InterFace\\AddOns\\Sora's\\Media\\"
 DB.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
 DB.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
-DB.Icon = "Interface\\Addons\\Sora's\\Chat\\Icon\\"
+DB.Icon = "Interface\\Addons\\Sora's\\Modules\\Chat\\Icon\\"
 DB.GlowTex = Media.."GlowTex"
 DB.Statusbar = Media.."Statusbar"
 DB.ThreatBar = Media.."ThreatBar"

@@ -85,11 +85,8 @@ local function OnUpdate(self, elapsed)
 end
 
 -- UpdateBuff
-local function UpdateBuff(Frame, value, idName)
+local function UpdateBuff(Frame, value, idName, key)
 	local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.unitId, idName)
-	
-	-- 过滤施法者和层数阈值
-	if not name then return end
 	if value.Caster and caster and value.Caster:lower() ~= caster:lower() then return end
 	if value.Stack and count and value.Stack > count then return end
 	
@@ -98,24 +95,20 @@ local function UpdateBuff(Frame, value, idName)
 	Frame.Count:SetText(count > 1 and count or "")
 	
 	if Frame.Cooldown then CooldownFrame_SetTimer(Frame.Cooldown, expires-duration, duration, 1) end
-	
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
-	
 	if Frame.Statusbar then
 		Frame.Filter = value.Filter
 		Frame.duration = duration
 		Frame.expires = expires
 		Frame:SetScript("OnUpdate", OnUpdate)
 	end
+	Arg[key] = Arg[key] + 1
 end
 
 -- UpdateDebuff
-local function UpdateDebuff(Frame, value, idName)
+local function UpdateDebuff(Frame, value, idName, key)
 	local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, idName)
-	
-	-- 过滤施法者和层数阈值
-	if not name then return end
-	if value.Caster and caster and value.Caster:lower() ~= caster:lower() or not caster then return end
+	if value.Caster ~= caster then return end
 	if value.Stack and count and value.Stack > count then return end
 	
 	Frame:Show()
@@ -123,66 +116,60 @@ local function UpdateDebuff(Frame, value, idName)
 	Frame.Count:SetText(count > 1 and count or "")
 	
 	if Frame.Cooldown then CooldownFrame_SetTimer(Frame.Cooldown, expires-duration, duration, 1) end
-	
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
-	
 	if Frame.Statusbar then
 		Frame.Filter = value.Filter
 		Frame.duration = duration
 		Frame.expires = expires
 		Frame:SetScript("OnUpdate", OnUpdate)
 	end
+	Arg[key] = Arg[key] + 1
 end
 
 -- UpdateCD
-local function UpdateCD(Frame, value, idName)
+local function UpdateCD(Frame, value, idName, key)
 	local start, duration = GetSpellCooldown(idName)
 	local _, _, icon = GetSpellInfo(value.spellID)
 
-	-- 更新图标
 	Frame:Show()	
 	Frame.Icon:SetTexture(icon)
 	if Frame.Cooldown then
 		Frame.Cooldown:SetReverse(false)
 		CooldownFrame_SetTimer(Frame.Cooldown, start , duration, 1)
 	end
-	
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
-	
 	if Frame.Statusbar then
 		Frame.Filter = value.Filter
 		Frame.duration = duration
 		Frame.expires = start
 		Frame:SetScript("OnUpdate", OnUpdate)
 	end
+	Arg[key] = Arg[key] + 1
 end
 
 -- UpdateItemCD
-local function UpdateItemCD(Frame, value, idName)
+local function UpdateItemCD(Frame, value, idName, key)
 	local start, duration = GetItemCooldown(value.itemID)
 	local name, _, _, _, _, _, _, _, _, icon = GetItemInfo(value.itemID)
 
-	-- 更新图标
 	Frame:Show()
 	Frame.Icon:SetTexture(icon)
 	if Frame.Cooldown then
 		Frame.Cooldown:SetReverse(false)
 		CooldownFrame_SetTimer(Frame.Cooldown, start , duration, 1)
 	end
-	
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
-	
 	if Frame.Statusbar then
 		Frame.Filter = value.Filter
 		Frame.duration = duration
 		Frame.expires = start
 		Frame:SetScript("OnUpdate", OnUpdate)
 	end
+	Arg[key] = Arg[key] + 1
 end
 
 -- Update
 local function Update()
-
 	-- 重置旧的Aura
 	for KEY, VALUE in pairs(Aura) do
 		for i = 1, Arg[KEY] do
@@ -198,20 +185,16 @@ local function Update()
 			if value.spellID then
 				local idName = GetSpellInfo(value.spellID)
 				if value.Filter:lower() == "buff" and UnitBuff(value.unitId, idName) then
-					UpdateBuff(Frame, value, idName)
-					Arg[KEY] = Arg[KEY] + 1
+					UpdateBuff(Frame, value, idName, KEY)
 				elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, idName) then
-					UpdateDebuff(Frame, value, idName)
-					Arg[KEY] = Arg[KEY] + 1
+					UpdateDebuff(Frame, value, idName, KEY)
 				elseif value.Filter:lower() == "cd" and GetSpellCooldown(idName) and select(2, GetSpellCooldown(idName)) > 1.5 then
 					UpdateCD(Frame, value, idName)
-					Arg[KEY] = Arg[KEY] + 1
 				end
 			elseif value.itemID then
 				idName = GetItemInfo(value.itemID)
 				if select(2, GetItemCooldown(value.itemID)) > 1.5 then
 					UpdateItemCD(Frame, value, idName)
-					Arg[KEY] = Arg[KEY] + 1
 				end
 			end
 		end
