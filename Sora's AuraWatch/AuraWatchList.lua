@@ -460,7 +460,6 @@ SRAuraList = {
 				{spellID = 90174, unitId = "player", Filter = "BUFF"},
 			},
 		},
-
 		{
 			Name = "TargetDebuff",
 			Direction = "UP",
@@ -643,6 +642,8 @@ SRAuraList = {
 				{spellID =  1966, unitId = "player", Filter = "BUFF"},
 				-- 切割
 				{spellID =  5171, unitId = "player", Filter = "BUFF"},
+				-- 冷血
+				{spellID = 14177, unitId = "player", Filter = "BUFF"},
 				-- 毒伤
 				{spellID = 32645, unitId = "player", Filter = "BUFF"},
 				-- 嫁祸诀窍
@@ -651,6 +652,8 @@ SRAuraList = {
 				{spellID = 58427, unitId = "player", Filter = "BUFF"},
 				-- 嫁祸诀窍
 				{spellID = 59628, unitId = "player", Filter = "BUFF"},
+				-- 养精蓄锐
+				{spellID = 73651, unitId = "player", Filter = "BUFF"},
 				-- 时间扭曲
 				{spellID = 80353, unitId = "player", Filter = "BUFF"},
 				-- 致命冲动
@@ -667,10 +670,20 @@ SRAuraList = {
 			barWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
+				-- 肾击
+				{spellID =   408, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				-- 偷袭
+				{spellID =  1833, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				-- 割裂
 				{spellID =  1943, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				-- 破甲
+				{spellID =  8647, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				-- 缴械
+				{spellID = 51722, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				-- 要害打击
 				{spellID = 84617, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				-- 仇杀
+				{spellID = 79140, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			}
 		},
 			
