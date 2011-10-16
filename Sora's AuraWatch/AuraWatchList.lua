@@ -380,19 +380,23 @@ SRAuraList = {
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
 				-- 英勇气概
 				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				-- 时间扭曲
+				{spellID = 80353, unitId = "player", Filter = "BUFF"},
 				-- 闪电之盾
 				{spellID =   324, unitId = "player", Filter = "BUFF"},
+				-- 萨满之怒
+				{spellID = 30823, unitId = "player", Filter = "BUFF"},
 				-- 水之护盾
 				{spellID = 52127, unitId = "player", Filter = "BUFF"},
 				-- 潮汐奔涌
 				{spellID = 53390, unitId = "player", Filter = "BUFF"},
 				-- 5层漩涡武器
 				{spellID = 53817, unitId = "player", Filter = "BUFF", Stack = 5},
-				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				-- 灵魂行者的恩赐
+				{spellID = 79206, unitId = "player", Filter = "BUFF"},
+
 			},
 		},
-		
 		{
 			Name = "TargetDebuff",
 			Direction = "UP",
@@ -402,10 +406,16 @@ SRAuraList = {
 			barWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
-				-- 灼热烈焰
-				{spellID = 77661, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				-- 大地震击
+				{spellID =  8042, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 				-- 烈焰震击
 				{spellID =  8050, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				-- 冰霜震击
+				{spellID =  8056, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				-- 风暴打击
+				{spellID = 17364, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				-- 灼热烈焰
+				{spellID = 77661, unitId = "target", Caster = "player", Filter = "DEBUFF"},
 			},
 		},
 	},
@@ -703,6 +713,8 @@ SRAuraList = {
 				{spellID =  2825, unitId = "player", Filter = "BUFF"},
 				-- 英勇气概
 				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				-- 时间扭曲
+				{spellID = 80353, unitId = "player", Filter = "BUFF"},
 				-- 利刃屏障(等级3)
 				{spellID = 64856, unitId = "player", Filter = "BUFF"},
 				-- 反魔法护罩
@@ -723,8 +735,6 @@ SRAuraList = {
 				{spellID = 55233, unitId = "player", Filter = "BUFF"},
 				-- 冰冻之雾
 				{spellID = 59052, unitId = "player", Filter = "BUFF"},
-				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
 				-- 赤色天灾
 				{spellID = 81141, unitId = "player", Filter = "BUFF"},
 				-- 大墓地的意志
