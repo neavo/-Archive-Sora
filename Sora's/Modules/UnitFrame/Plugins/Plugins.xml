@@ -1,18 +1,13 @@
-﻿
+﻿<Ui xmlns = "http://www.blizzard.com/wow/ui/">
 
-
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-
-	<Script file="AuraWatch.lua"/>
-	<Script file="boring_totembar.lua"/>
-	<Script file="Castbar.lua"/>
-	<Script file="Focuser.lua"/>
-	<Script file="Indicator.lua"/>
-	<Script file="MirrorTimer.lua"/>
-	<Script file="Movable.lua"/>
-	<Script file="RaidDebuff.lua"/>
-	<Script file="RaidDebuffList.lua"/>
-	<Script file="Smooth.lua"/>
-	<Script file="Tags.lua"/>
+	<Script file = "AuraWatch.lua"/>
+	<Script file = "boring_totembar.lua"/>
+	<Script file = "Castbar.lua"/>
+	<Script file = "Focuser.lua"/>
+	<Script file = "MirrorTimer.lua"/>
+	<Script file = "RaidDebuff.lua"/>
+	<Script file = "RaidDebuffList.lua"/>
+	<Script file = "Smooth.lua"/>
+	<Script file = "Tags.lua"/>
 
 </Ui>
