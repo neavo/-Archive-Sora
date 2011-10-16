@@ -80,7 +80,6 @@ local function BuildPortrait(self)
 			UIFrameFadeOut(self, 0.5, 0, 0.3)
 		end
 	end)
-	
 	self.Portrait = Portrait
 end
 
@@ -214,39 +213,37 @@ local function PostUpdateIcon(self, unit, Button, index, offset, filter, isDebuf
 end
 
 local function BuildBuff(self)
-	Buff = CreateFrame("Frame", nil, self)
-	Buff.onlyShowPlayer = UnitFrameDB.ShowTargetBuffOnlyPlayer
-	Buff:SetPoint("TOPLEFT", self, "TOPRIGHT", 8, 0)
-	Buff.initialAnchor = "TOPLEFT"
-	Buff["growth-x"] = "RIGHT"
-	Buff["growth-y"] = "DOWN"
-	Buff.size = 20
-	Buff.num = 18
-	Buff.spacing = 5
-	Buff:SetWidth((Buff.size+Buff.spacing)*6-Buff.spacing)
-	Buff:SetHeight((Buff.size+Buff.spacing)*3)
-	Buff.PostCreateIcon = PostCreateIcon
-	Buff.PostUpdateIcon = PostUpdateIcon
-
-	self.Buffs = Buff
+	local Buffs = CreateFrame("Frame", nil, self)
+	Buffs.onlyShowPlayer = UnitFrameDB.ShowTargetBuffOnlyPlayer
+	Buffs:SetPoint("TOPLEFT", self, "TOPRIGHT", 8, 0)
+	Buffs.initialAnchor = "TOPLEFT"
+	Buffs["growth-x"] = "RIGHT"
+	Buffs["growth-y"] = "DOWN"
+	Buffs.size = 20
+	Buffs.num = 18
+	Buffs.spacing = 5
+	Buffs:SetWidth(Buffs.size*6+Buffs.spacing*5)
+	Buffs:SetHeight(Buffs.size*3+Buffs.spacing*2)
+	Buffs.PostCreateIcon = PostCreateIcon
+	Buffs.PostUpdateIcon = PostUpdateIcon
+	self.Buffs = Buffs
 end
 
 local function BuildDebuff(self)
-	Debuff = CreateFrame("Frame", nil, self)
-	Debuff.size = 20
-	Debuff.num = 27
-	Debuff.onlyShowPlayer = UnitFrameDB.ShowTargetDebuffOnlyPlayer
-	Debuff.spacing = 5
-	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
-	Debuff:SetWidth(self:GetWidth())
-	Debuff:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -30)
-	Debuff.initialAnchor = "TOPLEFT"
-	Debuff["growth-x"] = "RIGHT"
-	Debuff["growth-y"] = "DOWN"
-	Debuff.PostCreateIcon = PostCreateIcon
-	Debuff.PostUpdateIcon = PostUpdateIcon
-
-	self.Debuffs = Debuff
+	local Debuffs = CreateFrame("Frame", nil, self)
+	Debuffs.size = 20
+	Debuffs.num = 27
+	Debuffs.onlyShowPlayer = UnitFrameDB.ShowTargetDebuffOnlyPlayer
+	Debuffs.spacing = 5
+	Debuffs:SetHeight(Debuffs.size*3+Debuffs.spacing*2)
+	Debuffs:SetWidth(self:GetWidth())
+	Debuffs:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -30)
+	Debuffs.initialAnchor = "TOPLEFT"
+	Debuffs["growth-x"] = "RIGHT"
+	Debuffs["growth-y"] = "DOWN"
+	Debuffs.PostCreateIcon = PostCreateIcon
+	Debuffs.PostUpdateIcon = PostUpdateIcon
+	self.Debuffs = Debuffs
 end
 
 local function BuildRaidIcon(self)

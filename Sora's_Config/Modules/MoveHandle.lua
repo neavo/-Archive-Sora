@@ -11,7 +11,7 @@ function C.MoveHandle.LoadSettings()
 		["TargetFrame"] = {"CENTER", "UIParent", "CENTER", 270, -100},
 		["FocusFrame"] = {"TOP", "UIParent", "TOP", 0, -100},
 		["PartyFrame"] = {"TOPLEFT", "UIParent", "TOPLEFT", 10, -250},
-		["RaidFrame"] = {"TOPLEFT", "UIParent", "BOTTOMRIGHT", -370, 135},
+		["RaidFrame"] = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -5, 5},
 		["BossFrame"] = {"TOPRIGHT", "UIParent", "TOPRIGHT", -50, -200},
 		["ActionBar"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 20},
 		["LeftBar"] = {"BOTTOMLEFT", "UIParent", "BOTTOMLEFT", 5, 150},

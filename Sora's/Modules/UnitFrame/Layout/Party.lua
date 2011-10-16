@@ -92,11 +92,11 @@ local function PostUpdateIcon(self, unit, Button, index, offset, filter, isDebuf
 end
 
 local function BuildDebuff(self)
-	Debuff = CreateFrame("Frame", nil, self)
+	local Debuff = CreateFrame("Frame", nil, self)
 	Debuff.size = 20
-	Debuff.num = 40
+	Debuff.num = 9
 	Debuff.spacing = 5
-	Debuff:SetHeight((Debuff.size+Debuff.spacing)*5)
+	Debuff:SetHeight(20)
 	Debuff:SetWidth(self:GetWidth())
 	Debuff:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
 	Debuff.initialAnchor = "TOPLEFT"
@@ -224,6 +224,10 @@ local function BuildPartyFrame(self, ...)
 end
 
 if UnitFrameDB.ShowParty then
+	local PartyFramePos = CreateFrame("Frame", nil, UIParent)
+	PartyFramePos:SetWidth(180)
+	PartyFramePos:SetHeight(22*5+30*4)
+	MoveHandle.PartyFrame = S.MakeMoveHandle(PartyFramePos, "小队框体", "PartyFrame")
 	oUF:RegisterStyle("SoraParty", BuildPartyFrame)
 	oUF:SetActiveStyle("SoraParty")
 	DB.PartyFrame = oUF:SpawnHeader("oUF_Party", nil, "raid,party,solo", 
@@ -234,5 +238,5 @@ if UnitFrameDB.ShowParty then
 		self:SetHeight(%d)
 	]]):format(180, 22))
 	DB.PartyFrame:SetScale(UnitFrameDB.RaidScale)
-	MoveHandle.PartyFrame = S.MakeMoveHandle(DB.PartyFrame, "小队框体", "PartyFrame", "TOP")
+	DB.PartyFrame:SetPoint("TOP", PartyFramePos)
 end

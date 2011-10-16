@@ -37,7 +37,7 @@ function C.UnitFrame.LoadSettings()
 		["Scale"] = 1,
 		-- 团队框体
 		["ShowRaid"] = true,
-			["RaidUnitWidth"] = 67,
+			["RaidUnitWidth"] = 70,
 			["RaidPartyH"] = true,
 			["ShowRaidDebuffs"] = true,
 		-- 小队框体

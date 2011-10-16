@@ -62,19 +62,16 @@ MiniMapBattlefieldFrame:SetPoint("TOP", Minimap, "TOP", 0, 4)
 MiniMapLFGFrame:ClearAllPoints()
 MiniMapLFGFrameBorder:SetAlpha(0)
 MiniMapLFGFrame:SetPoint("TOP", Minimap, "TOP", 0, 4)
-MiniMapLFGFrame:SetFrameStrata("MEDIUM")
 
 -- Instance Difficulty flag
 MiniMapInstanceDifficulty:ClearAllPoints()
 MiniMapInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
 MiniMapInstanceDifficulty:SetScale(0.8)
-MiniMapInstanceDifficulty:SetFrameStrata("LOW")
 
 -- Guild Instance Difficulty flag
 GuildInstanceDifficulty:ClearAllPoints()
 GuildInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
 GuildInstanceDifficulty:SetScale(0.8)
-GuildInstanceDifficulty:SetFrameStrata("LOW")
 
 -- Invites Icon
 GameTimeCalendarInvitesTexture:ClearAllPoints()
@@ -130,14 +127,9 @@ local menuList = {
 	{text = "系统菜单", func = function() ToggleFrame(GameMenuFrame) end}, 
     {text = ENCOUNTER_JOURNAL, func = function() ToggleFrame(EncounterJournal) end},
 }
-Minimap:SetScript("OnMouseUp", function(self, btn)
-	local position = Minimap:GetPoint()
-	if btn == "RightButton" then
-		if position:match("LEFT") then
-			EasyMenu(menuList, menuFrame, "cursor", 0, 0, "MENU", 2)
-		else
-			EasyMenu(menuList, menuFrame, "cursor", -160, 0, "MENU", 2)
-		end
+Minimap:SetScript("OnMouseUp", function(self, button)
+	if button == "RightButton" then
+		EasyMenu(menuList, menuFrame, "cursor", 0, 0, "MENU")
 	else
 		Minimap_OnClick(self)
 	end

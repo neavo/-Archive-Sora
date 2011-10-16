@@ -8,7 +8,7 @@ MoveHandle.Buff = S.MakeMoveHandle(BuffPos, "Buff", "Buff")
 local DebuffPos = CreateFrame("Frame", nil, UIParent)
 DebuffPos:SetWidth(BuffDB.IconSize)
 DebuffPos:SetHeight(BuffDB.IconSize)
-MoveHandle.Debuff = S.MakeMoveHandle(DebuffPos, "Debuff", "Debuff", nil, true)
+MoveHandle.Debuff = S.MakeMoveHandle(DebuffPos, "Debuff", "Debuff")
 
 -- BUFF/DEBUFF样式
 local function Style(buttonName, i)

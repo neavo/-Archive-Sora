@@ -337,9 +337,7 @@ local function BuildCurrency(Anchor)
 	StatusBar:SetScript("OnEnter", function(self)
 		UpdateCurrencyData()
 		for _, value in pairs(CurrencyTable) do
-			if value and not value:IsShown() then
-				value:Show()
-			end
+			if value and not value:IsShown() then value:Show() end
 		end
 	end)
 	StatusBar:SetScript("OnLeave", function(self)
