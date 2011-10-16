@@ -28,15 +28,13 @@ Modules = {
 	},
 	Hiden_1 = {
 		type = "execute",
-		name = " ",
+		name = "解锁框体",
 		order = 2,
-		disabled  = true,
 	},
 	Hiden_2 = {
 		type = "execute",
-		name = " ",
+		name = "锁定框体",
 		order = 3,
-		disabled  = true,
 	},
 	Reload = {
 		type = "execute",
