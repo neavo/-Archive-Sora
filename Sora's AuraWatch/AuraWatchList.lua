@@ -643,6 +643,8 @@ SRAuraList = {
 				{spellID =  1966, unitId = "player", Filter = "BUFF"},
 				-- 切割
 				{spellID =  5171, unitId = "player", Filter = "BUFF"},
+				-- 毒伤
+				{spellID = 32645, unitId = "player", Filter = "BUFF"},
 				-- 嫁祸诀窍
 				{spellID = 57934, unitId = "player", Filter = "BUFF"},			
 				-- 灭绝
