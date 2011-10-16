@@ -19,6 +19,7 @@ function C.MoveHandle.LoadSettings()
 		["Buff"] = {"TOPRIGHT", "UIParent", "TOPRIGHT", -5, -5},
 		["Debuff"] = {"TOPRIGHT", "UIParent", "TOPRIGHT", -5, -140},
 		["Minimap"] = {"TOPLEFT", "UIParent", "TOPLEFT", 10, -30},
+		["ChatFrame"] = {"BOTTOMLEFT", "UIParent", "BOTTOMLEFT", 5, 25},
 	}
 	if not MoveHandleDB then MoveHandleDB = {} end
 	for key, value in pairs(Default) do

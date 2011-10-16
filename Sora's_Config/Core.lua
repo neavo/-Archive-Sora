@@ -13,15 +13,19 @@ end
 
 -- UnLock
 local function UnLock()
-	for _, value in pairs(MoveHandle) do
-		value:Show()
+	if not UnitAffectingCombat("player") then
+		for _, value in pairs(MoveHandle) do
+			value:Show()
+		end
 	end
 end
 
 -- Lock
 local function Lock()
-	for _, value in pairs(MoveHandle) do
-		value:Hide()
+	if not UnitAffectingCombat("player") then
+		for _, value in pairs(MoveHandle) do
+			value:Hide()
+		end
 	end
 end
 
