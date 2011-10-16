@@ -76,14 +76,14 @@ end
 local function StartGlow(f)
 	f:SetBackdropColor(r, g, b, .1)
 	f:SetBackdropBorderColor(r, g, b)
-	S.CreatePulse(S.glow)
+	S.CreatePulse(f.glow)
 end
 
 local function StopGlow(f)
 	f:SetBackdropColor(0, 0, 0, 0)
 	f:SetBackdropBorderColor(0, 0, 0)
-	S.glow:SetScript("OnUpdate", nil)
-	S.glow:SetAlpha(0)
+	f.glow:SetScript("OnUpdate", nil)
+	f.glow:SetAlpha(0)
 end
 
 S.Reskin = function(f)
@@ -110,15 +110,15 @@ S.Reskin = function(f)
 	tex:SetTexture(DB.Aurora.Media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
-	S.glow = CreateFrame("Frame", nil, f)
-	S.glow:SetBackdrop({
+	f.glow = CreateFrame("Frame", nil, f)
+	f.glow:SetBackdrop({
 		edgeFile = DB.Aurora.Media.glow,
 		edgeSize = 5,
 	})
-	S.glow:SetPoint("TOPLEFT", -6, 6)
-	S.glow:SetPoint("BOTTOMRIGHT", 6, -6)
-	S.glow:SetBackdropBorderColor(r, g, b)
-	S.glow:SetAlpha(0)
+	f.glow:SetPoint("TOPLEFT", -6, 6)
+	f.glow:SetPoint("BOTTOMRIGHT", 6, -6)
+	f.glow:SetBackdropBorderColor(r, g, b)
+	f.glow:SetAlpha(0)
 
 	f:HookScript("OnEnter", StartGlow)
  	f:HookScript("OnLeave", StopGlow)
