@@ -234,5 +234,5 @@ if UnitFrameDB.ShowParty then
 		self:SetHeight(%d)
 	]]):format(180, 22))
 	DB.PartyFrame:SetScale(UnitFrameDB.RaidScale)
-	DB.PartyFrame:SetPoint("TOPLEFT", UIParent, 10, -250)
+	MoveHandle.PartyFrame = S.MakeMoveHandle(DB.PartyFrame, "小队框体", "PartyFrame", "TOP")
 end

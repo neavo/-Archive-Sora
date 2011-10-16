@@ -4,8 +4,8 @@ local S, _, _, DB = unpack(select(2, ...))
 DB.ActionBar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate") 
 DB.ActionBar:SetWidth(ActionBarDB.ActionBarButtonSize*18+3*17)
 DB.ActionBar:SetHeight(ActionBarDB.ActionBarButtonSize*2+5)
-DB.ActionBar:SetPoint("BOTTOM", UIParent, 0, 20)
-  
+MoveHandle.ActionBar = S.MakeMoveHandle(DB.ActionBar, "主动作条", "ActionBar")
+
 local Page = {
 	["DRUID"] = "[bonusbar:1, nostealth] 7; [bonusbar:1, stealth] 8; [bonusbar:2] 8; [bonusbar:3] 9; [bonusbar:4] 10;", 
 	["WARRIOR"] = "[bonusbar:1] 7; [bonusbar:2] 8; [bonusbar:3] 9;", 

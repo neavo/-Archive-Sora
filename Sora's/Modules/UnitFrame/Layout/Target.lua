@@ -312,4 +312,4 @@ end
 oUF:RegisterStyle("SoraTarget", BuildTargetFrame)
 oUF:SetActiveStyle("SoraTarget")
 DB.TargetFrame = oUF:Spawn("target")
-DB.TargetFrame:SetPoint("CENTER", UIParent, "CENTER", 270, -100)
+MoveHandle.TargetFrame = S.MakeMoveHandle(DB.TargetFrame, "目标框体", "TargetFrame")

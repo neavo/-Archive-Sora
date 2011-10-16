@@ -2,6 +2,7 @@
 
 	<Script file = "ActionBar.lua"/>
 	<Script file = "Buff.lua"/>
+	<Script file = "MoveHandle.lua"/>
 	<Script file = "Nameplate.lua"/>
 	<Script file = "Reminder.lua"/>
 	<Script file = "Tooltip.lua"/>	

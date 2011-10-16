@@ -82,6 +82,38 @@ function S.MakeButton(Parent)
 	return Button
 end
 
+function S.MakeMoveHandle(Frame, Text, key, Anchor, flag)
+	local MoveHandle = CreateFrame("Frame", nil, UIParent)
+	MoveHandle.Text = S.MakeFontString(MoveHandle, 10)
+	MoveHandle.Text:SetPoint("CENTER")
+	MoveHandle.Text:SetText(Text)
+	local Width = (Frame:GetWidth() > MoveHandle.Text:GetWidth()) and Frame:GetWidth() or MoveHandle.Text:GetWidth()
+	local Height = (Frame:GetHeight() > MoveHandle.Text:GetHeight()) and Frame:GetHeight() or MoveHandle.Text:GetHeight()
+	if flag then
+		Width = Frame:GetWidth()
+		Height = Frame:GetHeight()	
+	end
+	MoveHandle:SetWidth(Width)
+	MoveHandle:SetHeight(Height)
+	MoveHandle:SetFrameStrata("HIGH")
+	MoveHandle:SetBackdrop({bgFile = DB.Solid})
+	MoveHandle:SetBackdropColor(0, 0, 0, 0.9)
+	MoveHandle:SetPoint(unpack(MoveHandleDB[key]))
+	MoveHandle:EnableMouse(true)
+	MoveHandle:SetMovable(true)
+	MoveHandle:RegisterForDrag("LeftButton")
+	MoveHandle:SetScript("OnDragStart", function(self) MoveHandle:StartMoving() end)
+	MoveHandle:SetScript("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+		local AnchorF, _, AnchorT, X, Y = self:GetPoint()
+		MoveHandleDB[key] = {AnchorF, "UIParent", AnchorT, X, Y}
+	end)
+	MoveHandle:Hide()
+	Frame:SetPoint("CENTER" or Anchor, MoveHandle)
+	return MoveHandle
+end
+
+
 
 
 

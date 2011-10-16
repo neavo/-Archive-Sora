@@ -1,11 +1,11 @@
 ﻿-- Engines
 local S, _, _, _ = unpack(select(2, ...))
 
-local Bar = CreateFrame("Frame", "rABS_MultiBarRight", UIParent, "SecureHandlerStateTemplate")
+local Bar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
 Bar:SetWidth(24*6+3*5)
 Bar:SetHeight(24*2+3)
-Bar:SetPoint("BOTTOMRIGHT", -5, 150)
 MultiBarRight:SetParent(Bar)
+MoveHandle.RightBar = S.MakeMoveHandle(Bar, "侧边栏", "RightBar")
 
 for i=1, 12 do
 	local Button = _G["MultiBarRightButton"..i]

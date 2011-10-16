@@ -2,7 +2,7 @@
 ## Title: |cff70C0F5Sora's|r Config
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
-## SavedVariables: SoraInited, ActionBarDB, BuffDB, NameplateDB, ReminderDB, ThreatDB, TooltipDB, UnitFrameDB
+## SavedVariables: SoraInited, ActionBarDB, BuffDB, NameplateDB, ReminderDB, ThreatDB, TooltipDB, UnitFrameDB, MoveHandleDB
 ## X-Email:neavo7@Gmail.com
 
 Load_Config.xml

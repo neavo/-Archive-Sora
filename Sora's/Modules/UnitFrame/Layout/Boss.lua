@@ -296,7 +296,7 @@ if UnitFrameDB.ShowBoss then
 	for i = 1, MAX_BOSS_FRAMES do
 		DB.BossFrame[i] = oUF:Spawn("boss"..i)
 		if i == 1 then
-			DB.BossFrame[i]:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -50, -200)
+			MoveHandle.BossFrame = S.MakeMoveHandle(DB.BossFrame[i], "首领框体", "BossFrame")
 		else
 			DB.BossFrame[i]:SetPoint("TOP", DB.BossFrame[i-1], "BOTTOM", 0, -60)
 		end

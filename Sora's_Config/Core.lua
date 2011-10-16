@@ -1,6 +1,7 @@
 ﻿-- Engines
 local S, C, _, _ = unpack(select(2, ...))
 local SoraConfig = LibStub("AceAddon-3.0"):NewAddon("SoraConfig", "AceConsole-3.0")
+MoveHandle = {}
 
 -- ResetToDefault
 local function ResetToDefault()
@@ -10,12 +11,17 @@ local function ResetToDefault()
 	ReloadUI()
 end
 
--- OnFristLoad
-local function OnFristLoad()
-	for _, value in pairs(C) do
-		value.LoadSettings()
-		value.BuildGUI()
-		SoraInited = true
+-- UnLock
+local function UnLock()
+	for _, value in pairs(MoveHandle) do
+		value:Show()
+	end
+end
+
+-- Lock
+local function Lock()
+	for _, value in pairs(MoveHandle) do
+		value:Hide()
 	end
 end
 
@@ -26,23 +32,34 @@ Modules = {
 		order = 1,
 		func = function() ResetToDefault() end
 	},
-	Hiden_1 = {
+	UnLock = {
 		type = "execute",
 		name = "解锁框体",
 		order = 2,
+		func = function() UnLock() end,
 	},
-	Hiden_2 = {
+	Lock = {
 		type = "execute",
 		name = "锁定框体",
 		order = 3,
+		func = function() Lock() end,
 	},
 	Reload = {
 		type = "execute",
-		name = "重载界面",
+		name = "应用(重载界面)",
 		order = 4,
 		func = function() ReloadUI() end
 	},
 }
+
+-- OnFristLoad
+local function OnFristLoad()
+	for _, value in pairs(C) do
+		value.LoadSettings()
+		value.BuildGUI()
+		SoraInited = true
+	end
+end
 
 -- ShowConfig
 local function ShowConfig()

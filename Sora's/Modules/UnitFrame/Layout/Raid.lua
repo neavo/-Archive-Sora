@@ -326,7 +326,7 @@ if UnitFrameDB.ShowRaid then
 			self:SetHeight(%d)
 			]]):format(UnitFrameDB.RaidUnitWidth, 20))
 		DB.RaidFrame:SetScale(UnitFrameDB.RaidScale)
-		DB.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)		
+		MoveHandle.RaidFrame = S.MakeMoveHandle(DB.RaidFrame, "团队框体", "RaidFrame", "TOPLEFT")	
 	else
 		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  
@@ -348,6 +348,6 @@ if UnitFrameDB.ShowRaid then
 			self:SetHeight(%d)
 			]]):format(UnitFrameDB.RaidUnitWidth, 20))
 		DB.RaidFrame:SetScale(UnitFrameDB.RaidScale)
-		DB.RaidFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMRIGHT", -370, 135)
+		MoveHandle.RaidFrame = S.MakeMoveHandle(DB.RaidFrame, "团队框体", "RaidFrame", "TOPLEFT")
 	end
 end

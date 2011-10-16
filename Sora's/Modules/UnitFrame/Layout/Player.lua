@@ -430,4 +430,4 @@ end
 oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)
 oUF:SetActiveStyle("SoraPlayer")
 DB.PlayerFrame = oUF:Spawn("player")
-DB.PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -270, -100)
+MoveHandle.PlayerFrame = S.MakeMoveHandle(DB.PlayerFrame, "玩家框体", "PlayerFrame")

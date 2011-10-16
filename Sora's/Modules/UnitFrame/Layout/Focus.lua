@@ -300,4 +300,4 @@ end
 oUF:RegisterStyle("SoraFocus", BuildFocusFrame)
 oUF:SetActiveStyle("SoraFocus")
 DB.FocusFrame = oUF:Spawn("focus")
-DB.FocusFrame:SetPoint("TOP", 0, -100)
+MoveHandle.FocusFrame = S.MakeMoveHandle(DB.FocusFrame, "焦点框体", "FocusFrame")
