@@ -68,7 +68,6 @@ local function InitChatbar()
 		{160/255, 120/255,  90/255}, 
 		{255/255, 255/255,   0/255}, 
 	}
-
 	for i=1, 7 do
 		local Button = CreateFrame("Button", nil, MainBar)
 		Button:SetWidth((MainBar:GetWidth()-10)/8)
