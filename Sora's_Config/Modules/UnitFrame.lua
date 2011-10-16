@@ -215,14 +215,7 @@ function C.UnitFrame.BuildGUI()
 					name = "显示Boss框体",
 					order = 22,
 					get = function() return UnitFrameDB.ShowBoss end,
-					set = function(_, value)
-						if value then
-							UnitFrameDB.ShowBoss = value
-						else
-							UnitFrameDB.ShowBoss = value
-							UnitFrameDB.ShowBossTarget = value							
-						end
-					end,
+					set = function(_, value) UnitFrameDB.ShowBoss = value end,
 				},
 				ShowBossTarget = {
 					type = "toggle",
@@ -230,14 +223,7 @@ function C.UnitFrame.BuildGUI()
 					disabled = not UnitFrameDB.ShowBoss,
 					order = 23,
 					get = function() return UnitFrameDB.ShowBossTarget end,
-					set = function(_, value)
-						if not value then
-							UnitFrameDB.ShowBossTarget = value
-						else
-							UnitFrameDB.ShowBoss = value
-							UnitFrameDB.ShowBossTarget = value							
-						end 
-					end,
+					set = function(_, value) UnitFrameDB.ShowBossTarget = value end,
 				},
 				ShowBossCastbar = {
 					type = "toggle",

@@ -4,7 +4,7 @@ MultiBarBottomRight:SetParent(DB.ActionBar)
 
 for i=1, 12 do
 	local Button = _G["MultiBarBottomRightButton"..i]
-	Button:SetSize(26, 26)
+	Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 	Button:ClearAllPoints()	
 	if i == 1 then
 		Button:SetPoint("BOTTOMLEFT", DB.ActionBar)
@@ -12,7 +12,7 @@ for i=1, 12 do
 		local Pre = _G["MultiBarBottomRightButton"..i-1]      
 		Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)
 	elseif i == 4 then
-		Button:SetPoint("BOTTOMLEFT", DB.ActionBar, 0, 26+5)
+		Button:SetPoint("BOTTOMLEFT", DB.ActionBar, 0, ActionBarDB.ActionBarButtonSize+5)
 	elseif i <= 6 then
 		local Pre = _G["MultiBarBottomRightButton"..i-1]      
 		Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)	
@@ -22,7 +22,7 @@ for i=1, 12 do
 		local Pre = _G["MultiBarBottomRightButton"..i-1]      
 		Button:SetPoint("RIGHT", Pre, "LEFT", -3, 0)
 	elseif i == 10 then
-		Button:SetPoint("BOTTOMRIGHT", DB.ActionBar, 0, 26+5)
+		Button:SetPoint("BOTTOMRIGHT", DB.ActionBar, 0, ActionBarDB.ActionBarButtonSize+5)
 	elseif i <= 12 then
 		local Pre = _G["MultiBarBottomRightButton"..i-1]      
 		Button:SetPoint("RIGHT", Pre, "LEFT", -3, 0)	

@@ -4,7 +4,7 @@ ShapeshiftBarFrame:SetParent(DB.ActionBar)
 
 for i = 1, 6 do
 	local Button = _G["ShapeshiftButton"..i]
-	Button:SetSize(26, 26)
+	Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 	Button:ClearAllPoints()
 	if i == 1 then
 		Button:SetPoint("BOTTOM", MultiBarBottomRightButton4, "TOP", 0, 5)

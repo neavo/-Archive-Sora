@@ -1,9 +1,8 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-	<Script file = "cfg.lua"/>
-	<Script file = "Button.lua"/>
-	<Script file = "Channel.lua"/>
 	<Script file = "Chat.lua"/>
+	<Script file = "ChatEmotion.lua"/>
+	<Script file = "ChatFramePanels.lua"/>
 	<Script file = "TabChannel.lua"/>
 	
 </Ui>

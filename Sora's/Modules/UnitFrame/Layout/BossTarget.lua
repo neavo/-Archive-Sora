@@ -79,7 +79,7 @@ local function BuildBossTargetFrame(self, ...)
 
 end
 
-if UnitFrameDB.ShowBossTarget then
+if UnitFrameDB.ShowBossTarget and UnitFrameDB.ShowBoss then
 	oUF:RegisterStyle("SoraBossTarget", BuildBossTargetFrame)
 	oUF:SetActiveStyle("SoraBossTarget")
 	DB.BossTargetFrame = {}

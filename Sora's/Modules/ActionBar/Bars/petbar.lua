@@ -5,7 +5,7 @@ PetActionBarFrame:SetParent(DB.ActionBar)
 
 for i=1, NUM_PET_ACTION_SLOTS do
 	local Button = _G["PetActionButton"..i]
-	Button:SetSize(26, 26)
+	Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 	Button:ClearAllPoints()
 	if i == 1 then
 		Button:SetPoint("BOTTOM", MultiBarBottomLeftButton6, "TOP", 0, 5)

@@ -36,15 +36,15 @@ if myclass == "SHAMAN" then
 		end
 		MultiCastSummonSpellButton:ClearAllPoints();
 		MultiCastSummonSpellButton:SetPoint("BOTTOMLEFT", TotemBar, "BOTTOMLEFT", 0, 3);
-		MultiCastSummonSpellButton:SetSize(26, 26)
+		MultiCastSummonSpellButton:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 		for i = 1, 12 do
 			local b = _G["MultiCastSlotButton"..i]
 			local b2 = _G["MultiCastActionButton"..i]
-			b2:SetSize(26, 26)
+			b2:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 			if i <= 4 then
 				local b = _G["MultiCastSlotButton"..i]
 				b:ClearAllPoints()
-				b:SetSize(26, 26)
+				b:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 				b:SetPoint("TOPLEFT", b2, "TOPLEFT")
 			end
  			if i == 1 or i == 5 or i == 9 then 
@@ -54,8 +54,8 @@ if myclass == "SHAMAN" then
 			end
 		end
 		MultiCastRecallSpellButton:ClearAllPoints();
-		MultiCastRecallSpellButton:SetPoint("TOPLEFT", MultiCastSummonSpellButton, "TOPRIGHT", 3*5+26*4-2, 0)
-		MultiCastRecallSpellButton:SetSize(26, 26)
+		MultiCastRecallSpellButton:SetPoint("TOPLEFT", MultiCastSummonSpellButton, "TOPRIGHT", 3*5+ActionBarDB.ActionBarButtonSize*4-2, 0)
+		MultiCastRecallSpellButton:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 	end
 	-- right click to destroy totem
 	local function TotemBar_Destroy(self, button)

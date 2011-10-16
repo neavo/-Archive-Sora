@@ -2,8 +2,8 @@
 local S, _, _, DB = unpack(select(2, ...))
 
 DB.ActionBar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate") 
-DB.ActionBar:SetWidth(26*18+3*17)
-DB.ActionBar:SetHeight(26*2+5)
+DB.ActionBar:SetWidth(ActionBarDB.ActionBarButtonSize*18+3*17)
+DB.ActionBar:SetHeight(ActionBarDB.ActionBarButtonSize*2+5)
 DB.ActionBar:SetPoint("BOTTOM", UIParent, 0, 20)
   
 local Page = {
@@ -55,11 +55,11 @@ DB.ActionBar:SetScript("OnEvent", function(self, event, ...)
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		for i = 1, 12 do
 			local Button = _G["ActionButton"..i]
-			Button:SetSize(26, 26)
+			Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 			Button:ClearAllPoints()
 			Button:SetParent(self)
 			if i == 1 then
-				Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "BOTTOMLEFT", 26*3+3*3, 0)
+				Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "BOTTOMLEFT", ActionBarDB.ActionBarButtonSize*3+3*3, 0)
 			else
 				local Pre = _G["ActionButton"..i-1]
 				Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)
