@@ -225,8 +225,7 @@ end
 
 if UnitFrameDB.ShowParty then
 	local PartyFramePos = CreateFrame("Frame", nil, UIParent)
-	PartyFramePos:SetWidth(180)
-	PartyFramePos:SetHeight(22*5+30*4)
+	PartyFramePos:SetSize(180, 22*5+30*4)
 	MoveHandle.PartyFrame = S.MakeMoveHandle(PartyFramePos, "小队框体", "PartyFrame")
 	oUF:RegisterStyle("SoraParty", BuildPartyFrame)
 	oUF:SetActiveStyle("SoraParty")

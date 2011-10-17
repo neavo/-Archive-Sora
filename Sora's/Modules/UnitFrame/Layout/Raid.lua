@@ -307,8 +307,7 @@ if UnitFrameDB.ShowRaid then
 	oUF:SetActiveStyle("SoraRaid")
 	if UnitFrameDB.RaidPartyH then
 		local RaidFramePos = CreateFrame("Frame", nil, UIParent)
-		RaidFramePos:SetWidth(UnitFrameDB.RaidUnitWidth*5+5*4)
-		RaidFramePos:SetHeight(20*5+6*4)
+		RaidFramePos:SetSize(UnitFrameDB.RaidUnitWidth*5+5*4, 20*5+6*4)
 		MoveHandle.RaidFrame = S.MakeMoveHandle(RaidFramePos, "团队框体", "RaidFrame")	
 		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  
@@ -333,8 +332,7 @@ if UnitFrameDB.ShowRaid then
 		DB.RaidFrame:SetPoint("TOPLEFT", RaidFramePos)
 	else
 		local RaidFramePos = CreateFrame("Frame", nil, UIParent)
-		RaidFramePos:SetWidth(UnitFrameDB.RaidUnitWidth*5+5*4)
-		RaidFramePos:SetHeight(20*5+6*4)
+		RaidFramePos:SetSize(UnitFrameDB.RaidUnitWidth*5+5*4, 20*5+6*4)
 		MoveHandle.RaidFrame = S.MakeMoveHandle(RaidFramePos, "团队框体", "RaidFrame")
 		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  

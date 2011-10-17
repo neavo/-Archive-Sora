@@ -1,6 +1,8 @@
 -- Engines
 local S, _, _, DB = unpack(select(2, ...))
 
+if not SkinDB.EnableAurora then return end
+
 local Skin = CreateFrame("Frame", nil, UIParent)
 Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)

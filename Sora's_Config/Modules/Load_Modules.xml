@@ -5,8 +5,9 @@
 	<Script file = "MoveHandle.lua"/>
 	<Script file = "Nameplate.lua"/>
 	<Script file = "Reminder.lua"/>
-	<Script file = "Tooltip.lua"/>	
+	<Script file = "Skin.lua"/>
 	<Script file = "Threat.lua"/>
+	<Script file = "Tooltip.lua"/>	
 	<Script file = "UnitFrame.lua"/>
 	
 </Ui>

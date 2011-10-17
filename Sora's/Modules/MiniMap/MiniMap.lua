@@ -5,8 +5,7 @@ local NewMail = false
 Minimap:SetMaskTexture("Interface\\Buttons\\WHITE8x8")
 Minimap:SetFrameStrata("BACKGROUND")
 Minimap:ClearAllPoints()
-Minimap:SetWidth(105)
-Minimap:SetHeight(105)
+Minimap:SetSize(105, 105)
 MoveHandle.Minimap = S.MakeMoveHandle(Minimap, "小地图", "Minimap")
 
 LFDSearchStatus:SetClampedToScreen(true)

@@ -10,6 +10,7 @@ function C.Threat.LoadSettings()
 		["ThreatBarWidth"] = 230,								-- 仇恨条宽度
 		["NameTextL"] = 3,										-- 姓名长度(单位:字)
 		["ThreatLimited"] = 2,									-- 显示仇恨人数(不包括Tank)
+		["yOffset"] = -60,										-- 纵向偏移量
 	}
 	if not ThreatDB then ThreatDB = {} end
 	for key, value in pairs(Default) do
@@ -55,6 +56,14 @@ function C.Threat.BuildGUI()
 					order = 3,
 					get = function() return tostring(ThreatDB.ThreatLimited) end,
 					set = function(_, value) ThreatDB.ThreatLimited = tonumber(value) end,
+				},
+				yOffset = {
+					type = "input",
+					name = "框体纵向偏移量：",
+					desc = "请输入仇恨框体的纵向偏移量",
+					order = 4,
+					get = function() return tostring(ThreatDB.yOffset) end,
+					set = function(_, value) ThreatDB.yOffset = tonumber(value) end,
 				},
 			},
 		}

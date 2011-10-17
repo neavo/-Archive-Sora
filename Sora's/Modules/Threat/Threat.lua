@@ -15,9 +15,8 @@ Threat:SetBackdropBorderColor(0, 0, 0, 1)
 Threat:SetAlpha(0)
 -- 创建坦克仇恨标签
 Threat.FlagT = CreateFrame("Frame", "ThreatFlagTank", Threat)
-Threat.FlagT:SetWidth(1)
-Threat.FlagT:SetHeight(Threat:GetHeight()-6)
-Threat.FlagT:SetBackdrop({ bgFile = DB.Solid })
+Threat.FlagT:SetSize(1, Threat:GetHeight()-6)
+Threat.FlagT:SetBackdrop({bgFile = DB.Solid})
 Threat.FlagT:SetBackdropColor(0, 0, 0)
 Threat.FlagT:SetFrameLevel(2)
 Threat.FlagT.Name = Threat.FlagT:CreateTexture(nil, "OVERLAY")
@@ -178,7 +177,7 @@ Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 Event:RegisterEvent("PLAYER_REGEN_ENABLED")
 Event:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_ENTERING_WORLD" then
-		Threat:SetPoint(unpack(DB.ThreatPos))
+		Threat:SetPoint("TOP", "oUF_SoraPlayer", "BOTTOM", 0, ThreatDB.yOffset)
 	elseif event == "PLAYER_REGEN_DISABLED" then
 		if shouldShow() then
 			if Threat:GetAlpha() < 0.1 then

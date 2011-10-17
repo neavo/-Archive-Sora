@@ -28,11 +28,16 @@ local tokens = {
 	{416, 300}, -- Mark of the World Tree
 }
 
+-- InfoPanelPos
+local InfoPanelPos = CreateFrame("Frame", nil, UIParent)
+InfoPanelPos:SetSize(480, 20)
+MoveHandle.InfoPanel = S.MakeMoveHandle(InfoPanelPos, "信息面板", "InfoPanel")
+
 -- BuildClock
 local function BuildClock()
 	local Clock = CreateFrame("Frame", nil, UIParent)
 	Clock.Text = S.MakeFontString(Clock, 14)
-	Clock.Text:SetPoint("TOP", UIParent, "TOP", 0, -10)
+	Clock.Text:SetPoint("TOP", MoveHandle.InfoPanel)
 	Clock:SetAllPoints(Clock.Text)
 	Clock:RegisterEvent("PLAYER_LOGIN")
 	Clock:SetScript("OnEvent", function(self, event, ...)
@@ -83,7 +88,8 @@ local function BuildClock()
 		if self.Timer > 1 then
 			self.Timer = 0
 			local Text = GameTime_GetGameTime(true)
-			self.Text:SetText(Text:sub(1, 2).." : "..Text:sub(4, 5))
+			local index = Text:find(":")
+			self.Text:SetText(Text:sub(index-2, index-1).." : "..Text:sub(index+1, index+2))
 		end
 	end)
 	return Clock

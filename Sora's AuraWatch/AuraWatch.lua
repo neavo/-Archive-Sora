@@ -189,12 +189,12 @@ local function Update()
 				elseif value.Filter:lower() == "debuff" and UnitDebuff(value.unitId, idName) then
 					UpdateDebuff(Frame, value, idName, KEY)
 				elseif value.Filter:lower() == "cd" and GetSpellCooldown(idName) and select(2, GetSpellCooldown(idName)) > 1.5 then
-					UpdateCD(Frame, value, idName)
+					UpdateCD(Frame, value, idName, KEY)
 				end
 			elseif value.itemID then
 				idName = GetItemInfo(value.itemID)
 				if select(2, GetItemCooldown(value.itemID)) > 1.5 then
-					UpdateItemCD(Frame, value, idName)
+					UpdateItemCD(Frame, value, idName, KEY)
 				end
 			end
 		end
