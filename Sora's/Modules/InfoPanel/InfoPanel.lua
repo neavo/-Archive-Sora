@@ -87,7 +87,7 @@ local function BuildClock()
 		self.Timer = self.Timer + elapsed
 		if self.Timer > 1 then
 			self.Timer = 0
-			local Text = GameTime_GetGameTime(true)
+			local Text = GameTime_GetLocalTime(true)
 			local index = Text:find(":")
 			self.Text:SetText(Text:sub(index-2, index-1).." : "..Text:sub(index+1, index+2))
 		end
