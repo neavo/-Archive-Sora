@@ -3,5 +3,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Script file = "Aurora.lua"/>
+	<Script file = "DBM.lua"/>
 	
 </Ui>
