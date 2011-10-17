@@ -273,37 +273,41 @@ end
 
 -- BuildCurrency
 local function BuildCurrencyTable(Anchor)
-	for _, value in ipairs(tokens) do
-		local CurrencyID, CurrencyMax = unpack(value)
-		local name, amount, icon = GetCurrencyInfo(CurrencyID)
-		if name and amount > 0 then
-			local StatusBar = CreateFrame("StatusBar", nil, UIParent)
-			StatusBar:SetHeight(6)	
-			StatusBar:SetWidth(120)
-			StatusBar:SetStatusBarTexture(DB.Statusbar)
-			StatusBar:SetMinMaxValues(0, CurrencyMax)
-			StatusBar:SetStatusBarColor(0, 0.4, 1, 0.6)
-			StatusBar.Shaodw = S.MakeShadow(StatusBar, 3)
-			StatusBar.Text = S.MakeFontString(StatusBar, 10)
-			StatusBar.Text:SetPoint("CENTER")
-			StatusBar.Icon = StatusBar:CreateTexture(nil, "OVERLAY")
-			StatusBar.Icon:SetPoint("RIGHT", StatusBar, "LEFT", -5, 0)
-			StatusBar.Icon:SetWidth(16)
-			StatusBar.Icon:SetHeight(16)
-			StatusBar.Icon.Shaodow = S.MakeTexShadow(StatusBar, StatusBar.Icon, 3)
-			StatusBar.CurrencyID = CurrencyID
-			StatusBar.CurrencyMax = CurrencyMax
-			StatusBar:Hide()
-			tinsert(CurrencyTable, StatusBar)
+	local Event = CreateFrame("Frame")
+	Event:RegisterEvent("PLAYER_LOGIN")	
+	Event:SetScript("OnEvent", function(self)
+		for _, value in ipairs(tokens) do
+			local CurrencyID, CurrencyMax = unpack(value)
+			local name, amount, icon = GetCurrencyInfo(CurrencyID)
+			if name and amount > 0 then
+				local StatusBar = CreateFrame("StatusBar", nil, UIParent)
+				StatusBar:SetHeight(6)	
+				StatusBar:SetWidth(120)
+				StatusBar:SetStatusBarTexture(DB.Statusbar)
+				StatusBar:SetMinMaxValues(0, CurrencyMax)
+				StatusBar:SetStatusBarColor(0, 0.4, 1, 0.6)
+				StatusBar.Shaodw = S.MakeShadow(StatusBar, 3)
+				StatusBar.Text = S.MakeFontString(StatusBar, 10)
+				StatusBar.Text:SetPoint("CENTER")
+				StatusBar.Icon = StatusBar:CreateTexture(nil, "OVERLAY")
+				StatusBar.Icon:SetPoint("RIGHT", StatusBar, "LEFT", -5, 0)
+				StatusBar.Icon:SetWidth(16)
+				StatusBar.Icon:SetHeight(16)
+				StatusBar.Icon.Shaodow = S.MakeTexShadow(StatusBar, StatusBar.Icon, 3)
+				StatusBar.CurrencyID = CurrencyID
+				StatusBar.CurrencyMax = CurrencyMax
+				StatusBar:Hide()
+				tinsert(CurrencyTable, StatusBar)
+			end
 		end
-	end
-	for key, value in ipairs(CurrencyTable) do
-		if key == 1 then
-			value:SetPoint("TOP", Anchor, "BOTTOM", 8, -30)
-		else
-			value:SetPoint("TOP", CurrencyTable[key-1], "BOTTOM", 0, -20)
+		for key, value in ipairs(CurrencyTable) do
+			if key == 1 then
+				value:SetPoint("TOP", Anchor, "BOTTOM", 8, -30)
+			else
+				value:SetPoint("TOP", CurrencyTable[key-1], "BOTTOM", 0, -20)
+			end
 		end
-	end
+	end)
 end
 local function UpdateCurrencyData()
 	for _, value in ipairs(CurrencyTable) do
