@@ -87,7 +87,7 @@ end
 -- UpdateBuff
 local function UpdateBuff(Frame, value, idName, key)
 	local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.unitId, idName)
-	if value.Caster and caster and value.Caster:lower() ~= caster:lower() then return end
+	if value.Caster and value.Caster:lower() ~= caster:lower() then return end
 	if value.Stack and count and value.Stack > count then return end
 	
 	Frame:Show()
@@ -108,7 +108,7 @@ end
 -- UpdateDebuff
 local function UpdateDebuff(Frame, value, idName, key)
 	local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.unitId, idName)
-	if value.Caster ~= caster then return end
+	if value.Caster and value.Caster:lower() ~= caster:lower() then return end
 	if value.Stack and count and value.Stack > count then return end
 	
 	Frame:Show()
