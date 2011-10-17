@@ -194,11 +194,9 @@ for _, value in ipairs(tooltips) do
     end)
 end
 
---[[for _, value in ipairs({"OnTooltipSetItem", "OnTooltipSetAchievement", "OnTooltipSetQuest", "OnTooltipSetSpell"}) do
+for _, value in ipairs({"OnTooltipSetItem", "OnTooltipSetAchievement", "OnTooltipSetQuest", "OnTooltipSetSpell"}) do
 	ItemRefTooltip:HookScript(value, function(self) style(self) end)
-end]]
-	--ItemRefTooltip:HookScript("OnTooltipSetItem", function(self) style(self) end)
-
+end
 
 -- Event
 local Event = CreateFrame("Frame")
