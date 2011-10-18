@@ -14,20 +14,16 @@ local FramesToHide = {
 	PossessBarFrame,
 }  
 
-for _, f in pairs(FramesToHide) do
-	if f:GetObjectType() == "Frame" then
-		f:UnregisterAllEvents()
+for _, value in pairs(FramesToHide) do
+	if value:GetObjectType() == "Frame" then value:UnregisterAllEvents() end
+	if value ~= MainMenuBar then --patch 4.0.6 fix found by tukz
+		  value:HookScript("OnShow", function(self) self:Hide() end)
+		  value:Hide()
 	end
-	if f ~= MainMenuBar then --patch 4.0.6 fix found by tukz
-		  f:HookScript("OnShow", function(s) s:Hide(); end)
-		  f:Hide()
-	end
-	f:SetAlpha(0)
+	value:SetAlpha(0)
 end
 
 -- code by tukz/evl22
 -- fix main bar keybind not working after a talent switch. :X
-hooksecurefunc('TalentFrame_LoadUI', function()
-	PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-end)
+hooksecurefunc("TalentFrame_LoadUI", function() PlayerTalentFrame:UnregisterEvent("ACTIVE_TALENT_GROUP_CHANGED") end)
 

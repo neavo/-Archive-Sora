@@ -1,7 +1,7 @@
 -- Engines
 local S, _, _, DB = unpack(select(2, ...))
-if not SkinDB.EnableDBMSkin then return end
 
+if not SkinDB.EnableDBMSkin then return end
 
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("PLAYER_LOGIN")

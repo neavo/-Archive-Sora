@@ -2,7 +2,7 @@
 local _, _, _, DB = unpack(select(2, ...))
 ShapeshiftBarFrame:SetParent(DB.ActionBar)
 
-for i = 1, 6 do
+for i = 1, NUM_SHAPESHIFT_SLOTS do
 	local Button = _G["ShapeshiftButton"..i]
 	Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 	Button:ClearAllPoints()
@@ -19,19 +19,17 @@ hooksecurefunc("ShapeshiftBar_Update", function()
 	ShapeshiftButton1:SetPoint("BOTTOM", MultiBarBottomRightButton4, "TOP", 0, 5)
 end)
 
-for i=1, 6 do
+for i = 1, NUM_SHAPESHIFT_SLOTS do
 	local Button = _G["ShapeshiftButton"..i]
 	Button:SetAlpha(0.3)
 	Button:HookScript("OnEnter", function(self) 
-		for i = 1, 6 do
-			local Button = _G["ShapeshiftButton"..i]
-			Button:SetAlpha(1)
+		for i = 1, NUM_SHAPESHIFT_SLOTS do
+			_G["ShapeshiftButton"..i]:SetAlpha(1)
 		end
 	end)
 	Button:HookScript("OnLeave",function(self) 
-		for i = 1, 6 do
-			local Button = _G["ShapeshiftButton"..i]
-			Button:SetAlpha(0.3)
+		for i = 1, NUM_SHAPESHIFT_SLOTS do
+			_G["ShapeshiftButton"..i]:SetAlpha(0.3)
 		end
 	end)
 end

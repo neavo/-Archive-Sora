@@ -1,12 +1,6 @@
-﻿<!-- -->
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
+	<Include file = "Bars\Load_bars.xml"/>
+	<Include file = "Plugins\Load_Plugins.xml"/>
 
-
-
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-
-	<Script file="cfg.lua"/>
-	<Include file="Bars\Load_bars.xml"/>
-	<Include file="Plugins\Load_Plugins.xml"/>
-	
 </Ui>

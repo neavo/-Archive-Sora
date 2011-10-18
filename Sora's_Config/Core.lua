@@ -4,8 +4,6 @@ local SoraConfig = LibStub("AceAddon-3.0"):NewAddon("SoraConfig", "AceConsole-3.
 
 -- SetDefault
 local function SetDefault()
-	SetActionBarToggles(1, 1, 1, 1, 1)
-	SetCVar("alwaysShowActionBars", 1)
 	SlashCmdList.AutoSet()
 	SoraInited = true
 end
