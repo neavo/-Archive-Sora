@@ -1,5 +1,7 @@
 -- Engines
 local S, _, _, DB = unpack(select(2, ...))
+if not SkinDB.EnableDBMSkin then return end
+
 
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("PLAYER_LOGIN")
@@ -81,11 +83,9 @@ Event:SetScript("OnEvent", function()
 		DBT_SavedOptions["DBM"].Scale = 1
 		DBT_SavedOptions["DBM"].HugeScale = 1
 		DBT_SavedOptions["DBM"].Texture = DB.Statusbar
-		DBT_SavedOptions["DBM"].ExpandUpwards = true
+		DBT_SavedOptions["DBM"].ExpandUpwards = false
 		DBT_SavedOptions["DBM"].BarXOffset = 0
-		DBT_SavedOptions["DBM"].BarYOffset = -100
-		DBT_SavedOptions["DBM"].HugeBarXOffset = 0
-		DBT_SavedOptions["DBM"].HugeBarYOffset = -100
+		DBT_SavedOptions["DBM"].BarYOffset = 20
 		DBT_SavedOptions["DBM"].IconLeft = true
 		DBT_SavedOptions["DBM"].Texture = "Interface\\Buttons\\WHITE8x8"
 		DBT_SavedOptions["DBM"].IconRight = false

@@ -8,12 +8,11 @@ C.Skin = CreateFrame("Frame")
 function C.Skin.LoadSettings()
 	local Default = {
 		["EnableAurora"] = true,		-- 启用Aurora全局美化
+		["EnableDBMSkin"] = true,		-- 启用DBM皮肤
 	}
 	if not SkinDB then SkinDB = {} end
 	for key, value in pairs(Default) do
-		if SkinDB[key] == nil then
-			SkinDB[key] = value
-		end
+		if SkinDB[key] == nil then SkinDB[key] = value end
 	end
 end
 
@@ -32,10 +31,17 @@ function C.Skin.BuildGUI()
 			args = {
 				EnableAurora = {
 					type = "toggle",
-					name = "启用Aurora全局美化：",
+					name = "启用Aurora全局美化",
 					order = 1,
 					get = function() return SkinDB.EnableAurora end,
 					set = function(_, value) SkinDB.EnableAurora = value end,
+				},
+				EnableDBMSkin = {
+					type = "toggle",
+					name = "启用DBM皮肤",
+					order = 2,
+					get = function() return SkinDB.EnableDBMSkin end,
+					set = function(_, value) SkinDB.EnableDBMSkin = value end,
 				},
 			},
 		}
