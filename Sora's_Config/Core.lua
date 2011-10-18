@@ -1,10 +1,12 @@
 ﻿-- Engines
-local _, C, _, _ = unpack(select(2, ...))
+local S, C, _, _ = unpack(select(2, ...))
 local SoraConfig = LibStub("AceAddon-3.0"):NewAddon("SoraConfig", "AceConsole-3.0")
 
 -- SetDefault
 local function SetDefault()
 	SetActionBarToggles(1, 1, 1, 1, 1)
+	SetCVar("alwaysShowActionBars", 1)
+	SlashCmdList.AutoSet()
 	SoraInited = true
 end
 
@@ -62,7 +64,6 @@ end
 
 -- OnInitialize
 function SoraConfig:OnInitialize()
-	if not SoraInited then SetDefault() end
 	for _, value in pairs(C) do
 		value.LoadSettings()
 		value.BuildGUI()
@@ -74,3 +75,23 @@ function SoraConfig:OnInitialize()
 	})
 	SoraConfig:RegisterChatCommand("Sora", ShowConfig)
 end
+
+-- OnEnable
+function SoraConfig:OnEnable()
+	if not SoraInited then
+		StaticPopupDialogs["Sora's"] = {
+			text = "欢迎使用|cff70C0F5Sora's|r\n请点击确定按钮加载默认配置",
+			button1 = YES,
+			button2 = NO,
+			OnAccept = function()
+				SetDefault()
+				ReloadUI()
+			end,
+			timeout = 0,
+			whileDead = 1,
+			hideOnEscape = 0,
+		}
+		StaticPopup_Show("Sora's")
+	end
+end
+

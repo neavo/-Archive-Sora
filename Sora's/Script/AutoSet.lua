@@ -20,15 +20,11 @@ local function SetUIScale()
 		SetCVar("uiScale", scale)
 	end
 end
-local function SetCvar()
-	SetCVar("alwaysShowActionBars", 1)
-end
 SlashCmdList["AutoSet"] = function()
 	if not UnitAffectingCombat("player") then
 		SetChatFrame()
 		SetUIScale()
-		SetCvar()
-		ReloadUI()
+		--ReloadUI()
 	end
 end
 SLASH_AutoSet1 = "/AutoSet"
