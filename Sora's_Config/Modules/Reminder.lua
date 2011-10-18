@@ -11,8 +11,8 @@ function C.Reminder.LoadSettings()
 		["RaidBuffSpace"] = 4,
 		["RaidBuffDirection"] = 1,
 		["ShowOnlyInParty"] = true,
-		["ClassBuffSize"] = 48,
-		["ClassBuffSpace"] = 40,
+		["ClassBuffSize"] = 32,
+		["ClassBuffSpace"] = 64,
 		["ClassBuffSound"] = true,
 	}
 	if not ReminderDB then ReminderDB = {} end

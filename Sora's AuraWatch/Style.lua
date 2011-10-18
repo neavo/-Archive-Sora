@@ -62,9 +62,9 @@ function cfg.BuildBAR(iconSize, barWidth)
 	Frame:SetWidth(barWidth)
 	Frame:SetHeight(iconSize)
 	
-	Frame.Icon = Frame:CreateTexture(nil, "ARTWORK") 
-	Frame.Icon:SetWidth(iconSize)
-	Frame.Icon:SetHeight(iconSize)
+	Frame.Icon = Frame:CreateTexture(nil, "ARTWORK")
+	Frame.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	Frame.Icon:SetSize(iconSize, iconSize)
 	Frame.Icon:SetPoint("BOTTOMRIGHT", Frame, "BOTTOMLEFT", -5, 0)
 	
 	Frame.Icon.Shadow = MakeShadow(Frame, 3)

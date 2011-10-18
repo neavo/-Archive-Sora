@@ -18,6 +18,7 @@ local function Init()
 		Temp.Shadow:SetFrameLevel(0)
 		
 		Temp.Icon = Temp:CreateTexture(nil, "ARTWORK")
+		Temp.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 		Temp.Icon:SetAllPoints()
 		
 		if ReminderDB.RaidBuffDirection == 1 then

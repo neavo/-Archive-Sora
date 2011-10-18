@@ -19,6 +19,7 @@ local function Style(buttonName, i)
 	if Button then
 		Button:SetSize(BuffDB.IconSize, BuffDB.IconSize)
 		if not Button.Shadow then Button.Shadow = S.MakeShadow(Button, 3) end
+		Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 		Duration:ClearAllPoints()
 		Duration:SetParent(Button)
 		Duration:SetPoint("TOP", Button, "BOTTOM", 1, -3)

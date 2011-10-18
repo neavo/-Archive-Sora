@@ -15,7 +15,7 @@ DB.ArrowT = Media.."ArrowT"
 DB.Arrow = Media.."Arrow"
 DB.Warning = Media.."Warning.mp3"
 DB.RaidBuffPos = {"TOPLEFT", Minimap, "BOTTOMLEFT", -5, -25}
-DB.ClassBuffPos = {"CENTER", UIParent, -150, 150}
+DB.ClassBuffPos = {"CENTER", UIParent, -100, 150}
 DB.TooltipPos = {"BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -50, 201}
 DB.Colors = {
 	normal		= {r =   0, g =   0, b =    0},
