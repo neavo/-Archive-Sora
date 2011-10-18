@@ -12,14 +12,11 @@ LFDSearchStatus:SetClampedToScreen(true)
 
 Minimap.Shadow = S.MakeShadow(Minimap, 4)
 Minimap.Shadow.Timer = 0
-Minimap.Shadow:RegisterEvent("UPDATE_PENDING_MAIL")
-Minimap.Shadow:RegisterEvent("MAIL_CLOSED")
-Minimap.Shadow:SetScript("OnEvent",function(self, event, ... ) NewMail = HasNewMail() and true or false end)
 Minimap.Shadow:SetScript("OnUpdate",function(self,elapsed)
 	self.Timer = self.Timer + elapsed
 	if self.Timer > 1.2 then
 		self.Timer = 0
-		if NewMail then
+		if HasNewMail() then
 			self:SetBackdropBorderColor(120/255, 255/255, 120/255, 1)
 			UIFrameFadeOut(self, 1.2, 1, 0)
 		else
