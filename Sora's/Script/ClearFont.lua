@@ -1,4 +1,6 @@
-﻿-- /////////////////////////////////////////////////////////////////////////////
+﻿if not GetLocale() == "zhCN" then return end
+
+-- /////////////////////////////////////////////////////////////////////////////
 -- =============================================================================
 --  ClearFont v3.22b 国服增强版
 --  （根据ClearFont v20000-2 版本汉化修改）
@@ -25,28 +27,28 @@
 --   你可以根据例子添加属于自己的字体位置
 -- =============================================================================
 
-	ClearFont = CreateFrame("Frame", "ClearFont");
+ClearFont = CreateFrame("Frame", "ClearFont");
 
 -- 指出在哪里寻找字体
-	local CLEAR_FONT_BASE = "Fonts\\";
+local CLEAR_FONT_BASE = "Fonts\\"
 
 -- 金币、堆叠、按键绑定等字体
-	local CLEAR_FONT_NUMBER = CLEAR_FONT_BASE .. "FRIZQT__.TTF";
+local CLEAR_FONT_NUMBER = CLEAR_FONT_BASE.."FRIZQT__.TTF" or CLEAR_FONT_BASE.."FRIZQT__.TTF"
 -- 生命条、经验条上的字体
-	local CLEAR_FONT_EXP = CLEAR_FONT_BASE .. "ARIALN.TTF";
+local CLEAR_FONT_EXP = CLEAR_FONT_BASE.."ARIALN.TTF" or 
 -- 任务说明和书信、石碑的正文字体
-	local CLEAR_FONT_QUEST = CLEAR_FONT_BASE .. "FZBWJW.TTF";
+local CLEAR_FONT_QUEST = CLEAR_FONT_BASE.."FZBWJW.TTF"
 -- 战斗伤害数值提示
-	local CLEAR_FONT_DAMAGE = CLEAR_FONT_BASE .. "ZYKai_C.TTF";
+local CLEAR_FONT_DAMAGE = CLEAR_FONT_BASE.."ZYKai_C.TTF"
 -- 游戏界面中的主要字体
-	local CLEAR_FONT = CLEAR_FONT_BASE .. "ZYKai_T.TTF";
+local CLEAR_FONT = CLEAR_FONT_BASE.."ZYKai_T.TTF"
 -- 物品、技能的说明字体
-	local CLEAR_FONT_ITEM = CLEAR_FONT_BASE .. "FZXHJW.TTF";
+local CLEAR_FONT_ITEM = CLEAR_FONT_BASE.."FZXHJW.TTF"
 -- 聊天字体
-	local CLEAR_FONT_CHAT = CLEAR_FONT_BASE .. "ZYHei.TTF";
+local CLEAR_FONT_CHAT = CLEAR_FONT_BASE.."ZYHei.TTF"
 
 -- 添加属于自己的字体 （范例）
---	local YOUR_FONT_STYLE = CLEAR_FONT_BASE .. "YourFontName.ttf";
+-- local YOUR_FONT_STYLE = CLEAR_FONT_BASE .. "YourFontName.ttf";
 
 
 -- -----------------------------------------------------------------------------
