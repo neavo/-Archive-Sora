@@ -29,7 +29,7 @@ function C.UnitFrame.LoadSettings()
 		["ShowFocusBuff"] = true,
 		-- Boss框体
 		["ShowBoss"] = false,
-			["ShowBossTarget"] = false,
+			["ShowBossTarget"] = true,
 			["ShowBossCastbar"] = true,
 			["ShowBossDebuff"] = true,
 			["ShowBossBuff"] = true,
