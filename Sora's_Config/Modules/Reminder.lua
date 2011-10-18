@@ -17,9 +17,7 @@ function C.Reminder.LoadSettings()
 	}
 	if not ReminderDB then ReminderDB = {} end
 	for key, value in pairs(Default) do
-		if ReminderDB[key] == nil then
-			ReminderDB[key] = value
-		end
+		if ReminderDB[key] == nil then ReminderDB[key] = value end
 	end
 end
 
