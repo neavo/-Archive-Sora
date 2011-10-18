@@ -64,6 +64,8 @@ do
 		--Unlimited chatframes resizing
 		cf:SetMinResize(0, 0)
 		cf:SetMaxResize(0, 0)
+		local Font, Fontsize = cf:GetFont()
+		cf:SetFont(Font, Fontsize, "THINOUTLINE")
 	
 		--Allow the chat frame to move to the end of the screen
 		cf:SetClampedToScreen(false)

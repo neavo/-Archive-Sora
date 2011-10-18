@@ -33,9 +33,9 @@ ClearFont = CreateFrame("Frame", "ClearFont");
 local CLEAR_FONT_BASE = "Fonts\\"
 
 -- 金币、堆叠、按键绑定等字体
-local CLEAR_FONT_NUMBER = CLEAR_FONT_BASE.."FRIZQT__.TTF" or CLEAR_FONT_BASE.."FRIZQT__.TTF"
+local CLEAR_FONT_NUMBER = CLEAR_FONT_BASE.."FRIZQT__.TTF"
 -- 生命条、经验条上的字体
-local CLEAR_FONT_EXP = CLEAR_FONT_BASE.."ARIALN.TTF" or 
+local CLEAR_FONT_EXP = CLEAR_FONT_BASE.."ARIALN.TTF"
 -- 任务说明和书信、石碑的正文字体
 local CLEAR_FONT_QUEST = CLEAR_FONT_BASE.."FZBWJW.TTF"
 -- 战斗伤害数值提示
