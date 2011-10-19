@@ -50,21 +50,35 @@ function S.ToHex(r, g, b)
 	end
 end
 
-function S.FormatTime(Time)
+function S.FormatTime(Time, Short)
 	local Day = floor(Time/86400)
 	local Hour = floor((Time-Day*86400)/3600)
 	local Minute = floor((Time-Day*86400-Hour*3600)/60)
-	local Second = floor((Time-Day*86400-Hour*3600-Minute*60)/60)
-	if Time > 86400 then
-		return Day.."d "..Hour.."m"		
-	elseif Time > 3600 then
-		return Hour.."h "..Minute.."m"
-	elseif Time < 3600 and Time > 60 then
-		return Minute.."m "..Second.."s"
-	elseif Time < 60 and Time > 0 then	
-		return Second.."s"
+	local Second = floor(Time-Day*86400-Hour*3600-Minute*60)
+	if not Short then
+		if Time > 86400 then
+			return Day.."d "..Hour.."m"		
+		elseif Time > 3600 then
+			return Hour.."h "..Minute.."m"
+		elseif Time < 3600 and Time > 60 then
+			return Minute.."m "..Second.."s"
+		elseif Time < 60 and Time > 0 then	
+			return Second.."s"
+		else
+			return "N/A"
+		end
 	else
-		return "N/A"
+		if Time > 86400 then
+			return Day.."d"		
+		elseif Time > 3600 then
+			return Hour.."h"
+		elseif Time < 3600 and Time > 60 then
+			return Minute.."m"
+		elseif Time < 60 and Time > 0 then	
+			return Second.."s"
+		else
+			return "N/A"
+		end
 	end
 end
 

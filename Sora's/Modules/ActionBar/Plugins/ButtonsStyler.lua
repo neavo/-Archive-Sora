@@ -114,17 +114,6 @@ local function StyleSmallButton(Button, Icon, name)
 	end
 end
 
---[[local buttons = 0
-SpellFlyout:HookScript("OnShow", function(self)
-	for i = 1, buttons do
-		if _G["SpellFlyoutButton"..i] then
-			Style(_G["SpellFlyoutButton"..i])
-			StyleButton(_G["SpellFlyoutButton"..i], true)
-			_G["SpellFlyoutButton"..i]:SetFrameLevel(_G["SpellFlyoutButton"..i]:GetParent():GetFrameLevel()+5)
-		end
-	end
-end)]]
-
 --Hide the Mouseover texture and attempt to find the ammount of buttons to be skinned
 local function StyleFlyout(self)
 	self.FlyoutBorder:SetAlpha(0)
