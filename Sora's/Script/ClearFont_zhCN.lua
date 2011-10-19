@@ -2,20 +2,19 @@
 
 -- /////////////////////////////////////////////////////////////////////////////
 -- =============================================================================
---  ClearFont v3.22b 国服增强版
---  （根据ClearFont v20000-2 版本汉化修改）
+--  ClearFont v4.01a 台服用戶端
+--  （根據ClearFont v20000-2 版本漢化修改）
 --  原作者：KIRKBURN（原作者已不再更新！）
---  官方网页：http://www.clearfont.co.uk/
+--  官方網頁：http://www.clearfont.co.uk/
+--  漢化修改：五區 元素之力 逆襲的藍/台服 巴納紮爾 逆襲的蘭
+--  發佈頁面：http://bbs.game.mop.com/viewthread.php?tid=1503056
+--  發佈日期：2010.10.19
 -- -----------------------------------------------------------------------------
---  汉化修改：五区 元素之力 逆袭的蓝
---  发布页面：http://bbs.game.mop.com/viewthread.php?tid=1503056
---  发布日期：2010.10.19
--- -----------------------------------------------------------------------------
---  CLEARFONT.LUA - 标准WOW用户界面字体
---	A. ClearFont框架、预先定义字体位置
---	B. WOW用户界面设计
---	C. 重新载入功能
---	D. 第一次启动时应用以上设定
+--  CLEARFONT.LUA - STANDARD WOW UI FONTS
+--	A. ClearFont 框架 及為了以後代碼的簡潔而預先定義字體位置
+--	B. 標準的WOW用戶介面部分
+--	C. 每當一個插件載入時都重新載入的功能
+--	D. 第一次啟動時應用以上設定
 -- =============================================================================
 -- /////////////////////////////////////////////////////////////////////////////
 
@@ -23,11 +22,11 @@
 
 
 -- =============================================================================
---  A. ClearFont框架、预先定义字体位置
---   你可以根据例子添加属于自己的字体位置
+--  A. ClearFont 框架 及為了以後代碼的簡潔而預先定義字體位置
+--  你可以根據範例添加屬於自己的字體
 -- =============================================================================
 
-ClearFont = CreateFrame("Frame", "ClearFont");
+	ClearFont = CreateFrame("Frame", "ClearFont");
 
 -- 指出在哪里寻找字体
 local CLEAR_FONT_BASE = "Fonts\\"
@@ -37,13 +36,13 @@ local CLEAR_FONT_NUMBER = CLEAR_FONT_BASE.."FRIZQT__.TTF"
 -- 生命条、经验条上的字体
 local CLEAR_FONT_EXP = CLEAR_FONT_BASE.."ARIALN.TTF"
 -- 任务说明和书信、石碑的正文字体
-local CLEAR_FONT_QUEST = CLEAR_FONT_BASE.."FZBWJW.TTF"
+local CLEAR_FONT_QUEST = CLEAR_FONT_BASE.."ZYKai_T.TTF"
 -- 战斗伤害数值提示
 local CLEAR_FONT_DAMAGE = CLEAR_FONT_BASE.."ZYKai_C.TTF"
 -- 游戏界面中的主要字体
 local CLEAR_FONT = CLEAR_FONT_BASE.."ZYKai_T.TTF"
 -- 物品、技能的说明字体
-local CLEAR_FONT_ITEM = CLEAR_FONT_BASE.."FZXHJW.TTF"
+local CLEAR_FONT_ITEM = CLEAR_FONT_BASE.."ZYKai_T.TTF"
 -- 聊天字体
 local CLEAR_FONT_CHAT = CLEAR_FONT_BASE.."ZYHei.TTF"
 
@@ -52,15 +51,15 @@ local CLEAR_FONT_CHAT = CLEAR_FONT_BASE.."ZYHei.TTF"
 
 
 -- -----------------------------------------------------------------------------
--- 全局字体比例调整（当你觉得所有字体都太大或太小时调整这个参数）
---  例如：你想把所有字体缩小到80%，那么可以将"1.0"改成"0.8"
+-- 全局字體比例調整（當你覺得所有字體都太大或太小時調整這個參數）
+--  範例：你想把所有字體縮小到80%，那麼可以將"1.0"改成"0.8"
 -- -----------------------------------------------------------------------------
 
 	local CF_SCALE = 1.0
 
 
 -- -----------------------------------------------------------------------------
--- 检查是否能成功修改字体
+-- 檢查存在的字體並改變它們
 -- -----------------------------------------------------------------------------
 
 	local function CanSetFont(object) 
@@ -73,23 +72,23 @@ local CLEAR_FONT_CHAT = CLEAR_FONT_BASE.."ZYHei.TTF"
 
 
 -- =============================================================================
---  B. WOW用户接口设计
+--  B. WOW用戶介面設計
 -- =============================================================================
---   这是**修改字体大小/特效**最重要的部分
---   主要的字体被最先列出，其余部分字体按照字母表顺序排列
---   以下列出只包括 ClearFont 修改了的范例部分，并不是所有方面都会显示出来（范例：阴影）
+--   這是**修改字體大小/特效**最重要的部分
+--   主要的字體被最先列出，其餘部分字體按照字母表順序排列
+--   以下列出只包括 ClearFont 修改了的範例部分，並不是所有方面都會顯示出來（範例：陰影）
 -- -----------------------------------------------------------------------------
---  对于以下可用代码的解释
---   不带描边:		Font:SetFont(SOMETHING_TEXT_FONT, x * scale)
---   普通描边:		Font:SetFont(SOMETHING_TEXT_FONT, x * scale, "OUTLINE")
---   粗描边:			Font:SetFont(SOMETHING_TEXT_FONT, x * scale, "THICKOUTLINE")
---   字体颜色:		Font:SetTextColor(r, g, b)
---   阴影颜色:		Font:SetShadowColor(r, g, b) 
---   阴影位置:		Font:SetShadowOffset(x, y) 
+--  對於以下可用代碼的解釋
+--   不帶描邊:		Font:SetFont(SOMETHING_TEXT_FONT, x * scale)
+--   普通描邊:		Font:SetFont(SOMETHING_TEXT_FONT, x * scale, "OUTLINE")
+--   粗描邊:			Font:SetFont(SOMETHING_TEXT_FONT, x * scale, "THINOUTLINE")
+--   字體顏色:		Font:SetTextColor(r, g, b)
+--   陰影顏色:		Font:SetShadowColor(r, g, b) 
+--   陰影位置:		Font:SetShadowOffset(x, y) 
 --   透明度:			Font:SetAlpha(x)
 --
---  范例：			SetFont(CLEAR_FONT, 13 * CF_SCALE)
---   在括号里的第一部分是(A.)中申明过的字体代号，第二部分是字体大小
+--  範例：			SetFont(CLEAR_FONT, 13 * CF_SCALE)
+--   在括弧裏的第一部分是(A.)中申明過的字體代號，第二部分是字體大小
 -- =============================================================================
 
 
@@ -97,404 +96,363 @@ local CLEAR_FONT_CHAT = CLEAR_FONT_BASE.."ZYHei.TTF"
 
 
 -- -----------------------------------------------------------------------------
--- 特殊游戏世界的"3D"字体（Dark Imakuni）
---  ***注意*** ClearFont 不能定义这些字体的大小和特效（受限于Blizzard默认游戏框架）
+-- 特殊遊戲世界的"3D"字體（Dark Imakuni）
+--  ***注意*** ClearFont 不能定義這些字體的大小和特效（受限於Blizzard默認遊戲框架）
 -- -----------------------------------------------------------------------------
---  这些行语句会在用默认团队框架“设置MT/MA”时导致问题
---  如果你不用到“设置MT/MA”，可以保留这些行语句，不会有任何问题！
---  屏蔽这些语句的方法，在对应代码**行首**加上“--”
---   范例：--	STANDARD_TEXT_FONT = CLEAR_FONT_CHAT;
+--  這些行語句會在用默認團隊框架“設置MT/MA”時導致問題
+--  如果你不用到“設置MT/MA”，可以保留這些行語句，不會有任何問題！
+--  遮罩這些語句的方法，在對應代碼**行首**加上“--”
+--   範例：--	STANDARD_TEXT_FONT = CLEAR_FONT_CHAT;
 -- -----------------------------------------------------------------------------
 
 -- 聊天泡泡
 	STANDARD_TEXT_FONT = CLEAR_FONT_CHAT;
 
--- 头像上的名字，漂浮文本（远处即可看见）
+-- 頭像上的名字，漂浮文本（遠處即可看見）
 	UNIT_NAME_FONT = CLEAR_FONT;
 
--- 头像上的名字，在姓名板上（NamePlate，按“V”后靠近目标，出现的血条）
+-- 頭像上的名字，在姓名板上（NamePlate，按“V”後靠近目標，出現的血條）
 	NAMEPLATE_FONT = CLEAR_FONT;
 
--- 被攻击目标上方弹出的伤害指示（与伤害插件无关）
+-- 被攻擊目標上方彈出的傷害指示（與插件SCT/DCT無關）
 	DAMAGE_TEXT_FONT = CLEAR_FONT_DAMAGE;
 
 
 -- ----------------------------------------------------------------------------- 
--- 下拉菜单字体大小（Note by Kirkburn）
---  ***注意*** ClearFont 只能定义这个字体的大小（受限于Blizzard默认游戏框架）
+-- 下拉功能表字體大小（Note by Kirkburn）
+--  ***注意*** ClearFont 只能定義這個字體的大小（受限於Blizzard默認遊戲框架）
 -- ----------------------------------------------------------------------------- 
---  这些行语句会在用默认团队框架“设置MT/MA”时导致问题
---  如果你不用到“设置MT/MA”，可以保留这些行语句，不会有任何问题！
---  屏蔽这些语句的方法，在对应代码**行首**加上“--”
---   范例：--	UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = 12 * CF_SCALE;
+--  這些行語句會在用默認團隊框架“設置MT/MA”時導致問題
+--  如果你不用到“設置MT/MA”，可以保留這些行語句，不會有任何問題！
+--  遮罩這些語句的方法，在對應代碼**行首**加上“--”
+--   範例：--	UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = 12 * CF_SCALE;
 -- ----------------------------------------------------------------------------- 
 
 	UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = 12 * CF_SCALE;
 
 
 -- -----------------------------------------------------------------------------
--- 职业色彩（以下均为默认值/默认屏蔽）
+-- 職業色彩（以下均為預設值/默認遮罩）
 -- -----------------------------------------------------------------------------
 
---[[
-	RAID_CLASS_COLORS = {
-		["HUNTER"] = { r = 0.67, g = 0.83, b = 0.45 },			-- 猎人
-		["WARLOCK"] = { r = 0.58, g = 0.51, b = 0.79 },			-- 术士
-		["PRIEST"] = { r = 1.0, g = 1.0, b = 1.0 },				-- 牧师
-		["PALADIN"] = { r = 0.96, g = 0.55, b = 0.73 },			-- 圣骑士
-		["MAGE"] = { r = 0.41, g = 0.8, b = 0.94 },				-- 法师
-		["ROGUE"] = { r = 1.0, g = 0.96, b = 0.41 },			-- 潜行者
-		["DRUID"] = { r = 1.0, g = 0.49, b = 0.04 },			-- 德鲁伊
-		["SHAMAN"] = { r = 0.0, g = 0.44, b = 0.87 },			-- 萨满
-		["WARRIOR"] = { r = 0.78, g = 0.61, b = 0.43 }			-- 战士
-		["DEATHKNIGHT"] = { r = 0.77, g = 0.12 , b = 0.23 },	-- 死亡骑士
-	};
-]]
+--	RAID_CLASS_COLORS = {
+--		["HUNTER"] = { r = 0.67, g = 0.83, b = 0.45 },			-- 獵人
+--		["WARLOCK"] = { r = 0.58, g = 0.51, b = 0.79 },			-- 術士
+--		["PRIEST"] = { r = 1.0, g = 1.0, b = 1.0 },				-- 牧師
+--		["PALADIN"] = { r = 0.96, g = 0.55, b = 0.73 },			-- 聖騎士
+--		["MAGE"] = { r = 0.41, g = 0.8, b = 0.94 },				-- 法師
+--		["ROGUE"] = { r = 1.0, g = 0.96, b = 0.41 },			-- 潛行者
+--		["DRUID"] = { r = 1.0, g = 0.49, b = 0.04 },			-- 德魯伊
+--		["SHAMAN"] = { r = 0.14, g = 0.35, b = 1.0 },			-- 薩滿
+--		["WARRIOR"] = { r = 0.78, g = 0.61, b = 0.43 }			-- 戰士
+--		["DEATHKNIGHT"] = { r = 0.77, g = 0.12 , b = 0.23 },	-- 死亡騎士
+--	};
 
 
 -- -----------------------------------------------------------------------------
--- 系统字体（以下均为默认值/默认屏蔽）
--- 这类字体是系统字体模版，主要用来被其它字体继承（New in WotLK/3.x）
+-- 系統字體（以下均為預設值/默認遮罩）
+-- 這類字體是系統字體模版，主要用來被其他字體繼承（New in WotLK/3.x）
 -- -----------------------------------------------------------------------------
 
---[[
-	SystemFont_Tiny:SetFont(CLEAR_FONT, 9 * CF_SCALE)
+--	SystemFont_Tiny:SetFont(CLEAR_FONT, 9 * CF_SCALE)
 	
-	SystemFont_Small:SetFont(CLEAR_FONT, 12 * CF_SCALE)
+--	SystemFont_Small:SetFont(CLEAR_FONT, 10 * CF_SCALE)
 	
-	SystemFont_Outline_Small:SetFont(CLEAR_FONT_DAMAGE, 12 * CF_SCALE, "OUTLINE")
-	SystemFont_Outline:SetFont(CLEAR_FONT_DAMAGE, 15 * CF_SCALE, "OUTLINE")
-	
-	SystemFont_Shadow_Small:SetFont(CLEAR_FONT, 15 * CF_SCALE)
-	SystemFont_Shadow_Small:SetShadowColor(0, 0, 0) 
-	SystemFont_Shadow_Small:SetShadowOffset(1, -1) 
+--	SystemFont_Outline_Small:SetFont(CLEAR_FONT_CHAT, 12 * CF_SCALE, "OUTLINE")
 
-	SystemFont_InverseShadow_Small:SetFont(CLEAR_FONT, 10 * CF_SCALE)
-	SystemFont_InverseShadow_Small:SetShadowColor(0.4, 0.4, 0.4) 
-	SystemFont_InverseShadow_Small:SetShadowOffset(1, -1) 
-	SystemFont_InverseShadow_Small:SetAlpha(0.75)
+--	SystemFont_Outline:SetFont(CLEAR_FONT_CHAT, 15 * CF_SCALE)
 	
-	SystemFont_Med1:SetFont(CLEAR_FONT, 13 * CF_SCALE)
+--	SystemFont_Shadow_Small:SetFont(CLEAR_FONT, 15 * CF_SCALE)
+--	SystemFont_Shadow_Small:SetShadowColor(0, 0, 0) 
+--	SystemFont_Shadow_Small:SetShadowOffset(1, -1) 
 
-	SystemFont_Shadow_Med1:SetFont(CLEAR_FONT, 15 * CF_SCALE)
-	SystemFont_Shadow_Med1:SetTextColor(0, 0, 0)
-	SystemFont_Shadow_Med1:SetShadowOffset(1, -1) 
+--	SystemFont_InverseShadow_Small:SetFont(CLEAR_FONT, 10 * CF_SCALE)
+--	SystemFont_InverseShadow_Small:SetShadowColor(0.4, 0.4, 0.4) 
+--	SystemFont_InverseShadow_Small:SetShadowOffset(1, -1) 
+--	SystemFont_InverseShadow_Small:SetAlpha(0.75)
 	
-	SystemFont_Med2:SetFont(CLEAR_FONT, 14 * CF_SCALE)
+--	SystemFont_Med1:SetFont(CLEAR_FONT, 13 * CF_SCALE)
 
-	SystemFont_Shadow_Med2:SetFont(CLEAR_FONT, 16 * CF_SCALE)
-	SystemFont_Shadow_Med2:SetTextColor(0, 0, 0)
-	SystemFont_Shadow_Med2:SetShadowOffset(1, -1) 
+--	SystemFont_Shadow_Med1:SetFont(CLEAR_FONT, 15 * CF_SCALE)
+--	SystemFont_Shadow_Med1:SetTextColor(0, 0, 0)
+--	SystemFont_Shadow_Med1:SetShadowOffset(1, -1) 
 	
-	SystemFont_Med3:SetFont(CLEAR_FONT, 13 * CF_SCALE)
-	
-	SystemFont_Shadow_Med3:SetFont(CLEAR_FONT, 14 * CF_SCALE)
-	SystemFont_Shadow_Med3:SetTextColor(0, 0, 0)
-	SystemFont_Shadow_Med3:SetShadowOffset(1, -1) 
-	
-	SystemFont_Large:SetFont(CLEAR_FONT, 13 * CF_SCALE)
-	
-	SystemFont_Shadow_Large:SetFont(CLEAR_FONT, 17 * CF_SCALE)
-	SystemFont_Shadow_Large:SetTextColor(0, 0, 0)
-	SystemFont_Shadow_Large:SetShadowOffset(1, -1) 
-	
-	SystemFont_Huge1:SetFont(CLEAR_FONT, 20 * CF_SCALE)
+--	SystemFont_Med2:SetFont(CLEAR_FONT_DAMAGE, 14 * CF_SCALE)
 
-	SystemFont_Shadow_Huge1:SetFont(CLEAR_FONT, 20 * CF_SCALE)
-	SystemFont_Shadow_Huge1:SetTextColor(0, 0, 0)
-	SystemFont_Shadow_Huge1:SetShadowOffset(1, -1) 
+--	SystemFont_Shadow_Med2:SetFont(CLEAR_FONT, 16 * CF_SCALE)
+--	SystemFont_Shadow_Med2:SetShadowColor(0, 0, 0) 
+--	SystemFont_Shadow_Med2:SetShadowOffset(1, -1) 
 	
-	SystemFont_OutlineThick_Huge2:SetFont(CLEAR_FONT, 22 * CF_SCALE, "THICKOUTLINE")
+--	SystemFont_Med3:SetFont(CLEAR_FONT_DAMAGE, 13 * CF_SCALE)
 	
-	SystemFont_Shadow_Outline_Huge2:SetFont(CLEAR_FONT, 22 * CF_SCALE, "OUTLINE")
-	SystemFont_Shadow_Outline_Huge2:SetTextColor(0, 0, 0)
-	SystemFont_Shadow_Outline_Huge2:SetShadowOffset(2, -2)
+--	SystemFont_Shadow_Med3:SetFont(CLEAR_FONT_DAMAGE, 15 * CF_SCALE)
+--	SystemFont_Shadow_Med3:SetTextColor(0, 0, 0)
+--	SystemFont_Shadow_Med3:SetShadowOffset(1, -1) 
 	
-	SystemFont_Shadow_Huge3:SetFont(CLEAR_FONT, 25 * CF_SCALE)
-	SystemFont_Shadow_Huge3:SetTextColor(0, 0, 0)
-	SystemFont_Shadow_Huge3:SetShadowOffset(1, -1) 
+--	SystemFont_Large:SetFont(CLEAR_FONT, 13 * CF_SCALE)
 	
-	SystemFont_OutlineThick_Huge4:SetFont(CLEAR_FONT, 26 * CF_SCALE, "THICKOUTLINE")
+--	SystemFont_Shadow_Large:SetFont(CLEAR_FONT, 17 * CF_SCALE)
+--	SystemFont_Shadow_Large:SetTextColor(0, 0, 0)
+--	SystemFont_Shadow_Large:SetShadowOffset(1, -1) 
 	
-	SystemFont_OutlineThick_WTF:SetFont(CLEAR_FONT, 112 * CF_SCALE, "THICKOUTLINE")
-	
-	NumberFont_Shadow_Small:SetFont(CLEAR_FONT_CHAT, 12 * CF_SCALE)
-	NumberFont_Shadow_Small:SetTextColor(0, 0, 0)
-	NumberFont_Shadow_Small:SetShadowOffset(1, -1) 
-	
-	NumberFont_OutlineThick_Mono_Small:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "OUTLINE")
-	
-	NumberFont_Shadow_Med:SetFont(CLEAR_FONT_CHAT, 14 * CF_SCALE)
-	NumberFont_Shadow_Med:SetTextColor(0, 0, 0)
-	NumberFont_Shadow_Med:SetShadowOffset(1, -1) 
-	
-	NumberFont_Outline_Med:SetFont(CLEAR_FONT_DAMAGE, 12 * CF_SCALE, "OUTLINE")		-- 3.1.3版本默认字体：CLEAR_FONT_NUMBER
-	
-	NumberFont_Outline_Large:SetFont(CLEAR_FONT_DAMAGE, 14 * CF_SCALE, "OUTLINE")	-- 3.1.3版本默认字体：CLEAR_FONT_NUMBER
-	
-	NumberFont_Outline_Huge:SetFont(CLEAR_FONT_DAMAGE, 20 * CF_SCALE, "THICKOUTLINE")
-	
-	GameTooltipHeader:SetFont(CLEAR_FONT, 16 * CF_SCALE)
-	
-	QuestFont_Large:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE)
-	
-	QuestFont_Shadow_Huge:SetFont(CLEAR_FONT_QUEST, 17 * CF_SCALE)
-	QuestFont_Shadow_Huge:SetTextColor(0.49, 0.35, 0.05)
-	QuestFont_Shadow_Huge:SetShadowOffset(1, -1) 
-	
-	MailFont_Large:SetFont(CLEAR_FONT, 15 * CF_SCALE)
-	
-	SpellFont_Small:SetFont(CLEAR_FONT, 12 * CF_SCALE)
-	
-	InvoiceFont_Med:SetFont(CLEAR_FONT, 12 * CF_SCALE)
-	
-	InvoiceFont_Small:SetFont(CLEAR_FONT, 10 * CF_SCALE)
-	
-	Tooltip_Med:SetFont(CLEAR_FONT_CHAT, 13 * CF_SCALE)
-	
-	Tooltip_Small:SetFont(CLEAR_FONT_CHAT, 12 * CF_SCALE)
-	
-	AchievementFont_Small:SetFont(CLEAR_FONT, 10 * CF_SCALE)
-	
-	ReputationDetailFont:SetFont(CLEAR_FONT, 13 * CF_SCALE)
-	ReputationDetailFont:SetTextColor(0, 0, 0)
-	ReputationDetailFont:SetShadowColor(1, 1, 1) 
-	ReputationDetailFont:SetShadowOffset(1, -1) 
+--	SystemFont_Huge1:SetFont(CLEAR_FONT, 20 * CF_SCALE)
 
-	FriendsFont_Normal:SetFont(CLEAR_FONT, 15 * CF_SCALE)
-	FriendsFont_Normal:SetShadowColor(0, 0, 0) 
-	FriendsFont_Normal:SetShadowOffset(1, -1) 
+--	SystemFont_Shadow_Huge1:SetFont(CLEAR_FONT, 20 * CF_SCALE)
+--	SystemFont_Shadow_Huge1:SetTextColor(0, 0, 0)
+--	SystemFont_Shadow_Huge1:SetShadowOffset(1, -1) 
+	
+--	SystemFont_OutlineThick_Huge2:SetFont(CLEAR_FONT, 22 * CF_SCALE, "THINOUTLINE")
+	
+--	SystemFont_Shadow_Outline_Huge2:SetFont(CLEAR_FONT, 25 * CF_SCALE, "OUTLINE")
+--	SystemFont_Shadow_Outline_Huge2:SetTextColor(0, 0, 0)
+--	SystemFont_Shadow_Outline_Huge2:SetShadowOffset(2, -2)
+	
+--	SystemFont_Shadow_Huge3:SetFont(CLEAR_FONT, 25 * CF_SCALE)
+--	SystemFont_Shadow_Huge3:SetTextColor(0, 0, 0)
+--	SystemFont_Shadow_Huge3:SetShadowOffset(1, -1) 
+	
+--	SystemFont_OutlineThick_Huge4:SetFont(CLEAR_FONT, 26 * CF_SCALE, "THINOUTLINE")
+	
+--	SystemFont_OutlineThick_WTF:SetFont(CLEAR_FONT_CHAT, 112 * CF_SCALE, "THINOUTLINE")
+	
+--	ReputationDetailFont:SetFont(CLEAR_FONT, 13 * CF_SCALE)
+--	ReputationDetailFont:SetTextColor(1, 1, 1)
+--	ReputationDetailFont:SetShadowColor(0, 0, 0) 
+--	ReputationDetailFont:SetShadowOffset(1, -1) 
 
-	FriendsFont_Small:SetFont(CLEAR_FONT, 13 * CF_SCALE)
-	FriendsFont_Small:SetShadowColor(0, 0, 0) 
-	FriendsFont_Small:SetShadowOffset(1, -1) 
+--	FriendsFont_Normal:SetFont(CLEAR_FONT, 15 * CF_SCALE)
+--	FriendsFont_Normal:SetShadowColor(0, 0, 0) 
+--	FriendsFont_Normal:SetShadowOffset(1, -1) 
 
-	FriendsFont_Large:SetFont(CLEAR_FONT, 17 * CF_SCALE)
-	FriendsFont_Large:SetShadowColor(0, 0, 0) 
-	FriendsFont_Large:SetShadowOffset(1, -1) 
+--	FriendsFont_Large:SetFont(CLEAR_FONT, 17 * CF_SCALE)
+--	FriendsFont_Large:SetShadowColor(0, 0, 0) 
+--	FriendsFont_Large:SetShadowOffset(1, -1) 
 
-	FriendsFont_UserText:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE)
-	FriendsFont_UserText:SetShadowColor(0, 0, 0) 
-	FriendsFont_UserText:SetShadowOffset(1, -1) 
-]]
+--	FriendsFont_UserText:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE)
+--	FriendsFont_UserText:SetShadowColor(0, 0, 0) 
+--	FriendsFont_UserText:SetShadowOffset(1, -1) 
+
+--	GameFont_Gigantic:SetFont(CLEAR_FONT, 41 * CF_SCALE)
+--	GameFont_Gigantic:SetShadowColor(0, 0, 0) 
+--	GameFont_Gigantic:SetShadowOffset(1, -1) 
+--	GameFont_Gigantic:SetTextColor(1.0, 0.82, 0)
 
 
 -- -----------------------------------------------------------------------------
--- 主游戏字体: 随处可见的主要的字体
+-- 主遊戲字體: 隨處可見的主要的字體
 -- -----------------------------------------------------------------------------
 
--- 主标题，按钮，技能标题（技能书面板），任务名（任务日志面板），好友角色名字（社交面板），荣誉点数、竞技场点数（PvP面板），系统菜单项目
-	if (CanSetFont(GameFontNormal)) then 				GameFontNormal:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 默认值：15
+-- 主標題，按鈕，技能標題（技能書面板），任務名（任務日誌面板），好友角色名字（社交面板），榮譽點數、競技場點數（PvP面板），系統功能表專案
+	if (CanSetFont(GameFontNormal)) then 				GameFontNormal:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 預設值：15
    
--- 副标题，系统菜单按钮，成就点数、成就条目（成就面板），货币面板条目，高亮任务名（任务日志面板），日历日期
-	if (CanSetFont(GameFontHighlight)) then 			GameFontHighlight:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 默认值：15
+-- 副標題，系統功能表按鈕，成就點數、成就條目（成就面板），貨幣面板條目，高亮任務名（任務日誌面板），日曆日期
+	if (CanSetFont(GameFontHighlight)) then 			GameFontHighlight:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 預設值：15
 
--- （未确认）
-	if (CanSetFont(GameFontNormalMed3)) then 			GameFontNormalMed3:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- 默认值：14
-	if (CanSetFont(GameFontNormalMed3)) then 			GameFontNormalMed3:SetTextColor(1.0, 0.82, 0); end	-- 默认值：(1.0, 0.82, 0)
+-- （未確認）
+	if (CanSetFont(GameFontNormalMed3)) then 			GameFontNormalMed3:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- 預設值：14
+	if (CanSetFont(GameFontNormalMed3)) then 			GameFontNormalMed3:SetTextColor(1.0, 0.82, 0); end	-- 預設值：(1.0, 0.82, 0)
 
--- 按钮（不可选状态）
+-- 按鈕（不可選狀態）
 	if (CanSetFont(GameFontDisable)) then 				GameFontDisable:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
-	if (CanSetFont(GameFontDisable)) then 				GameFontDisable:SetTextColor(0.5, 0.5, 0.5); end	-- 默认值：(0.5, 0.5, 0.5)
+	if (CanSetFont(GameFontDisable)) then 				GameFontDisable:SetTextColor(0.5, 0.5, 0.5); end	-- 預設值：(0.5, 0.5, 0.5)
 
--- 各种色彩文字
-	if (CanSetFont(GameFontGreen)) then 				GameFontGreen:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 默认值：15
+-- 各種色彩文字
+	if (CanSetFont(GameFontGreen)) then 				GameFontGreen:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 預設值：15
 	if (CanSetFont(GameFontRed)) then 					GameFontRed:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
 	if (CanSetFont(GameFontBlack)) then 				GameFontBlack:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
 	if (CanSetFont(GameFontWhite)) then 				GameFontWhite:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
 
 
 -- -----------------------------------------------------------------------------
--- 小字体：经常用小字体的地方，如角色属性面板，BUFF时间，宏标题
+-- 小字體：經常用小字體的地方，如角色屬性面板，BUFF時間，宏標題
 -- -----------------------------------------------------------------------------
 
--- 头像框架名字，BUFF时间，未选择的面板标签，面板中大部分描述字体，天赋点的数字，头衔奖励（成就面板），查询、公会成员角色名字（社交面板），
--- 竞技场站队详细、站队等级（PvP面板），日历活动条目
-	if (CanSetFont(GameFontNormalSmall)) then 			GameFontNormalSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end		-- 默认值：15
+-- 頭像框架名字，BUFF時間，未選擇的面板標籤，面板中大部分描述字體，天賦點的數位，頭銜獎勵（成就面板），查詢、公會成員角色名字（社交面板），
+-- 競技場站隊詳細、站隊等級（PvP面板），日曆活動條目
+	if (CanSetFont(GameFontNormalSmall)) then 			GameFontNormalSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end		-- 預設值：15
 
--- 高亮字体，下拉菜单选项，已选择的面板标签，角色属性、技能的数字、声望条目（角色信息面板），天赋点数（天赋面板），角色等级、职业等信息、公会信息（社交面板），
--- 详细荣誉点、竞技场比分（PvP面板），时间信息，系统菜单子项目
-	if (CanSetFont(GameFontHighlightSmall)) then 		GameFontHighlightSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- 默认值：15
+-- 高亮字體，下拉功能表選項，已選擇的面板標籤，角色屬性、技能的數位、聲望條目（角色資訊面板），天賦點數（天賦面板），角色等級、職業等資訊、公會資訊（社交面板），
+-- 詳細榮譽點、競技場比分（PvP面板），時間資訊，系統功能表子專案
+	if (CanSetFont(GameFontHighlightSmall)) then 		GameFontHighlightSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- 預設值：15
 	if (CanSetFont(GameFontHighlightSmallOutline)) then	GameFontHighlightSmallOutline:SetFont(CLEAR_FONT, 12 * CF_SCALE, "OUTLINE"); end
 
--- PvP面板描述，团队面板按钮等
-	if (CanSetFont(GameFontDisableSmall)) then			GameFontDisableSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- 默认值：15
-	if (CanSetFont(GameFontDisableSmall)) then			GameFontDisableSmall:SetTextColor(0.5, 0.5, 0.5); end	-- 默认值：(0.5, 0.5, 0.5)
+-- PvP面板描述，團隊面板按鈕等
+	if (CanSetFont(GameFontDisableSmall)) then			GameFontDisableSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- 預設值：15
+	if (CanSetFont(GameFontDisableSmall)) then			GameFontDisableSmall:SetTextColor(0.5, 0.5, 0.5); end	-- 預設值：(0.5, 0.5, 0.5)
 
--- （未确认）
-	if (CanSetFont(GameFontDarkGraySmall)) then 		GameFontDarkGraySmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- 默认值：15
-	if (CanSetFont(GameFontDarkGraySmall)) then 		GameFontDarkGraySmall:SetTextColor(0.35, 0.35, 0.35); end	-- 默认值：(0.35, 0.35, 0.35)
+-- （未確認）
+	if (CanSetFont(GameFontDarkGraySmall)) then 		GameFontDarkGraySmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- 預設值：15
+	if (CanSetFont(GameFontDarkGraySmall)) then 		GameFontDarkGraySmall:SetTextColor(0.35, 0.35, 0.35); end	-- 預設值：(0.35, 0.35, 0.35)
 
--- （未确认）
-	if (CanSetFont(GameFontGreenSmall)) then 			GameFontGreenSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- 默认值：15
+-- （未確認）
+	if (CanSetFont(GameFontGreenSmall)) then 			GameFontGreenSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- 預設值：15
 	if (CanSetFont(GameFontRedSmall)) then				GameFontRedSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end
 	
--- 超小字体
-	if (CanSetFont(GameFontHighlightExtraSmall)) then 		GameFontHighlightExtraSmall:SetFont(CLEAR_FONT, 11 * CF_SCALE); end		-- 默认值：15
+-- 超小字體
+	if (CanSetFont(GameFontHighlightExtraSmall)) then 		GameFontHighlightExtraSmall:SetFont(CLEAR_FONT, 11 * CF_SCALE); end		-- 預設值：15
 
 
 -- -----------------------------------------------------------------------------
--- 大字体：标题
+-- 大字體：標題
 -- -----------------------------------------------------------------------------
 
--- 时钟，秒表
-	if (CanSetFont(GameFontNormalLarge)) then 			GameFontNormalLarge:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 默认值：17
+-- 時鐘，碼錶
+	if (CanSetFont(GameFontNormalLarge)) then 			GameFontNormalLarge:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 預設值：17
 	if (CanSetFont(GameFontHighlightLarge)) then 		GameFontHighlightLarge:SetFont(CLEAR_FONT, 13 * CF_SCALE); end
 
--- 竞技场面板
-	if (CanSetFont(GameFontDisableLarge)) then			GameFontDisableLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 默认值：17
-	if (CanSetFont(GameFontDisableLarge)) then			GameFontDisableLarge:SetTextColor(0.5, 0.5, 0.5); end	-- 默认值：(0.5, 0.5, 0.5)
+-- 競技場面板
+	if (CanSetFont(GameFontDisableLarge)) then			GameFontDisableLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 預設值：17
+	if (CanSetFont(GameFontDisableLarge)) then			GameFontDisableLarge:SetTextColor(0.5, 0.5, 0.5); end	-- 預設值：(0.5, 0.5, 0.5)
 
--- （未确认）
-	if (CanSetFont(GameFontGreenLarge)) then 			GameFontGreenLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 默认值：17
+-- （未確認）
+	if (CanSetFont(GameFontGreenLarge)) then 			GameFontGreenLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 預設值：17
 	if (CanSetFont(GameFontRedLarge)) then 			GameFontRedLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
 
 
 -- -----------------------------------------------------------------------------
--- 巨大字体：Raid警报
+-- 巨大字體：Raid警報
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(GameFontNormalHuge)) then			GameFontNormalHuge:SetFont(CLEAR_FONT, 20 * CF_SCALE); end	-- 默认值：20
-	if (CanSetFont(GameFontNormalHugeBlack)) then		GameFontNormalHugeBlack:SetFont(CLEAR_FONT, 20 * CF_SCALE); end	-- 默认值：20
+	if (CanSetFont(GameFontNormalHuge)) then			GameFontNormalHuge:SetFont(CLEAR_FONT, 20 * CF_SCALE); end	-- 預設值：20
+	if (CanSetFont(GameFontNormalHugeBlack)) then		GameFontNormalHugeBlack:SetFont(CLEAR_FONT, 20 * CF_SCALE); end	-- 預設值：20
 
 
 -- -----------------------------------------------------------------------------
 -- Boss表情文字
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(BossEmoteNormalHuge)) then			BossEmoteNormalHuge:SetFont(CLEAR_FONT, 25 * CF_SCALE); end		-- 默认值：25
-
+	if (CanSetFont(BossEmoteNormalHuge)) then			BossEmoteNormalHuge:SetFont(CLEAR_FONT, 25 * CF_SCALE); end		-- 預設值：25
 
 -- -----------------------------------------------------------------------------
--- 数字字体: 拍卖行，金币，按键绑定，物品堆栈数量
+-- 數位字體: 拍賣行，金幣，按鍵綁定，物品堆疊數量
 -- -----------------------------------------------------------------------------
 
--- 金币，物品、Buff堆栈数量
-	if (CanSetFont(NumberFontNormal)) then				NumberFontNormal:SetFont(CLEAR_FONT_NUMBER, 12 * CF_SCALE, "OUTLINE"); end		-- 默认值：12
+-- 金幣，物品、Buff堆疊數量
+	if (CanSetFont(NumberFontNormal)) then				NumberFontNormal:SetFont(CLEAR_FONT_NUMBER, 12 * CF_SCALE, "OUTLINE"); end		-- 預設值：12
 	if (CanSetFont(NumberFontNormalYellow)) then 		NumberFontNormalYellow:SetFont(CLEAR_FONT_NUMBER, 12 * CF_SCALE); end
 
--- 动作条的按键绑定
-	if (CanSetFont(NumberFontNormalSmall)) then 		NumberFontNormalSmall:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "OUTLINE"); end		-- 默认值：11
-	if (CanSetFont(NumberFontNormalSmallGray)) then 	NumberFontNormalSmallGray:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "THICKOUTLINE"); end
+-- 動作條的按鍵綁定
+	if (CanSetFont(NumberFontNormalSmall)) then 		NumberFontNormalSmall:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "OUTLINE"); end		-- 預設值：11
+	if (CanSetFont(NumberFontNormalSmallGray)) then 	NumberFontNormalSmallGray:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "THINOUTLINE"); end
 
--- （未确认）
-	if (CanSetFont(NumberFontNormalLarge)) then 		NumberFontNormalLarge:SetFont(CLEAR_FONT_NUMBER, 14 * CF_SCALE, "OUTLINE"); end		-- 默认值：14
+-- （未確認）
+	if (CanSetFont(NumberFontNormalLarge)) then 		NumberFontNormalLarge:SetFont(CLEAR_FONT_NUMBER, 14 * CF_SCALE, "OUTLINE"); end		-- 預設值：14
 
--- 玩家头像上的被攻击指示
-	if (CanSetFont(NumberFontNormalHuge)) then			NumberFontNormalHuge:SetFont(CLEAR_FONT_DAMAGE, 20 * CF_SCALE, "THICKOUTLINE"); end	-- 默认值：20
+-- 玩家頭像上的被攻擊指示
+	if (CanSetFont(NumberFontNormalHuge)) then			NumberFontNormalHuge:SetFont(CLEAR_FONT_DAMAGE, 20 * CF_SCALE, "THINOUTLINE"); end	-- 預設值：20
 --	if (CanSetFont(NumberFontNormalHuge)) then			NumberFontNormalHuge:SetAlpha(30); end
 
 
 -- -----------------------------------------------------------------------------
--- 聊天窗口字体和聊天输入框字体
+-- 聊天視窗字體和聊天輸入框字體
 -- -----------------------------------------------------------------------------
 
--- 聊天输入框字体
-	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE, "THINOUTLINE"); end
+-- 聊天輸入框字體
+	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE, "THINOUTLINE"); end	-- 預設值：14
 
--- 聊天输入框字体
-	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE, "THINOUTLINE"); end	-- 默认值：14
-
-
--- -----------------------------------------------------------------------------
--- 任务日志: 任务日志、书籍等
--- -----------------------------------------------------------------------------
-
--- 任务标题
-	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 默认值：17
-	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetShadowColor(0, 0, 0); end		-- 默认值：(0, 0, 0)
-
-	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 默认值：17
-	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetShadowColor(0, 0, 0); end		-- 默认值：(0, 0, 0)
-	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetTextColor(1.0, 0.82, 0); end			-- 默认值：(1.0, 0.82, 0)
-
--- 任务描述
-	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetFont(CLEAR_FONT_QUEST, 14 * CF_SCALE); end		-- 默认值：14
-	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetTextColor(0, 0, 0); end			-- 默认值：(0, 0, 0)
-
--- 任务目标
-	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- 默认值：13
-	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetShadowColor(0.3, 0.18, 0); end	-- 默认值：(0.3, 0.18, 0)
-
--- 任务高亮
-	if (CanSetFont(QuestFontHighlight)) then 			QuestFontHighlight:SetFont(CLEAR_FONT_QUEST, 13 * CF_SCALE); end	-- 默认值：13
+-- 聊天視窗默認字體
+	if (CanSetFont(ChatFontSmall)) then 				ChatFontSmall:SetFont(CLEAR_FONT_CHAT, 12 * CF_SCALE); end	-- 預設值：12
 
 
 -- -----------------------------------------------------------------------------
--- 物品信息: 那些"按右键阅读"的物品（任务物品的内容字体，比如可以携带的书籍、信件的副本等）
+-- 任務日誌: 任務日誌、書籍等
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(ItemTextFontNormal)) then 	 	  	ItemTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end		-- 默认值：15
-	if (CanSetFont(ItemTextFontNormal)) then			ItemTextFontNormal:SetShadowColor(0.18, 0.12, 0.06); end	-- 默认值：(0.18, 0.12, 0.06)
+-- 任務標題
+	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 預設值：17
+	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetShadowColor(0, 0, 0); end		-- 預設值：(0, 0, 0)
+
+	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 預設值：17
+	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetShadowColor(0, 0, 0); end		-- 預設值：(0, 0, 0)
+	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetTextColor(1.0, 0.82, 0); end			-- 預設值：(1.0, 0.82, 0)
+
+-- 任務描述
+	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetFont(CLEAR_FONT_QUEST, 14 * CF_SCALE); end		-- 預設值：14
+	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetTextColor(0, 0, 0); end			-- 預設值：(0, 0, 0)
+
+-- 任務目標
+	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- 預設值：14
+	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetShadowColor(0.3, 0.18, 0); end	-- 預設值：(0.3, 0.18, 0)
+
+-- 任務高亮
+	if (CanSetFont(QuestFontHighlight)) then 			QuestFontHighlight:SetFont(CLEAR_FONT_QUEST, 13 * CF_SCALE); end	-- 預設值：13
 
 
 -- -----------------------------------------------------------------------------
--- 邮件
+-- 物品信息: 那些"按右鍵閱讀"的物品（任務物品的內容字體，比如可以攜帶的書籍、信件的副本等）
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 默认值：15
-	if (CanSetFont(MailTextFontNormal)) then 		   	MailTextFontNormal:SetTextColor(1, 1, 1); end		-- 默认值：(0.18, 0.12, 0.06)
+	if (CanSetFont(ItemTextFontNormal)) then 	 	  	ItemTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end		-- 預設值：15
+	if (CanSetFont(ItemTextFontNormal)) then			ItemTextFontNormal:SetShadowColor(0.18, 0.12, 0.06); end	-- 預設值：(0.18, 0.12, 0.06)
+
+
+-- -----------------------------------------------------------------------------
+-- 郵件
+-- -----------------------------------------------------------------------------
+
+	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 預設值：15
+	if (CanSetFont(MailTextFontNormal)) then 		   	MailTextFontNormal:SetTextColor(0.18, 0.12, 0.06); end		-- 預設值：(0.18, 0.12, 0.06)
 --	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetShadowColor(0.54, 0.4, 0.1); end
 --	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetShadowOffset(1, -1); end
    
    
 -- -----------------------------------------------------------------------------
--- 技能：技能类型（被动、种族特长等）、技能等级
+-- 技能：技能類型（被動、種族特長等）、技能等級
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(SubSpellFont)) then					SubSpellFont:SetFont(CLEAR_FONT_QUEST, 12 * CF_SCALE); end	-- 默认值：12
-	if (CanSetFont(SubSpellFont)) then 	   			SubSpellFont:SetTextColor(0.35, 0.2, 0); end	-- 默认值：(0.35, 0.2, 0)
+	if (CanSetFont(SubSpellFont)) then					SubSpellFont:SetFont(CLEAR_FONT_QUEST, 12 * CF_SCALE); end	-- 預設值：12
+	if (CanSetFont(SubSpellFont)) then 	   			SubSpellFont:SetTextColor(0.35, 0.2, 0); end	-- 預設值：(0.35, 0.2, 0)
 
 
 -- -----------------------------------------------------------------------------
--- 对话框按钮："同意"等字样
+-- 對話方塊按鈕："同意"等字樣
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(DialogButtonNormalText)) then 		DialogButtonNormalText:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- 默认值：13
+	if (CanSetFont(DialogButtonNormalText)) then 		DialogButtonNormalText:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- 預設值：13
 	if (CanSetFont(DialogButtonHighlightText)) then 	DialogButtonHighlightText:SetFont(CLEAR_FONT, 13 * CF_SCALE); end
 
 
 -- -----------------------------------------------------------------------------
--- 区域切换显示：在屏幕中央通知
+-- 區域切換顯示：在螢幕中央通知
 -- -----------------------------------------------------------------------------
 
--- 主区域名
-	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetFont(CLEAR_FONT, 32 * CF_SCALE, "THICKOUTLINE"); end		-- 默认值：112
-	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetShadowColor(1.0, 0.9294, 0.7607); end	-- 默认值：(1.0, 0.9294, 0.7607)
+-- 大區功能變數名稱
+	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetFont(CLEAR_FONT, 32 * CF_SCALE, "THINOUTLINE"); end		-- 預設值：112
+	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetShadowColor(1.0, 0.9294, 0.7607); end	-- 預設值：(1.0, 0.9294, 0.7607)
 	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetShadowOffset(1, -1); end
 
--- 次区域名
-	if (CanSetFont(SubZoneTextFont)) then				SubZoneTextFont:SetFont(CLEAR_FONT, 26 * CF_SCALE, "THICKOUTLINE"); end		-- 默认值：26
+-- 次區功能變數名稱
+	if (CanSetFont(SubZoneTextFont)) then				SubZoneTextFont:SetFont(CLEAR_FONT, 26 * CF_SCALE, "THINOUTLINE"); end		-- 預設值：26
 
 
 -- -----------------------------------------------------------------------------
--- PvP信息：如"争夺中的领土"、"联盟领地"等
+-- PvP信息：如“爭奪中的領土”、“聯盟領地”等
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(PVPInfoTextFont)) then				PVPInfoTextFont:SetFont(CLEAR_FONT, 20 * CF_SCALE, "THICKOUTLINE"); end		-- 默认值：22
-
-
--- -----------------------------------------------------------------------------
--- 错误字体："另一个动作正在进行中"等字样
--- -----------------------------------------------------------------------------
-
-	if (CanSetFont(ErrorFont)) then					ErrorFont:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 默认值：17
-	if (CanSetFont(ErrorFont)) then					ErrorFont:SetShadowOffset(1, -1); end	-- 默认值：(1, -1)
+	if (CanSetFont(PVPInfoTextFont)) then				PVPInfoTextFont:SetFont(CLEAR_FONT, 20 * CF_SCALE, "THINOUTLINE"); end		-- 預設值：22
 
 
 -- -----------------------------------------------------------------------------
--- 状态区：头像框架中的数字（生命值、法力值/怒气值/能量值等），经验条（经验、声望等）
+-- 錯誤字體："另一個動作正在進行中"等字樣
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(TextStatusBarText)) then			TextStatusBarText:SetFont(CLEAR_FONT_EXP, 12 * CF_SCALE, "OUTLINE"); end	-- 默认值：12
-	if (CanSetFont(TextStatusBarTextLarge)) then		TextStatusBarTextLarge:SetFont(CLEAR_FONT_EXP, 14 * CF_SCALE, "OUTLINE"); end	-- 默认值：15
+	if (CanSetFont(ErrorFont)) then					ErrorFont:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 預設值：17
+	if (CanSetFont(ErrorFont)) then					ErrorFont:SetShadowOffset(1, -1); end	-- 預設值：(1, -1)
+
+
+-- -----------------------------------------------------------------------------
+-- 狀態欄：頭像框架中的數字（生命值、法力值/怒氣值/能量值等），經驗條（經驗、聲望等）
+-- -----------------------------------------------------------------------------
+
+	if (CanSetFont(TextStatusBarText)) then			TextStatusBarText:SetFont(CLEAR_FONT_EXP, 12 * CF_SCALE, "OUTLINE"); end	-- 預設值：12
+	if (CanSetFont(TextStatusBarTextLarge)) then		TextStatusBarTextLarge:SetFont(CLEAR_FONT_EXP, 14 * CF_SCALE, "OUTLINE"); end	-- 預設值：15
 	
 
 -- -----------------------------------------------------------------------------
--- 战斗纪录文字
+-- 戰鬥紀錄文字
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(CombatLogFont)) then				CombatLogFont:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 默认值：16
+	if (CanSetFont(CombatLogFont)) then				CombatLogFont:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- 預設值：16
 
 
 -- -----------------------------------------------------------------------------
@@ -502,84 +460,84 @@ local CLEAR_FONT_CHAT = CLEAR_FONT_BASE.."ZYHei.TTF"
 -- -----------------------------------------------------------------------------
 
 -- 提示框正文
-	if (CanSetFont(GameTooltipText)) then				GameTooltipText:SetFont(CLEAR_FONT_ITEM, 13 * CF_SCALE); end		-- 默认值：13
+	if (CanSetFont(GameTooltipText)) then				GameTooltipText:SetFont(CLEAR_FONT_ITEM, 13 * CF_SCALE); end		-- 預設值：13
    
--- 装备比较的小字部分
-	if (CanSetFont(GameTooltipTextSmall)) then			GameTooltipTextSmall:SetFont(CLEAR_FONT_ITEM, 12 * CF_SCALE); end	-- 默认值：12
+-- 裝備比較的小字部分
+	if (CanSetFont(GameTooltipTextSmall)) then			GameTooltipTextSmall:SetFont(CLEAR_FONT_ITEM, 12 * CF_SCALE); end	-- 預設值：12
    
--- 提示框标题
-	if (CanSetFont(GameTooltipHeaderText)) then		GameTooltipHeaderText:SetFont(CLEAR_FONT, 15 * CF_SCALE, "OUTLINE"); end	-- 默认值：16
+-- 提示框標題
+	if (CanSetFont(GameTooltipHeaderText)) then		GameTooltipHeaderText:SetFont(CLEAR_FONT, 15 * CF_SCALE, "OUTLINE"); end	-- 預設值：16
 
 
 -- -----------------------------------------------------------------------------
--- 世界地图：位置标题
+-- 世界地圖：位置標題
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetFont(CLEAR_FONT, 102 * CF_SCALE, "THICKOUTLINE"); end	-- 默认值：102
-	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetShadowColor(1.0, 0.9294, 0.7607); end	-- 默认值：(1.0, 0.9294, 0.7607)
+	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetFont(CLEAR_FONT, 102 * CF_SCALE, "THINOUTLINE"); end	-- 預設值：102
+	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetShadowColor(1.0, 0.9294, 0.7607); end	-- 預設值：(1.0, 0.9294, 0.7607)
 	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetShadowOffset(1, -1); end
 --	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetAlpha(0.4); end
 
 
 -- -----------------------------------------------------------------------------
--- 发货单：拍卖行邮寄来的发货单
+-- 發貨單：拍賣行郵寄來的發貨單
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(InvoiceTextFontNormal)) then 	   	InvoiceTextFontNormal:SetFont(CLEAR_FONT_QUEST, 13 * CF_SCALE); end	-- 默认值：12
-	if (CanSetFont(InvoiceTextFontNormal)) then 	   	InvoiceTextFontNormal:SetTextColor(0.18, 0.12, 0.06); end	-- 默认值：(0.18, 0.12, 0.06)
+	if (CanSetFont(InvoiceTextFontNormal)) then 	   	InvoiceTextFontNormal:SetFont(CLEAR_FONT_QUEST, 13 * CF_SCALE); end	-- 預設值：12
+	if (CanSetFont(InvoiceTextFontNormal)) then 	   	InvoiceTextFontNormal:SetTextColor(0.18, 0.12, 0.06); end	-- 預設值：(0.18, 0.12, 0.06)
 
-	if (CanSetFont(InvoiceTextFontSmall)) then			InvoiceTextFontSmall:SetFont(CLEAR_FONT_QUEST, 11 * CF_SCALE); end	-- 默认值：10
-	if (CanSetFont(InvoiceTextFontSmall)) then			InvoiceTextFontSmall:SetTextColor(0.18, 0.12, 0.06); end	-- 默认值：(0.18, 0.12, 0.06)
+	if (CanSetFont(InvoiceTextFontSmall)) then			InvoiceTextFontSmall:SetFont(CLEAR_FONT_QUEST, 11 * CF_SCALE); end	-- 預設值：10
+	if (CanSetFont(InvoiceTextFontSmall)) then			InvoiceTextFontSmall:SetTextColor(0.18, 0.12, 0.06); end	-- 預設值：(0.18, 0.12, 0.06)
 
 
 -- -----------------------------------------------------------------------------
--- 战斗文字: 暴雪内置战斗指示器
+-- 戰鬥文字: 暴雪內置戰鬥指示器
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(CombatTextFont)) then				CombatTextFont:SetFont(CLEAR_FONT_DAMAGE, 25 * CF_SCALE); end		-- 默认值：25
+	if (CanSetFont(CombatTextFont)) then				CombatTextFont:SetFont(CLEAR_FONT_DAMAGE, 25 * CF_SCALE); end		-- 預設值：25
 
 
 -- -----------------------------------------------------------------------------
 -- 影片字幕文字（New in WotLK/3.x）
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(MovieSubtitleFont)) then			MovieSubtitleFont:SetFont(CLEAR_FONT, 25 * CF_SCALE); end		-- 默认值：25
-	if (CanSetFont(MovieSubtitleFont)) then			MovieSubtitleFont:SetTextColor(1.0, 0.78, 0); end	-- 默认值：(1.0, 0.78, 0)
+	if (CanSetFont(MovieSubtitleFont)) then			MovieSubtitleFont:SetFont(CLEAR_FONT, 25 * CF_SCALE); end		-- 預設值：25
+	if (CanSetFont(MovieSubtitleFont)) then			MovieSubtitleFont:SetTextColor(1.0, 0.78, 0); end	-- 預設值：(1.0, 0.78, 0)
 
 
 -- -----------------------------------------------------------------------------
--- 成就系统（New in WotLK/3.x）
+-- 成就系統（New in WotLK/3.x）
 -- -----------------------------------------------------------------------------
 
--- 成就系统其它面板上的成就分数
-	if (CanSetFont(AchievementPointsFont)) then		AchievementPointsFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 默认值：13
+-- 成就系統其他面板上的成就分數
+	if (CanSetFont(AchievementPointsFont)) then		AchievementPointsFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 預設值：13
 
--- 成就系统总汇面板的成就分数
-	if (CanSetFont(AchievementPointsFontSmall)) then	AchievementPointsFontSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 默认值：13
+-- 成就系統總匯面板的成就分數
+	if (CanSetFont(AchievementPointsFontSmall)) then	AchievementPointsFontSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 預設值：13
 
--- 成就系统描述的内容
-	if (CanSetFont(AchievementDescriptionFont)) then	AchievementDescriptionFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 默认值：13
+-- 成就系統描述的內容
+	if (CanSetFont(AchievementDescriptionFont)) then	AchievementDescriptionFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 預設值：13
 
--- 成就系统描述的副标题
-	if (CanSetFont(AchievementCriteriaFont)) then		AchievementCriteriaFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 默认值：13
+-- 成就系統描述的副標題
+	if (CanSetFont(AchievementCriteriaFont)) then		AchievementCriteriaFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- 預設值：13
    
--- 成就系统记录的日期
-	if (CanSetFont(AchievementDateFont)) then			AchievementDateFont:SetFont(CLEAR_FONT, 11 * CF_SCALE); end		-- 默认值：13
+-- 成就系統記錄的日期
+	if (CanSetFont(AchievementDateFont)) then			AchievementDateFont:SetFont(CLEAR_FONT, 11 * CF_SCALE); end		-- 預設值：13
 
 
 -- -----------------------------------------------------------------------------
--- 新骑乘、车辆系统相关（待确认，New in WotLK/3.2+）
+-- 新騎乘、車輛系統相關（待確認，New in WotLK/3.2+）
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(VehicleMenuBarStatusBarText)) then		VehicleMenuBarStatusBarText:SetFont(CLEAR_FONT, 15 * CF_SCALE); end		-- 默认值：15
-	if (CanSetFont(VehicleMenuBarStatusBarText)) then		VehicleMenuBarStatusBarText:SetTextColor(1.0, 1.0, 1.0); end	-- 默认值：(1.0, 1.0, 1.0)
+	if (CanSetFont(VehicleMenuBarStatusBarText)) then		VehicleMenuBarStatusBarText:SetFont(CLEAR_FONT, 15 * CF_SCALE); end		-- 預設值：15
+	if (CanSetFont(VehicleMenuBarStatusBarText)) then		VehicleMenuBarStatusBarText:SetTextColor(1.0, 1.0, 1.0); end	-- 預設值：(1.0, 1.0, 1.0)
 
 
 -- -----------------------------------------------------------------------------
--- 焦点框架字体（待确认，New in WotLK/3.3+）
+-- 焦點框架字體（待確認，New in CTM/4.0+）
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(FocusFontSmall)) then				FocusFontSmall:SetFont(CLEAR_FONT, 15 * CF_SCALE); end		-- 默认值：16
+	if (CanSetFont(FocusFontSmall)) then				FocusFontSmall:SetFont(CLEAR_FONT, 15 * CF_SCALE); end		-- 預設值：16
 
 
 	end
@@ -588,16 +546,16 @@ local CLEAR_FONT_CHAT = CLEAR_FONT_BASE.."ZYHei.TTF"
 
 
 -- =============================================================================
---  C. 每当一个插件载入时都重新载入的功能
---  他们真喜欢搞乱我的插件！
+--  C. 每當一個插件載入時都重新載入的功能
+--  他們真喜歡搞亂我的插件！
 -- =============================================================================
 
 	ClearFont:SetScript("OnEvent",
-		    function() 
+			function() 
 				if (event == "ADDON_LOADED") then
 					ClearFont:ApplySystemFonts()
 				end
-		    end);
+			end);
 
 	ClearFont:RegisterEvent("ADDON_LOADED");
 
@@ -605,8 +563,8 @@ local CLEAR_FONT_CHAT = CLEAR_FONT_BASE.."ZYHei.TTF"
 
 
 -- =============================================================================
---  D. 第一次启动时应用以上设定
---  让球能够滚起来
+--  D. 第一次啟動時應用以上設定
+--  讓球能夠滾起來
 -- =============================================================================
 
 	ClearFont:ApplySystemFonts()

@@ -1,3 +1,5 @@
+if not GetLocale() == "zhTW" then return end
+
 -- /////////////////////////////////////////////////////////////////////////////
 -- =============================================================================
 --  ClearFont v4.01a 台服用戶端
@@ -15,9 +17,6 @@
 --	D. 第一次啟動時應用以上設定
 -- =============================================================================
 -- /////////////////////////////////////////////////////////////////////////////
-
-if not GetLocale() == "zhTW" then return end
-
 
 -- =============================================================================
 --  A. ClearFont 框架 及為了以後代碼的簡潔而預先定義字體位置
@@ -346,32 +345,10 @@ if not GetLocale() == "zhTW" then return end
 -- -----------------------------------------------------------------------------
 
 -- 聊天輸入框字體
-	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 14 * CF_SCALE); end	-- 預設值：14
-
--- 可選聊天框字體
-	CHAT_FONT_HEIGHTS = {
-		[1] = 7,
-		[2] = 8,
-		[3] = 9,
-		[4] = 10,
-		[5] = 11,
-		[6] = 12,
-		[7] = 13,
-		[8] = 14,
-		[9] = 15,
-		[10] = 16,
-		[11] = 17,
-		[12] = 18,
-		[13] = 19,
-		[14] = 20,
-		[15] = 21,
-		[16] = 22,
-		[17] = 23,
-		[18] = 24
-	};
+	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE, "THINOUTLINE"); end	-- 預設值：14
 
 -- 聊天視窗默認字體
-	if (CanSetFont(ChatFontSmall)) then 				ChatFontSmall:SetFont(CLEAR_FONT_CHAT, 13 * CF_SCALE); end	-- 預設值：12
+	if (CanSetFont(ChatFontSmall)) then 				ChatFontSmall:SetFont(CLEAR_FONT_CHAT, 12 * CF_SCALE); end	-- 預設值：12
 
 
 -- -----------------------------------------------------------------------------
