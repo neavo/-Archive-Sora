@@ -4,7 +4,8 @@
 	<Script file = "AutoSet.lua"/>
 	<Script file = "AutoWipeMemory.lua"/>
 	<Script file = "BlzFrameHack.lua"/>
-	<Script file = "ClearFont.lua"/>
+	<Script file = "ClearFont_zhCN.lua"/>
+	<Script file = "ClearFont_zhTW.lua"/>
 	<Script file = "UIParentFade.lua"/>
 
 </Ui>
