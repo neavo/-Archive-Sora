@@ -9,6 +9,7 @@ Minimap:SetSize(105, 105)
 MoveHandle.Minimap = S.MakeMoveHandle(Minimap, "小地图", "Minimap")
 
 LFDSearchStatus:SetClampedToScreen(true)
+DropDownList1:SetClampedToScreen(true)
 
 Minimap.Shadow = S.MakeShadow(Minimap, 4)
 Minimap.Shadow.Timer = 0
