@@ -189,7 +189,6 @@ end
 
 for _, value in ipairs(tooltips) do
     value:SetScript("OnShow", function(value)
-        if TooltipDB.HideInCombat and InCombatLockdown() then return value:Hide() end
         style(value) 
     end)
 end
