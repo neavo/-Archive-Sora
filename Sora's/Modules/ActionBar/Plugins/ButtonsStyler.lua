@@ -15,31 +15,25 @@ local function StyleButton(Button, Checked)
     local NormalTexture = _G[name.."NormalTexture"]
 	local IconTexture = _G[name.."IconTexture"]
  
-    --[[Button.Highlight = Button:CreateTexture("Frame", nil, self) -- hover
-    Button.Highlight:SetTexture(1, 1, 1, 1)
-    Button.Highlight:SetHeight(Button:GetHeight())
-    Button.Highlight:SetWidth(Button:GetWidth())
-    Button.Highlight:SetPoint("TOPLEFT", Button, 2, -2)
-    Button.Highlight:SetPoint("BOTTOMRIGHT", Button, -2, 2)
-    Button:SetHighlightTexture(DB.Button)
+    Button.Highlight = Button:CreateTexture(nil, "OVERLAY")
+    Button.Highlight:SetTexture(1, 1, 1, 0.3)
+    Button.Highlight:SetPoint("TOPLEFT", 2, -2)
+    Button.Highlight:SetPoint("BOTTOMRIGHT", -2, 2)
+    Button:SetHighlightTexture(Button.Highlight)
  
-    Button.Pushed = Button:CreateTexture("Frame", nil, self) -- pushed
-    --Button.Pushed:SetTexture(0.1, 0.1, 0.1, 0.5)
-	Button.Pushed:SetHeight(Button:GetHeight())
-	Button.Pushed:SetWidth(Button:GetWidth())
+    Button.Pushed = Button:CreateTexture(nil, "OVERLAY")
+    Button.Pushed:SetTexture(0.1, 0.1, 0.1, 0.5)
 	Button.Pushed:SetPoint("TOPLEFT", 2, -2)
 	Button.Pushed:SetPoint("BOTTOMRIGHT", -2, 2)
-    Button:SetPushedTexture(DB.Button)
+    Button:SetPushedTexture(Button.Pushed)
 	
 	if Checked then
-		Button.Checked = Button:CreateTexture("frame", nil, self) -- checked
+		Button.Checked = Button:CreateTexture(nil, "OVERLAY")
 		Button.Checked:SetTexture(1, 1, 1, 0.3)
-		Button.Checked:SetHeight(Button:GetHeight())
-		Button.Checked:SetWidth(Button:GetWidth())
-		Button.Checked:SetPoint("TOPLEFT", Button, 2, -2)
-		Button.Checked:SetPoint("BOTTOMRIGHT", Button, -2, 2)
-		Button:SetCheckedTexture(DB.Button)
-	end]]
+		Button.Checked:SetPoint("TOPLEFT", 2, -2)
+		Button.Checked:SetPoint("BOTTOMRIGHT", -2, 2)
+		Button:SetCheckedTexture(Button.Checked)
+	end
 end
 
 local function Style(self)
@@ -216,7 +210,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 			Icon:SetPoint("TOPLEFT", 2, -2)
 			Icon:SetPoint("BOTTOMRIGHT", -2, 2)		
 			if not InCombatLockdown() then
-				Button:SetSize(26, 26)
+				Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 				Button:ClearAllPoints()
 				Button:SetPoint("BOTTOM", last, "TOP", 0, 3)
 				Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
@@ -237,8 +231,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Button.background:SetPoint("TOPLEFT", 2, -2)
 		Button.background:SetPoint("BOTTOMRIGHT", -2, 2)
 		Button.Shadow = S.MakeTexShadow(Button, Button.background, 4)
-		Button:SetSize(26, 26)
-		Button:SetParent(UIParent)
+		Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 		Button:ClearAllPoints()
 		if index < 3 then
 			Button:SetPoint("BOTTOM", _G["MultiBarBottomRightButton"..index+4], "TOP", 0, 5)
@@ -277,7 +270,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Icon:SetPoint("BOTTOMRIGHT", -2, 2)
 		Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
 		Button:GetNormalTexture():SetTexture(nil)
-		Button:SetSize(26, 26)
+		Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
 		Button:ClearAllPoints()
 		Button:SetPoint("BOTTOM", MultiBarBottomRightButton4, "TOP", 0, 5)
 		_G[Button:GetName().."Highlight"]:SetTexture(nil)
@@ -292,9 +285,9 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Icon:SetPoint("BOTTOMRIGHT", -2, 2)
 		Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
 		Button:GetNormalTexture():SetTexture(nil)
-		Button:SetSize(26, 26)
-		--Button:ClearAllPoints()
-		--Button:SetPoint("BOTTOM", MultiBarBottomLeftButton3, "TOP", 0, 5)
+		Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
+		Button:ClearAllPoints()
+		Button:SetPoint("BOTTOM", MultiBarBottomLeftButton3, "TOP", 0, 5)
 		_G[Button:GetName().."Highlight"]:SetTexture(nil)
 		_G[Button:GetName().."NormalTexture"]:SetTexture(nil)
 		StyleButton(Button)
