@@ -37,25 +37,6 @@ local data = {
 			["Shadowfang Keep"] = 764,
 			["Stratholme"] = 765,
 		},
-		TBC = {
-			["The Blood Furnace"] = 725,
-			["Hellfire Ramparts"] = 797,
-			["The Shattered Halls"] = 710,
-			["Shadow Labyrinth"] = 724,
-			["Auchenai Crypts"] = 722,
-			["Mana-Tombs"] = 732,
-			["Sethekk Halls"] = 723,
-			["Old Hillsbrad Foothills"] = 734,
-			["The Black Morass"] = 733,
-			["The Botanica"] = 729,
-			["The Underbog"] = 726,
-			["The Mechanar"] = 730,
-			["The Slave Pens"] = 728,
-			["The Steamvault"] = 727,
-			["The Arcatraz"] = 731,
-			["Magisters' Terrace"] = 798,
-			
-		},
 		wrath = {
 			["The Nexus"] = 520,
 			["The Culling of Stratholme"] = 521,
@@ -96,16 +77,6 @@ local data = {
 			["Ruins of Ahn'Qiraj"] = 717,
 			["Ahn'Qiraj"] = 766,
 		},
-		TBC = {
-			["Hyjal Summit"] = 775,
-			["Sunwell Plateau"] = 789,
-			["Gruul's Lair"] = 776,
-			["Karazhan"] = 799,
-			["Magtheridon's Lair"] = 779,
-			["Black Temple"] = 796,
-			["Serpentshrine Cavern"] = 780,
-			["The Eye"] = 782,
-		},
 		wrath = {
 			["The Eye of Eternity"] = 527,
 			["Ulduar"] = 529,
@@ -125,7 +96,6 @@ local data = {
 			["Blackwing Descent"] = 754,
 			["The Bastion of Twilight"] = 758,
 			["Throne of the Four Winds"] = 773,
-			["Firelands"] = 800,
 		},
 	},
 	bgs = {
@@ -138,12 +108,7 @@ local data = {
 			["Isle of Conquest"] = 540,
 			["Twin Peaks"] = 626,
 		},
-	},
-	Special = {
-		all = {
-			["Molten Front"] = 795,
-		},
-	},
+	}
 }
 
 --[[
@@ -266,19 +231,7 @@ function Maps:WorldMapFrame_LoadContinents()
 	info.checked = nil
 	info.arg1 = "raids|classic"
 	UIDropDownMenu_AddButton(info)
-	
-	info.text =  L["TBC Instances"]
-	info.func = MapsterContinentButton_OnClick
-	info.checked = nil
-	info.arg1 = "instances|TBC"
-	UIDropDownMenu_AddButton(info)
-	
-	info.text =  L["TBC Raids"]
-	info.func = MapsterContinentButton_OnClick
-	info.checked = nil
-	info.arg1 = "raids|TBC"
-	UIDropDownMenu_AddButton(info)
-	
+
 	info.text =  L["Wrath Instances"]
 	info.func = MapsterContinentButton_OnClick
 	info.checked = nil
@@ -307,12 +260,6 @@ function Maps:WorldMapFrame_LoadContinents()
 	info.func = MapsterContinentButton_OnClick
 	info.checked = nil
 	info.arg1 = "bgs|all"
-	UIDropDownMenu_AddButton(info)
-	
-	info.text =  L["Special Zones"]
-	info.func = MapsterContinentButton_OnClick
-	info.checked = nil
-	info.arg1 = "Special|all"
 	UIDropDownMenu_AddButton(info)
 end
 
