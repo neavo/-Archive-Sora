@@ -1,6 +1,6 @@
 --[[
 Name: LibBabble-Zone-3.0
-Revision: $Rev: 317 $
+Revision: $Rev: 328 $
 Maintainers: ckknight, nevcairiel, Ackis
 Website: http://www.wowace.com/projects/libbabble-zone-3-0/
 Dependencies: None
@@ -8,7 +8,7 @@ License: MIT
 ]]
 
 local MAJOR_VERSION = "LibBabble-Zone-3.0"
-local MINOR_VERSION = 90000 + tonumber(("$Rev: 317 $"):match("%d+"))
+local MINOR_VERSION = 90000 + tonumber(("$Rev: 328 $"):match("%d+"))
 
 if not LibStub then error(MAJOR_VERSION .. " requires LibStub.") end
 local lib = LibStub("LibBabble-3.0"):New(MAJOR_VERSION, MINOR_VERSION)
@@ -93,6 +93,7 @@ lib:SetBaseTranslations {
 	["Eye of the Storm"] = "Eye of the Storm",
 	Felwood = "Felwood",
 	Feralas = "Feralas",
+	Firelands = "Firelands",
 	["Forge Camp: Terror"] = "Forge Camp: Terror",
 	["Forge Camp: Wrath"] = "Forge Camp: Wrath",
 	["Frostwyrm Lair"] = "Frostwyrm Lair",
@@ -109,6 +110,7 @@ lib:SetBaseTranslations {
 	["Grom'gol Base Camp"] = "Grom'gol Base Camp",
 	["Gruul's Lair"] = "Gruul's Lair",
 	Gundrak = "Gundrak",
+	["Hall of Blackhand"] = "Hall of Blackhand",
 	["Hall of Champions"] = "Hall of Champions",
 	["Hall of Legends"] = "Hall of Legends",
 	["Halls of Lightning"] = "Halls of Lightning",
@@ -146,6 +148,7 @@ lib:SetBaseTranslations {
 	["Marshlight Lake"] = "Marshlight Lake",
 	["Menethil Harbor"] = "Menethil Harbor",
 	["Molten Core"] = "Molten Core",
+	["Molten Front"] = "Molten Front",
 	Moonglade = "Moonglade",
 	["Mount Hyjal"] = "Mount Hyjal",
 	Mulgore = "Mulgore",
@@ -162,6 +165,7 @@ lib:SetBaseTranslations {
 	["Old Hillsbrad Foothills"] = "Old Hillsbrad Foothills",
 	["Old Stratholme"] = "Old Stratholme",
 	["Onyxia's Lair"] = "Onyxia's Lair",
+	["Opening of the Dark Portal"] = "Opening of the Dark Portal",
 	Orgrimmar = "Orgrimmar",
 	Outland = "Outland",
 	["Pit of Saron"] = "Pit of Saron",
@@ -233,6 +237,7 @@ lib:SetBaseTranslations {
 	["The Dark Portal"] = "The Dark Portal",
 	["The Deadmines"] = "The Deadmines",
 	["The Descent into Madness"] = "The Descent into Madness",
+	["The Escape From Durnholde"] = "The Escape From Durnholde",
 	["The Exodar"] = "The Exodar",
 	["The Eye"] = "The Eye",
 	["The Eye of Eternity"] = "The Eye of Eternity",
@@ -389,6 +394,7 @@ elseif GAME_LOCALE == "deDE" then
 	["Eye of the Storm"] = "Auge des Sturms",
 	Felwood = "Teufelswald",
 	Feralas = "Feralas",
+	Firelands = "Feuerlande",
 	["Forge Camp: Terror"] = "Konstruktionslager: Terror",
 	["Forge Camp: Wrath"] = "Konstruktionslager: Wut",
 	["Frostwyrm Lair"] = "Frostwyrmbau",
@@ -405,6 +411,7 @@ elseif GAME_LOCALE == "deDE" then
 	["Grom'gol Base Camp"] = "Basislager von Grom'gol",
 	["Gruul's Lair"] = "Gruuls Unterschlupf",
 	Gundrak = "Gundrak",
+	["Hall of Blackhand"] = "Schwarzfausthalle",
 	["Hall of Champions"] = "Halle der Champions",
 	["Hall of Legends"] = "Halle der Legenden",
 	["Halls of Lightning"] = "Die Hallen der Blitze",
@@ -442,6 +449,7 @@ elseif GAME_LOCALE == "deDE" then
 	["Marshlight Lake"] = "Sumpflichtsee",
 	["Menethil Harbor"] = "Hafen von Menethil",
 	["Molten Core"] = "Geschmolzener Kern",
+	["Molten Front"] = "Geschmolzene Front",
 	Moonglade = "Mondlichtung",
 	["Mount Hyjal"] = "Hyjal",
 	Mulgore = "Mulgore",
@@ -458,6 +466,7 @@ elseif GAME_LOCALE == "deDE" then
 	["Old Hillsbrad Foothills"] = "Vorgebirge des Alten Hügellands",
 	["Old Stratholme"] = "Alt-Stratholme",
 	["Onyxia's Lair"] = "Onyxias Hort",
+	["Opening of the Dark Portal"] = "Öffnung des Dunklen Portals",
 	Orgrimmar = "Orgrimmar",
 	Outland = "Scherbenwelt",
 	["Pit of Saron"] = "Grube von Saron",
@@ -529,6 +538,7 @@ elseif GAME_LOCALE == "deDE" then
 	["The Dark Portal"] = "Das Dunkle Portal",
 	["The Deadmines"] = "Die Todesminen",
 	["The Descent into Madness"] = "Der Abstieg in den Wahnsinn",
+	["The Escape From Durnholde"] = "Flucht aus Burg Durnholde",
 	["The Exodar"] = "Die Exodar",
 	["The Eye"] = "Das Auge",
 	["The Eye of Eternity"] = "Das Auge der Ewigkeit",
@@ -676,11 +686,12 @@ elseif GAME_LOCALE == "frFR" then
 	["Eastern Kingdoms"] = "Royaumes de l'est",
 	["Eastern Plaguelands"] = "Maleterres de l'Est",
 	["Elwynn Forest"] = "Forêt d'Elwynn",
-	Everlook = "Long-guet",
+	Everlook = "Long-Guet", -- Needs review
 	["Eversong Woods"] = "Bois des Chants éternels",
 	["Eye of the Storm"] = "L'Œil du cyclone",
 	Felwood = "Gangrebois",
 	Feralas = "Féralas",
+	Firelands = "Terres de Feu", -- Needs review
 	["Forge Camp: Terror"] = "Camp de forge : Terreur",
 	["Forge Camp: Wrath"] = "Camp de forge : Courroux",
 	["Frostwyrm Lair"] = "Repaire du wyrm de givre",
@@ -697,6 +708,7 @@ elseif GAME_LOCALE == "frFR" then
 	["Grom'gol Base Camp"] = "Campement Grom'gol",
 	["Gruul's Lair"] = "Repaire de Gruul",
 	Gundrak = "Gundrak",
+	-- ["Hall of Blackhand"] = "",
 	["Hall of Champions"] = "Hall des Champions",
 	["Hall of Legends"] = "Hall des Légendes",
 	["Halls of Lightning"] = "Les salles de Foudre",
@@ -734,6 +746,7 @@ elseif GAME_LOCALE == "frFR" then
 	["Marshlight Lake"] = "Lac des furoles",
 	["Menethil Harbor"] = "Port de Menethil",
 	["Molten Core"] = "Cœur du Magma",
+	["Molten Front"] = "Front du Magma", -- Needs review
 	Moonglade = "Reflet-de-Lune",
 	["Mount Hyjal"] = "Mont Hyjal",
 	Mulgore = "Mulgore",
@@ -750,6 +763,7 @@ elseif GAME_LOCALE == "frFR" then
 	["Old Hillsbrad Foothills"] = "Contreforts de Hautebrande d'antan",
 	["Old Stratholme"] = "L'Épuration de Stratholme",
 	["Onyxia's Lair"] = "Repaire d'Onyxia",
+	-- ["Opening of the Dark Portal"] = "",
 	Orgrimmar = "Orgrimmar",
 	Outland = "Outreterre",
 	["Pit of Saron"] = "Fosse de Saron",
@@ -821,6 +835,7 @@ elseif GAME_LOCALE == "frFR" then
 	["The Dark Portal"] = "La Porte des ténèbres",
 	["The Deadmines"] = "Les Mortemines",
 	["The Descent into Madness"] = "La Descente dans la folie",
+	-- ["The Escape From Durnholde"] = "",
 	["The Exodar"] = "L'Exodar",
 	["The Eye"] = "L'Œil",
 	["The Eye of Eternity"] = "L'Œil de l'éternité",
@@ -919,7 +934,7 @@ elseif GAME_LOCALE == "koKR" then
 	Badlands = "황야의 땅",
 	["Baradin Hold"] = "바라딘 요새",
 	["Bash'ir Landing"] = "바쉬르 영지",
-	["Battle for Gilneas"] = "길니아스 전투", -- Needs review
+	["Battle for Gilneas"] = "길니아스 전투",
 	["Black Temple"] = "검은 사원",
 	["Blackfathom Deeps"] = "검은심연의 나락",
 	["Blackrock Caverns"] = "검은바위 동굴",
@@ -973,6 +988,7 @@ elseif GAME_LOCALE == "koKR" then
 	["Eye of the Storm"] = "폭풍의 눈",
 	Felwood = "악령의 숲",
 	Feralas = "페랄라스",
+	Firelands = "불의 땅",
 	["Forge Camp: Terror"] = "공포의 괴철로 기지",
 	["Forge Camp: Wrath"] = "격노의 괴철로 기지",
 	["Frostwyrm Lair"] = "서리고룡의 방",
@@ -989,6 +1005,7 @@ elseif GAME_LOCALE == "koKR" then
 	["Grom'gol Base Camp"] = "그롬골 주둔지",
 	["Gruul's Lair"] = "그룰의 둥지",
 	Gundrak = "군드락",
+	["Hall of Blackhand"] = "검은손 전당", -- Needs review
 	["Hall of Champions"] = "용사의 전당",
 	["Hall of Legends"] = "전설의 전당",
 	["Halls of Lightning"] = "번개의 전당",
@@ -1026,6 +1043,7 @@ elseif GAME_LOCALE == "koKR" then
 	["Marshlight Lake"] = "수렁등불 호수",
 	["Menethil Harbor"] = "메네실 항구",
 	["Molten Core"] = "화산 심장부",
+	["Molten Front"] = "녹아내린 전초지", -- Needs review
 	Moonglade = "달의 숲",
 	["Mount Hyjal"] = "하이잘 산",
 	Mulgore = "멀고어",
@@ -1042,6 +1060,7 @@ elseif GAME_LOCALE == "koKR" then
 	["Old Hillsbrad Foothills"] = "옛 힐스브래드 구릉지",
 	["Old Stratholme"] = "옛 스트라솔름",
 	["Onyxia's Lair"] = "오닉시아의 둥지",
+	["Opening of the Dark Portal"] = "어둠의 문 열기", -- Needs review
 	Orgrimmar = "오그리마",
 	Outland = "아웃랜드",
 	["Pit of Saron"] = "사론의 구덩이",
@@ -1102,7 +1121,7 @@ elseif GAME_LOCALE == "koKR" then
 	["The Argent Coliseum"] = "십자군 원형경기장",
 	["The Barrens"] = "불모의 땅",
 	["The Bastion of Twilight"] = "황혼의 요새",
-	["The Battle for Gilneas"] = "길니아스 전투지", -- Needs review
+	["The Battle for Gilneas"] = "길니아스 전투지",
 	["The Black Morass"] = "검은늪",
 	["The Blood Furnace"] = "피의 용광로",
 	["The Bone Wastes"] = "해골 무덤",
@@ -1113,6 +1132,7 @@ elseif GAME_LOCALE == "koKR" then
 	["The Dark Portal"] = "어둠의 문",
 	["The Deadmines"] = "죽음의 폐광",
 	["The Descent into Madness"] = "광기의 내리막길",
+	["The Escape From Durnholde"] = "던홀드 탈출", -- Needs review
 	["The Exodar"] = "엑소다르",
 	["The Eye"] = "눈",
 	["The Eye of Eternity"] = "영원의 눈",
@@ -1265,6 +1285,7 @@ elseif GAME_LOCALE == "esES" then
 	["Eye of the Storm"] = "Ojo de la Tormenta",
 	Felwood = "Frondavil",
 	Feralas = "Feralas",
+	Firelands = "Tierras de Fuego",
 	["Forge Camp: Terror"] = "Campamento forja: Terror",
 	["Forge Camp: Wrath"] = "Campamento forja: Cólera",
 	["Frostwyrm Lair"] = "Guarida de Vermis de Escarcha",
@@ -1281,6 +1302,7 @@ elseif GAME_LOCALE == "esES" then
 	["Grom'gol Base Camp"] = "Campamento Grom'gol",
 	["Gruul's Lair"] = "Guarida de Gruul",
 	Gundrak = "Gundrak",
+	-- ["Hall of Blackhand"] = "",
 	["Hall of Champions"] = "Sala de los Campeones",
 	["Hall of Legends"] = "Sala de las Leyendas",
 	["Halls of Lightning"] = "Cámaras de Relámpagos",
@@ -1318,6 +1340,7 @@ elseif GAME_LOCALE == "esES" then
 	["Marshlight Lake"] = "Lago Luz Pantanosa",
 	["Menethil Harbor"] = "Puerto de Menethil",
 	["Molten Core"] = "Núcleo de Magma",
+	["Molten Front"] = "Frente de Magma",
 	Moonglade = "Claro de la Luna",
 	["Mount Hyjal"] = "Monte Hyjal",
 	Mulgore = "Mulgore",
@@ -1334,6 +1357,7 @@ elseif GAME_LOCALE == "esES" then
 	["Old Hillsbrad Foothills"] = "Antiguas Laderas de Trabalomas",
 	["Old Stratholme"] = "Stratholme en el pasado",
 	["Onyxia's Lair"] = "Guarida de Onyxia",
+	["Opening of the Dark Portal"] = "Apertura de El Portal Oscuro", -- Needs review
 	Orgrimmar = "Orgrimmar",
 	Outland = "Terrallende",
 	["Pit of Saron"] = "Foso de Saron",
@@ -1405,6 +1429,7 @@ elseif GAME_LOCALE == "esES" then
 	["The Dark Portal"] = "El Portal Oscuro",
 	["The Deadmines"] = "Las Minas de la Muerte",
 	["The Descent into Madness"] = "Descenso a la Locura",
+	["The Escape From Durnholde"] = "La Fuga de Durnholde", -- Needs review
 	["The Exodar"] = "El Exodar",
 	["The Eye"] = "El Ojo",
 	["The Eye of Eternity"] = "El Ojo de la Eternidad",
@@ -1557,6 +1582,7 @@ elseif GAME_LOCALE == "esMX" then
 	["Eye of the Storm"] = "Ojo de la Tormenta",
 	Felwood = "Frondavil",
 	Feralas = "Feralas",
+	Firelands = "Tierras de Fuego", -- Needs review
 	["Forge Camp: Terror"] = "Campamento forja: Terror",
 	["Forge Camp: Wrath"] = "Campamento forja: Cólera",
 	["Frostwyrm Lair"] = "Guarida de Vermis de Escarcha",
@@ -1573,6 +1599,7 @@ elseif GAME_LOCALE == "esMX" then
 	["Grom'gol Base Camp"] = "Campamento Grom'gol",
 	["Gruul's Lair"] = "Guarida de Gruul",
 	Gundrak = "Gundrak",
+	-- ["Hall of Blackhand"] = "",
 	["Hall of Champions"] = "Sala de los Campeones",
 	["Hall of Legends"] = "Sala de las Leyendas",
 	["Halls of Lightning"] = "Cámaras de Relámpagos",
@@ -1610,6 +1637,7 @@ elseif GAME_LOCALE == "esMX" then
 	["Marshlight Lake"] = "Lago Luz Pantanosa",
 	["Menethil Harbor"] = "Puerto de Menethil",
 	["Molten Core"] = "Núcleo de Magma",
+	["Molten Front"] = "Frente de Magma", -- Needs review
 	Moonglade = "Claro de la Luna",
 	["Mount Hyjal"] = "Monte Hyjal", -- Needs review
 	Mulgore = "Mulgore",
@@ -1626,6 +1654,7 @@ elseif GAME_LOCALE == "esMX" then
 	["Old Hillsbrad Foothills"] = "Antiguas Laderas de Trabalomas",
 	["Old Stratholme"] = "Stratholme en el pasado",
 	["Onyxia's Lair"] = "Guarida de Onyxia",
+	-- ["Opening of the Dark Portal"] = "",
 	Orgrimmar = "Orgrimmar",
 	Outland = "Terrallende",
 	["Pit of Saron"] = "Foso de Saron",
@@ -1697,6 +1726,7 @@ elseif GAME_LOCALE == "esMX" then
 	["The Dark Portal"] = "El Portal Oscuro",
 	["The Deadmines"] = "Las Minas de la Muerte",
 	["The Descent into Madness"] = "Descenso a la Locura",
+	-- ["The Escape From Durnholde"] = "",
 	["The Exodar"] = "El Exodar",
 	["The Eye"] = "El Ojo",
 	["The Eye of Eternity"] = "El Ojo de la Eternidad",
@@ -1826,7 +1856,7 @@ elseif GAME_LOCALE == "ruRU" then
 	["Darkmoon Faire"] = "Ярмарка Новолуния",
 	Darkshore = "Темные берега",
 	Darnassus = "Дарнас",
-	Deadmines = "Deadmines", -- Needs review
+	Deadmines = "Мертвые копи",
 	["Deadwind Pass"] = "Перевал Мертвого Ветра",
 	Deepholm = "Подземье",
 	["Deeprun Tram"] = "Подземный поезд",
@@ -1849,6 +1879,7 @@ elseif GAME_LOCALE == "ruRU" then
 	["Eye of the Storm"] = "Око Бури",
 	Felwood = "Оскверненный лес",
 	Feralas = "Фералас",
+	Firelands = "Огненные Просторы",
 	["Forge Camp: Terror"] = "Лагерь Легиона: Ужас",
 	["Forge Camp: Wrath"] = "Лагерь Легиона: Гнев",
 	["Frostwyrm Lair"] = "Логово Ледяного змея",
@@ -1865,6 +1896,7 @@ elseif GAME_LOCALE == "ruRU" then
 	["Grom'gol Base Camp"] = "Лагерь Гром'гол",
 	["Gruul's Lair"] = "Логово Груула",
 	Gundrak = "Гундрак",
+	-- ["Hall of Blackhand"] = "",
 	["Hall of Champions"] = "Чертог Защитников",
 	["Hall of Legends"] = "Зал Легенд",
 	["Halls of Lightning"] = "Чертоги Молний",
@@ -1902,6 +1934,7 @@ elseif GAME_LOCALE == "ruRU" then
 	["Marshlight Lake"] = "Озеро Болотных Огоньков",
 	["Menethil Harbor"] = "Гавань Менетилов",
 	["Molten Core"] = "Огненные Недра",
+	["Molten Front"] = "Огненная передовая", -- Needs review
 	Moonglade = "Лунная поляна",
 	["Mount Hyjal"] = "Хиджал",
 	Mulgore = "Мулгор",
@@ -1918,6 +1951,7 @@ elseif GAME_LOCALE == "ruRU" then
 	["Old Hillsbrad Foothills"] = "Старые предгорья Хилсбрада",
 	["Old Stratholme"] = "Старый Стратхольм",
 	["Onyxia's Lair"] = "Логово Ониксии",
+	-- ["Opening of the Dark Portal"] = "",
 	Orgrimmar = "Оргриммар",
 	Outland = "Запределье",
 	["Pit of Saron"] = "Яма Сарона",
@@ -1989,6 +2023,7 @@ elseif GAME_LOCALE == "ruRU" then
 	["The Dark Portal"] = "Темный портал",
 	["The Deadmines"] = "Мертвые копи",
 	["The Descent into Madness"] = "Провал Безумия",
+	-- ["The Escape From Durnholde"] = "",
 	["The Exodar"] = "Экзодар",
 	["The Eye"] = "Око",
 	["The Eye of Eternity"] = "Око Вечности",
@@ -2065,9 +2100,9 @@ elseif GAME_LOCALE == "ruRU" then
 }
 elseif GAME_LOCALE == "zhCN" then
 	lib:SetCurrentTranslations {
-	["Abyssal Depths"] = "Abyssal Depths", -- Needs review
+	["Abyssal Depths"] = "无底海渊",
 	["Ahn'Qiraj"] = "安其拉",
-	["Ahn'Qiraj: The Fallen Kingdom"] = "Ahn'Qiraj: The Fallen Kingdom", -- Needs review
+	["Ahn'Qiraj: The Fallen Kingdom"] = "安其拉：堕落王国",
 	["Ahn'kahet: The Old Kingdom"] = "安卡赫特：古代王国",
 	["Alliance Base"] = "联盟基地",
 	["Alterac Mountains"] = "奥特兰克山脉",
@@ -2141,6 +2176,7 @@ elseif GAME_LOCALE == "zhCN" then
 	["Eye of the Storm"] = "风暴之眼",
 	Felwood = "费伍德森林",
 	Feralas = "菲拉斯",
+	Firelands = "火焰之地",
 	["Forge Camp: Terror"] = "铸魔营地：恐怖",
 	["Forge Camp: Wrath"] = "铸魔营地：天罚",
 	["Frostwyrm Lair"] = "冰霜巨龙的巢穴",
@@ -2149,7 +2185,7 @@ elseif GAME_LOCALE == "zhCN" then
 	["Gates of Ahn'Qiraj"] = "安其拉之门",
 	Ghostlands = "幽魂之地",
 	Gilneas = "吉尔尼斯",
-	["Gilneas City"] = "Gilneas City", -- Needs review
+	["Gilneas City"] = "吉尔尼斯城",
 	Gnomeregan = "诺莫瑞根",
 	Graveyard = "墓地",
 	["Grim Batol"] = "格瑞姆巴托",
@@ -2157,6 +2193,7 @@ elseif GAME_LOCALE == "zhCN" then
 	["Grom'gol Base Camp"] = "格罗姆高营地",
 	["Gruul's Lair"] = "格鲁尔的巢穴",
 	Gundrak = "古达克",
+	["Hall of Blackhand"] = "黑手大厅",
 	["Hall of Champions"] = "勇士大厅",
 	["Hall of Legends"] = "传说大厅",
 	["Halls of Lightning"] = "闪电大厅",
@@ -2180,8 +2217,8 @@ elseif GAME_LOCALE == "zhCN" then
 	["Isle of Quel'Danas"] = "奎尔丹纳斯岛",
 	Kalimdor = "卡利姆多",
 	Karazhan = "卡拉赞",
-	["Kelp'thar Forest"] = "Kelp Forest", -- Needs review
-	Kezan = "Kezan", -- Needs review
+	["Kelp'thar Forest"] = "柯尔普萨之森",
+	Kezan = "科赞",
 	["Krasus' Landing"] = "克拉苏斯平台",
 	Library = "图书馆",
 	["Loch Modan"] = "洛克莫丹",
@@ -2194,6 +2231,7 @@ elseif GAME_LOCALE == "zhCN" then
 	["Marshlight Lake"] = "沼光湖",
 	["Menethil Harbor"] = "米奈希尔港",
 	["Molten Core"] = "熔火之心",
+	["Molten Front"] = "熔火前线",
 	Moonglade = "月光林地",
 	["Mount Hyjal"] = "海加尔",
 	Mulgore = "莫高雷",
@@ -2210,6 +2248,7 @@ elseif GAME_LOCALE == "zhCN" then
 	["Old Hillsbrad Foothills"] = "旧希尔斯布莱德丘陵",
 	["Old Stratholme"] = "旧斯坦索姆",
 	["Onyxia's Lair"] = "奥妮克希亚的巢穴",
+	["Opening of the Dark Portal"] = "开启黑暗之门",
 	Orgrimmar = "奥格瑞玛",
 	Outland = "外域",
 	["Pit of Saron"] = "萨隆矿坑",
@@ -2224,8 +2263,8 @@ elseif GAME_LOCALE == "zhCN" then
 	["Ring of Observance"] = "仪式广场",
 	["Rivendark's Perch"] = "雷文达克栖木",
 	["Ruins of Ahn'Qiraj"] = "安其拉废墟",
-	["Ruins of Gilneas"] = "Ruins of Gilneas", -- Needs review
-	["Ruins of Gilneas City"] = "吉尔尼斯城废墟", -- Needs review
+	["Ruins of Gilneas"] = "吉尔尼斯废墟",
+	["Ruins of Gilneas City"] = "吉尔尼斯城废墟",
 	["Ruins of Lordaeron"] = "洛丹伦废墟",
 	["Scalebeard's Cave"] = "鳞须海龟洞穴",
 	["Scarlet Monastery"] = "血色修道院",
@@ -2240,7 +2279,7 @@ elseif GAME_LOCALE == "zhCN" then
 	["Shartuul's Transporter"] = "沙图尔的传送器",
 	Shattrath = "沙塔斯",
 	["Shattrath City"] = "沙塔斯城",
-	["Shimmering Expanse"] = "Shimmering Expanse", -- Needs review
+	["Shimmering Expanse"] = "烁光海床",
 	["Sholazar Basin"] = "索拉查盆地",
 	Silithus = "希利苏斯",
 	["Silvermoon City"] = "银月城",
@@ -2281,6 +2320,7 @@ elseif GAME_LOCALE == "zhCN" then
 	["The Dark Portal"] = "黑暗之门",
 	["The Deadmines"] = "死亡矿井",
 	["The Descent into Madness"] = "疯狂阶梯",
+	["The Escape From Durnholde"] = "逃离敦霍尔德",
 	["The Exodar"] = "埃索达",
 	["The Eye"] = "风暴要塞",
 	["The Eye of Eternity"] = "永恒之眼",
@@ -2291,8 +2331,8 @@ elseif GAME_LOCALE == "zhCN" then
 	["The Great Sea"] = "无尽之海",
 	["The Halls of Winter"] = "寒冬之厅",
 	["The Hinterlands"] = "辛特兰",
-	["The Lost Isles"] = "The Lost Isles", -- Needs review
-	["The Maelstrom"] = "The Maelstrom", -- Needs review
+	["The Lost Isles"] = "失落群岛",
+	["The Maelstrom"] = "大漩涡",
 	["The Mechanar"] = "能源舰",
 	["The Military Quarter"] = "军事区",
 	["The Nexus"] = "魔枢",
@@ -2324,7 +2364,7 @@ elseif GAME_LOCALE == "zhCN" then
 	Tirisfal = "提里斯法林地",
 	["Tirisfal Glades"] = "提瑞斯法林地",
 	["Tol Barad"] = "托尔巴拉德",
-	["Tol Barad Peninsula"] = "托尔巴拉德半岛", -- Needs review
+	["Tol Barad Peninsula"] = "托尔巴拉德半岛",
 	["Trial of the Champion"] = "冠军的试炼",
 	["Trial of the Crusader"] = "十字军的试炼",
 	["Twilight Highlands"] = "暮光高地",
@@ -2433,6 +2473,7 @@ elseif GAME_LOCALE == "zhTW" then
 	["Eye of the Storm"] = "暴風之眼",
 	Felwood = "費伍德森林",
 	Feralas = "菲拉斯",
+	Firelands = "火源之界",
 	["Forge Camp: Terror"] = "煉冶場:驚駭",
 	["Forge Camp: Wrath"] = "煉冶場:憤怒",
 	["Frostwyrm Lair"] = "冰霜巨龍的巢穴",
@@ -2449,6 +2490,7 @@ elseif GAME_LOCALE == "zhTW" then
 	["Grom'gol Base Camp"] = "格羅姆高營地",
 	["Gruul's Lair"] = "戈魯爾之巢",
 	Gundrak = "剛德拉克",
+	["Hall of Blackhand"] = "黑手大廳",
 	["Hall of Champions"] = "勇士大廳",
 	["Hall of Legends"] = "傳說大廳",
 	["Halls of Lightning"] = "雷光大廳",
@@ -2486,6 +2528,7 @@ elseif GAME_LOCALE == "zhTW" then
 	["Marshlight Lake"] = "沼澤光之湖",
 	["Menethil Harbor"] = "米奈希爾港",
 	["Molten Core"] = "熔火之心",
+	["Molten Front"] = "熔岩前線",
 	Moonglade = "月光林地",
 	["Mount Hyjal"] = "海加爾山",
 	Mulgore = "莫高雷",
@@ -2502,6 +2545,7 @@ elseif GAME_LOCALE == "zhTW" then
 	["Old Hillsbrad Foothills"] = "希爾斯布萊德丘陵舊址",
 	["Old Stratholme"] = "舊斯坦索姆",
 	["Onyxia's Lair"] = "奧妮克希亞的巢穴",
+	["Opening of the Dark Portal"] = "開啟黑暗之門",
 	Orgrimmar = "奧格瑪",
 	Outland = "外域",
 	["Pit of Saron"] = "薩倫之淵",
@@ -2573,6 +2617,7 @@ elseif GAME_LOCALE == "zhTW" then
 	["The Dark Portal"] = "黑暗之門",
 	["The Deadmines"] = "死亡礦坑",
 	["The Descent into Madness"] = "驟狂斜廊",
+	["The Escape From Durnholde"] = "逃離敦霍爾德",
 	["The Exodar"] = "艾克索達",
 	["The Eye"] = "風暴要塞",
 	["The Eye of Eternity"] = "永恆之眼",
