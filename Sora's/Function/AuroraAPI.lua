@@ -1,11 +1,10 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
-local _, class = UnitClass("player")
-local r, g, b = RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b
+
 local alpha = 0.5
 DB.Aurora = {}
 
-DB.Aurora.classcolours = RAID_CLASS_COLORS
+local r, g, b = DB.MyClassColor.r, DB.MyClassColor.g, DB.MyClassColor.b
 
 DB.Aurora.Media = {
 	["backdrop"] = "Interface\\ChatFrame\\ChatFrameBackground",

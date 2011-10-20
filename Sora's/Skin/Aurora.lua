@@ -3,8 +3,7 @@ local S, _, _, DB = unpack(select(2, ...))
 
 if not SkinDB.EnableAurora then return end
 
-local _, class = UnitClass("player")
-local r, g, b = RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b
+local r, g, b = DB.MyClassColor.r, DB.MyClassColor.g, DB.MyClassColor.b
 
 local Skin = CreateFrame("Frame", nil, UIParent)
 Skin:RegisterEvent("ADDON_LOADED")
@@ -1520,7 +1519,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		function PaperDollFrame_SetLevel()
 			local primaryTalentTree = GetPrimaryTalentTree()
 			local classDisplayName, class = UnitClass("player")
-			local classColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or DB.Aurora.classcolours[class]
+			local classColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or DB.MyClassColor
 			local classColorString = format("ff%.2x%.2x%.2x", classColor.r * 255, classColor.g * 255, classColor.b * 255)
 			local specName
 
