@@ -3300,7 +3300,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			num:ClearAllPoints()
 			num:SetPoint("RIGHT", _G["PlayerTalentFramePanel"..i.."HeaderBackground"], "RIGHT", -40, 0)
-			num:SetFont("FONTS\\FRIZQT__.TTF", 12)
+			num:SetFont(DB.Font, 12)
 			num:SetJustifyH("RIGHT")
 
 			panel.bg = CreateFrame("Frame", nil, panel)
@@ -3639,7 +3639,7 @@ Delay:SetScript("OnEvent", function()
 		S.ReskinCheck(WorldMapQuestShowObjectives)
 		S.ReskinCheck(WorldMapTrackQuest)
 	end
-
+	
 	if not(IsAddOnLoaded("Butsu") or IsAddOnLoaded("LovelyLoot") or IsAddOnLoaded("XLoot")) then
 		LootFramePortraitOverlay:Hide()
 		select(2, LootFrame:GetRegions()):Hide()
