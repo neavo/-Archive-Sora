@@ -5,6 +5,8 @@ local Bar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
 Bar:SetWidth(24*6+3*5)
 Bar:SetHeight(24*2+3)
 MultiBarLeft:SetParent(Bar)
+MultiBarLeft:ClearAllPoints()
+MultiBarLeft.SetPoint = function() end
 MoveHandle.LeftBar = S.MakeMoveHandle(Bar, "侧边栏", "LeftBar")
 
 for i=1, 12 do

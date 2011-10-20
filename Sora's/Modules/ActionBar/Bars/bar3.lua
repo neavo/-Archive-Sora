@@ -1,6 +1,8 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
 MultiBarBottomRight:SetParent(DB.ActionBar)
+MultiBarBottomRight:ClearAllPoints()
+MultiBarBottomRight.SetPoint = function() end
 
 for i=1, 12 do
 	local Button = _G["MultiBarBottomRightButton"..i]

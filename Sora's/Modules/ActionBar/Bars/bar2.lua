@@ -1,6 +1,8 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
 MultiBarBottomLeft:SetParent(DB.ActionBar)
+MultiBarBottomLeft:ClearAllPoints()
+MultiBarBottomLeft.SetPoint = function() end
 
 for i=1, 12 do
 	local Button = _G["MultiBarBottomLeftButton"..i]
@@ -13,3 +15,5 @@ for i=1, 12 do
 		Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)
 	end
 end
+
+
