@@ -17,9 +17,7 @@ function C.Nameplate.LoadSettings()
 	}
 	if not NameplateDB then NameplateDB = {} end
 	for key, value in pairs(Default) do
-		if NameplateDB[key] == nil then
-			NameplateDB[key] = value
-		end
+		if NameplateDB[key] == nil then NameplateDB[key] = value end
 	end
 end
 

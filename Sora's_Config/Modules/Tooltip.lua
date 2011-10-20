@@ -12,9 +12,7 @@ function C.Tooltip.LoadSettings()
 	}
 	if not TooltipDB then TooltipDB = {} end
 	for key, value in pairs(Default) do
-		if TooltipDB[key] == nil then
-			TooltipDB[key] = value
-		end
+		if TooltipDB[key] == nil then TooltipDB[key] = value end
 	end
 end
 

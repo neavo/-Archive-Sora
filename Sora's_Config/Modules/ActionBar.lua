@@ -17,9 +17,7 @@ function C.ActionBar.LoadSettings()
 	}
 	if not ActionBarDB then ActionBarDB = {} end
 	for key, value in pairs(Default) do
-		if ActionBarDB[key] == nil then
-			ActionBarDB[key] = value
-		end
+		if ActionBarDB[key] == nil then ActionBarDB[key] = value end
 	end
 end
 

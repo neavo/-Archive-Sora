@@ -14,9 +14,7 @@ function C.Threat.LoadSettings()
 	}
 	if not ThreatDB then ThreatDB = {} end
 	for key, value in pairs(Default) do
-		if ThreatDB[key] == nil then
-			ThreatDB[key] = value
-		end
+		if ThreatDB[key] == nil then ThreatDB[key] = value end
 	end
 end
 

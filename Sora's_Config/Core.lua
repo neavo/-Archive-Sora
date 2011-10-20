@@ -1,11 +1,12 @@
 ﻿-- Engines
 local S, C, _, _ = unpack(select(2, ...))
 local SoraConfig = LibStub("AceAddon-3.0"):NewAddon("SoraConfig", "AceConsole-3.0")
+local Version = 1021
 
 -- SetDefault
 local function SetDefault()
 	SlashCmdList.AutoSet()
-	SoraInited = true
+	SoraVersion = Version
 end
 
 MoveHandle = {}
@@ -76,11 +77,10 @@ end
 
 -- OnEnable
 function SoraConfig:OnEnable()
-	if not SoraInited then
+	if not SoraVersion or SoraVersion < Version then
 		StaticPopupDialogs["Sora's"] = {
 			text = "欢迎使用|cff70C0F5Sora's|r\n请点击确定按钮加载默认配置",
-			button1 = YES,
-			button2 = NO,
+			button1 = "确定",
 			OnAccept = function()
 				SetDefault()
 				ReloadUI()

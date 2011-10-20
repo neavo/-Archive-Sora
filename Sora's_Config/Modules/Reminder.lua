@@ -32,11 +32,11 @@ function C.Reminder.BuildGUI()
 	if Modules then
 		Modules["Reminder"] =  {
 			type = "group",
-			name = "Reminder",
+			name = "增益缺失提醒",
 			args = {
 				Header_1 = {
 					type = "header",
-					name = "RaidBuff设置",
+					name = "团队增益",
 					order = 1,
 				},
 				ShowOnlyInParty = {
@@ -49,24 +49,24 @@ function C.Reminder.BuildGUI()
 				},
 				RaidBuffSize = {
 					type = "input",
-					name = "RaidBuff图标大小：",
-					desc = "请输入RaidBuff图标大小",
+					name = "团队增益图标大小：",
+					desc = "请输入团队增益图标大小",
 					order = 3,
 					get = function() return tostring(ReminderDB.RaidBuffSize) end,
 					set = function(_, value) ReminderDB.RaidBuffSize = tonumber(value) end,
 				},
 				RaidBuffSpace = {
 					type = "input",
-					name = "RaidBuff图标间距：",
-					desc = "请输入RaidBuff图标间距",
+					name = "团队增益图标间距：",
+					desc = "请输入团队增益图标间距",
 					order = 4,
 					get = function() return tostring(ReminderDB.RaidBuffSpace) end,
 					set = function(_, value) ReminderDB.RaidBuffSpace = tonumber(value) end,
 				},
 				RaidBuffDirection = {
 					type = "select",
-					name = "RaidBuff图标排列方式：",
-					desc = "请选择RaidBuff图标排列方式",
+					name = "团队增益图标排列方式：",
+					desc = "请选择团队增益图标排列方式",
 					order = 5,
 					values = {[1] = "横排", [2] = "竖排"},
 					get = function() return ReminderDB.RaidBuffDirection end,
@@ -79,7 +79,7 @@ function C.Reminder.BuildGUI()
 				},
 				Header_2 = {
 					type = "header",
-					name = "ClassBuff设置",
+					name = "职业增益",
 					order = 7,
 				},
 				ClassBuffSound = {
@@ -92,16 +92,16 @@ function C.Reminder.BuildGUI()
 				},
 				ClassBuffSize = {
 					type = "input",
-					name = "ClassBuff图标大小：",
-					desc = "请输入ClassBuff图标大小",
+					name = "职业增益图标大小：",
+					desc = "请输入职业增益图标大小",
 					order = 9,
 					get = function() return tostring(ReminderDB.ClassBuffSize) end,
 					set = function(_, value) ReminderDB.ClassBuffSize = tonumber(value) end,
 				},
 				ClassBuffSpace = {
 					type = "input",
-					name = "ClassBuff图标间距：",
-					desc = "请输入ClassBuff图标间距",
+					name = "职业增益图标间距：",
+					desc = "请输入职业增益图标间距",
 					order = 10,
 					get = function() return tostring(ReminderDB.ClassBuffSpace) end,
 					set = function(_, value) ReminderDB.ClassBuffSpace = tonumber(value) end,

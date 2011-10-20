@@ -48,9 +48,7 @@ function C.UnitFrame.LoadSettings()
 	}
 	if not UnitFrameDB then UnitFrameDB = {} end
 	for key, value in pairs(Default) do
-		if UnitFrameDB[key] == nil then
-			UnitFrameDB[key] = value
-		end
+		if UnitFrameDB[key] == nil then UnitFrameDB[key] = value end
 	end
 end
 

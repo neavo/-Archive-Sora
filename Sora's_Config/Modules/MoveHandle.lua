@@ -24,9 +24,7 @@ function C.MoveHandle.LoadSettings()
 	}
 	if not MoveHandleDB then MoveHandleDB = {} end
 	for key, value in pairs(Default) do
-		if MoveHandleDB[key] == nil then
-			MoveHandleDB[key] = value
-		end
+		if MoveHandleDB[key] == nil then MoveHandleDB[key] = value end
 	end
 end
 
