@@ -3,6 +3,9 @@ local S, _, _, DB = unpack(select(2, ...))
 
 if not SkinDB.EnableAurora then return end
 
+local _, class = UnitClass("player")
+local r, g, b = RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b
+
 local Skin = CreateFrame("Frame", nil, UIParent)
 Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
@@ -90,11 +93,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		hooksecurefunc("CharacterFrame_Expand", function()
-			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture("Interface\\AddOns\\Aurora\\arrow-left-active")
+			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture("Interface\\Addons\\Sora's\\Media\\arrow-left-active")
 		end)
 
 		hooksecurefunc("CharacterFrame_Collapse", function()
-			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture("Interface\\AddOns\\Aurora\\arrow-right-active")
+			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture("Interface\\Addons\\Sora's\\Media\\arrow-right-active")
 		end)
 
 		-- [[ Check boxes ]]
@@ -1978,7 +1981,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		S.Reskin(BrowseDropDownButton)
 
 		local downtex = BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
-		downtex:SetTexture("Interface\\AddOns\\FreeUI\\media\\arrow-down-active")
+		downtex:SetTexture("Interface\\AddOns\\Sora's\\Media\\arrow-down-active")
 		downtex:SetSize(8, 8)
 		downtex:SetPoint("CENTER")
 		downtex:SetVertexColor(1, 1, 1)
@@ -2340,7 +2343,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 		local downtex = CalendarFilterButton:CreateTexture(nil, "ARTWORK")
-		downtex:SetTexture("Interface\\AddOns\\Aurora\\arrow-down-active")
+		downtex:SetTexture("Interface\\Addons\\Sora's\\Media\\arrow-down-active")
 		downtex:SetSize(8, 8)
 		downtex:SetPoint("CENTER")
 		downtex:SetVertexColor(1, 1, 1)

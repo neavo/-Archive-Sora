@@ -263,7 +263,7 @@ S.ReskinClose = function(f, a1, p, a2, x, y)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	local text = f:CreateFontString(nil, "OVERLAY")
-	text:SetFont("Fonts\\ARIALN.TTF", 14, "THINOUTLINE")
+	text:SetFont(DB.Font, 14, "THINOUTLINE")
 	text:SetPoint("CENTER", 1, 1)
 	text:SetText("x")
 
