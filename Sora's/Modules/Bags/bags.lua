@@ -61,25 +61,22 @@ function MyButton:OnCreate()
 	self:SetNormalTexture(nil)
 	self:SetSize(32, 32)
 	
-	self.Icon:SetPoint("TOPLEFT", self, 0, 0)
-	self.Icon:SetPoint("BOTTOMRIGHT", self, 0, 0)
+	self.Icon:SetAllPoints()
+	self.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	
 	self.Count:SetPoint("BOTTOMRIGHT", -1, 3)
 	self.Count:SetFont( DB.Font, 10, "THINOUTLINE")
 	
 	self.Border = CreateFrame("Frame", nil, self)
-	self.Border:SetPoint("TOPLEFT", self.Icon, 0, 0)
-	self.Border:SetPoint("BOTTOMRIGHT", self.Icon, 0, 0)
+	self.Border:SetAllPoints(self.Icon)
 	self.Border:SetBackdrop({edgeFile = DB.Solid, edgeSize = 1})
 	self.Border:SetBackdropBorderColor(0, 0, 0, 0)	
 	
 	self.BG = CreateFrame("Frame", nil, self)
 	self.BG:SetPoint("TOPLEFT", self.Icon, 0, 0)
 	self.BG:SetPoint("BOTTOMRIGHT", self.Icon, 0, 0)
-	self.BG:SetBackdrop({
-		bgFile = DB.Solid, insets = { left = 1, right = 1, top = 1, bottom = 1 }, 
-	})
-	self.BG:SetBackdropColor(0.2, 0.2, 0.2, 0.7)
+	self.BG:SetBackdrop({bgFile = DB.Solid, insets = { left = 1, right = 1, top = 1, bottom = 1 }})
+	self.BG:SetBackdropColor(0.2, 0.2, 0.2, 0.5)
 	self.BG:SetFrameLevel(0)
 
 	_G[self:GetName().."IconQuestTexture"]:SetSize(0.01, 0.01)
