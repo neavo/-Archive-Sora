@@ -109,14 +109,14 @@ local function BuildCombatIcon(self)
 end
 
 local function BuildLFDRoleIcon(self)
-	LFDRoleIcon = self.Health:CreateTexture(nil, "OVERLAY")
+	local LFDRoleIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	LFDRoleIcon:SetSize(16, 16)
 	LFDRoleIcon:SetPoint("TOPRIGHT", self.Health, 7, 9)
 	self.LFDRole = LFDRoleIcon
 end
 
 local function BuildReadyCheckIcon(self)
-	ReadyCheck = self.Health:CreateTexture(nil, "OVERLAY")
+	local ReadyCheck = self.Health:CreateTexture(nil, "OVERLAY")
 	ReadyCheck:SetSize(16, 16)
 	ReadyCheck:SetPoint("CENTER", 0, 0)
 	self.ReadyCheck = ReadyCheck
@@ -151,23 +151,19 @@ local function BuildThreatBorder(self)
 	end)
 end
 
-local function BuildRaidDebuffs(self)	
-	self.RaidDebuffs = CreateFrame("Frame", nil, self)
-	self.RaidDebuffs:SetHeight(18)
-	self.RaidDebuffs:SetWidth(18)
-	self.RaidDebuffs:SetPoint("CENTER")
-	self.RaidDebuffs:SetFrameStrata("HIGH")
-	self.RaidDebuffs.icon = self.RaidDebuffs:CreateTexture(nil, "OVERLAY")
-	self.RaidDebuffs.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	self.RaidDebuffs.icon:SetAllPoints(self.RaidDebuffs)
-	self.RaidDebuffs.time = self.RaidDebuffs:CreateFontString(nil, "OVERLAY")
-	self.RaidDebuffs.time:SetFont(DB.Font, 12, "THINOUTLINE")
-	self.RaidDebuffs.time:SetPoint("CENTER", self.RaidDebuffs, "CENTER", 0, 0)
-	self.RaidDebuffs.time:SetTextColor(1, 0.9, 0)
-	self.RaidDebuffs.count = self.RaidDebuffs:CreateFontString(nil, "OVERLAY")
-	self.RaidDebuffs.count:SetFont(DB.Font, 8, "OUTLINE")
-	self.RaidDebuffs.count:SetPoint("BOTTOMRIGHT", self.RaidDebuffs, "BOTTOMRIGHT", 2, 0)
-	self.RaidDebuffs.count:SetTextColor(1, 0.9, 0)
+local function BuildRaidDebuffs(self)
+	local RaidDebuff = CreateFrame("Frame", nil, self)
+	RaidDebuff:SetSize(20, 20)
+	RaidDebuff:SetPoint("CENTER")
+	RaidDebuff:SetFrameStrata("HIGH")
+	RaidDebuff.Icon = RaidDebuff:CreateTexture(nil, "ARTWORK")
+	RaidDebuff.Icon:SetAllPoints()
+	RaidDebuff.Count = S.MakeFontString(RaidDebuff, 8)
+	RaidDebuff.Count:SetPoint("BOTTOMRIGHT", 1, -1)
+	RaidDebuff.Cooldown = CreateFrame("Cooldown", nil, RaidDebuff) 
+	RaidDebuff.Cooldown:SetAllPoints() 
+	RaidDebuff.Cooldown:SetReverse(true)
+	self.RaidDebuff = RaidDebuff
 end
 
 local function BuildAuraWatch(self, ...)
@@ -332,7 +328,7 @@ if UnitFrameDB.ShowRaid then
 		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  
 			"showPlayer", true, 
-			"showSolo", false, 
+			"showSolo", true, 
 			"showParty", true, 
 			"xoffset", 5, 
 			"groupFilter", "1, 2, 3, 4, 5", 
