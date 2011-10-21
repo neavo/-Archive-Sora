@@ -18,7 +18,7 @@ local function Init()
 	for key, _ in pairs(SRAuraList) do
 		if key == class then
 			for _, value in pairs(SRAuraList[class]) do
-				table.insert(AuraList, value)
+				tinsert(AuraList, value)
 			end
 		end
 	end
@@ -33,10 +33,10 @@ local function Init()
 				temp = BuildBAR(value.iconSize, value.barWidth)
 			end
 			temp:Hide()
-			table.insert(tempTable, temp)
+			tinsert(tempTable, temp)
 		end
-		table.insert(Arg, 0)
-		table.insert(Aura, tempTable)
+		tinsert(Arg, 0)
+		tinsert(Aura, tempTable)
 	end
 	cfg.AuraList = AuraList
 	cfg.Aura = Aura
