@@ -153,11 +153,12 @@ end
 
 local function BuildRaidDebuffs(self)
 	local RaidDebuff = CreateFrame("Frame", nil, self)
-	RaidDebuff:SetSize(20, 20)
+	RaidDebuff:SetSize(18, 18)
 	RaidDebuff:SetPoint("CENTER")
 	RaidDebuff:SetFrameStrata("HIGH")
 	RaidDebuff.Icon = RaidDebuff:CreateTexture(nil, "ARTWORK")
 	RaidDebuff.Icon:SetAllPoints()
+	RaidDebuff.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	RaidDebuff.Count = S.MakeFontString(RaidDebuff, 8)
 	RaidDebuff.Count:SetPoint("BOTTOMRIGHT", 1, -1)
 	RaidDebuff.Cooldown = CreateFrame("Cooldown", nil, RaidDebuff) 
@@ -328,7 +329,7 @@ if UnitFrameDB.ShowRaid then
 		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 			"showRaid", UnitFrameDB.ShowRaid,  
 			"showPlayer", true, 
-			"showSolo", true, 
+			"showSolo", false, 
 			"showParty", true, 
 			"xoffset", 5, 
 			"groupFilter", "1, 2, 3, 4, 5", 
