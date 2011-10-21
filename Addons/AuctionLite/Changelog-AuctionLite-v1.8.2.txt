@@ -1,0 +1,30 @@
+------------------------------------------------------------------------
+r218 | merialkilrogg | 2011-07-02 06:13:42 +0000 (Sat, 02 Jul 2011) | 5 lines
+Changed paths:
+   A /tags/v1.8.2 (from /trunk:217)
+
+Tagging as v1.8.2
+
+Changes:
+- Updated for WoW 4.2
+- Fixed a few bugs and bad asserts
+------------------------------------------------------------------------
+r217 | merialkilrogg | 2011-07-02 06:10:59 +0000 (Sat, 02 Jul 2011) | 3 lines
+Changed paths:
+   M /trunk/AuctionLite.lua
+   M /trunk/AuctionLite.toc
+
+Bumped version number to 1.8.2.
+Bumped TOC to 40200.
+
+------------------------------------------------------------------------
+r216 | merialkilrogg | 2011-07-02 06:10:33 +0000 (Sat, 02 Jul 2011) | 4 lines
+Changed paths:
+   M /trunk/AuctionFrame.lua
+   M /trunk/BuyFrame.lua
+
+Fixed a few bugs:
+- OpenAllBags no longer takes a boolean argument.
+- Bad assertion in BuyFrame.lua.
+
+------------------------------------------------------------------------

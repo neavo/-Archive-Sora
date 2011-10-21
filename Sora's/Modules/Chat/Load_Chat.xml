@@ -1,8 +1,0 @@
-﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
-
-	<Script file = "Chat.lua"/>
-	<Script file = "ChatEmotion.lua"/>
-	<Script file = "ChatFramePanels.lua"/>
-	<Script file = "TabChannel.lua"/>
-	
-</Ui>

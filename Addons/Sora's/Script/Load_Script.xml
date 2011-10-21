@@ -1,0 +1,11 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Script file = "AchievementMover.lua"/>
+	<Script file = "AutoSet.lua"/>
+	<Script file = "AutoWipeMemory.lua"/>
+	<Script file = "BlzFrameHack.lua"/>
+	<Script file = "ClearFont_zhCN.lua"/>
+	<Script file = "ClearFont_zhTW.lua"/>
+	<Script file = "UIParentFade.lua"/>
+
+</Ui>

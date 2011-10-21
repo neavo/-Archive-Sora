@@ -1,7 +1,0 @@
-﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
-
-	<Script file = "CollapseButton.lua"/>
-	<Script file = "QuestItemPrice.lua"/>
-	<Script file = "QuestTags.lua"/>
-
-</Ui>

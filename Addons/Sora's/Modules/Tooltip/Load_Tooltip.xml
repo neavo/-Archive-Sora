@@ -1,0 +1,15 @@
+﻿<!-- -->
+
+
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Script file="cfg.lua"/>
+	<Script file="Tooltip.lua"/>
+	<Script file="iLevel.lua"/>
+	<Script file="Talent.lua"/>
+	<Script file="SpeellID.lua"/>
+	<Script file="CastBy.lua"/>
+	
+</Ui>
