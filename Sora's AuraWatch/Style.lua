@@ -18,9 +18,9 @@ local function MakeShadow(Frame, Size)
 end
 
 -- BuildICON
-function cfg.BuildICON(iconSize)
-	local Frame = CreateFrame("Frame", nil, UIParent)
-	Frame:SetSize(iconSize, iconSize)
+function cfg.BuildICON(IconSize, ClickCast)
+	local Frame = ClickCast and CreateFrame("Button", nil, UIParent, "SecureActionButtonTemplate") or CreateFrame("Frame", nil, UIParent)
+	Frame:SetSize(IconSize, IconSize)
 	
 	Frame.Icon = Frame:CreateTexture(nil, "ARTWORK") 
 	Frame.Icon:SetAllPoints()
@@ -51,17 +51,19 @@ function cfg.BuildICON(iconSize)
 	Frame.Statusbar.BG:SetTexture(cfg.Statusbar)
 	Frame.Statusbar.BG:SetVertexColor(0.1, 0.1, 0.1, 0.6)
 	
+	if ClickCast then Frame:SetAttribute("type1","macro") end
+	
 	return Frame
 end
 
 -- BuildBAR
-function cfg.BuildBAR(iconSize, barWidth)
+function cfg.BuildBAR(BarWidth, IconSize, ClickCast)
 	local Frame = CreateFrame("Frame", nil, UIParent)
-	Frame:SetSize(barWidth, iconSize)
+	Frame:SetSize(BarWidth, IconSize)
 	
 	Frame.Icon = Frame:CreateTexture(nil, "ARTWORK")
 	Frame.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-	Frame.Icon:SetSize(iconSize, iconSize)
+	Frame.Icon:SetSize(IconSize, IconSize)
 	Frame.Icon:SetPoint("BOTTOMRIGHT", Frame, "BOTTOMLEFT", -5, 0)
 	
 	Frame.Icon.Shadow = MakeShadow(Frame, 3)

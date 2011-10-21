@@ -11,17 +11,16 @@
 		Direction = 提示的增长方向 ("RIGHT"/"LEFT"/"UP"/"DOWN")
 		Interval = 相邻提示的间距
 		Mode = 提示模式(图标ICON 或者 计时条BAR)
-		iconSize = 图标大小
-		barWidth = 计时条宽度(BAR模式下必须有这个属性)
+		IconSize = 图标大小
+		BarWidth = 计时条宽度(BAR模式下必须有这个属性)
 		Pos = 首图标的定位点
 		List = 要监视的Buff/Debuff/CD列表	
    }
    
    其中List =
    {
-		spellID/itemID = 要监视的Buff/Debuff/技能/物品 ID (二选一，必须有，其中itemID只能搭配Filter = "CD"来监视物品CD)
-		unitId = 要监视的目标，常用的有 玩家"player"/目标"target" (必须有)
-		Filter = 要监视的类型， "BUFF"/"DEBUFF"/"CD" (必须有 ！！！注意，F为大写！！！)
+		AuraID/ItemID/SpellID = 
+		UnitID = 要监视的目标，常用的有 玩家"player"/目标"target" (必须有)
 		Caster = 过滤Buff/Debuff的释放者 (可选，如果不需要按照施法者过滤请不要写这一项 ！！！注意，C为大写！！！ )
 		Stack = 过滤Buff/Debuff的层数(可选，当Buff/Debuff层数大于等于Stack的值的时候才显示 ！！！注意，S为大写！！！)
 	}
@@ -32,25 +31,20 @@
 		Direction = "UP",
 		Interval = 4,
 		Mode = "BAR",
-		iconSize = 16,
-		barWidth = 175,
+		IconSize = 16,
+		BarWidth = 175,
 		Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 		List = {
 			-- 血之疫病
-			{spellID = 55078, unitId = "target", Filter = "DEBUFF", Stack = 1},
+			{AuraID = 55078, UnitID = "target", Stack = 1},
 			-- 冰霜疫病
-			{spellID = 55095, unitId = "target", Filter = "DEBUFF", Caster = "player"},
+			{AuraID = 55095, UnitID = "target", Caster = "player"},
 			-- 不灭药水
-			{itemID = 40093, Filter = "CD"},
+			{ItemID = 40093},
 		},
 	},
 
 ]]
-
-
--- -- -- -- -- -- -- -- 
---  命名空间  -- 
--- -- -- -- -- -- -- -- 
 
 local _, SR = ...
 local cfg = SR.AuraWatchConfig
@@ -63,23 +57,23 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 4,
 			Mode = "ICON",
-			iconSize = 54,
+			IconSize = 54,
 			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
 			List = {
 				-- 变羊
-				{spellID =   118, unitId = "player", Filter = "DEBUFF"},
+				{AuraID =   118, UnitID = "player"},
 				-- 制裁之锤
-				{spellID =   853, unitId = "player", Filter = "DEBUFF"},
+				{AuraID =   853, UnitID = "player"},
 				-- 肾击
-				{spellID =   408, unitId = "player", Filter = "DEBUFF"},
+				{AuraID =   408, UnitID = "player"},
 				-- 撕扯
-				{spellID = 47481, unitId = "player", Filter = "DEBUFF"},
+				{AuraID = 47481, UnitID = "player"},
 				-- 沉默
-				{spellID = 55021, unitId = "player", Filter = "DEBUFF"},
+				{AuraID = 55021, UnitID = "player"},
 				-- 割碎
-				{spellID = 22570, unitId = "player", Filter = "DEBUFF"},
+				{AuraID = 22570, UnitID = "player"},
 				-- 断筋
-				{spellID =  1715, unitId = "player", Filter = "DEBUFF"},
+				{AuraID =  1715, UnitID = "player"},
 			},
 		},
 	},
@@ -91,35 +85,35 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 节能施法
-				{spellID = 16870, unitId = "player", Filter = "BUFF"},
+				{AuraID = 16870, UnitID = "player"},
 				-- 自然之赐
-				{spellID = 16886, unitId = "player", Filter = "BUFF"},
+				{AuraID = 16886, UnitID = "player"},
 				-- 日蚀
-				{spellID = 48517, unitId = "player", Filter = "BUFF"},			
+				{AuraID = 48517, UnitID = "player"},			
 				-- 月蚀
-				{spellID = 48518, unitId = "player", Filter = "BUFF"},
+				{AuraID = 48518, UnitID = "player"},
 				-- 狂暴(猫&熊)
-				{spellID = 50334, unitId = "player", Filter = "BUFF"},
+				{AuraID = 50334, UnitID = "player"},
 				-- 野蛮咆哮(猫)
-				{spellID = 52610, unitId = "player", Filter = "BUFF"},
+				{AuraID = 52610, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 粉碎
-				{spellID = 80951, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80951, UnitID = "player"},
 				-- 月光淋漓
-				{spellID = 81192, unitId = "player", Filter = "BUFF"},
+				{AuraID = 81192, UnitID = "player"},
 				-- 坠星
-				{spellID = 93400, unitId = "player", Filter = "BUFF"},
+				{AuraID = 93400, UnitID = "player"},
 				-- 狂暴
-				{spellID = 93622, unitId = "player", Filter = "BUFF"},
+				{AuraID = 93622, UnitID = "player"},
 			},
 		},
 		
@@ -128,32 +122,32 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175,
+			IconSize = 20,
+			BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {	
 				-- 挫志咆哮(熊)
-				{spellID =    99, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =    99, UnitID = "target", Caster = "player"},
 				-- 回春术
-				{spellID =   774, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =   774, UnitID = "target", Caster = "player"},
 				-- 割裂(猫)
-				{spellID =  1079, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  1079, UnitID = "target", Caster = "player"},
 				-- 斜掠(猫)
-				{spellID =  1822, unitId = "target", Caster = "player", Filter = "DEBUFF"},			
+				{AuraID =  1822, UnitID = "target", Caster = "player"},			
 				-- 虫群
-				{spellID =  5570, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  5570, UnitID = "target", Caster = "player"},
 				-- 月火术
-				{spellID =  8921, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  8921, UnitID = "target", Caster = "player"},
 				-- 割伤(熊)
-				{spellID = 33745, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 33745, UnitID = "target", Caster = "player"},
 				-- 生命绽放
-				{spellID = 33763, unitId = "target", Caster = "player", Filter = "DEBUFF"},			
+				{AuraID = 33763, UnitID = "target", Caster = "player"},			
 				-- 裂伤(猫)
-				{spellID = 33876, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 33876, UnitID = "target", Caster = "player"},
 				-- 野蛮咆哮(猫)
-				{spellID = 52610, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 52610, UnitID = "target", Caster = "player"},
 				-- 阳炎术
-				{spellID = 93402, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 93402, UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -165,41 +159,41 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {	
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 急速射击
-				{spellID =  3045, unitId = "player", Filter = "BUFF"},
+				{AuraID =  3045, UnitID = "player"},
 				-- 野兽之心
-				{spellID = 34471, unitId = "player", Filter = "BUFF"},
+				{AuraID = 34471, UnitID = "player"},
 				-- 误导
-				{spellID = 34477, unitId = "player", Filter = "BUFF"},			
+				{AuraID = 34477, UnitID = "player"},			
 				-- 强化稳固射击
-				{spellID = 53220, unitId = "player", Filter = "BUFF"},
+				{AuraID = 53220, UnitID = "player"},
 				-- 眼镜蛇打击
-				{spellID = 53257, unitId = "player", Filter = "BUFF"},
+				{AuraID = 53257, UnitID = "player"},
 				-- 野性呼唤
-				{spellID = 53434, unitId = "player", Filter = "BUFF"},
+				{AuraID = 53434, UnitID = "player"},
 				-- 荷枪实弹
-				{spellID = 56453, unitId = "player", Filter = "BUFF"},
+				{AuraID = 56453, UnitID = "player"},
 				-- 攻击弱点
-				{spellID = 70728, unitId = "player", Filter = "BUFF"},
+				{AuraID = 70728, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 准备,端枪,瞄准... ...
-				{spellID = 82925, unitId = "player", Filter = "BUFF"},
+				{AuraID = 82925, UnitID = "player"},
 				-- 开火!
-				{spellID = 82926, unitId = "player", Filter = "BUFF"},
+				{AuraID = 82926, UnitID = "player"},
 				-- 上!
-				{spellID = 89388, unitId = "player", Filter = "BUFF"},
+				{AuraID = 89388, UnitID = "player"},
 				-- 血性大发
-				{spellID = 94007, unitId = "player", Filter = "BUFF"},
+				{AuraID = 94007, UnitID = "player"},
 				-- X光瞄准
-				{spellID = 95712, unitId = "player", Filter = "BUFF"},
+				{AuraID = 95712, UnitID = "player"},
 			},
 		},
 		
@@ -208,18 +202,18 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175 ,
+			IconSize = 20,
+			BarWidth = 175 ,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 猎人印记
-				{spellID =  1130 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  1130 ,UnitID = "target", Caster = "player"},
 				-- 毒蛇钉刺
-				{spellID =  1978 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  1978 ,UnitID = "target", Caster = "player"},
 				-- 驱散射击
-				{spellID = 19503 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 19503 ,UnitID = "target", Caster = "player"},
 				-- 穿刺射击
-				{spellID = 63468 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 63468 ,UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -231,33 +225,33 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 奥术强化
-				{spellID = 12042, unitId = "player", Filter = "BUFF"},
+				{AuraID = 12042, UnitID = "player"},
 				-- 唤醒
-				{spellID = 12051, unitId = "player", Filter = "BUFF"},
+				{AuraID = 12051, UnitID = "player"},
 				-- 奥术冲击
-				{spellID = 36032, unitId = "player", Filter = "DEBUFF"},				
+				{AuraID = 36032, UnitID = "player"},				
 				-- 寒冰指
-				{spellID = 44544, unitId = "player", Filter = "BUFF"},
+				{AuraID = 44544, UnitID = "player"},
 				-- 法术连击
-				{spellID = 48108, unitId = "player", Filter = "BUFF"},
+				{AuraID = 48108, UnitID = "player"},
 				-- 冰冷智慧
-				{spellID = 57761, unitId = "player", Filter = "BUFF"},
+				{AuraID = 57761, UnitID = "player"},
 				-- 冲击(等级1)
-				{spellID = 64343, unitId = "player", Filter = "BUFF"},
+				{AuraID = 64343, UnitID = "player"},
 				-- 奥术飞弹!
-				{spellID = 79683, unitId = "player", Filter = "BUFF"},
+				{AuraID = 79683, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 灸灼
-				{spellID = 87023, unitId = "player", Filter = "BUFF"},
+				{AuraID = 87023, UnitID = "player"},
 			},
 		},
 		
@@ -266,18 +260,18 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175 ,
+			IconSize = 20,
+			BarWidth = 175 ,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {		
 				-- 点燃
-				{spellID = 12654 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 12654 ,UnitID = "target", Caster = "player"},
 				-- 临界炽焰
-				{spellID = 22959 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 22959 ,UnitID = "target", Caster = "player"},
 				-- 减速
-				{spellID = 31589 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 31589 ,UnitID = "target", Caster = "player"},
 				-- 活动炸弹
-				{spellID = 44457 ,unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 44457 ,UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -289,65 +283,65 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 盾墙(防御姿态)
-				{spellID =   871, unitId = "player", Filter = "BUFF"},
+				{AuraID =   871, UnitID = "player"},
 				-- 怒火中烧
-				{spellID =  1134, unitId = "player", Filter = "BUFF"},
+				{AuraID =  1134, UnitID = "player"},
 				-- 盾牌格挡(防御姿态)
-				{spellID =  2565, unitId = "player", Filter = "BUFF"},			
+				{AuraID =  2565, UnitID = "player"},			
 				-- 横扫攻击(战斗,狂暴姿态)
-				{spellID = 12328, unitId = "player", Filter = "BUFF"},
+				{AuraID = 12328, UnitID = "player"},
 				-- 战斗专注
-				{spellID = 12964, unitId = "player", Filter = "BUFF"},
+				{AuraID = 12964, UnitID = "player"},
 				-- 破釜沉舟
-				{spellID = 12975, unitId = "player", Filter = "BUFF"},
+				{AuraID = 12975, UnitID = "player"},
 				-- 血之狂热
-				{spellID = 16491, unitId = "player", Filter = "BUFF"},
+				{AuraID = 16491, UnitID = "player"},
 				-- 反击风暴(战斗姿态)
-				{spellID = 20230, unitId = "player", Filter = "BUFF"},
+				{AuraID = 20230, UnitID = "player"},
 				-- 嗜血
-				{spellID = 23885, unitId = "player", Filter = "BUFF"},
+				{AuraID = 23885, UnitID = "player"},
 				-- 法术发射(战斗,防御姿态)
-				{spellID = 23920, unitId = "player", Filter = "BUFF"},
+				{AuraID = 23920, UnitID = "player"},
 				-- 复苏之风(等级1)
-				{spellID = 29841, unitId = "player", Filter = "BUFF"},
+				{AuraID = 29841, UnitID = "player"},
 				-- 胜利
-				{spellID = 32216, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32216, UnitID = "player"},
 				-- 血脉喷张
-				{spellID = 46916, unitId = "player", Filter = "BUFF"},
+				{AuraID = 46916, UnitID = "player"},
 				-- 剑盾猛攻
-				{spellID = 50227, unitId = "player", Filter = "BUFF"},
+				{AuraID = 50227, UnitID = "player"},
 				-- 猝死
-				{spellID = 55694, unitId = "player", Filter = "BUFF"},
+				{AuraID = 55694, UnitID = "player"},
 				-- 激怒(等级2)
-				{spellID = 57519, unitId = "player", Filter = "BUFF"},
+				{AuraID = 57519, UnitID = "player"},
 				-- 血之气息
-				{spellID = 60503, unitId = "player", Filter = "BUFF"},
+				{AuraID = 60503, UnitID = "player"},
 				-- 主宰
-				{spellID = 65156, unitId = "player", Filter = "BUFF"},
+				{AuraID = 65156, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 胜利
-				{spellID = 82368, unitId = "player", Filter = "BUFF"},
+				{AuraID = 82368, UnitID = "player"},
 				-- 屠夫(等级3)
-				{spellID = 84586, unitId = "player", Filter = "BUFF"},
+				{AuraID = 84586, UnitID = "player"},
 				-- 坚守阵地
-				{spellID = 84620, unitId = "player", Filter = "BUFF"},
+				{AuraID = 84620, UnitID = "player"},
 				-- 致命平静
-				{spellID = 85730, unitId = "player", Filter = "BUFF"},
+				{AuraID = 85730, UnitID = "player"},
 				-- 激动
-				{spellID = 86627, unitId = "player", Filter = "BUFF"},
+				{AuraID = 86627, UnitID = "player"},
 				-- 雷霆余震
-				{spellID = 87096, unitId = "player", Filter = "BUFF"},
+				{AuraID = 87096, UnitID = "player"},
 				-- 行刑者
-				{spellID = 90806, unitId = "player", Filter = "BUFF"},
+				{AuraID = 90806, UnitID = "player"},
 			},
 		},	
 
@@ -356,12 +350,12 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175,
+			IconSize = 20,
+			BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 撕裂(战斗,防御姿态)
-				{spellID = 94009, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 94009, UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -373,27 +367,27 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 25},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 闪电之盾
-				{spellID =   324, unitId = "player", Filter = "BUFF"},
+				{AuraID =   324, UnitID = "player"},
 				-- 萨满之怒
-				{spellID = 30823, unitId = "player", Filter = "BUFF"},
+				{AuraID = 30823, UnitID = "player"},
 				-- 水之护盾
-				{spellID = 52127, unitId = "player", Filter = "BUFF"},
+				{AuraID = 52127, UnitID = "player"},
 				-- 潮汐奔涌
-				{spellID = 53390, unitId = "player", Filter = "BUFF"},
+				{AuraID = 53390, UnitID = "player"},
 				-- 5层漩涡武器
-				{spellID = 53817, unitId = "player", Filter = "BUFF", Stack = 5},
+				{AuraID = 53817, UnitID = "player", Stack = 5},
 				-- 灵魂行者的恩赐
-				{spellID = 79206, unitId = "player", Filter = "BUFF"},
+				{AuraID = 79206, UnitID = "player"},
 
 			},
 		},
@@ -402,20 +396,20 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175,
+			IconSize = 20,
+			BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 大地震击
-				{spellID =  8042, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  8042, UnitID = "target", Caster = "player"},
 				-- 烈焰震击
-				{spellID =  8050, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  8050, UnitID = "target", Caster = "player"},
 				-- 冰霜震击
-				{spellID =  8056, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  8056, UnitID = "target", Caster = "player"},
 				-- 风暴打击
-				{spellID = 17364, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 17364, UnitID = "target", Caster = "player"},
 				-- 灼热烈焰
-				{spellID = 77661, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 77661, UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -427,47 +421,47 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 圣佑术
-				{spellID =   498, unitId = "player", Filter = "BUFF"},
+				{AuraID =   498, UnitID = "player"},
 				-- 圣盾术
-				{spellID =   642, unitId = "player", Filter = "BUFF"},
+				{AuraID =   642, UnitID = "player"},
 				-- 神恩术
-				{spellID = 31842, unitId = "player", Filter = "BUFF"},			
+				{AuraID = 31842, UnitID = "player"},			
 				-- 复仇之怒
-				{spellID = 31884, unitId = "player", Filter = "BUFF"},
+				{AuraID = 31884, UnitID = "player"},
 				-- 炙热防御者
-				{spellID = 31850, unitId = "player", Filter = "BUFF"},
+				{AuraID = 31850, UnitID = "player"},
 				-- 纯洁审判(等级3)
-				{spellID = 53657, unitId = "player", Filter = "BUFF"},
+				{AuraID = 53657, UnitID = "player"},
 				-- 圣光灌注(等级2)
-				{spellID = 54149, unitId = "player", Filter = "BUFF"},
+				{AuraID = 54149, UnitID = "player"},
 				-- 神圣恳求
-				{spellID = 54428, unitId = "player", Filter = "BUFF"},
+				{AuraID = 54428, UnitID = "player"},
 				-- 战争艺术
-				{spellID = 59578, unitId = "player", Filter = "BUFF"},
+				{AuraID = 59578, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 异端裁决
-				{spellID = 84963, unitId = "player", Filter = "BUFF"},
+				{AuraID = 84963, UnitID = "player"},
 				-- 大十字军 (复仇盾)
-				{spellID = 85043, unitId = "player", Filter = "BUFF"},
+				{AuraID = 85043, UnitID = "player"},
 				-- 神圣使命 (盾击必暴)
-				{spellID = 85433, unitId = "player", Filter = "BUFF"},
+				{AuraID = 85433, UnitID = "player"},
 				-- 狂热
-				{spellID = 85696, unitId = "player", Filter = "BUFF"},
+				{AuraID = 85696, UnitID = "player"},
 				-- 远古列王守卫
-				{spellID = 86659, unitId = "player", Filter = "BUFF"},
+				{AuraID = 86659, UnitID = "player"},
 				-- 破晓
-				{spellID = 88819, unitId = "player", Filter = "BUFF"},
+				{AuraID = 88819, UnitID = "player"},
 				-- 神圣意志
-				{spellID = 90174, unitId = "player", Filter = "BUFF"},
+				{AuraID = 90174, UnitID = "player"},
 			},
 		},
 		{
@@ -475,18 +469,18 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175,
+			IconSize = 20,
+			BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 制裁之锤
-				{spellID =   853, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =   853, UnitID = "target", Caster = "player"},
 				-- 神圣愤怒
-				{spellID =  2812, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  2812, UnitID = "target", Caster = "player"},
 				-- 超度邪恶
-				{spellID = 10326, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 10326, UnitID = "target", Caster = "player"},
 				-- 忏悔
-				{spellID = 20066, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 20066, UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -498,44 +492,44 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 消散
-				{spellID = 47585, unitId = "player", Filter = "BUFF"},
+				{AuraID = 47585, UnitID = "player"},
 				-- 争分夺秒
-				{spellID = 59888, unitId = "player", Filter = "BUFF"},			
+				{AuraID = 59888, UnitID = "player"},			
 				-- 妙手回春
-				{spellID = 63735, unitId = "player", Filter = "BUFF"},
+				{AuraID = 63735, UnitID = "player"},
 				-- 心灵融化
-				{spellID = 73510, unitId = "player", Filter = "BUFF"},				-- 暗影宝珠
-				{spellID = 77487, unitId = "player", Filter = "BUFF"},
+				{AuraID = 73510, UnitID = "player"},				-- 暗影宝珠
+				{AuraID = 77487, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 脉轮:佑
-				-- {spellID = 81206, unitId = "player", Filter = "BUFF"},
+				-- {AuraID = 81206, UnitID = "player"},
 				-- 脉轮:静
-				-- {spellID = 81208, unitId = "player", Filter = "BUFF"},
+				-- {AuraID = 81208, UnitID = "player"},
 				-- 脉轮:罚
-				-- {spellID = 81209, unitId = "player", Filter = "BUFF"},
+				-- {AuraID = 81209, UnitID = "player"},
 				-- 真言术:障
-				{spellID = 81782, unitId = "player", Filter = "BUFF"},
+				{AuraID = 81782, UnitID = "player"},
 				-- 黑暗福音
-				{spellID = 87118, unitId = "player", Filter = "BUFF"},
+				{AuraID = 87118, UnitID = "player"},
 				-- 天使长
-				{spellID = 87152, unitId = "player", Filter = "BUFF"},
+				{AuraID = 87152, UnitID = "player"},
 				-- 黑暗天使长
-				{spellID = 87153, unitId = "player", Filter = "BUFF"},    
+				{AuraID = 87153, UnitID = "player"},    
 				-- 福音传播
-				{spellID = 81661, unitId = "player", Filter = "BUFF"},
+				{AuraID = 81661, UnitID = "player"},
 				-- 圣光涌动(等级1)
-				{spellID = 88688, unitId = "player", Filter = "BUFF"},
+				{AuraID = 88688, UnitID = "player"},
 				-- 强效暗影
-				{spellID = 95799, unitId = "player", Filter = "BUFF"},
+				{AuraID = 95799, UnitID = "player"},
 			},
 		},
 
@@ -544,18 +538,18 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175,
+			IconSize = 20,
+			BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 暗言术:痛
-				{spellID =   589, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =   589, UnitID = "target", Caster = "player"},
 				-- 噬灵疫病
-				{spellID =  2944, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  2944, UnitID = "target", Caster = "player"},
 				-- 虚弱灵魂
-				{spellID =  6788, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  6788, UnitID = "target", Caster = "player"},
 				-- 吸血鬼之触
-				{spellID = 34914, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 34914, UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -567,31 +561,31 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 暗影冥思
-				{spellID = 17941, unitId = "player", Filter = "BUFF"},
+				{AuraID = 17941, UnitID = "player"},
 				-- 反冲(等级3)
-				{spellID = 34939, unitId = "player", Filter = "BUFF"},
+				{AuraID = 34939, UnitID = "player"},
 				-- 小鬼增效
-				{spellID = 47283, unitId = "player", Filter = "BUFF"},			
+				{AuraID = 47283, UnitID = "player"},			
 				-- 灭杀(等级2)
-				{spellID = 63158, unitId = "player", Filter = "BUFF"},
+				{AuraID = 63158, UnitID = "player"},
 				-- 灭杀
-				{spellID = 63167, unitId = "player", Filter = "BUFF"},
+				{AuraID = 63167, UnitID = "player"},
 				-- 熔火之心
-				{spellID = 71165, unitId = "player", Filter = "BUFF"},
+				{AuraID = 71165, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 强化灵魂之火
-				{spellID = 85383, unitId = "player", Filter = "BUFF"},
+				{AuraID = 85383, UnitID = "player"},
 				-- 魔能火花
-				{spellID = 89937, unitId = "player", Filter = "BUFF"},
+				{AuraID = 89937, UnitID = "player"},
 			},
 		},
 
@@ -600,36 +594,36 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175,
+			IconSize = 20,
+			BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 腐蚀术
-				{spellID =   172, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =   172, UnitID = "target", Caster = "player"},
 				-- 献祭
-				{spellID =   348, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =   348, UnitID = "target", Caster = "player"},
 				-- 末日灾祸
-				{spellID =   603, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =   603, UnitID = "target", Caster = "player"},
 				-- 痛苦灾祸
-				{spellID =   980, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =   980, UnitID = "target", Caster = "player"},
 				-- 元素诅咒
-				{spellID =  1490, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  1490, UnitID = "target", Caster = "player"},
 				-- 暗影烈焰 (强化暗箭)
-				{spellID = 17800, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 17800, UnitID = "target", Caster = "player"},
 				-- 烧尽
-				{spellID = 29722, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 29722, UnitID = "target", Caster = "player"},
 				-- 痛苦无常
-				{spellID = 30108, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 30108, UnitID = "target", Caster = "player"},
 				-- 暗影之拥
-				{spellID = 32389, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 32389, UnitID = "target", Caster = "player"},
 				-- 鬼影缠身
-				{spellID = 48181, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 48181, UnitID = "target", Caster = "player"},
 				-- 混乱之箭
-				{spellID = 50796, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 50796, UnitID = "target", Caster = "player"},
 				-- 浩劫灾祸
-				{spellID = 80240, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 80240, UnitID = "target", Caster = "player"},
 				-- 古尔丹邪咒
-				{spellID = 86000, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 86000, UnitID = "target", Caster = "player"},
 			},
 		},	
 	},
@@ -641,33 +635,33 @@ SRAuraList = {
 			Direction = "RIGHT",
 			Interval = 6,
 			Mode = "ICON",
-			iconSize = 30,
+			IconSize = 30,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 佯攻
-				{spellID =  1966, unitId = "player", Filter = "BUFF"},
+				{AuraID =  1966, UnitID = "player"},
 				-- 切割
-				{spellID =  5171, unitId = "player", Filter = "BUFF"},
+				{AuraID =  5171, UnitID = "player"},
 				-- 冷血
-				{spellID = 14177, unitId = "player", Filter = "BUFF"},
+				{AuraID = 14177, UnitID = "player"},
 				-- 毒伤
-				{spellID = 32645, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32645, UnitID = "player"},
 				-- 嫁祸诀窍
-				{spellID = 57934, unitId = "player", Filter = "BUFF"},			
+				{AuraID = 57934, UnitID = "player"},			
 				-- 灭绝
-				{spellID = 58427, unitId = "player", Filter = "BUFF"},
+				{AuraID = 58427, UnitID = "player"},
 				-- 嫁祸诀窍
-				{spellID = 59628, unitId = "player", Filter = "BUFF"},
+				{AuraID = 59628, UnitID = "player"},
 				-- 养精蓄锐
-				{spellID = 73651, unitId = "player", Filter = "BUFF"},
+				{AuraID = 73651, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 致命冲动
-				{spellID = 84590, unitId = "player", Filter = "BUFF"},
+				{AuraID = 84590, UnitID = "player"},
 			}
 		},
 		
@@ -676,24 +670,24 @@ SRAuraList = {
 			Direction = "UP",
 			Interval = 4,
 			Mode = "BAR",
-			iconSize = 20,
-			barWidth = 175,
+			IconSize = 20,
+			BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 肾击
-				{spellID =   408, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =   408, UnitID = "target", Caster = "player"},
 				-- 偷袭
-				{spellID =  1833, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  1833, UnitID = "target", Caster = "player"},
 				-- 割裂
-				{spellID =  1943, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  1943, UnitID = "target", Caster = "player"},
 				-- 破甲
-				{spellID =  8647, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID =  8647, UnitID = "target", Caster = "player"},
 				-- 缴械
-				{spellID = 51722, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 51722, UnitID = "target", Caster = "player"},
 				-- 要害打击
-				{spellID = 84617, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 84617, UnitID = "target", Caster = "player"},
 				-- 仇杀
-				{spellID = 79140, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 79140, UnitID = "target", Caster = "player"},
 			}
 		},
 			
@@ -703,64 +697,59 @@ SRAuraList = {
 	["DEATHKNIGHT"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			iconSize = 30,
+			Direction = "RIGHT",Interval = 6,
+			Mode = "ICON", IconSize = 30, ClickCast = true,
 			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
-				{spellID =  2825, unitId = "player", Filter = "BUFF"},
+				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
-				{spellID = 32182, unitId = "player", Filter = "BUFF"},
+				{AuraID = 32182, UnitID = "player"},
 				-- 时间扭曲
-				{spellID = 80353, unitId = "player", Filter = "BUFF"},
-				-- 利刃屏障(等级3)
-				{spellID = 64856, unitId = "player", Filter = "BUFF"},
+				{AuraID = 80353, UnitID = "player"},
+				-- 利刃屏障
+				{AuraID = 64856, UnitID = "player"},
 				-- 反魔法护罩
-				{spellID = 48707, unitId = "player", Filter = "BUFF"},
+				{AuraID = 48707, UnitID = "player"},
 				-- 冰封之韧
-				{spellID = 48792, unitId = "player", Filter = "BUFF"},
+				{AuraID = 48792, UnitID = "player"},
 				-- 末日突降
-				{spellID = 49018, unitId = "player", Filter = "BUFF"},			
+				{AuraID = 49018, UnitID = "player"},			
 				-- 巫妖之躯
-				{spellID = 49039, unitId = "player", Filter = "BUFF"},
+				{AuraID = 49039, UnitID = "player"},
 				-- 白骨之盾
-				{spellID = 49222, unitId = "player", Filter = "BUFF"},
+				{AuraID = 49222, UnitID = "player"},
 				-- 杀戮机器
-				{spellID = 51124, unitId = "player", Filter = "BUFF"},
+				{AuraID = 51124, UnitID = "player"},
 				-- 灰烬冰川
-				{spellID = 53386, unitId = "player", Filter = "BUFF"},
+				{AuraID = 53386, UnitID = "player"},
 				-- 吸血鬼之血
-				{spellID = 55233, unitId = "player", Filter = "BUFF"},
+				{AuraID = 55233, UnitID = "player"},
 				-- 冰冻之雾
-				{spellID = 59052, unitId = "player", Filter = "BUFF"},
+				{AuraID = 59052, UnitID = "player"},
 				-- 赤色天灾
-				{spellID = 81141, unitId = "player", Filter = "BUFF"},
+				{AuraID = 81141, UnitID = "player"},
 				-- 大墓地的意志
-				{spellID = 81162, unitId = "player", Filter = "BUFF"},
+				{AuraID = 81162, UnitID = "player"},
 				-- 符文刃舞
-				{spellID = 81256, unitId = "player", Filter = "BUFF"},
+				{AuraID = 81256, UnitID = "player"},
 				-- 暗影灌注
-				{spellID = 91342, unitId = "pet", Filter = "BUFF"}, 
+				{AuraID = 91342, UnitID = "pet"}, 
 			},
 		},
 		
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
-			Mode = "BAR",
-			iconSize = 16,
-			barWidth = 175,
+			Direction = "UP", Interval = 4,
+			Mode = "BAR", IconSize = 16, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 血之疫病
-				{spellID = 55078, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 55078, UnitID = "target", Caster = "player"},
 				-- 冰霜疫病
-				{spellID = 55095, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 55095, UnitID = "target", Caster = "player"},
 				-- 血红热疫
-				{spellID = 81130, unitId = "target", Caster = "player", Filter = "DEBUFF"},
+				{AuraID = 81130, UnitID = "target", Caster = "player"},
 			},
 		},
 		
@@ -769,16 +758,16 @@ SRAuraList = {
 			Direction = "DOWN",
 			Interval = 4,
 			Mode = "ICON",
-			iconSize = 48,
-			barWidth = 175,
+			IconSize = 48,
+			BarWidth = 175,
 			Pos = {"CENTER", UIParent, "CENTER", 0, 100},
 			List = {
 				-- 随身邮箱
-				{itemID = 40768, Filter = "CD"},
+				{ItemID = 40768},
 				-- 不灭药水
-				{itemID = 40093, Filter = "CD"},
+				{ItemID = 40093},
 				-- 厚烬丝绷带
-				{itemID = 53050, Filter = "CD"},
+				{ItemID = 53050},
 			},
 		},]]
 	
