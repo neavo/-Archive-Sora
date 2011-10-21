@@ -1,8 +1,0 @@
-## Interface: 40200
-## Notes: World Map modifications
-## Title: mono|cffffffffMap|r
-## Author: Monolit
-## X-Credits: Nevcairiel (Mapster)
-## Version: 3.5
-
-m_Map.lua
