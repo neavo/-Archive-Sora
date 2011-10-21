@@ -20,8 +20,7 @@ end
 -- BuildICON
 function cfg.BuildICON(iconSize)
 	local Frame = CreateFrame("Frame", nil, UIParent)
-	Frame:SetWidth(iconSize)
-	Frame:SetHeight(iconSize)
+	Frame:SetSize(iconSize, iconSize)
 	
 	Frame.Icon = Frame:CreateTexture(nil, "ARTWORK") 
 	Frame.Icon:SetAllPoints()
@@ -33,13 +32,12 @@ function cfg.BuildICON(iconSize)
 	Frame.Count:SetFont(cfg.Font, 10, "THINOUTLINE") 
 	Frame.Count:SetPoint("BOTTOMRIGHT", 3, -1)
 	
-	Frame.Cooldown = CreateFrame("Cooldown", nil, Frame, "CooldownFrameTemplate") 
+	Frame.Cooldown = CreateFrame("Cooldown", nil, Frame) 
 	Frame.Cooldown:SetAllPoints() 
 	Frame.Cooldown:SetReverse(true)
 	
 	Frame.Statusbar = CreateFrame("StatusBar", nil, Frame)
-	Frame.Statusbar:SetWidth(Frame:GetWidth())
-	Frame.Statusbar:SetHeight(Frame:GetHeight()/10)	
+	Frame.Statusbar:SetSize(Frame:GetWidth(), Frame:GetHeight()/10)
 	Frame.Statusbar:SetPoint("BOTTOM", Frame, "TOP", 0, 2) 
 	Frame.Statusbar:SetStatusBarTexture(cfg.Statusbar) 
 	Frame.Statusbar:SetStatusBarColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b, 0.9)
@@ -59,8 +57,7 @@ end
 -- BuildBAR
 function cfg.BuildBAR(iconSize, barWidth)
 	local Frame = CreateFrame("Frame", nil, UIParent)
-	Frame:SetWidth(barWidth)
-	Frame:SetHeight(iconSize)
+	Frame:SetSize(barWidth, iconSize)
 	
 	Frame.Icon = Frame:CreateTexture(nil, "ARTWORK")
 	Frame.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
@@ -72,8 +69,7 @@ function cfg.BuildBAR(iconSize, barWidth)
 	Frame.Icon.Shadow:SetPoint("BOTTOMRIGHT", Frame.Icon, 3, -3)
 
 	Frame.Statusbar = CreateFrame("StatusBar", nil, Frame)
-	Frame.Statusbar:SetWidth(Frame:GetWidth())
-	Frame.Statusbar:SetHeight(Frame:GetHeight()/3)	
+	Frame.Statusbar:SetSize(Frame:GetWidth(), Frame:GetHeight()/3)
 	Frame.Statusbar:SetPoint("BOTTOM") 
 	Frame.Statusbar:SetStatusBarTexture(cfg.Statusbar) 
 	Frame.Statusbar:SetStatusBarColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b, 0.9)

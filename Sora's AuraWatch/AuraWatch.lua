@@ -94,7 +94,7 @@ local function UpdateBuff(Frame, value, idName, key)
 	Frame.Icon:SetTexture(icon)
 	Frame.Count:SetText(count > 1 and count or "")
 	
-	if Frame.Cooldown then CooldownFrame_SetTimer(Frame.Cooldown, expires-duration, duration, 1) end
+	if Frame.Cooldown then Frame.Cooldown:SetCooldown(expires-duration, duration) end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
 		Frame.Filter = value.Filter
@@ -115,7 +115,7 @@ local function UpdateDebuff(Frame, value, idName, key)
 	Frame.Icon:SetTexture(icon)
 	Frame.Count:SetText(count > 1 and count or "")
 	
-	if Frame.Cooldown then CooldownFrame_SetTimer(Frame.Cooldown, expires-duration, duration, 1) end
+	if Frame.Cooldown then Frame.Cooldown:SetCooldown(expires-duration, duration) end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
 		Frame.Filter = value.Filter
@@ -135,7 +135,7 @@ local function UpdateCD(Frame, value, idName, key)
 	Frame.Icon:SetTexture(icon)
 	if Frame.Cooldown then
 		Frame.Cooldown:SetReverse(false)
-		CooldownFrame_SetTimer(Frame.Cooldown, start , duration, 1)
+		Frame.Cooldown:SetCooldown(start, duration)
 	end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
@@ -156,7 +156,7 @@ local function UpdateItemCD(Frame, value, idName, key)
 	Frame.Icon:SetTexture(icon)
 	if Frame.Cooldown then
 		Frame.Cooldown:SetReverse(false)
-		CooldownFrame_SetTimer(Frame.Cooldown, start , duration, 1)
+		Frame.Cooldown:SetCooldown(start, duration)
 	end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
