@@ -3,7 +3,7 @@ local S, _, _, DB = unpack(select(2, ...))
 local _, ns = ...
 local oUF = ns.oUF or oUF
 
-oUF.colors.power["MANA"] = {0.1, 0.3, 1}
+oUF.colors.power["MANA"] = {0.31, 0.45, 0.63}
 
 oUF.Tags["Sora:color"] = function(u, r)
 	local _, class = UnitClass(u)
