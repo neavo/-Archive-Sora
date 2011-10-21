@@ -22,12 +22,14 @@ Event:SetScript("OnEvent", function()
 					if icon1 then
 						icon1:ClearAllPoints()
 						icon1:SetSize(24, 24)
+						icon1:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 						icon1:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", -5, 0)
 					end
 
 					if icon2 then
 						icon2:ClearAllPoints()
 						icon2:SetSize(24, 24)
+						icon2:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 						icon2:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 5, 0)
 					end
 
