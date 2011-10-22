@@ -1,6 +1,6 @@
 InspectFix = CreateFrame("Button", "InspectFixHiddenFrame", UIParent)
 local addonName = "InspectFix"
-local revision = tonumber(("$Revision: 21 $"):match("%d+"))
+local revision = tonumber(("$Revision: 26 $"):match("%d+"))
 
 local BlizzardNotifyInspect = _G.NotifyInspect
 local InspectPaperDollFrame_SetLevel = nil
@@ -11,7 +11,7 @@ local debugging = false
 
 local function debug(msg)
   if debugging then
-     -- DEFAULT_CHAT_FRAME:AddMessage("\124cFFFF0000"..addonName.."\124r: "..msg)
+     DEFAULT_CHAT_FRAME:AddMessage("\124cFFFF0000"..addonName.."\124r: "..msg)
   end
 end
 
@@ -40,11 +40,13 @@ end
 local function inspectonevent(self, event, ...)
   if inspectfilter(self, event, ...) then
     InspectFrame_OnEvent(self, event, ...)
+    InspectFix:Update()
   end
 end
 local function inspectonupdate(self)
   if inspectfilter(self, nil) then
     InspectFrame_OnUpdate(self)
+    InspectFix:Update()
   end
 end
 
@@ -92,6 +94,16 @@ local function pdfonenter(self)
     end
   end
 end
+
+function InspectFix:GetID() return self.val end
+InspectFix.val = INVSLOT_FIRST_EQUIPPED
+function InspectFix:Update() 
+ for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
+   InspectFix.val = slot
+   pdfupdate(InspectFix)
+ end
+end
+
 
 local blockmsg = {}
 
@@ -163,13 +175,14 @@ function InspectFix:tryhook()
   end
 
   if _G.NotifyInspect and _G.NotifyInspect ~= NIhook then
-    _G.NotifyInspect = NIhook
     if not hooked["notifyinspect"] then
+      BlizzardNotifyInspect = _G.NotifyInspect
+      _G.NotifyInspect = NIhook
       hookcnt = hookcnt + 1
       hooked["notifyinspect"] = true
       debug("Hooked notifyinspect")
     else
-      debug("Re-Hooked notifyinspect")
+      debug("NotifyInspect hooked by another addon")
     end
   end
 
@@ -196,34 +209,34 @@ function InspectFix:tryhook()
   end
 
   if _G.InspectPaperDollFrame_SetLevel and _G.InspectPaperDollFrame_SetLevel ~= setlevel_hook then
-    InspectPaperDollFrame_SetLevel = _G.InspectPaperDollFrame_SetLevel
-    _G.InspectPaperDollFrame_SetLevel = setlevel_hook
     if not hooked[setlevel_hook] then
+      InspectPaperDollFrame_SetLevel = _G.InspectPaperDollFrame_SetLevel
+      _G.InspectPaperDollFrame_SetLevel = setlevel_hook
       hooked[setlevel_hook] = true
       hookcnt = hookcnt + 1
       debug("Hooked setlevel_hook")
     else
-      debug("Re-Hooked setlevel_hook")
+      debug("InspectPaperDollFrame_SetLevel hooked by another addon")
     end
   end
 
   if _G.InspectGuildFrame_Update and _G.InspectGuildFrame_Update ~= guildframe_hook then
-    InspectGuildFrame_Update = _G.InspectGuildFrame_Update
-    _G.InspectGuildFrame_Update = guildframe_hook
     if not hooked[guildframe_hook] then
+      InspectGuildFrame_Update = _G.InspectGuildFrame_Update
+      _G.InspectGuildFrame_Update = guildframe_hook
       hooked[guildframe_hook] = true
       hookcnt = hookcnt + 1
       debug("Hooked guildframe_hook")
     else
-      debug("Re-Hooked guildframe_hook")
+      debug("InspectGuildFrame_Update hooked by another addon")
     end
   end
 
   if _G.InspectPaperDollFrame_OnShow and _G.InspectPaperDollFrame_OnShow ~= pdfshow_hook then
-    InspectPaperDollFrame_OnShow = _G.InspectPaperDollFrame_OnShow
-    _G.InspectPaperDollFrame_OnShow = pdfshow_hook
     InspectPaperDollFrame:SetScript("OnShow", pdfshow_hook)
     if not hooked[pdfshow_hook] then
+      InspectPaperDollFrame_OnShow = _G.InspectPaperDollFrame_OnShow
+      _G.InspectPaperDollFrame_OnShow = pdfshow_hook
       hooked[pdfshow_hook] = true
       hookcnt = hookcnt + 1
       debug("Hooked pdfshow_hook")
@@ -264,7 +277,7 @@ function InspectFix:Load()
   if not revstr or string.find(revstr, "@") then
     revstr = "r"..tostring(revision)
   end
-  -- print("InspectFix "..revstr.." loaded.")
+  print("InspectFix "..revstr.." loaded.")
 end
 
 function InspectFix:Unload()
