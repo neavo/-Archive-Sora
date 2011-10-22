@@ -19,7 +19,7 @@ end
 
 -- BuildICON
 function cfg.BuildICON(IconSize, ClickCast)
-	local Frame = ClickCast and CreateFrame("Button", nil, UIParent, "SecureActionButtonTemplate") or CreateFrame("Frame", nil, UIParent)
+	local Frame = CreateFrame("Frame", nil, UIParent)
 	Frame:SetSize(IconSize, IconSize)
 	
 	Frame.Icon = Frame:CreateTexture(nil, "ARTWORK") 
@@ -51,7 +51,12 @@ function cfg.BuildICON(IconSize, ClickCast)
 	Frame.Statusbar.BG:SetTexture(cfg.Statusbar)
 	Frame.Statusbar.BG:SetVertexColor(0.1, 0.1, 0.1, 0.6)
 	
-	if ClickCast then Frame:SetAttribute("type1","macro") end
+	--[[if ClickCast then
+		Frame.ClickCast = CreateFrame("Button", nil, Frame, "SecureActionButtonTemplate")
+		Frame.ClickCast:SetAllPoints()
+		--Frame.ClickCast:SetFrameLevel(Frame:GetFrameLevel()+1)
+		Frame.ClickCast:SetAttribute("type1","macro")
+	end]]
 	
 	return Frame
 end
@@ -90,7 +95,14 @@ function cfg.BuildBAR(BarWidth, IconSize, ClickCast)
 
 	Frame.Spellname = Frame.Statusbar:CreateFontString(nil, "ARTWORK") 
 	Frame.Spellname:SetFont(cfg.Font, 11, "THINOUTLINE") 
-	Frame.Spellname:SetPoint("CENTER", -10, 5) 
+	Frame.Spellname:SetPoint("CENTER", -10, 5)
+	
+	--[[if ClickCast then
+		Frame.ClickCast = CreateFrame("Button", nil, Frame, "SecureActionButtonTemplate")
+		Frame.ClickCast:SetAllPoints(Frame.Icon)
+		--Frame.ClickCast:SetFrameLevel(Frame:GetFrameLevel()+1)
+		Frame.ClickCast:SetAttribute("type1","macro")
+	end]]
 	
 	return Frame
 end

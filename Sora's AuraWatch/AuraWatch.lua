@@ -93,7 +93,7 @@ local function UpdateUnitDB(UnitID, Bool)
 end
 
 -- UpdateAura
-local function UpdateAura(Frame, value, Name, VALUE, ClickCast)
+local function UpdateAura(Frame, value, Name, VALUE)
 	local name, _, icon, count, _, duration, expires, caster = nil, nil, nil, nil, nil, nil, nil, nil
 	if UnitBuff(value.UnitID, Name) then 
 		name, _, icon, count, _, duration, expires, caster = UnitBuff(value.UnitID, Name)
@@ -115,15 +115,15 @@ local function UpdateAura(Frame, value, Name, VALUE, ClickCast)
 		Frame:SetScript("OnUpdate", OnUpdate)
 	end
 	
-	if ClickCast then Frame:SetAttribute("macrotext", "/cast [target="..value.UnitID.."] "..name) end
+	if Frame.ClickCast then Frame.ClickCast:SetAttribute("macrotext", "/cast [target="..value.UnitID.."] "..name) end
 
 	VALUE.Index = VALUE.Index + 1
 end
 
 -- UpdateCD
-local function UpdateCD(Frame, value, Name, VALUE)
-	local start, duration = GetSpellCooldown(Name)
-	local _, _, icon = GetSpellInfo(value.spellID)
+local function UpdateCD(Frame, value, VALUE)
+	local start, duration = GetSpellCooldown(value.SpellID)
+	local name, _, icon = GetSpellInfo(value.SpellID)
 
 	Frame:Show()	
 	Frame.Icon:SetTexture(icon)
@@ -177,16 +177,15 @@ local function Update()
 			local Frame = VALUE[VALUE.Index]
 			if value.AuraID then
 				local Name = GetSpellInfo(value.AuraID)
-				if UnitBuff(value.UnitID, Name) then UpdateAura(Frame, value, Name, VALUE, AuraList[KEY].ClickCast) end
-				if UnitDebuff(value.UnitID, Name) then UpdateAura(Frame, value, Name, VALUE, AuraList[KEY].ClickCast) end
+				if UnitBuff(value.UnitID, Name) then UpdateAura(Frame, value, Name, VALUE) end
+				if UnitDebuff(value.UnitID, Name) then UpdateAura(Frame, value, Name, VALUE) end
 			end
 			if value.ItemID then
 				local Name = GetItemInfo(value.ItemID)
 				if select(2, GetItemCooldown(value.ItemID)) > 1.5 then UpdateItemCD(Frame, value, Name, VALUE) end
 			end
 			if value.SpellID then
-				local Name = GetSpellInfo(value.SpellID)
-				if GetSpellCooldown(Name) and select(2, GetSpellCooldown(Name)) > 1.5 then UpdateCD(Frame, value, Name, VALUE) end
+				if GetSpellCooldown(value.SpellID) and select(2, GetSpellCooldown(value.SpellID)) > 1.5 then UpdateCD(Frame, value, VALUE) end
 			end
 		end
 	end

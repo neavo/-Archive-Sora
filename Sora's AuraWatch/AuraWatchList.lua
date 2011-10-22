@@ -741,7 +741,7 @@ SRAuraList = {
 		{
 			Name = "TargetDebuff",
 			Direction = "UP", Interval = 4,
-			Mode = "BAR", IconSize = 16, BarWidth = 175,
+			Mode = "BAR", IconSize = 16, BarWidth = 175, ClickCast = true,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 血之疫病
@@ -757,7 +757,7 @@ SRAuraList = {
 			Name = "CD",
 			Direction = "DOWN",
 			Interval = 4,
-			Mode = "ICON",
+			Mode = "BAR",
 			IconSize = 48,
 			BarWidth = 175,
 			Pos = {"CENTER", UIParent, "CENTER", 0, 100},
@@ -768,6 +768,8 @@ SRAuraList = {
 				{ItemID = 40093},
 				-- 厚烬丝绷带
 				{ItemID = 53050},
+				-- Test
+				{SpellID = 48792},
 			},
 		},]]
 	
