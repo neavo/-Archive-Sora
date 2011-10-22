@@ -753,7 +753,7 @@ SRAuraList = {
 			},
 		},
 		
-		{
+		--[[{
 			Name = "CD",
 			Direction = "DOWN",
 			Interval = 4,
@@ -771,7 +771,6 @@ SRAuraList = {
 				-- Test
 				{SpellID = 48792},
 			},
-		},
-	
+		},]]
 	},
 }

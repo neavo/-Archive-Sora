@@ -25,9 +25,9 @@ local function Init()
 		local FrameTable = {}
 		for i = 1, MaxFrame do
 			if value.Mode:lower() == "icon" then
-				tinsert(FrameTable, BuildICON(value.IconSize, value.ClickCast))
+				tinsert(FrameTable, BuildICON(value.IconSize))
 			elseif value.Mode:lower() == "bar" then
-				tinsert(FrameTable, BuildBAR(value.BarWidth, value.IconSize, value.ClickCast))
+				tinsert(FrameTable, BuildBAR(value.BarWidth, value.IconSize))
 			end
 		end
 		FrameTable.Index = 1
@@ -144,6 +144,8 @@ local function UpdateAuraFrame(index, UnitID, name, icon, count, duration, expir
 		Frame.expires = expires
 		Frame:SetScript("OnUpdate", OnUpdate)
 	end
+	if Frame.ClickCast then Frame.ClickCast:SetAttribute("macrotext", "/cast [target="..UnitID.."] "..name) end
+	
 	Frame.UnitID = UnitID
 	
 	Aura[index].Index = (Aura[index].Index + 1 > MaxFrame) and MaxFrame or Aura[index].Index + 1
@@ -231,7 +233,6 @@ SlashCmdList.SRAuraWatch = function()
 		TestFlag = false
 		Event:SetScript("OnUpdate", nil)
 		Event:UnregisterEvent("UNIT_AURA")
-		Event:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		Event:UnregisterEvent("PLAYER_TARGET_CHANGED")
 		for _, VALUE in pairs(Aura) do
 			for i = 1, MaxFrame do
@@ -246,9 +247,15 @@ SlashCmdList.SRAuraWatch = function()
 		end
 	else
 		TestFlag = true
+		Event:SetScript("OnUpdate", function(self, elapsed)
+			self.Timer = self.Timer + elapsed
+			if self.Timer > 0.5 then
+				self.Timer = 0
+				UpdateCD()
+			end	
+		end)
 		Event:RegisterEvent("UNIT_AURA")
-		Event:RegisterEvent("PLAYER_ENTERING_WORLD")
-		Event:UnregisterEvent("PLAYER_TARGET_CHANGED")
+		Event:RegisterEvent("PLAYER_TARGET_CHANGED")
 		for _, VALUE in pairs(Aura) do
 			for i = 1, MaxFrame do
 				VALUE[i]:Hide()
