@@ -1,0 +1,17 @@
+tag v40200-1.4.0
+478fa5e21f9f3970dda8ffde0841f6f4751ddf0b
+James Whitehead II <jnwhiteh@gmail.com>
+2011-06-29 17:57:49 +0100
+
+v40200-1.4.0
+
+
+--------------------
+
+James Whitehead II:
+	- Updating TOC for 4.2
+	- Add missing Localization.ruRU.lua file
+	- Revert "Use 'secure' registration for RegisterFrame"
+	This reverts commit 0fa3e7bde2be8b508e152999872878425cb612ec.
+	- Clarify license as All rights reserved
+	- Use 'secure' registration for RegisterFrame

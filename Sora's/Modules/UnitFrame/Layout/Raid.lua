@@ -18,23 +18,6 @@ local function BuildMenu(self)
 	end
 end
 
-local function BuildClickCast(self)
-	for KEY, VALUE in pairs(UnitFrameDB.ClickCast) do
-		for	key, value in pairs(VALUE) do
-			if value.Enable then
-				local Button = key == "Left" and "1" or "2"
-				if KEY == "Click" then
-					self:SetAttribute("type"..Button, "spell")
-					self:SetAttribute("spell"..Button, value.Spell)
-				else
-					self:SetAttribute(KEY:lower().."-type"..Button, "spell")
-					self:SetAttribute(KEY:lower().."-spell"..Button, value.Spell)
-				end
-			end
-		end
-	end
-end
-
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
 	Bar:SetStatusBarTexture(DB.Statusbar)
@@ -302,9 +285,6 @@ local function BuildRaidFrame(self, ...)
 	
 	-- BuildRaidDebuffs
 	if UnitFrameDB.ShowRaidDebuffs then BuildRaidDebuffs(self) end
-	
-	-- BuildClickCast
-	if UnitFrameDB.EnableClickCast then BuildClickCast(self) end
 	
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end

@@ -45,26 +45,6 @@ function C.UnitFrame.LoadSettings()
 		-- 小队框体
 		["ShowParty"] = false,
 			["ShowPartyDebuff"] = true,
-		-- 点击施法
-		["EnableClickCast"] = false,
-		["ClickCast"] = {
-			["Click"] = {
-				["Left"] = {["Enable"] = false, ["Spell"] = "无"},
-				["Right"] = {["Enable"] = false, ["Spell"] = "无"},
-			},
-			["Ctrl"] = {
-				["Left"] = {["Enable"] = false, ["Spell"] = "无"},
-				["Right"] = {["Enable"] = false, ["Spell"] = "无"},
-			},
-			["Shift"] = {
-				["Left"] = {["Enable"] = false, ["Spell"] = "无"},
-				["Right"] = {["Enable"] = false, ["Spell"] = "无"},
-			},
-			["Alt"] = {
-				["Left"] = {["Enable"] = false, ["Spell"] = "无"},
-				["Right"] = {["Enable"] = false, ["Spell"] = "无"},
-			},
-		},
 		--其他
 		["RaidScale"] = 1,
 	}
@@ -346,89 +326,14 @@ function C.UnitFrame.BuildGUI()
 				},
 				Header_3 = {
 					type = "header",
-					name = "点击施法",
-					order = 9,
-				},
-				EnableClickCast = {
-					type = "toggle",
-					name = "启用点击施法",
-					width = "full",
-					order = 10,
-					get = function() return UnitFrameDB.EnableClickCast end,
-					set = function(_, value) UnitFrameDB.EnableClickCast = value end,
-				},
-				LeftButton = {
-					type = "select",
-					name = "选择",
-					disabled = not UnitFrameDB.EnableClickCast,
-					order = 11,
-					values = {
-						["Click"] = "鼠标左键",
-						["Ctrl"] = "Ctrl + 鼠标左键",
-						["Shift"] = "Shift + 鼠标左键",
-						["Alt"] = "Alt + 鼠标左键",
-					},
-					get = function() return C.UnitFrame.LeftButton end,
-					set = function(_, value) C.UnitFrame.LeftButton = value end,
-				},
-				LeftButtonSpell = {
-					type = "input",
-					name = "法术名称：",
-					desc = "请输入法术名称：",
-					disabled = not UnitFrameDB.EnableClickCast,
-					order = 12,
-					get = function() return UnitFrameDB["ClickCast"][C.UnitFrame.LeftButton]["Left"]["Spell"] end,
-					set = function(_, value) UnitFrameDB["ClickCast"][C.UnitFrame.LeftButton]["Left"]["Spell"] = value end,
-				},
-				LeftButtonEnable = {
-					type = "toggle",
-					name = "启用",
-					disabled = not UnitFrameDB.EnableClickCast,
-					order = 13,
-					get = function() return UnitFrameDB["ClickCast"][C.UnitFrame.LeftButton]["Left"]["Enable"] end,
-					set = function(_, value) UnitFrameDB["ClickCast"][C.UnitFrame.LeftButton]["Left"]["Enable"] = value end,
-				},
-				RightButton = {
-					type = "select",
-					name = "选择",
-					disabled = not UnitFrameDB.EnableClickCast,
-					order = 14,
-					values = {
-						["Click"] = "鼠标右键",
-						["Ctrl"] = "Ctrl + 鼠标右键",
-						["Shift"] = "Shift + 鼠标右键",
-						["Alt"] = "Alt + 鼠标右键",
-					},
-					get = function() return C.UnitFrame.RightButton end,
-					set = function(_, value) C.UnitFrame.RightButton = value end,
-				},
-				RightButtonSpell = {
-					type = "input",
-					name = "法术名称：",
-					desc = "请输入法术名称：",
-					disabled = not UnitFrameDB.EnableClickCast,
-					order = 15,
-					get = function() return UnitFrameDB["ClickCast"][C.UnitFrame.RightButton]["Right"]["Spell"] end,
-					set = function(_, value) UnitFrameDB["ClickCast"][C.UnitFrame.RightButton]["Right"]["Spell"] = value end,
-				},
-				RightButtonEnable = {
-					type = "toggle",
-					name = "启用",
-					disabled = not UnitFrameDB.EnableClickCast,
-					order = 16,
-					get = function() return UnitFrameDB["ClickCast"][C.UnitFrame.RightButton]["Right"]["Enable"] end,
-					set = function(_, value) UnitFrameDB["ClickCast"][C.UnitFrame.RightButton]["Right"]["Enable"] = value end,
-				},
-				Header_4 = {
-					type = "header",
 					name = "其他",
-					order = 17,
+					order = 9,
 				},	
 				RaidScale = {
 					type = "input",
 					name = "团队&小队缩放比例：",
 					desc = "请输入团队&小队缩放比例：",
-					order = 18,
+					order = 10,
 					get = function() return tostring(UnitFrameDB.RaidScale) end,
 					set = function(_, value) UnitFrameDB.RaidScale = tonumber(value) end,
 				},
