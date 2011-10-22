@@ -58,6 +58,7 @@ function cfg.BuildICON(IconSize, ClickCast)
 		Frame.ClickCast:SetAttribute("type1","macro")
 	end]]
 	
+	Frame:Hide()
 	return Frame
 end
 
@@ -104,5 +105,6 @@ function cfg.BuildBAR(BarWidth, IconSize, ClickCast)
 		Frame.ClickCast:SetAttribute("type1","macro")
 	end]]
 	
+	Frame:Hide()
 	return Frame
 end
