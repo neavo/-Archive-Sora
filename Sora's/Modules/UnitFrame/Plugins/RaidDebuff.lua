@@ -288,20 +288,13 @@ local RaidDebuffList = {
 		-- Priest
 		{6346, 1}, -- Fear Ward
 		{605, 1}, -- Mind Control
-		{34914, 1}, -- Vampiric Touch	
-		{2944, 1}, -- Devouring Plague
-		{589, 1}, -- Shadow Word: Pain
 		{8122, 1}, -- Psychic Scream
 		{64044, 1}, -- Psychic Horror	
 		{69910, 1}, -- Pain Suppression
 		{15487, 1}, -- Silence
-		{15473, 1}, -- Shadowform	
 		{47585, 1}, -- Dispersion	
 		{17, 1}, -- Power Word: Shield
-		{139, 1}, -- Renew
-		{33076, 1}, -- Prayer of Mending
 		{88625, 1}, -- Holy Word: Chastise
-		{6788, 1}, -- Weakened Soul
 		
 		-- Paladin
 		{853, 1}, -- Hammer of Justice
@@ -310,14 +303,12 @@ local RaidDebuffList = {
 		{1044, 1}, -- Hand of Freedom
 		{6940, 1}, -- Hand of Sacrifice	
 		{20066, 1}, -- Repentance
-		{53563, 1}, -- Beacon of Light
 		
 		-- Rogue
 		{31224, 1}, -- Cloak of Shadows
 		{5277, 1}, -- Evasion
 		{43235, 1}, -- Wound Poison
 		{2094, 1}, -- Blind
-		{3776, 1}, -- Crippling Poison
 		{6770, 1}, -- Sap
 		{408, 1}, -- Kidney Shot
 		{1776, 1}, -- Gouge	
@@ -333,15 +324,11 @@ local RaidDebuffList = {
 		{339, 1}, -- Entangling Roots
 		{29166, 1}, -- Innervate
 		{2637, 1}, -- Hibernate
-		{774, 1}, -- Rejuvenation
-		{8936, 1}, -- Regrowth
-		{33763, 1}, -- Lifebloom
 		
 		-- Warlock
 		{5782, 1}, -- Fear
 		{5484, 1}, -- Howl of Terror
-		{6358, 1}, -- Seduction
-		{30108, 1}, -- Unstable Affliction		
+		{6358, 1}, -- Seduction	
 		{1714, 1}, -- Curse of Tongues
 		{18223, 1}, -- Curse of Exhaustion
 		{6789, 1}, -- Death Coil
@@ -349,8 +336,6 @@ local RaidDebuffList = {
 		
 		-- Shaman
 		{51514, 1}, -- Hex
-		{974, 1}, -- Earth Shield
-		{61295, 1}, -- Riptide
 		
 		-- Mage
 		{18469, 1}, -- Silenced - Improved Counterspell - Rank1
@@ -365,15 +350,12 @@ local RaidDebuffList = {
 		{44572, 1}, -- Deep Freeze
 		{45438, 1}, -- Ice Block	
 		{122, 1}, -- Frost Nova
-		{80353, 1}, -- Time Warp
-		
+	
 		-- Hunter
-		{82928, 1}, -- Aimed Shot
 		{19503, 1}, -- Scatter Shot
 		{55041, 1}, -- Freezing Trap Effect
 		{2974, 1}, -- Wing Clip
 		{19263, 1}, -- Deterrence
-		{34692, 1}, -- The Beast Within
 		{34490, 1}, -- Silencing Shot
 		{19386, 1}, -- Wyvern Sting
 		{19577, 1}, -- Intimidation
