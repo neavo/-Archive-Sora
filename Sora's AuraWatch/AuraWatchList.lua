@@ -19,10 +19,10 @@
    
    其中List =
    {
-		AuraID/ItemID/SpellID = 三选一，分别对应监视 Buff/Debuff，物品CD，技能CD 三种情况
-		UnitID = 要监视的目标，常用的有 玩家"player"/目标"target" (如果要监视Buff/Debuff的话必须有)
-		Caster = 过滤Buff/Debuff的释放者 (可选，如果不需要按照施法者过滤请不要写这一项 ！！！注意，C为大写！！！ )
-		Stack = 过滤Buff/Debuff的层数(可选，当Buff/Debuff层数大于等于Stack的值的时候才显示 ！！！注意，S为大写！！！)
+		AuraID/ItemID/SpellID = 三选一,分别对应监视 Buff/Debuff,物品CD,技能CD 三种情况
+		UnitID = 要监视的目标,常用的有 玩家"player"/目标"target" (如果要监视Buff/Debuff的话必须有)
+		Caster = 过滤Buff/Debuff的释放者 (可选,如果不需要按照施法者过滤请不要写这一项 ！！！注意,C为大写！！！ )
+		Stack = 过滤Buff/Debuff的层数(可选,当Buff/Debuff层数大于等于Stack的值的时候才显示 ！！！注意,S为大写！！！)
 	}
 
 	eg. 这是一个示例
@@ -691,12 +691,11 @@ SRAuraList = {
 				-- 暗影灌注
 				{AuraID = 91342, UnitID = "pet"}, 
 			},
-		},
-		
+		},	
 		{
 			Name = "TargetDebuff",
 			Direction = "UP", Interval = 4,
-			Mode = "BAR", IconSize = 16, BarWidth = 175，
+			Mode = "BAR", IconSize = 16, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 血之疫病
@@ -706,8 +705,7 @@ SRAuraList = {
 				-- 血红热疫
 				{AuraID = 81130, UnitID = "target", Caster = "player"},
 			},
-		},
-		
+		},	
 		--[[{
 			Name = "CD",
 			Direction = "DOWN",
