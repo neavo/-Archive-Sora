@@ -156,13 +156,13 @@ local function AuraFilter(spellID, unitID, name, bool)
 			if value.AuraID == spellID and value.UnitID == unitID then
 				if bool then
 					local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.UnitID, name)
-					if value.Caster and value.Caster:lower() ~= caster then return end
-					if value.Stack and count and value.Stack > count then return end
+					if value.Caster and value.Caster:lower() ~= caster then return false end
+					if value.Stack and count and value.Stack > count then return false end
 					return KEY, value.UnitID, name, icon, count, duration, expires
 				else
 					local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.UnitID, name)
-					if value.Caster and value.Caster:lower() ~= caster then return end
-					if value.Stack and count and value.Stack > count then return end
+					if value.Caster and value.Caster:lower() ~= caster then return false end
+					if value.Stack and count and value.Stack > count then return false end
 					return KEY, value.UnitID, name, icon, count, duration, expires
 				end
 			end
