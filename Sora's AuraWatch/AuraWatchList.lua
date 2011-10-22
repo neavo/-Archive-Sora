@@ -19,8 +19,8 @@
    
    其中List =
    {
-		AuraID/ItemID/SpellID = 
-		UnitID = 要监视的目标，常用的有 玩家"player"/目标"target" (必须有)
+		AuraID/ItemID/SpellID = 三选一，分别对应监视 Buff/Debuff，物品CD，技能CD 三种情况
+		UnitID = 要监视的目标，常用的有 玩家"player"/目标"target" (如果要监视Buff/Debuff的话必须有)
 		Caster = 过滤Buff/Debuff的释放者 (可选，如果不需要按照施法者过滤请不要写这一项 ！！！注意，C为大写！！！ )
 		Stack = 过滤Buff/Debuff的层数(可选，当Buff/Debuff层数大于等于Stack的值的时候才显示 ！！！注意，S为大写！！！)
 	}
@@ -54,10 +54,8 @@ SRAuraList = {
 	["ALL"] = {
 		{
 			Name = "PlayerDebuff",
-			Direction = "RIGHT",
-			Interval = 4,
-			Mode = "ICON",
-			IconSize = 54,
+			Direction = "RIGHT", Interval = 4,
+			Mode = "ICON", IconSize = 54,
 			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
 			List = {
 				-- 变羊
@@ -82,11 +80,9 @@ SRAuraList = {
 	["DRUID"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -119,11 +115,8 @@ SRAuraList = {
 		
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
-			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175,
+			Direction = "UP", Interval = 4,
+			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {	
 				-- 挫志咆哮(熊)
@@ -156,11 +149,9 @@ SRAuraList = {
 	["HUNTER"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {	
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -199,11 +190,9 @@ SRAuraList = {
 		
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
+			Direction = "UP", Interval = 4,
 			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175 ,
+			IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 猎人印记
@@ -222,11 +211,9 @@ SRAuraList = {
 	["MAGE"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -257,11 +244,9 @@ SRAuraList = {
 		
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
+			Direction = "UP", Interval = 4,
 			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175 ,
+			IconSize = 20, BarWidth = 175 ,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {		
 				-- 点燃
@@ -280,11 +265,9 @@ SRAuraList = {
 	["WARRIOR"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -347,11 +330,8 @@ SRAuraList = {
 
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
-			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175,
+			Direction = "UP", Interval = 4,
+			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 撕裂(战斗,防御姿态)
@@ -364,11 +344,9 @@ SRAuraList = {
 	["SHAMAN"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 25},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 25},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -393,11 +371,8 @@ SRAuraList = {
 		},
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
-			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175,
+			Direction = "UP", Interval = 4,
+			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 大地震击
@@ -418,11 +393,9 @@ SRAuraList = {
 	["PALADIN"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -466,11 +439,8 @@ SRAuraList = {
 		},
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
-			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175,
+			Direction = "UP", Interval = 4,
+			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 制裁之锤
@@ -489,11 +459,9 @@ SRAuraList = {
 	["PRIEST"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -535,11 +503,8 @@ SRAuraList = {
 
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
-			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175,
+			Direction = "UP", Interval = 4,
+			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 暗言术:痛
@@ -558,11 +523,9 @@ SRAuraList = {
 	["WARLOCK"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -591,11 +554,8 @@ SRAuraList = {
 
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
-			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175,
+			Direction = "UP", Interval = 4,
+			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 腐蚀术
@@ -632,11 +592,9 @@ SRAuraList = {
 	["ROGUE"] = {
 		{
 			Name = "PlayerBuff",
-			Direction = "RIGHT",
-			Interval = 6,
-			Mode = "ICON",
-			IconSize = 30,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Direction = "RIGHT", Interval = 6,
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -667,11 +625,8 @@ SRAuraList = {
 		
 		{
 			Name = "TargetDebuff",
-			Direction = "UP",
-			Interval = 4,
-			Mode = "BAR",
-			IconSize = 20,
-			BarWidth = 175,
+			Direction = "UP", Interval = 4,
+			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 肾击
@@ -698,8 +653,8 @@ SRAuraList = {
 		{
 			Name = "PlayerBuff",
 			Direction = "RIGHT",Interval = 6,
-			Mode = "ICON", IconSize = 30, ClickCast = true,
-			Pos = {"BOTTOM","oUF_SoraPlayer", "TOP", -95, 12},
+			Mode = "ICON", IconSize = 30,
+			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -741,7 +696,7 @@ SRAuraList = {
 		{
 			Name = "TargetDebuff",
 			Direction = "UP", Interval = 4,
-			Mode = "BAR", IconSize = 16, BarWidth = 175, ClickCast = true,
+			Mode = "BAR", IconSize = 16, BarWidth = 175，
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
 			List = {
 				-- 血之疫病
