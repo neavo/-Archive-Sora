@@ -1,17 +1,8 @@
-﻿<!-- -->
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-
-
-
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-
-	<!--Include file = "lib\lib.xml"/-->
-	
 	<Script file = "cfg.lua"/>
 	<Script file = "AuraWatchList.lua"/>
 	<Script file = "Style.lua"/>
 	<Script file = "AuraWatch.lua"/>
-	
-	<!--Script file = "Options.lua"/-->
 	
 </Ui>

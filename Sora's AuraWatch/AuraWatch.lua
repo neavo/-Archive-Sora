@@ -9,6 +9,7 @@ local AuraList, Aura, MaxFrame = {}, {}, 15
 local MyClass = select(2, UnitClass("player")) 
 local BuildICON = cfg.BuildICON
 local BuildBAR = cfg.BuildBAR
+if not sRawDB then sRawDB = {} end
 
 -- Init
 local function Init()
@@ -36,24 +37,54 @@ local function Init()
 end
 
 -- Pos
+local function MakeMoveHandle(Frame, Text, key, Pos)
+	local MoveHandle = CreateFrame("Frame", nil, UIParent)
+	MoveHandle:SetWidth(Frame:GetWidth())
+	MoveHandle:SetHeight(Frame:GetHeight())
+	MoveHandle:SetFrameStrata("HIGH")
+	MoveHandle:SetBackdrop({bgFile = cfg.Solid})
+	MoveHandle:SetBackdropColor(0, 0, 0, 0.9)
+	MoveHandle.Text = MoveHandle:CreateFontString(nil, "OVERLAY")
+	MoveHandle.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
+	MoveHandle.Text:SetPoint("CENTER")
+	MoveHandle.Text:SetText(Text)
+	if not sRawDB[key] then 
+		MoveHandle:SetPoint(unpack(Pos))
+	else
+		MoveHandle:SetPoint(unpack(sRawDB[key]))		
+	end
+	MoveHandle:EnableMouse(true)
+	MoveHandle:SetMovable(true)
+	MoveHandle:RegisterForDrag("LeftButton")
+	MoveHandle:SetScript("OnDragStart", function(self) MoveHandle:StartMoving() end)
+	MoveHandle:SetScript("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+		local AnchorF, _, AnchorT, X, Y = self:GetPoint()
+		sRawDB[key] = {AnchorF, "UIParent", AnchorT, X, Y}
+	end)
+	MoveHandle:Hide()
+	Frame:SetPoint("CENTER", MoveHandle)
+	return MoveHandle
+end
 local function Pos()
 	for key, VALUE in pairs(Aura) do
 		local value = AuraList[key]
 		local Pre = nil
 		for i = 1, #VALUE do
-			local frame = VALUE[i]
+			local Frame = VALUE[i]
 			if i == 1 then
-				frame:SetPoint(unpack(value.Pos))
+				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos)
+				Frame:SetPoint("CENTER", Frame.MoveHandle)
 			elseif value.Direction:lower() == "right" then
-				frame:SetPoint("LEFT", Pre, "RIGHT", value.Interval, 0)
+				Frame:SetPoint("LEFT", Pre, "RIGHT", value.Interval, 0)
 			elseif value.Direction:lower() == "left" then
-				frame:SetPoint("RIGHT", Pre, "LEFT", -value.Interval, 0)
+				Frame:SetPoint("RIGHT", Pre, "LEFT", -value.Interval, 0)
 			elseif value.Direction:lower() == "up" then
-				frame:SetPoint("BOTTOM", Pre, "TOP", 0, value.Interval)
+				Frame:SetPoint("BOTTOM", Pre, "TOP", 0, value.Interval)
 			elseif value.Direction:lower() == "down" then
-				frame:SetPoint("TOP", Pre, "BOTTOM", 0, -value.Interval)
+				Frame:SetPoint("TOP", Pre, "BOTTOM", 0, -value.Interval)
 			end
-			Pre = frame
+			Pre = Frame
 		end
 	end
 end
@@ -232,16 +263,17 @@ SlashCmdList.SRAuraWatch = function()
 		Event:SetScript("OnUpdate", nil)
 		Event:UnregisterEvent("UNIT_AURA")
 		Event:UnregisterEvent("PLAYER_TARGET_CHANGED")
-		for _, VALUE in pairs(Aura) do
+		for _, value in pairs(Aura) do
 			for i = 1, MaxFrame do
-				VALUE[i]:SetScript("OnUpdate", nil)		
-				if VALUE[i].Icon then VALUE[i].Icon:SetTexture(select(3, GetSpellInfo(118))) end
-				if VALUE[i].Count then VALUE[i].Count:SetText("9") end
-				if VALUE[i].Time then VALUE[i].Time:SetText("59.59") end
-				if VALUE[i].Statusbar then VALUE[i].Statusbar:SetValue(1) end
-				if VALUE[i].Spellname then VALUE[i].Spellname:SetText("变形术") end
-				VALUE[i]:Show()		
+				value[i]:SetScript("OnUpdate", nil)		
+				if value[i].Icon then value[i].Icon:SetTexture(select(3, GetSpellInfo(118))) end
+				if value[i].Count then value[i].Count:SetText("9") end
+				if value[i].Time then value[i].Time:SetText("59.59") end
+				if value[i].Statusbar then value[i].Statusbar:SetValue(1) end
+				if value[i].Spellname then value[i].Spellname:SetText("变形术") end
+				value[i]:Show()		
 			end
+			value[1].MoveHandle:Show()
 		end
 	else
 		TestFlag = true
@@ -254,11 +286,12 @@ SlashCmdList.SRAuraWatch = function()
 		end)
 		Event:RegisterEvent("UNIT_AURA")
 		Event:RegisterEvent("PLAYER_TARGET_CHANGED")
-		for _, VALUE in pairs(Aura) do
+		for _, value in pairs(Aura) do
 			for i = 1, MaxFrame do
-				VALUE[i]:Hide()
+				value[i]:Hide()
 			end
-			VALUE.Index = 1
+			value[1].MoveHandle:Hide()
+			value.Index = 1
 		end
 	end
 end
