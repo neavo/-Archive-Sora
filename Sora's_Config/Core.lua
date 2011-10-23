@@ -102,7 +102,7 @@ function SoraConfig:OnEnable()
 	if not SoraVersion or SoraVersion < Version then
 		StaticPopupDialogs["Sora's"] = {
 			text = "欢迎使用|cff70C0F5Sora's|r\n请点击确定按钮加载默认配置",
-			button1 = "确定",
+			button1 = ACCEPT,
 			OnAccept = function()
 				SetDefault()
 				ReloadUI()
