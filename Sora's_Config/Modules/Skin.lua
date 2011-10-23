@@ -7,7 +7,6 @@ C.Skin = CreateFrame("Frame")
 -- LoadSettings
 function C.Skin.LoadSettings()
 	local Default = {
-		["EnableAurora"] = true,		-- 启用Aurora全局美化
 		["EnableDBMSkin"] = true,		-- 启用DBM皮肤
 	}
 	if not SkinDB then SkinDB = {} end
@@ -29,13 +28,6 @@ function C.Skin.BuildGUI()
 			type = "group",
 			name = "皮肤",
 			args = {
-				EnableAurora = {
-					type = "toggle",
-					name = "启用Aurora全局美化",
-					order = 1,
-					get = function() return SkinDB.EnableAurora end,
-					set = function(_, value) SkinDB.EnableAurora = value end,
-				},
 				EnableDBMSkin = {
 					type = "toggle",
 					name = "启用DBM皮肤",

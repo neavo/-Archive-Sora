@@ -1,5 +1,6 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
+local r, g, b = DB.MyClassColor.r, DB.MyClassColor.g, DB.MyClassColor.b
 
 function S.MakeShadow(Parent, Size)
 	local Shadow = CreateFrame("Frame", nil, Parent)
@@ -94,9 +95,86 @@ function S.FormatMemory(Memory)
 	end	
 end
 
+local function CreateBD(f, a)
+	f:SetBackdrop({
+		bgFile = DB.bgFile, 
+		edgeFile = DB.bgFile, 
+		edgeSize = 1, 
+	})
+	f:SetBackdropColor(0, 0, 0, a or alpha)
+	f:SetBackdropBorderColor(0, 0, 0)
+end
+local function CreatePulse(frame, speed, mult, alpha)
+	frame.speed = speed or .05
+	frame.mult = mult or 1
+	frame.alpha = alpha or 1
+	frame.tslu = 0
+	frame:SetScript("OnUpdate", function(self, elapsed)
+		self.tslu = self.tslu + elapsed
+		if self.tslu > self.speed then
+			self.tslu = 0
+			self:SetAlpha(self.alpha)
+		end
+		self.alpha = self.alpha - elapsed*self.mult
+		if self.alpha < 0 and self.mult > 0 then
+			self.mult = self.mult*-1
+			self.alpha = 0
+		elseif self.alpha > 1 and self.mult < 0 then
+			self.mult = self.mult*-1
+		end
+	end)
+end
+local function StartGlow(f)
+	f:SetBackdropColor(r, g, b, .1)
+	f:SetBackdropBorderColor(r, g, b)
+	CreatePulse(f.glow)
+end
+local function StopGlow(f)
+	f:SetBackdropColor(0, 0, 0, 0)
+	f:SetBackdropBorderColor(0, 0, 0)
+	f.glow:SetScript("OnUpdate", nil)
+	f.glow:SetAlpha(0)
+end
+local function Reskin(f)
+	f:SetNormalTexture("")
+	f:SetHighlightTexture("")
+	f:SetPushedTexture("")
+	f:SetDisabledTexture("")
+
+	if f:GetName() then
+		local left = _G[f:GetName().."Left"]
+		local middle = _G[f:GetName().."Middle"]
+		local right = _G[f:GetName().."Right"]
+
+		if left then left:SetAlpha(0) end
+		if middle then middle:SetAlpha(0) end
+		if right then right:SetAlpha(0) end
+	end
+
+	CreateBD(f, .0)
+
+	local tex = f:CreateTexture(nil, "BACKGROUND")
+	tex:SetPoint("TOPLEFT")
+	tex:SetPoint("BOTTOMRIGHT")
+	tex:SetTexture(DB.bgFile)
+	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+
+	f.glow = CreateFrame("Frame", nil, f)
+	f.glow:SetBackdrop({
+		edgeFile = DB.GlowTex,
+		edgeSize = 5,
+	})
+	f.glow:SetPoint("TOPLEFT", -6, 6)
+	f.glow:SetPoint("BOTTOMRIGHT", 6, -6)
+	f.glow:SetBackdropBorderColor(r, g, b)
+	f.glow:SetAlpha(0)
+
+	f:HookScript("OnEnter", StartGlow)
+ 	f:HookScript("OnLeave", StopGlow)
+end
 function S.MakeButton(Parent)
 	local Button = CreateFrame("Button", nil, Parent)
-	S.Reskin(Button)
+	Reskin(Button)
 	return Button
 end
 

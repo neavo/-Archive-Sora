@@ -46,7 +46,6 @@ local function Init()
 		StatusBar.Name:SetPoint("TOP", StatusBar.Arrow, "BOTTOM", 1, 3)
 		tinsert(ThreatFlag, StatusBar)
 	end
-	return MainFrame, Tank
 end
 	
 -- 更新仇恨列表
@@ -157,6 +156,7 @@ Event:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 Event:RegisterEvent("PLAYER_TARGET_CHANGED")
 Event:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_ENTERING_WORLD" then
+		Init()
 		MainFrame:SetPoint("TOP", "oUF_SoraPlayer", "BOTTOM", 0, ThreatDB.yOffset)
 		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	elseif event == "UNIT_THREAT_LIST_UPDATE" then

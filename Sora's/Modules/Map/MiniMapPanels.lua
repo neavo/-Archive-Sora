@@ -62,9 +62,8 @@ end
 local function BuildButtonTable()
 	local ButtonTable = {}
 	for i = 1, 5 do
-		local Button = CreateFrame("Button", nil, UIParent)
+		local Button = S.MakeButton(UIParent)
 		Button:SetSize(80, 20)
-		S.Reskin(Button)
 		Button.Text = Button:CreateFontString(nil, "OVERLAY")
 		Button.Text:SetPoint("CENTER")
 		Button.Text:SetFont(DB.Font, 10, "THINOUTLINE")
