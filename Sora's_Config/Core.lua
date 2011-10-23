@@ -7,6 +7,28 @@ local Version = 1021
 local function SetDefault()
 	SlashCmdList.AutoSet()
 	SoraVersion = Version
+	-- 聊天频道职业染色
+	ToggleChatColorNamesByClassGroup(true, "SAY")
+	ToggleChatColorNamesByClassGroup(true, "EMOTE")
+	ToggleChatColorNamesByClassGroup(true, "YELL")
+	ToggleChatColorNamesByClassGroup(true, "GUILD")
+	ToggleChatColorNamesByClassGroup(true, "GUILD_OFFICER")
+	ToggleChatColorNamesByClassGroup(true, "OFFICER")
+	ToggleChatColorNamesByClassGroup(true, "GUILD_ACHIEVEMENT")
+	ToggleChatColorNamesByClassGroup(true, "ACHIEVEMENT")
+	ToggleChatColorNamesByClassGroup(true, "WHISPER")
+	ToggleChatColorNamesByClassGroup(true, "PARTY")
+	ToggleChatColorNamesByClassGroup(true, "PARTY_LEADER")
+	ToggleChatColorNamesByClassGroup(true, "RAID")
+	ToggleChatColorNamesByClassGroup(true, "RAID_LEADER")
+	ToggleChatColorNamesByClassGroup(true, "RAID_WARNING")
+	ToggleChatColorNamesByClassGroup(true, "BATTLEGROUND")
+	ToggleChatColorNamesByClassGroup(true, "BATTLEGROUND_LEADER")   
+	ToggleChatColorNamesByClassGroup(true, "CHANNEL1")
+	ToggleChatColorNamesByClassGroup(true, "CHANNEL2")
+	ToggleChatColorNamesByClassGroup(true, "CHANNEL3")
+	ToggleChatColorNamesByClassGroup(true, "CHANNEL4")
+	ToggleChatColorNamesByClassGroup(true, "CHANNEL5")
 end
 
 MoveHandle = {}
