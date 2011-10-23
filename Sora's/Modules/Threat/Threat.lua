@@ -1,58 +1,57 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
 local ThreatList, ThreatFlag = {}, {}
-
--- 创建主框体
 local MainFrame = CreateFrame("Frame", nil, UIParent)
-MainFrame:SetSize(ThreatDB.ThreatBarWidth, 2)
-MainFrame:SetBackdrop({bgFile = DB.ThreatBar})
-MainFrame:SetBackdropColor(1, 1, 1)
-MainFrame:SetAlpha(0)
-MainFrame.Shadow = S.MakeShadow(MainFrame, 3)
--- 创建坦克仇恨标签
 local Tank = CreateFrame("StatusBar", nil, MainFrame)
-Tank:SetAllPoints()
-Tank:SetStatusBarTexture(DB.Solid)
-Tank:SetStatusBarColor(0, 0, 0, 0)
-Tank:SetMinMaxValues(0, 130)
-Tank:SetValue(100)
-Tank.Flag = Tank:CreateTexture(nil, "OVERLAY")
-Tank.Flag:SetSize(1, 2)
-Tank.Flag:SetVertexColor(0, 0, 0)
-Tank.Flag:SetPoint("LEFT", Tank:GetStatusBarTexture(), "RIGHT", 0, 0)
-Tank.Arrow = Tank:CreateTexture(nil, "OVERLAY")
-Tank.Arrow:SetSize(24, 24)
-Tank.Arrow:SetTexture(DB.ArrowT)
-Tank.Arrow:SetPoint("BOTTOM", Tank.Flag, "TOP", 0, 0)
-Tank.Name = S.MakeFontString(Tank, 10)
-Tank.Name:SetPoint("BOTTOM", Tank.Arrow, "TOP", 0, -8)
 
-for i=1, ThreatDB.ThreatLimited do 
-	local StatusBar = CreateFrame("StatusBar", nil, MainFrame)
-	StatusBar:SetAllPoints()
-	StatusBar:SetStatusBarTexture(DB.Solid)
-	StatusBar:SetStatusBarColor(0, 0, 0, 0)
-	StatusBar:SetMinMaxValues(0, 130)
-	StatusBar:SetValue(0)
-	StatusBar.Flag = StatusBar:CreateTexture(nil, "OVERLAY")
-	StatusBar.Flag:SetSize(1, 2)
-	StatusBar.Flag:SetVertexColor(0, 0, 0)
-	StatusBar.Flag:SetPoint("LEFT", StatusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
-	StatusBar.Arrow = StatusBar:CreateTexture(nil, "OVERLAY")
-	StatusBar.Arrow:SetHeight(16)
-	StatusBar.Arrow:SetWidth(16)
-	StatusBar.Arrow:SetTexture(DB.Arrow)
-	StatusBar.Arrow:SetPoint("TOP", StatusBar.Flag, "BOTTOM", 0, 0)
-	StatusBar.Name = S.MakeFontString(StatusBar, 10)
-	StatusBar.Name:SetPoint("TOP", StatusBar.Arrow, "BOTTOM", 1, 3)
-	tinsert(ThreatFlag, StatusBar)
+-- Init
+local function Init()
+	MainFrame:SetSize(ThreatDB.ThreatBarWidth, 2)
+	MainFrame:SetBackdrop({bgFile = DB.ThreatBar})
+	MainFrame:SetBackdropColor(1, 1, 1)
+	MainFrame:SetAlpha(0)
+	MainFrame.Shadow = S.MakeShadow(MainFrame, 3)
+	Tank:SetAllPoints()
+	Tank:SetStatusBarTexture(DB.Solid)
+	Tank:SetStatusBarColor(0, 0, 0, 0)
+	Tank:SetMinMaxValues(0, 130)
+	Tank:SetValue(100)
+	Tank.Flag = Tank:CreateTexture(nil, "OVERLAY")
+	Tank.Flag:SetSize(1, 2)
+	Tank.Flag:SetVertexColor(0, 0, 0)
+	Tank.Flag:SetPoint("LEFT", Tank:GetStatusBarTexture(), "RIGHT", 0, 0)
+	Tank.Arrow = Tank:CreateTexture(nil, "OVERLAY")
+	Tank.Arrow:SetSize(24, 24)
+	Tank.Arrow:SetTexture(DB.ArrowT)
+	Tank.Arrow:SetPoint("BOTTOM", Tank.Flag, "TOP", 0, 0)
+	Tank.Name = S.MakeFontString(Tank, 10)
+	Tank.Name:SetPoint("BOTTOM", Tank.Arrow, "TOP", 0, -8)
+	for i=1, ThreatDB.ThreatLimited do 
+		local StatusBar = CreateFrame("StatusBar", nil, MainFrame)
+		StatusBar:SetAllPoints()
+		StatusBar:SetStatusBarTexture(DB.Solid)
+		StatusBar:SetStatusBarColor(0, 0, 0, 0)
+		StatusBar:SetMinMaxValues(0, 130)
+		StatusBar:SetValue(0)
+		StatusBar.Flag = StatusBar:CreateTexture(nil, "OVERLAY")
+		StatusBar.Flag:SetSize(1, 2)
+		StatusBar.Flag:SetVertexColor(0, 0, 0)
+		StatusBar.Flag:SetPoint("LEFT", StatusBar:GetStatusBarTexture(), "RIGHT", 0, 0)
+		StatusBar.Arrow = StatusBar:CreateTexture(nil, "OVERLAY")
+		StatusBar.Arrow:SetHeight(16)
+		StatusBar.Arrow:SetWidth(16)
+		StatusBar.Arrow:SetTexture(DB.Arrow)
+		StatusBar.Arrow:SetPoint("TOP", StatusBar.Flag, "BOTTOM", 0, -1)
+		StatusBar.Name = S.MakeFontString(StatusBar, 10)
+		StatusBar.Name:SetPoint("TOP", StatusBar.Arrow, "BOTTOM", 1, 3)
+		tinsert(ThreatFlag, StatusBar)
+	end
+	return MainFrame, Tank
 end
-
+	
 -- 更新仇恨列表
 local function GetThreat(unit, pet)
-	if UnitName(pet or unit) == UNKNOWN or not UnitIsVisible(pet or unit) then
-		return
-	end
+	if UnitName(pet or unit) == UNKNOWN or not UnitIsVisible(pet or unit) then return end
 	local isTanking, _, _, rawPercent = UnitDetailedThreatSituation(pet or unit, "target")
 	local name = pet and UnitName(pet) or UnitName(unit)
 	for index, value in ipairs(ThreatList) do
@@ -137,6 +136,7 @@ local function UpdateThreatFlag()
 	end		
 end
 
+-- 显隐控制
 local function Fade()
 	local Flag = false
 	for key ,value in pairs(ThreatList) do
@@ -163,7 +163,6 @@ Event:SetScript("OnEvent", function(self, event, ...)
 		UpdateThreat()
 		Fade()
 		UpdateThreatFlag()
-
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		wipe(ThreatList)
 		UpdateThreat()
