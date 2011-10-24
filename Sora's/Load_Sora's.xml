@@ -1,7 +1,6 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Script file = "Init.lua"/>
-	<Script file = "cfg.lua"/>
 	<Include file = "Function\Load_Function.xml"/>
 	<Include file = "Misc\Load_Misc.xml"/>
 	<Include file = "Modules\Load_Modules.xml"/>
