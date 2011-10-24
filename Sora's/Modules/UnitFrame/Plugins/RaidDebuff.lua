@@ -407,10 +407,23 @@ end
 local function Update(self, event, unit)
     if self.unit ~= unit then return end
 	local RaidDebuff = self.RaidDebuff
-	local index = 1
 	local Flag = true
+	local index = 1
     while true do
-		local name, _, icon, count, _, duration, expires  = UnitAura(unit, index)
+		local name, _, icon, count, _, duration, expires  = UnitBuff(unit, index)
+		if not name then break end
+		if ShouldBeShown(name) then
+			if RaidDebuff.Icon then RaidDebuff.Icon:SetTexture(icon) end
+			if RaidDebuff.Count then RaidDebuff.Count:SetText(count > 1 and count or nil) end
+			if RaidDebuff.Cooldown then RaidDebuff.Cooldown:SetCooldown(expires-duration, duration) end
+			RaidDebuff:Show()
+			Flag = false
+		end
+		index = index + 1
+	end
+	local index = 1
+    while true do
+		local name, _, icon, count, _, duration, expires  = UnitDebuff(unit, index)
 		if not name then break end
 		if ShouldBeShown(name) then
 			if RaidDebuff.Icon then RaidDebuff.Icon:SetTexture(icon) end
