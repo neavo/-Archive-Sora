@@ -293,7 +293,7 @@ SlashCmdList.SRAuraWatch = function(msg)
 			end
 		end
 	elseif msg:lower() == "reset" then
-		wipe(sRaw.db.char)
+		wipe(sRawDB)
 		ReloadUI()
 	else
 		print("/sRaw Test -- 测试模式")
