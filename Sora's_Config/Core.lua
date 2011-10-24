@@ -29,6 +29,8 @@ local function SetDefault()
 	ToggleChatColorNamesByClassGroup(true, "CHANNEL3")
 	ToggleChatColorNamesByClassGroup(true, "CHANNEL4")
 	ToggleChatColorNamesByClassGroup(true, "CHANNEL5")
+	SetCVar("alwaysShowActionBars", 1) -- 总是显示动作条
+	SetCVar("lootUnderMouse", 1) --拾取框跟随鼠标
 end
 
 MoveHandle = {}
