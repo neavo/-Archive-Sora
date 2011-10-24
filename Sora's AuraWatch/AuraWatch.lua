@@ -4,40 +4,15 @@
 
 local _, SR = ...
 local cfg = SR.AuraWatchConfig
+local sRaw = LibStub("AceAddon-3.0"):NewAddon("sRaw")
 
 local AuraList, Aura, MaxFrame = {}, {}, 15
 local MyClass = select(2, UnitClass("player")) 
 local BuildICON = cfg.BuildICON
 local BuildBAR = cfg.BuildBAR
-if not sRawDB then sRawDB = {} end
 
 -- Init
-local function Init()
-	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
-	for key, _ in pairs(SRAuraList) do
-		if key == MyClass then
-			for _, value in pairs(SRAuraList[MyClass]) do
-				tinsert(AuraList, value)
-			end
-		end
-	end
-	wipe(SRAuraList)
-	for _, value in pairs(AuraList) do
-		local FrameTable = {}
-		for i = 1, MaxFrame do
-			if value.Mode:lower() == "icon" then
-				tinsert(FrameTable, BuildICON(value.IconSize))
-			elseif value.Mode:lower() == "bar" then
-				tinsert(FrameTable, BuildBAR(value.BarWidth, value.IconSize))
-			end
-		end
-		FrameTable.Index = 1
-		tinsert(Aura, FrameTable)
-	end
-end
-
--- Pos
-local function MakeMoveHandle(Frame, Text, key, Pos)
+local function MakeMoveHandle(Frame, Text, key, Pos, DB)
 	local MoveHandle = CreateFrame("Frame", nil, UIParent)
 	MoveHandle:SetWidth(Frame:GetWidth())
 	MoveHandle:SetHeight(Frame:GetHeight())
@@ -48,10 +23,10 @@ local function MakeMoveHandle(Frame, Text, key, Pos)
 	MoveHandle.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 	MoveHandle.Text:SetPoint("CENTER")
 	MoveHandle.Text:SetText(Text)
-	if not sRawDB[key] then 
+	if not DB[key] then 
 		MoveHandle:SetPoint(unpack(Pos))
 	else
-		MoveHandle:SetPoint(unpack(sRawDB[key]))		
+		MoveHandle:SetPoint(unpack(DB[key]))		
 	end
 	MoveHandle:EnableMouse(true)
 	MoveHandle:SetMovable(true)
@@ -60,7 +35,7 @@ local function MakeMoveHandle(Frame, Text, key, Pos)
 	MoveHandle:SetScript("OnDragStop", function(self)
 		self:StopMovingOrSizing()
 		local AnchorF, _, AnchorT, X, Y = self:GetPoint()
-		sRawDB[key] = {AnchorF, "UIParent", AnchorT, X, Y}
+		DB[key] = {AnchorF, "UIParent", AnchorT, X, Y}
 	end)
 	MoveHandle:Hide()
 	Frame:SetPoint("CENTER", MoveHandle)
@@ -73,7 +48,6 @@ local function Pos()
 		for i = 1, #VALUE do
 			local Frame = VALUE[i]
 			if i == 1 then
-				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos)
 				Frame:SetPoint("CENTER", Frame.MoveHandle)
 			elseif value.Direction:lower() == "right" then
 				Frame:SetPoint("LEFT", Pre, "RIGHT", value.Interval, 0)
@@ -87,6 +61,34 @@ local function Pos()
 			Pre = Frame
 		end
 	end
+end
+local function Init(DB)
+	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
+	for key, _ in pairs(SRAuraList) do
+		if key == MyClass then
+			for _, value in pairs(SRAuraList[MyClass]) do
+				tinsert(AuraList, value)
+			end
+		end
+	end
+	wipe(SRAuraList)
+	for key, value in pairs(AuraList) do
+		local FrameTable = {}
+		for i = 1, MaxFrame do
+			if value.Mode:lower() == "icon" then
+				local Frame = BuildICON(value.IconSize)
+				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos, DB)
+				tinsert(FrameTable, Frame)
+			elseif value.Mode:lower() == "bar" then
+				local Frame = BuildBAR(value.BarWidth, value.IconSize)
+				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos, DB)
+				tinsert(FrameTable, Frame)
+			end
+		end
+		FrameTable.Index = 1
+		tinsert(Aura, FrameTable)
+	end
+	Pos()
 end
 
 -- OnUpdate
@@ -230,16 +232,10 @@ end
 
 -- Event
 local Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_LOGIN")
 Event:RegisterEvent("UNIT_AURA")
-Event:RegisterEvent("PLAYER_ENTERING_WORLD")
 Event:RegisterEvent("PLAYER_TARGET_CHANGED")
 Event:SetScript("onEvent", function(self, event, unitID, ...)
-	if event == "PLAYER_LOGIN" then
-		Init()
-	elseif event == "PLAYER_ENTERING_WORLD" then
-		Pos()
-	elseif event == "UNIT_AURA" then
+	if event == "UNIT_AURA" then
 		UpdateAura(self, event, unitID, ...)
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		UpdateAura(self, event, "target", ...)
@@ -254,47 +250,60 @@ Event:SetScript("OnUpdate", function(self, elapsed)
 	end	
 end)
 
+function sRaw:OnInitialize()
+	local default = {}
+	sRaw.db = LibStub("AceDB-3.0"):New("sRawDB")
+	sRaw.db:RegisterDefaults(default)
+end
+
+function sRaw:OnEnable()
+	Init(sRaw.db.char)
+end
 
 -- Test
 local TestFlag = true
-SlashCmdList.SRAuraWatch = function()
-	if TestFlag then
-		TestFlag = false
-		Event:SetScript("OnUpdate", nil)
-		Event:UnregisterEvent("UNIT_AURA")
-		Event:UnregisterEvent("PLAYER_TARGET_CHANGED")
-		for _, value in pairs(Aura) do
-			for i = 1, MaxFrame do
-				value[i]:SetScript("OnUpdate", nil)		
-				if value[i].Icon then value[i].Icon:SetTexture(select(3, GetSpellInfo(118))) end
-				if value[i].Count then value[i].Count:SetText("9") end
-				if value[i].Time then value[i].Time:SetText("59.59") end
-				if value[i].Statusbar then value[i].Statusbar:SetValue(1) end
-				if value[i].Spellname then value[i].Spellname:SetText("变形术") end
-				value[i]:Show()		
+SlashCmdList.SRAuraWatch = function(msg)
+	if msg:lower() == "test" then
+		if TestFlag then
+			TestFlag = false
+			Event:SetScript("OnUpdate", nil)
+			Event:UnregisterEvent("UNIT_AURA")
+			for _, value in pairs(Aura) do
+				for i = 1, MaxFrame do
+					value[i]:SetScript("OnUpdate", nil)		
+					if value[i].Icon then value[i].Icon:SetTexture(select(3, GetSpellInfo(118))) end
+					if value[i].Count then value[i].Count:SetText("9") end
+					if value[i].Time then value[i].Time:SetText("59.59") end
+					if value[i].Statusbar then value[i].Statusbar:SetValue(1) end
+					if value[i].Spellname then value[i].Spellname:SetText("变形术") end
+					value[i]:Show()		
+				end
+				value[1].MoveHandle:Show()
 			end
-			value[1].MoveHandle:Show()
+		else
+			TestFlag = true
+			Event:SetScript("OnUpdate", function(self, elapsed)
+				self.Timer = self.Timer + elapsed
+				if self.Timer > 0.5 then
+					self.Timer = 0
+					UpdateCD()
+				end	
+			end)
+			Event:RegisterEvent("UNIT_AURA")
+			for _, value in pairs(Aura) do
+				for i = 1, MaxFrame do
+					value[i]:Hide()
+				end
+				value[1].MoveHandle:Hide()
+				value.Index = 1
+			end
 		end
+	elseif msg:lower() == "reset" then
+		wipe(sRaw.db.char)
 	else
-		TestFlag = true
-		Event:SetScript("OnUpdate", function(self, elapsed)
-			self.Timer = self.Timer + elapsed
-			if self.Timer > 0.5 then
-				self.Timer = 0
-				UpdateCD()
-			end	
-		end)
-		Event:RegisterEvent("UNIT_AURA")
-		Event:RegisterEvent("PLAYER_TARGET_CHANGED")
-		for _, value in pairs(Aura) do
-			for i = 1, MaxFrame do
-				value[i]:Hide()
-			end
-			value[1].MoveHandle:Hide()
-			value.Index = 1
-		end
+		print("/sRaw Test -- 测试模式")
+		print("/sRaw Reset -- 恢复默认设置")
 	end
 end
-SLASH_SRAuraWatch1 = "/SRAuraWatch"
-SLASH_SRAuraWatch2 = "/sRaw"
+SLASH_SRAuraWatch1 = "/sRaw"
 

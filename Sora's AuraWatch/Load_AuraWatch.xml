@@ -1,5 +1,6 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
+	<Include file = "Lib\Load_Lib.xml"/>
 	<Script file = "cfg.lua"/>
 	<Script file = "AuraWatchList.lua"/>
 	<Script file = "Style.lua"/>

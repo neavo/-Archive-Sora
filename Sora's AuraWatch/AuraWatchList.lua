@@ -27,7 +27,7 @@
 
 	eg. 这是一个示例
 	{
-		Name = "TargetDebuff",
+		Name = "目标Debuff",
 		Direction = "UP",
 		Interval = 4,
 		Mode = "BAR",
@@ -53,7 +53,7 @@ SRAuraList = {
 	-- 全职业
 	["ALL"] = {
 		{
-			Name = "PlayerDebuff",
+			Name = "玩家Debuff",
 			Direction = "RIGHT", Interval = 4,
 			Mode = "ICON", IconSize = 54,
 			Pos = {"CENTER", UIParent, "CENTER", -200, 200},
@@ -79,7 +79,7 @@ SRAuraList = {
 	-- 德鲁伊
 	["DRUID"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -114,7 +114,7 @@ SRAuraList = {
 		},
 		
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
@@ -148,7 +148,7 @@ SRAuraList = {
 	-- 猎人
 	["HUNTER"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -189,7 +189,7 @@ SRAuraList = {
 		},
 		
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR",
 			IconSize = 20, BarWidth = 175,
@@ -210,7 +210,7 @@ SRAuraList = {
 	-- 法师
 	["MAGE"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -243,7 +243,7 @@ SRAuraList = {
 		},
 		
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR",
 			IconSize = 20, BarWidth = 175 ,
@@ -264,7 +264,7 @@ SRAuraList = {
 	-- 战士
 	["WARRIOR"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -329,7 +329,7 @@ SRAuraList = {
 		},	
 
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
@@ -343,7 +343,7 @@ SRAuraList = {
 	-- 萨满
 	["SHAMAN"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 25},
@@ -370,7 +370,7 @@ SRAuraList = {
 			},
 		},
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
@@ -392,7 +392,7 @@ SRAuraList = {
 	-- 圣骑士
 	["PALADIN"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -438,7 +438,7 @@ SRAuraList = {
 			},
 		},
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
@@ -458,7 +458,7 @@ SRAuraList = {
 	-- 牧师
 	["PRIEST"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -502,7 +502,7 @@ SRAuraList = {
 		},
 
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
@@ -522,7 +522,7 @@ SRAuraList = {
 	-- 术士
 	["WARLOCK"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -553,7 +553,7 @@ SRAuraList = {
 		},
 
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
@@ -591,7 +591,7 @@ SRAuraList = {
 	-- 盗贼
 	["ROGUE"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -624,7 +624,7 @@ SRAuraList = {
 		},
 		
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
@@ -651,7 +651,7 @@ SRAuraList = {
 	-- 死亡骑士
 	["DEATHKNIGHT"] = {
 		{
-			Name = "PlayerBuff",
+			Name = "玩家Buff",
 			Direction = "RIGHT",Interval = 6,
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
@@ -693,7 +693,7 @@ SRAuraList = {
 			},
 		},	
 		{
-			Name = "TargetDebuff",
+			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 16, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
