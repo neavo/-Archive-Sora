@@ -4,15 +4,15 @@
 
 local _, SR = ...
 local cfg = SR.AuraWatchConfig
-local sRaw = LibStub("AceAddon-3.0"):NewAddon("sRaw")
 
 local AuraList, Aura, MaxFrame = {}, {}, 15
 local MyClass = select(2, UnitClass("player")) 
 local BuildICON = cfg.BuildICON
 local BuildBAR = cfg.BuildBAR
+if not sRawDB then sRawDB = {} end
 
 -- Init
-local function MakeMoveHandle(Frame, Text, key, Pos, DB)
+local function MakeMoveHandle(Frame, Text, key, Pos)
 	local MoveHandle = CreateFrame("Frame", nil, UIParent)
 	MoveHandle:SetWidth(Frame:GetWidth())
 	MoveHandle:SetHeight(Frame:GetHeight())
@@ -23,10 +23,10 @@ local function MakeMoveHandle(Frame, Text, key, Pos, DB)
 	MoveHandle.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
 	MoveHandle.Text:SetPoint("CENTER")
 	MoveHandle.Text:SetText(Text)
-	if not DB[key] then 
+	if not sRawDB[key] then 
 		MoveHandle:SetPoint(unpack(Pos))
 	else
-		MoveHandle:SetPoint(unpack(DB[key]))		
+		MoveHandle:SetPoint(unpack(sRawDB[key]))		
 	end
 	MoveHandle:EnableMouse(true)
 	MoveHandle:SetMovable(true)
@@ -35,7 +35,7 @@ local function MakeMoveHandle(Frame, Text, key, Pos, DB)
 	MoveHandle:SetScript("OnDragStop", function(self)
 		self:StopMovingOrSizing()
 		local AnchorF, _, AnchorT, X, Y = self:GetPoint()
-		DB[key] = {AnchorF, "UIParent", AnchorT, X, Y}
+		sRawDB[key] = {AnchorF, "UIParent", AnchorT, X, Y}
 	end)
 	MoveHandle:Hide()
 	Frame:SetPoint("CENTER", MoveHandle)
@@ -62,7 +62,7 @@ local function Pos()
 		end
 	end
 end
-local function Init(DB)
+local function Init()
 	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
 	for key, _ in pairs(SRAuraList) do
 		if key == MyClass then
@@ -77,11 +77,11 @@ local function Init(DB)
 		for i = 1, MaxFrame do
 			if value.Mode:lower() == "icon" then
 				local Frame = BuildICON(value.IconSize)
-				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos, DB)
+				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos)
 				tinsert(FrameTable, Frame)
 			elseif value.Mode:lower() == "bar" then
 				local Frame = BuildBAR(value.BarWidth, value.IconSize)
-				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos, DB)
+				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos)
 				tinsert(FrameTable, Frame)
 			end
 		end
@@ -234,8 +234,12 @@ end
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("UNIT_AURA")
 Event:RegisterEvent("PLAYER_TARGET_CHANGED")
+Event:RegisterEvent("PLAYER_ENTERING_WORLD")
 Event:SetScript("onEvent", function(self, event, unitID, ...)
-	if event == "UNIT_AURA" then
+	if event == "PLAYER_ENTERING_WORLD" then
+		Init()
+		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	elseif event == "UNIT_AURA" then
 		UpdateAura(self, event, unitID, ...)
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		UpdateAura(self, event, "target", ...)
@@ -249,16 +253,6 @@ Event:SetScript("OnUpdate", function(self, elapsed)
 		UpdateCD()
 	end	
 end)
-
-function sRaw:OnInitialize()
-	local default = {}
-	sRaw.db = LibStub("AceDB-3.0"):New("sRawDB")
-	sRaw.db:RegisterDefaults(default)
-end
-
-function sRaw:OnEnable()
-	Init(sRaw.db.char)
-end
 
 -- Test
 local TestFlag = true
@@ -300,6 +294,7 @@ SlashCmdList.SRAuraWatch = function(msg)
 		end
 	elseif msg:lower() == "reset" then
 		wipe(sRaw.db.char)
+		ReloadUI()
 	else
 		print("/sRaw Test -- 测试模式")
 		print("/sRaw Reset -- 恢复默认设置")
