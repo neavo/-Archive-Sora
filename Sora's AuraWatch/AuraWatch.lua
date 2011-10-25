@@ -5,7 +5,7 @@
 local _, SR = ...
 local cfg = SR.AuraWatchConfig
 
-local AuraList, Aura, UnitIDTable, MaxFrame = {}, {}, {}, 15
+local AuraList, Aura, UnitIDTable, MaxFrame = {}, {}, {}, 12
 local MyClass = select(2, UnitClass("player")) 
 local BuildICON = cfg.BuildICON
 local BuildBAR = cfg.BuildBAR
@@ -109,41 +109,38 @@ local function Init()
 	Pos()
 end
 
--- OnUpdate
-local Timer = 0
-local function OnUpdate(self, elapsed)
-	Timer = self.IsCD and self.expires+self.duration-GetTime() or self.expires-GetTime()
-	if Timer < 0 then
-		if self.Time then self.Time:SetText("N/A") end
-		self.Statusbar:SetMinMaxValues(0, 1) 
-		self.Statusbar:SetValue(0)
-	elseif Timer < 60 then
-		if self.Time then self.Time:SetFormattedText("%.1f", Timer) end
-		self.Statusbar:SetMinMaxValues(0, self.duration) 
-		self.Statusbar:SetValue(Timer)
-	else
-		if self.Time then self.Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
-		self.Statusbar:SetMinMaxValues(0, self.duration) 
-		self.Statusbar:SetValue(Timer)
-	end
-end
-
 -- UpdateCD
 local function UpdateCDFrame(index, name, icon, start, duration, bool)
 	local Frame = Aura[index][Aura[index].Index]
-	Frame:Show()	
-	Frame.Icon:SetTexture(icon)
+	if Frame then Frame:Show() end
+	if Frame.Icon then Frame.Icon:SetTexture(icon) end
 	if Frame.Cooldown then
 		Frame.Cooldown:SetReverse(false)
 		Frame.Cooldown:SetCooldown(start, duration)
 	end
-	Frame.Count:SetText(nil)
+	if Frame.Count then Frame.Count:SetText(nil) end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
 		Frame.IsCD = true
 		Frame.duration = duration
-		Frame.expires = start
-		Frame:SetScript("OnUpdate", OnUpdate)
+		Frame.start = start
+		Frame.Timer = 0
+		Frame:SetScript("OnUpdate", function(self, elapsed)
+			self.Timer = self.start+self.duration-GetTime()
+			if self.Timer < 0 then
+				if self.Time then self.Time:SetText("N/A") end
+				self.Statusbar:SetMinMaxValues(0, 1) 
+				self.Statusbar:SetValue(0)
+			elseif self.Timer < 60 then
+				if self.Time then self.Time:SetFormattedText("%.1f", self.Timer) end
+				self.Statusbar:SetMinMaxValues(0, self.duration) 
+				self.Statusbar:SetValue(self.Timer)
+			else
+				if self.Time then self.Time:SetFormattedText("%d:%.2d", self.Timer/60, self.Timer%60) end
+				self.Statusbar:SetMinMaxValues(0, self.duration) 
+				self.Statusbar:SetValue(self.Timer)
+			end
+		end)
 	end
 	
 	Aura[index].Index = (Aura[index].Index + 1 > MaxFrame) and MaxFrame or Aura[index].Index + 1
@@ -172,15 +169,34 @@ end
 -- UpdateAura
 local function UpdateAuraFrame(index, UnitID, name, icon, count, duration, expires)
 	local Frame = Aura[index][Aura[index].Index]
-	Frame:Show()
-	Frame.Icon:SetTexture(icon)
-	Frame.Count:SetText(count > 1 and count or nil)
-	if Frame.Cooldown then Frame.Cooldown:SetCooldown(expires-duration, duration) end
+	if Frame then Frame:Show() end
+	if Frame.Icon then Frame.Icon:SetTexture(icon) end
+	if Frame.Count then Frame.Count:SetText(count > 1 and count or nil) end
+	if Frame.Cooldown then
+		Frame.Cooldown:SetReverse(true)
+		Frame.Cooldown:SetCooldown(expires-duration, duration)
+	end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
 		Frame.duration = duration
 		Frame.expires = expires
-		Frame:SetScript("OnUpdate", OnUpdate)
+		Frame.Timer = 0
+		Frame:SetScript("OnUpdate", function(self, elapsed)
+			self.Timer = self.expires-GetTime()
+			if self.Timer < 0 then
+				if self.Time then self.Time:SetText("N/A") end
+				self.Statusbar:SetMinMaxValues(0, 1) 
+				self.Statusbar:SetValue(0)
+			elseif self.Timer < 60 then
+				if self.Time then self.Time:SetFormattedText("%.1f", self.Timer) end
+				self.Statusbar:SetMinMaxValues(0, self.duration) 
+				self.Statusbar:SetValue(self.Timer)
+			else
+				if self.Time then self.Time:SetFormattedText("%d:%.2d", self.Timer/60, self.Timer%60) end
+				self.Statusbar:SetMinMaxValues(0, self.duration) 
+				self.Statusbar:SetValue(self.Timer)
+			end
+		end)
 	end
 	
 	Aura[index].Index = (Aura[index].Index + 1 > MaxFrame) and MaxFrame or Aura[index].Index + 1
@@ -224,15 +240,21 @@ end
 
 -- CleanUp
 local function CleanUp()
-	for _, VALUE in pairs(Aura) do
+	for _, value in pairs(Aura) do
 		for i = 1, MaxFrame do
-			VALUE[i]:Hide()
-			VALUE[i].Icon:SetTexture(nil)
-			VALUE[i].Count:SetText(nil)
-			if VALUE[i].Spellname then VALUE[i].Spellname:SetText(nil) end
-			if VALUE[i].Statusbar then VALUE[i]:SetScript("OnUpdate", nil) end
+			if value[i] then
+				value[i]:Hide()
+				value[i]:SetScript("OnUpdate", nil)
+			end
+			if value[i].Icon then value[i].Icon:SetTexture(nil) end
+			if value[i].Count then value[i].Count:SetText(nil) end
+			if value[i].Spellname then value[i].Spellname:SetText(nil) end
+			if value[i].Statusbar then
+				value[i].Statusbar:SetMinMaxValues(0, 1) 
+				value[i].Statusbar:SetValue(0)
+			end
 		end
-		VALUE.Index = 1
+		value.Index = 1
 	end
 end
 
@@ -265,36 +287,37 @@ SlashCmdList.SRAuraWatch = function(msg)
 		if TestFlag then
 			TestFlag = false
 			Event:SetScript("OnUpdate", nil)
-			Event:UnregisterEvent("UNIT_AURA")
 			for _, value in pairs(Aura) do
 				for i = 1, MaxFrame do
-					value[i]:SetScript("OnUpdate", nil)		
+					if value[i] then
+						value[i]:SetScript("OnUpdate", nil)
+						value[i]:Show()	
+					end		
 					if value[i].Icon then value[i].Icon:SetTexture(select(3, GetSpellInfo(118))) end
 					if value[i].Count then value[i].Count:SetText("9") end
 					if value[i].Time then value[i].Time:SetText("59.59") end
 					if value[i].Statusbar then value[i].Statusbar:SetValue(1) end
-					if value[i].Spellname then value[i].Spellname:SetText("变形术") end
-					value[i]:Show()		
+					if value[i].Spellname then value[i].Spellname:SetText("变形术") end				
 				end
 				value[1].MoveHandle:Show()
 			end
 		else
 			TestFlag = true
+			CleanUp()
+			for _, value in pairs(Aura) do
+				value[1].MoveHandle:Hide()
+			end
 			Event:SetScript("OnUpdate", function(self, elapsed)
 				self.Timer = self.Timer + elapsed
 				if self.Timer > 0.5 then
 					self.Timer = 0
+					CleanUp()
 					UpdateCD()
+					for _, value in pairs(UnitIDTable) do
+						UpdateAura(value)
+					end
 				end	
 			end)
-			Event:RegisterEvent("UNIT_AURA")
-			for _, value in pairs(Aura) do
-				for i = 1, MaxFrame do
-					value[i]:Hide()
-				end
-				value[1].MoveHandle:Hide()
-				value.Index = 1
-			end
 		end
 	elseif msg:lower() == "reset" then
 		wipe(sRawDB)

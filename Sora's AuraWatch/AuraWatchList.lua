@@ -700,24 +700,22 @@ SRAuraList = {
 				{AuraID = 81130, UnitID = "target", Caster = "player"},
 			},
 		},	
-		--[[{
+		{
 			Name = "CD",
 			Direction = "DOWN",
 			Interval = 4,
-			Mode = "BAR",
+			Mode = "ICON",
 			IconSize = 48,
 			BarWidth = 175,
 			Pos = {"CENTER", UIParent, "CENTER", 0, 100},
 			List = {
 				-- 随身邮箱
 				{ItemID = 40768},
-				-- 不灭药水
-				{ItemID = 40093},
-				-- 厚烬丝绷带
-				{ItemID = 53050},
-				-- Test
+				-- 冰封之韧
 				{SpellID = 48792},
+				-- 反魔法护罩
+				{SpellID = 48707},
 			},
-		},]]
+		},
 	},
 }
