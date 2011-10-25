@@ -7,7 +7,7 @@ C.Threat = CreateFrame("Frame")
 -- LoadSettings
 function C.Threat.LoadSettings()
 	local Default = {
-		["ThreatBarWidth"] = 230,								-- 仇恨条宽度
+		["ThreatBarWidth"] = 220,								-- 仇恨条宽度
 		["NameTextL"] = 3,										-- 姓名长度(单位:字)
 		["ThreatLimited"] = 2,									-- 显示仇恨人数(不包括Tank)
 		["yOffset"] = -60,										-- 纵向偏移量
