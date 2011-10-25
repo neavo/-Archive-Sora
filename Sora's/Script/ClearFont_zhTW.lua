@@ -357,15 +357,13 @@ if not (GetLocale() == "zhTW") then return end
 
 -- 任務標題
 	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 預設值：17
-	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetShadowColor(0, 0, 0); end		-- 預設值：(0, 0, 0)
 
 	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 預設值：17
-	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetShadowColor(0, 0, 0); end		-- 預設值：(0, 0, 0)
 	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetTextColor(1.0, 0.82, 0); end			-- 預設值：(1.0, 0.82, 0)
 
 -- 任務描述
 	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetFont(CLEAR_FONT_QUEST, 14 * CF_SCALE); end		-- 預設值：14
-	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetTextColor(0, 0, 0); end			-- 預設值：(0, 0, 0)
+	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetTextColor(1, 1, 1); end			-- 預設值：(0, 0, 0)
 
 -- 任務目標
 	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- 預設值：14
