@@ -1,7 +1,7 @@
 ﻿-- Engines
 local S, C, _, _ = unpack(select(2, ...))
 local SoraConfig = LibStub("AceAddon-3.0"):NewAddon("SoraConfig", "AceConsole-3.0")
-local Version = 1021
+local Version = 1026
 
 -- SetDefault
 local function SetDefault()
