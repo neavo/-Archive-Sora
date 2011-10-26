@@ -5,6 +5,9 @@ local Version = 1026
 
 -- SetDefault
 local function SetDefault()
+	for _, value in pairs({ActionBarDB, BuffDB, NameplateDB, ReminderDB, ThreatDB, TooltipDB, UnitFrameDB, MoveHandleDB, SkinDB}) do
+		wipe(value)
+	end
 	SlashCmdList.AutoSet()
 	SoraVersion = Version
 	-- 聊天频道职业染色

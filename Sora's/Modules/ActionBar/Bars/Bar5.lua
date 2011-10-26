@@ -2,8 +2,7 @@
 local S, _, _, _ = unpack(select(2, ...))
 
 local Bar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
-Bar:SetWidth(24*6+3*5)
-Bar:SetHeight(24*2+3)
+Bar:SetSize(24, 24*12+3*11)
 MultiBarRight:SetParent(Bar)
 MultiBarRight:ClearAllPoints()
 MultiBarRight.SetPoint = function() end
@@ -15,10 +14,8 @@ for i=1, 12 do
 	Button:ClearAllPoints()
 	if i == 1 then
 		Button:SetPoint("TOPRIGHT", Bar, 0, 0)
-	elseif i == 7 then
-		Button:SetPoint("TOP", MultiBarRightButton1, "BOTTOM", 0, -3)	
 	else
-		Button:SetPoint("RIGHT", _G["MultiBarRightButton"..i-1], "LEFT", -3, 0)
+		Button:SetPoint("TOP", _G["MultiBarRightButton"..i-1], "BOTTOM", 0, -3)
 	end
 	Button.HideFrame = CreateFrame("Frame", nil, Button)
 	Button.HideFrame:SetAllPoints()
