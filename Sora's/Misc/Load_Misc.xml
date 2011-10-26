@@ -2,13 +2,13 @@
 
 	<Script file = "Align.lua"/>
 	<Script file = "AlreadyKnown.lua"/>
+	<Script file = "AutoRepair.lua"/>
+	<Script file = "AutoSell.lua"/>
 	<Script file = "CombatAlert.lua"/>
-	<Script file = "DragEmAll.lua"/>
 	<Script file = "Durability.lua"/>
 	<Script file = "Glow.lua"/>
 	<Script file = "HoverTips.lua"/>
 	<Script file = "Mail.lua"/>
-	<Script file = "PFEIL.lua"/>
 	<Script file = "Roster.lua"/>
 	<Script file = "tekKompare.lua"/>
 	<Script file = "TradeTab.lua"/>
