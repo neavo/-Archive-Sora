@@ -625,6 +625,8 @@ SRAuraList = {
 			List = {
 				-- 肾击
 				{AuraID =   408, UnitID = "target", Caster = "player"},
+				-- 绞喉
+				{AuraID =   408, UnitID = "target", Caster = "player"},
 				-- 偷袭
 				{AuraID =  1833, UnitID = "target", Caster = "player"},
 				-- 割裂
