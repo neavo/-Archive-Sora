@@ -255,17 +255,16 @@ if UnitFrameDB.ShowRaidFrame then
 	oUF:SetActiveStyle("SoraRaid")
 	local RaidFramePos = CreateFrame("Frame", nil, UIParent)
 	RaidFramePos:SetSize(UnitFrameDB.RaidUnitWidth*5+5*4, UnitFrameDB.RaidUnitHeight*5+5*4)
-	MoveHandle.RaidFrame = S.MakeMoveHandle(RaidFramePos, "团队框体", "RaidFrame")	
+	MoveHandle.RaidFrame = S.MakeMoveHandle(RaidFramePos, "团队框体", "RaidFrame")
 	DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
-		"showRaid", UnitFrameDB.ShowRaid,  
+		"showRaid", true,  
 		"showPlayer", true, 
 		"showSolo", false, 
-		"showParty", true, 
 		"xoffset", (UnitFrameDB.RaidPartyArrangement == "Horizontal") and 5 or 0, 
 		"yoffset", (UnitFrameDB.RaidPartyArrangement == "Vertical") and -5 or 0, 
-		"groupFilter", "1, 2, 3, 4, 5", 
+		"groupFilter", "1,2,3,4,5", 
 		"groupBy", "GROUP", 
-		"groupingOrder", "1, 2, 3, 4, 5", 
+		"groupingOrder", "1,2,3,4,5", 
 		"sortMethod", "INDEX", 
 		"maxColumns", 5, 
 		"unitsPerColumn", 5, 

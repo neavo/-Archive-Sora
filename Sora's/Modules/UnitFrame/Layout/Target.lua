@@ -90,7 +90,7 @@ local function BuildTags(self)
 	Name:SetAlpha(0)
 	local HPTag = S.MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.TargetTagMode == "Full" then
+	if UnitFrameDB.TargetTagMode == "Short" then
 		self:Tag(HPTag, "[Sora:color][Sora:hp]")
 	else
 		self:Tag(HPTag, "[Sora:color][curhp] | [perhp]%")		
@@ -98,7 +98,7 @@ local function BuildTags(self)
 	HPTag:SetAlpha(0)
 	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.TargetTagMode == "Full" then
+	if UnitFrameDB.TargetTagMode == "Short" then
 		self:Tag(PPTag, "[Sora:pp]")
 	else
 		self:Tag(PPTag, "[curpp] | [perpp]%")
