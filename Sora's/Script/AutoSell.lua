@@ -7,7 +7,7 @@ Event:SetScript("OnEvent", function(self)
 		for SlotID = 1, GetContainerNumSlots(BagID) do
 			local Link = GetContainerItemLink(BagID, SlotID)
 			if Link then
-				local p = select(11, GetItemInfo(Link))*select(2, GetContainerItemInfo(b, SlotID))
+				local p = select(11, GetItemInfo(Link))*select(2, GetContainerItemInfo(BagID, SlotID))
 				if select(3, GetItemInfo(Link)) == 0 and p > 0 then
 					UseContainerItem(BagID, SlotID)
 					PickupMerchantItem()
