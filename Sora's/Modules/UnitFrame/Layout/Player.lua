@@ -21,9 +21,9 @@ end
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
 	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetHeight(24)
+	Bar:SetHeight(UnitFrameDB.PlayerHeight-2-4)
 	Bar:SetWidth(self:GetWidth())
-	Bar:SetPoint("TOP", 0, 0)
+	Bar:SetPoint("TOP")
 	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
@@ -44,7 +44,7 @@ local function BuildPowerBar(self)
 	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
-	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
+	Bar:SetPoint("BOTTOM")
 	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
@@ -257,7 +257,7 @@ local function BuildTags(self)
 	Name:SetAlpha(0)
 	local HPTag = S.MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.ShortPlayerTags then
+	if UnitFrameDB.PlayerTagMode == "Full" then
 		self:Tag(HPTag, "[Sora:color][Sora:hp]")
 	else
 		self:Tag(HPTag, "[Sora:color][curhp] | [perhp]%")		
@@ -265,7 +265,7 @@ local function BuildTags(self)
 	HPTag:SetAlpha(0)
 	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.ShortPlayerTags then
+	if UnitFrameDB.PlayerTagMode == "Full" then
 		self:Tag(PPTag, "[Sora:pp]")
 	else
 		self:Tag(PPTag, "[curpp] | [perpp]%")
@@ -308,11 +308,11 @@ local function BuildCastbar(self)
 	local Castbar = CreateFrame("StatusBar", nil, self)
 	Castbar:SetStatusBarTexture(DB.Statusbar)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	if UnitFrameDB.PlayerCastbarAlone then
+	if UnitFrameDB.PlayerCastbarMode == "Large" then
 		Castbar:SetHeight(20)
 		Castbar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton4, "TOPLEFT", 2, 35)
 		Castbar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton10, "TOPRIGHT", -30, 35)			
-	else
+	elseif UnitFrameDB.PlayerCastbarMode == "Small" then
 		Castbar:SetHeight(10)
 		Castbar:SetWidth(self:GetWidth()-70)
 		Castbar:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -14)
@@ -398,8 +398,7 @@ local function BuildPlayerFrame(self, ...)
 	self:RegisterForClicks("AnyUp")
 	
 	-- Set Size and Scale
-	self:SetScale(UnitFrameDB.Scale)
-	self:SetSize(220, 30)
+	self:SetSize(UnitFrameDB.PlayerWidth, UnitFrameDB.PlayerHeight)
 	
 	-- BuildHealthBar
 	BuildHealthBar(self)
@@ -417,7 +416,7 @@ local function BuildPlayerFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if UnitFrameDB.ShowPlayerCastbar then BuildCastbar(self) end
+	if UnitFrameDB.PlayerCastbarMode ~= "None" then BuildCastbar(self) end
 	
 	-- BuildRaidMark
 	BuildRaidIcon(self)

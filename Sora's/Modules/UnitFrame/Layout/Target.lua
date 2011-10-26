@@ -21,9 +21,9 @@ end
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
 	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetHeight(24)
+	Bar:SetHeight(UnitFrameDB.PlayerHeight-2-4)
 	Bar:SetWidth(self:GetWidth())
-	Bar:SetPoint("TOP", 0, 0)
+	Bar:SetPoint("TOP")
 	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
@@ -46,7 +46,7 @@ local function BuildPowerBar(self)
 	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
-	Bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
+	Bar:SetPoint("BOTTOM")
 	Bar.Shadow = S.MakeShadow(Bar, 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
@@ -90,7 +90,7 @@ local function BuildTags(self)
 	Name:SetAlpha(0)
 	local HPTag = S.MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.ShortTargetTags then
+	if UnitFrameDB.TargetTagMode == "Full" then
 		self:Tag(HPTag, "[Sora:color][Sora:hp]")
 	else
 		self:Tag(HPTag, "[Sora:color][curhp] | [perhp]%")		
@@ -98,7 +98,7 @@ local function BuildTags(self)
 	HPTag:SetAlpha(0)
 	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.ShortTargetTags then
+	if UnitFrameDB.TargetTagMode == "Full" then
 		self:Tag(PPTag, "[Sora:pp]")
 	else
 		self:Tag(PPTag, "[curpp] | [perpp]%")
@@ -141,7 +141,7 @@ local function BuildCastbar(self)
 	local Castbar = CreateFrame("StatusBar", nil, self)
 	Castbar:SetStatusBarTexture(DB.Statusbar)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	if UnitFrameDB.TargetCastbarAlone then
+	if UnitFrameDB.TargetCastbarMode == "Large" then
 		Castbar:SetHeight(14)
 		Castbar:SetPoint("BOTTOMLEFT", MultiBarBottomRightButton4, "TOPLEFT", 54, 60)
 		Castbar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton10, "TOPRIGHT", -40, 60)			
@@ -214,7 +214,7 @@ end
 
 local function BuildBuff(self)
 	local Buffs = CreateFrame("Frame", nil, self)
-	Buffs.onlyShowPlayer = UnitFrameDB.ShowTargetBuffOnlyPlayer
+	Buffs.onlyShowPlayer = (UnitFrameDB.TargetBuffMode == "OnlyPlayer")
 	Buffs:SetPoint("TOPLEFT", self, "TOPRIGHT", 8, 0)
 	Buffs.initialAnchor = "TOPLEFT"
 	Buffs["growth-x"] = "RIGHT"
@@ -233,7 +233,7 @@ local function BuildDebuff(self)
 	local Debuffs = CreateFrame("Frame", nil, self)
 	Debuffs.size = 20
 	Debuffs.num = 27
-	Debuffs.onlyShowPlayer = UnitFrameDB.ShowTargetDebuffOnlyPlayer
+	Debuffs.onlyShowPlayer = (UnitFrameDB.TargetDebuffMode == "OnlyPlayer")
 	Debuffs.spacing = 5
 	Debuffs:SetHeight(Debuffs.size*3+Debuffs.spacing*2)
 	Debuffs:SetWidth(self:GetWidth())
@@ -275,8 +275,7 @@ local function BuildTargetFrame(self, ...)
 	self:RegisterForClicks("AnyUp")
 	
 	-- Set Size and Scale
-	self:SetScale(UnitFrameDB.Scale)
-	self:SetSize(220, 30)
+	self:SetSize(UnitFrameDB.TargetWidth, UnitFrameDB.TargetHeight)
 	
 	-- BuildHealthBar
 	BuildHealthBar(self)
@@ -291,13 +290,13 @@ local function BuildTargetFrame(self, ...)
 	BuildTags(self)
 	
 	-- BuildCastbar
-	if UnitFrameDB.ShowTargetCastbar then BuildCastbar(self) end
+	if UnitFrameDB.TargetCastbarMode ~= "None" then BuildCastbar(self) end
 	
 	-- BuildBuff
-	if UnitFrameDB.ShowTargetBuff then BuildBuff(self) end
+	if UnitFrameDB.TargetBuffMode ~= "None" then BuildBuff(self) end
 	
 	-- BuildDebuff
-	if UnitFrameDB.ShowTargetDebuff then BuildDebuff(self) end
+	if UnitFrameDB.TargetDebuffMode ~= "None" then BuildDebuff(self) end
 	
 	-- BuildRaidMark
 	BuildRaidIcon(self)

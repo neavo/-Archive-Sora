@@ -264,7 +264,6 @@ local function BuildFocusFrame(self, ...)
 	self:RegisterForClicks("AnyUp")
 	
 	-- Set Size and Scale
-	self:SetScale(UnitFrameDB.Scale)
 	self:SetSize(220, 30)
 	
 	-- BuildHealthBar

@@ -65,7 +65,6 @@ local function BuildBossTargetFrame(self, ...)
 	self:RegisterForClicks("AnyUp")
 	
 	-- Set Size and Scale
-	self:SetScale(UnitFrameDB.Scale)
 	self:SetSize(60, 14)
 	
 	-- BuildHealthBar

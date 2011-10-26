@@ -241,7 +241,7 @@ local function BuildRaidFrame(self, ...)
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
 
-if UnitFrameDB.ShowParty or UnitFrameDB.ShowRaid then
+if UnitFrameDB.ShowRaidFrame then
 	-- Hide the Blizzard raid frames
 	CompactRaidFrameManager:UnregisterAllEvents()
 	CompactRaidFrameManager.Show = function() end
@@ -249,9 +249,8 @@ if UnitFrameDB.ShowParty or UnitFrameDB.ShowRaid then
 	CompactRaidFrameContainer:UnregisterAllEvents()
 	CompactRaidFrameContainer.Show = function() end
 	CompactRaidFrameContainer:Hide()		
-	CompactRaidFrameContainer:SetParent(UIParent)	
-end
-if UnitFrameDB.ShowRaid then
+	CompactRaidFrameContainer:SetParent(UIParent)
+	
 	oUF:RegisterStyle("SoraRaid", BuildRaidFrame)
 	oUF:SetActiveStyle("SoraRaid")
 	local RaidFramePos = CreateFrame("Frame", nil, UIParent)
@@ -260,10 +259,10 @@ if UnitFrameDB.ShowRaid then
 	DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
 		"showRaid", UnitFrameDB.ShowRaid,  
 		"showPlayer", true, 
-		"showSolo", true, 
+		"showSolo", false, 
 		"showParty", true, 
-		"xoffset", (UnitFrameDB.RaidPartyArrangement == "HORIZONTAL") and 5 or 0, 
-		"yoffset", (UnitFrameDB.RaidPartyArrangement == "VERTICAL") and -5 or 0, 
+		"xoffset", (UnitFrameDB.RaidPartyArrangement == "Horizontal") and 5 or 0, 
+		"yoffset", (UnitFrameDB.RaidPartyArrangement == "Vertical") and -5 or 0, 
 		"groupFilter", "1, 2, 3, 4, 5", 
 		"groupBy", "GROUP", 
 		"groupingOrder", "1, 2, 3, 4, 5", 
@@ -271,8 +270,8 @@ if UnitFrameDB.ShowRaid then
 		"maxColumns", 5, 
 		"unitsPerColumn", 5, 
 		"columnSpacing", 5, 
-		"point", (UnitFrameDB.RaidPartyArrangement == "HORIZONTAL") and "LEFT" or "TOP", 
-		"columnAnchorPoint", (UnitFrameDB.RaidPartyArrangement == "HORIZONTAL") and "TOP" or "LEFT", 
+		"point", (UnitFrameDB.RaidPartyArrangement == "Horizontal") and "LEFT" or "TOP", 
+		"columnAnchorPoint", (UnitFrameDB.RaidPartyArrangement == "Horizontal") and "TOP" or "LEFT", 
 		"oUF-initialConfigFunction", ([[
 			self:SetWidth(%d)
 			self:SetHeight(%d)
