@@ -21,7 +21,7 @@ end
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
 	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetHeight(16)
+	Bar:SetHeight(UnitFrameDB.RaidUnitHeight-2-1)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP", 0, 0)
 	Bar.Shadow = S.MakeShadow(Bar, 3)
@@ -46,7 +46,7 @@ local function BuildPowerBar(self)
 	Bar:SetStatusBarTexture(DB.Statusbar)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetHeight(2)
-	Bar:SetPoint("BOTTOM", 0, -1)
+	Bar:SetPoint("BOTTOM")
 	Bar.Shadow = S.MakeShadow(Bar , 3)
 	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
 	Bar.BG:SetTexture(DB.Statusbar)
@@ -150,79 +150,31 @@ local function BuildRaidDebuffs(self)
 	self.RaidDebuff = RaidDebuff
 end
 
-local function BuildAuraWatch(self, ...)
-	local _, Class = UnitClass("player")
-	local AuraWatch = {}
-	local spellIDs = {
-		DEATHKNIGHT = {}, 
-		DRUID = {
-			33763, -- Lifebloom
-			8936, -- Regrowth
-			774, -- Rejuvenation
-			48438, -- Wild Growth
-		}, 
-		HUNTER = {
-			34477, -- Misdirection
-		}, 
-		MAGE = {
-			54646, -- Focus Magic
-		}, 
-		PALADIN = {
-			53563, -- Beacon of Light
-			25771, -- Forbearance
-		}, 
-		PRIEST = { 
-			17, -- Power Word: Shield
-			139, -- Renew
-			33076, -- Prayer of Mending
-			6788, -- Weakened Soul
-		}, 
-		ROGUE = {
-			57934, -- Tricks of the Trade
-		}, 
-		SHAMAN = {
-			974, -- Earth Shield
-			61295, -- Riptide
-		}, 
-		WARLOCK = {
-			20707, -- Soulstone Resurrection
-		}, 
-		WARRIOR = {
-			50720, -- Vigilance
-		}, 
-	}
-		
-	local function PostCreateIcon(_, Button, ...)
-		Button.cd:SetReverse()
-		Button.count = S.MakeFontString(Button, 12)
-		Button.count:SetPoint("CENTER", Button, "BOTTOM", 3, 3)
-	end
-	AuraWatch.onlyShowPresent = true
-	AuraWatch.anyUnit = true
-	AuraWatch.PostCreateIcon = PostCreateIcon
-	-- Set any other AuraWatch settings
-	AuraWatch.icons = {}
-
-	for i, sid in pairs(spellIDs[Class]) do
-		local icon = CreateFrame("Frame", nil, self)
-		icon.spellID = sid
-		-- set the dimensions and positions
-		icon:SetWidth(12)
-		icon:SetHeight(12)
-		icon:SetFrameLevel(5)
+local function BuildIndicator(self)
+	local Indicator = {}
+	for i = 1, 4 do
+		local Button = CreateFrame("Frame", nil, self.Health)
+		Button:SetSize(6, 6)
+		Button:SetFrameStrata("HIGH")
+		Button:SetBackdrop({
+			bgFile = DB.Solid, insets = {left = 1, right = 1, top = 1, bottom = 1},
+			edgeFile = DB.Solid, edgeSize = 1,
+		})
+		Button:SetBackdropColor(0, 0.9, 0)
+		Button:SetBackdropBorderColor(0, 0, 0)
 		if i == 1 then
-			icon:SetPoint("TOPLEFT", self, "TOPLEFT", -1, 1)
+			Button:SetPoint("TOPLEFT", 2, -1)
 		elseif i == 2 then
-			icon:SetPoint("TOPRIGHT", self, "TOPRIGHT", 1, 1)
+			Button:SetPoint("TOPRIGHT", -2, -1)
 		elseif i == 3 then
-			icon:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", -1, -1)
+			Button:SetPoint("BOTTOMLEFT", 2, 1)
 		elseif i == 4 then
-			icon:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 1, -1)
+			Button:SetPoint("BOTTOMRIGHT", -2, 1)
 		end
-		
-		AuraWatch.icons[sid] = icon
+		Button:Hide()
+		tinsert(Indicator, Button)
 	end
-	self.AuraWatch = AuraWatch
+	self.Indicator = Indicator
 end
 
 local function PostUpdateRaidFrame(Health, unit, min, max)
@@ -280,11 +232,11 @@ local function BuildRaidFrame(self, ...)
 	-- BuildThreatBorder
 	BuildThreatBorder(self)
 	
-	-- BuildAuraWatch
-	BuildAuraWatch(self)
-	
 	-- BuildRaidDebuffs
-	if UnitFrameDB.ShowRaidDebuffs then BuildRaidDebuffs(self) end
+	BuildRaidDebuffs(self)
+	
+	-- BuildIndicator
+	BuildIndicator(self)
 	
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
@@ -302,55 +254,28 @@ end
 if UnitFrameDB.ShowRaid then
 	oUF:RegisterStyle("SoraRaid", BuildRaidFrame)
 	oUF:SetActiveStyle("SoraRaid")
-	if UnitFrameDB.RaidPartyH then
-		local RaidFramePos = CreateFrame("Frame", nil, UIParent)
-		RaidFramePos:SetSize(UnitFrameDB.RaidUnitWidth*5+5*4, 20*5+6*4)
-		MoveHandle.RaidFrame = S.MakeMoveHandle(RaidFramePos, "团队框体", "RaidFrame")	
-		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
-			"showRaid", UnitFrameDB.ShowRaid,  
-			"showPlayer", true, 
-			"showSolo", false, 
-			"showParty", true, 
-			"xoffset", 5, 
-			"groupFilter", "1, 2, 3, 4, 5", 
-			"groupBy", "GROUP", 
-			"groupingOrder", "1, 2, 3, 4, 5", 
-			"sortMethod", "INDEX", 
-			"maxColumns", 5, 
-			"unitsPerColumn", 5, 
-			"columnSpacing", 5, 
-			"point", "LEFT", 
-			"columnAnchorPoint", "TOP", 
-			"oUF-initialConfigFunction", ([[
+	local RaidFramePos = CreateFrame("Frame", nil, UIParent)
+	RaidFramePos:SetSize(UnitFrameDB.RaidUnitWidth*5+5*4, UnitFrameDB.RaidUnitHeight*5+5*4)
+	MoveHandle.RaidFrame = S.MakeMoveHandle(RaidFramePos, "团队框体", "RaidFrame")	
+	DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
+		"showRaid", UnitFrameDB.ShowRaid,  
+		"showPlayer", true, 
+		"showSolo", true, 
+		"showParty", true, 
+		"xoffset", (UnitFrameDB.RaidPartyArrangement == "HORIZONTAL") and 5 or 0, 
+		"yoffset", (UnitFrameDB.RaidPartyArrangement == "VERTICAL") and -5 or 0, 
+		"groupFilter", "1, 2, 3, 4, 5", 
+		"groupBy", "GROUP", 
+		"groupingOrder", "1, 2, 3, 4, 5", 
+		"sortMethod", "INDEX", 
+		"maxColumns", 5, 
+		"unitsPerColumn", 5, 
+		"columnSpacing", 5, 
+		"point", (UnitFrameDB.RaidPartyArrangement == "HORIZONTAL") and "LEFT" or "TOP", 
+		"columnAnchorPoint", (UnitFrameDB.RaidPartyArrangement == "HORIZONTAL") and "TOP" or "LEFT", 
+		"oUF-initialConfigFunction", ([[
 			self:SetWidth(%d)
 			self:SetHeight(%d)
-			]]):format(UnitFrameDB.RaidUnitWidth, 20))
-		DB.RaidFrame:SetScale(UnitFrameDB.RaidScale)
-		DB.RaidFrame:SetPoint("TOPLEFT", RaidFramePos)
-	else
-		local RaidFramePos = CreateFrame("Frame", nil, UIParent)
-		RaidFramePos:SetSize(UnitFrameDB.RaidUnitWidth*5+5*4, 20*5+6*4)
-		MoveHandle.RaidFrame = S.MakeMoveHandle(RaidFramePos, "团队框体", "RaidFrame")
-		DB.RaidFrame = oUF:SpawnHeader("oUF_Raid", nil, "raid,party,solo", 
-			"showRaid", UnitFrameDB.ShowRaid,  
-			"showPlayer", true, 
-			"showSolo", false, 
-			"showParty", true, 
-			"yoffset", -5, 
-			"groupFilter", "1,2,3,4,5", 
-			"groupBy", "GROUP", 
-			"groupingOrder", "1,2,3,4,5", 
-			"sortMethod", "INDEX", 
-			"maxColumns", 5, 
-			"unitsPerColumn", 5, 
-			"columnSpacing", 5, 
-			"point", "TOP", 
-			"columnAnchorPoint", "LEFT", 
-			"oUF-initialConfigFunction", ([[
-			self:SetWidth(%d)
-			self:SetHeight(%d)
-			]]):format(UnitFrameDB.RaidUnitWidth, 20))
-		DB.RaidFrame:SetScale(UnitFrameDB.RaidScale)
-		DB.RaidFrame:SetPoint("TOPLEFT", RaidFramePos)
-	end
+		]]):format(UnitFrameDB.RaidUnitWidth, UnitFrameDB.RaidUnitHeight))
+	DB.RaidFrame:SetPoint("TOPLEFT", RaidFramePos)
 end

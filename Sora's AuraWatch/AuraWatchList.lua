@@ -700,7 +700,7 @@ SRAuraList = {
 				{AuraID = 81130, UnitID = "target", Caster = "player"},
 			},
 		},	
-		{
+		--[[{
 			Name = "CD",
 			Direction = "DOWN",
 			Interval = 4,
@@ -716,6 +716,6 @@ SRAuraList = {
 				-- 反魔法护罩
 				{SpellID = 48707},
 			},
-		},
+		},]]
 	},
 }

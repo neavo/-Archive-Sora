@@ -3,8 +3,6 @@ local S, C, _, _ = unpack(select(2, ...))
 
 -- Init
 C.UnitFrame = {}
-C.UnitFrame.LeftButton = "Click"
-C.UnitFrame.RightButton = "Click"
 
 -- LoadSettings
 function C.UnitFrame.LoadSettings()
@@ -40,13 +38,8 @@ function C.UnitFrame.LoadSettings()
 		-- 团队框体
 		["ShowRaid"] = true,
 			["RaidUnitWidth"] = 70,
-			["RaidPartyH"] = true,
-			["ShowRaidDebuffs"] = true,
-		-- 小队框体
-		["ShowParty"] = false,
-			["ShowPartyDebuff"] = true,
-		--其他
-		["RaidScale"] = 1,
+			["RaidUnitHeight"] = 20,
+			["RaidPartyArrangement"] = "HORIZONTAL",
 	}
 	if not UnitFrameDB then UnitFrameDB = {} end
 	for key, value in pairs(Default) do
@@ -267,75 +260,46 @@ function C.UnitFrame.BuildGUI()
 		Modules["Raid"] =  {
 			type = "group",
 			name = "团队框体",
-			args = {
-				Header_1 = {
-					type = "header",
-					name = "小队框体",
-					order = 1,
-				},	
-				ShowParty = {
-					type = "toggle",
-					name = "显示小队框体",
-					order = 2,
-					get = function() return UnitFrameDB.ShowParty end,
-					set = function(_, value) UnitFrameDB.ShowParty = value end,
-				},
-				ShowPartyDebuff = {
-					type = "toggle",
-					name = "显示小队Debuff",
-					disabled = not UnitFrameDB.ShowParty,
-					order = 3,
-					get = function() return UnitFrameDB.ShowPartyDebuff end,
-					set = function(_, value) UnitFrameDB.ShowPartyDebuff = value end,
-				},
-				Header_2 = {
-					type = "header",
-					name = "团队框体",
-					order = 4,
-				},			
+			args = {	
 				ShowRaid = {
 					type = "toggle",
-					name = "显示团队框体",
-					order = 5,
+					name = "启用团队框体",
+					order = 1,
 					get = function() return UnitFrameDB.ShowRaid end,
 					set = function(_, value) UnitFrameDB.ShowRaid = value end,
 				},
-				RaidPartyH = {
-					type = "toggle",
-					name = "各小队排列横向",
-					disabled = not UnitFrameDB.ShowRaid,
-					order = 6,
-					get = function() return UnitFrameDB.RaidPartyH end,
-					set = function(_, value) UnitFrameDB.RaidPartyH = value end,
-				},
-				ShowRaidDebuffs = {
-					type = "toggle",
-					name = "显示RaidDebuff",
-					disabled = not UnitFrameDB.ShowRaid,
-					order = 7,
-					get = function() return UnitFrameDB.ShowRaidDebuffs end,
-					set = function(_, value) UnitFrameDB.ShowRaidDebuffs = value end,
+				NewLine = {
+					type = "description",
+					name = "\n",
+					order = 2,
 				},
 				RaidUnitWidth = {
-					type = "input",
+					type = "range",
 					name = "团队框体单位宽度：",
 					desc = "请输入团队框体单位宽度",
-					order = 8,
-					get = function() return tostring(UnitFrameDB.RaidUnitWidth) end,
-					set = function(_, value) UnitFrameDB.RaidUnitWidth = tonumber(value) end,
+					min = 30, max = 200,
+					order = 3,
+					get = function() return UnitFrameDB.RaidUnitWidth end,
+					set = function(_, value) UnitFrameDB.RaidUnitWidth = value end,
 				},
-				Header_3 = {
-					type = "header",
-					name = "其他",
-					order = 9,
-				},	
-				RaidScale = {
-					type = "input",
-					name = "团队&小队缩放比例：",
-					desc = "请输入团队&小队缩放比例：",
-					order = 10,
-					get = function() return tostring(UnitFrameDB.RaidScale) end,
-					set = function(_, value) UnitFrameDB.RaidScale = tonumber(value) end,
+				RaidUnitHeight = {
+					type = "range",
+					name = "团队框体单位高度：",
+					desc = "请输入团队框体单位高度",
+					min = 10, max = 50,
+					order = 4,
+					get = function() return UnitFrameDB.RaidUnitHeight end,
+					set = function(_, value) UnitFrameDB.RaidUnitHeight = value end,
+				},
+				RaidPartyArrangement = {
+					type = "select",
+					name = "小队成员排列方式：",
+					desc = "请选择小队成员排列方式:",
+					values = {["HORIZONTAL"] = "横向排列", ["VERTICAL"] = "纵向排列"},
+					disabled = not UnitFrameDB.ShowRaid,
+					order = 5,
+					get = function() return UnitFrameDB.RaidPartyArrangement end,
+					set = function(_, value) UnitFrameDB.RaidPartyArrangement = value end,
 				},
 			}
 		}
