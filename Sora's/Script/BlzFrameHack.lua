@@ -19,7 +19,7 @@ end
 local WatchFrame = _G["WatchFrame"]
 WatchFrame:ClearAllPoints()	
 WatchFrame.ClearAllPoints = function() end
-WatchFrame:SetPoint("RIGHT", UIParent, "RIGHT", -5, -10)
+WatchFrame:SetPoint("RIGHT", UIParent, -20, -10)
 WatchFrame.SetPoint = function() end
 WatchFrame:SetHeight(400)  
 

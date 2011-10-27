@@ -17,7 +17,7 @@ Event:SetScript("OnEvent", function(self)
 		end
 	end
 	if Cost > 0 then
-		local g, s, c = math.floor(c/10000) or 0, math.floor((c%10000)/100) or 0, c%100
+		local g, s, c = math.floor(Cost/10000) or 0, math.floor((Cost%10000)/100) or 0, Cost%100
 		DEFAULT_CHAT_FRAME:AddMessage("共售出：".." |cffffffff"..g.."|cffffc125 G|r".." |cffffffff"..s.."|cffc7c7cf S|r".." |cffffffff"..c.."|cffeda55f C|r"..".", 255, 255, 255)
 	end
 end)
