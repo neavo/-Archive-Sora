@@ -2,7 +2,11 @@
 local S, _, _, _ = unpack(select(2, ...))
 
 local Bar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
-Bar:SetSize(24, 24*12+3*11)
+if ActionBarDB.ExtraBarLayout == 1 then
+	Bar:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize*12+3*11)
+elseif ActionBarDB.ExtraBarLayout == 2 then
+	Bar:SetSize(ActionBarDB.ButtonSize*6+5*3, ActionBarDB.ButtonSize*2+3)
+end
 MultiBarLeft:SetParent(Bar)
 MultiBarLeft:ClearAllPoints()
 MultiBarLeft.SetPoint = function() end
@@ -10,12 +14,16 @@ MoveHandle.LeftBar = S.MakeMoveHandle(Bar, "侧边栏", "LeftBar")
 
 for i = 1, 12 do
 	local Button = _G["MultiBarLeftButton"..i]
-	Button:SetSize(24, 24)
+	Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 	Button:ClearAllPoints()
 	if i == 1 then
-		Button:SetPoint("TOP", Bar, 0, 0)
-	else
+		Button:SetPoint("TOPLEFT", Bar, 0, 0)
+	elseif ActionBarDB.ExtraBarLayout == 1 then
 		Button:SetPoint("TOP", _G["MultiBarLeftButton"..i-1], "BOTTOM", 0, -3)
+	elseif ActionBarDB.ExtraBarLayout == 2 and i == 7 then
+		Button:SetPoint("TOP", _G["MultiBarLeftButton"..i-6], "BOTTOM", 0, -3)
+	elseif ActionBarDB.ExtraBarLayout == 2 then
+		Button:SetPoint("LEFT", _G["MultiBarLeftButton"..i-1], "RIGHT", 3, 0)	
 	end
 	Button.HideFrame = CreateFrame("Frame", nil, Button)
 	Button.HideFrame:SetAllPoints()

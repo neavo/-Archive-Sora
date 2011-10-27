@@ -74,15 +74,15 @@ function C.UnitFrame.BuildGUI()
 				PlayerWidth = {
 					type = "range", order = 3,
 					name = "玩家框体单位宽度：", desc = "请输入玩家框体宽度",
-					min = 150, max = 400,
+					min = 150, max = 400, step = 1,
 					disabled = not UnitFrameDB.ShowPlayerFrame,
 					get = function() return UnitFrameDB.PlayerWidth end,
 					set = function(_, value) UnitFrameDB.PlayerWidth = value end,
 				},
 				PlayerHeight = {
 					type = "range", order = 4,
-					name = "玩家框体单位高度：", desc = "请输入玩家框体高度",
-					min = 20, max = 100,
+					name = "玩家框体高度：", desc = "请输入玩家框体高度",
+					min = 20, max = 100, step = 1,
 					disabled = not UnitFrameDB.ShowPlayerFrame,
 					get = function() return UnitFrameDB.PlayerHeight end,
 					set = function(_, value) UnitFrameDB.PlayerHeight = value end,
@@ -129,7 +129,7 @@ function C.UnitFrame.BuildGUI()
 				TargetWidth = {
 					type = "range", order = 3,
 					name = "目标框体单位宽度：", desc = "请输入目标框体宽度",
-					min = 150, max = 400,
+					min = 150, max = 400, step = 1,
 					disabled = not UnitFrameDB.ShowTargetFrame,
 					get = function() return UnitFrameDB.TargetWidth end,
 					set = function(_, value) UnitFrameDB.TargetWidth = value end,
@@ -137,7 +137,7 @@ function C.UnitFrame.BuildGUI()
 				TargetHeight = {
 					type = "range", order = 4,
 					name = "目标框体单位高度：", desc = "请输入目标框体高度",
-					min = 20, max = 100,
+					min = 20, max = 100, step = 1,
 					disabled = not UnitFrameDB.ShowTargetFrame,
 					get = function() return UnitFrameDB.TargetHeight end,
 					set = function(_, value) UnitFrameDB.TargetHeight = value end,
@@ -290,7 +290,7 @@ function C.UnitFrame.BuildGUI()
 				RaidUnitWidth = {
 					type = "range", order = 3,
 					name = "团队框体单位宽度：", desc = "请输入团队框体单位宽度",
-					min = 30, max = 200,
+					min = 30, max = 200, step = 1,
 					disabled = not UnitFrameDB.ShowRaidFrame,
 					get = function() return UnitFrameDB.RaidUnitWidth end,
 					set = function(_, value) UnitFrameDB.RaidUnitWidth = value end,
@@ -298,7 +298,7 @@ function C.UnitFrame.BuildGUI()
 				RaidUnitHeight = {
 					type = "range", order = 4,
 					name = "团队框体单位高度：", desc = "请输入团队框体单位高度",
-					min = 10, max = 50,
+					min = 10, max = 50, step = 1,
 					disabled = not UnitFrameDB.ShowRaidFrame,
 					get = function() return UnitFrameDB.RaidUnitHeight end,
 					set = function(_, value) UnitFrameDB.RaidUnitHeight = value end,

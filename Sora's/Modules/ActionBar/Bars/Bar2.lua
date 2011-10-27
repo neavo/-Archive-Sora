@@ -6,10 +6,10 @@ MultiBarBottomLeft.SetPoint = function() end
 
 for i=1, 12 do
 	local Button = _G["MultiBarBottomLeftButton"..i]
-	Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
+	Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 	Button:ClearAllPoints()
 	if i == 1 then
-		Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "BOTTOMLEFT", ActionBarDB.ActionBarButtonSize*3+3*3, ActionBarDB.ActionBarButtonSize+5)
+		Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "BOTTOMLEFT", ActionBarDB.ButtonSize*3+3*3, ActionBarDB.ButtonSize+5)
 	else
 		local Pre = _G["MultiBarBottomLeftButton"..i-1]
 		Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)

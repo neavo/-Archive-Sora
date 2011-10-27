@@ -172,11 +172,7 @@ local function BuildCastbar(self)
 	
 	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
 	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	if UnitFrameDB.TargetCastbarAlone then
-		Castbar.Icon:SetSize(14, 14)
-	else
-		Castbar.Icon:SetSize(20, 20)
-	end
+	Castbar.Icon:SetSize(14, 14)
 	Castbar.Icon:SetPoint("BOTTOMRIGHT", Castbar, "BOTTOMLEFT", -8, 0)
 	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
 

@@ -57,7 +57,7 @@ local function Style(self)
  
 	Count:ClearAllPoints()
 	Count:SetPoint("BOTTOMRIGHT", 2, 2)
-	Count:SetFont(DB.Font, ActionBarDB.CountFontSize, "THINOUTLINE")
+	Count:SetFont(DB.Font, ActionBarDB.FontSize, "THINOUTLINE")
  
 	if Name and ActionBarDB.HideMacroName then
 		Name:SetText("")
@@ -74,7 +74,7 @@ local function Style(self)
 
 	HotKey:ClearAllPoints()
 	HotKey:SetPoint("TOPRIGHT", 1, -1)
-	HotKey:SetFont(DB.Font, ActionBarDB.HotkeyFontSize, "THINOUTLINE")
+	HotKey:SetFont(DB.Font, ActionBarDB.FontSize, "THINOUTLINE")
 	HotKey.ClearAllPoints = function() end
 	HotKey.SetPoint = function() end
  
@@ -199,7 +199,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 			Icon:SetPoint("TOPLEFT", 2, -2)
 			Icon:SetPoint("BOTTOMRIGHT", -2, 2)		
 			if not InCombatLockdown() then
-				Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
+				Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 				Button:ClearAllPoints()
 				Button:SetPoint("BOTTOM", last, "TOP", 0, 3)
 				Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
@@ -220,7 +220,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Button.background:SetPoint("TOPLEFT", 2, -2)
 		Button.background:SetPoint("BOTTOMRIGHT", -2, 2)
 		Button.Shadow = S.MakeTexShadow(Button, Button.background, 4)
-		Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
+		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 		Button:ClearAllPoints()
 		if index < 3 then
 			Button:SetPoint("BOTTOM", _G["MultiBarBottomRightButton"..index+4], "TOP", 0, 5)
@@ -259,7 +259,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Icon:SetPoint("BOTTOMRIGHT", -2, 2)
 		Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
 		Button:GetNormalTexture():SetTexture(nil)
-		Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
+		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 		Button:ClearAllPoints()
 		Button:SetPoint("BOTTOM", MultiBarBottomRightButton4, "TOP", 0, 5)
 		_G[Button:GetName().."Highlight"]:SetTexture(nil)
@@ -274,7 +274,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Icon:SetPoint("BOTTOMRIGHT", -2, 2)
 		Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
 		Button:GetNormalTexture():SetTexture(nil)
-		Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
+		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 		Button:ClearAllPoints()
 		Button:SetPoint("BOTTOM", MultiBarBottomLeftButton3, "TOP", 0, 5)
 		_G[Button:GetName().."Highlight"]:SetTexture(nil)

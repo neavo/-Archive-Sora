@@ -6,7 +6,7 @@ for i = 1, NUM_PET_ACTION_SLOTS do
 	Button:ClearAllPoints()
 	Button:SetParent(DB.ActionBar)
 	Button:SetAlpha(0.3)
-	Button:SetSize(ActionBarDB.ActionBarButtonSize, ActionBarDB.ActionBarButtonSize)
+	Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 	if i == 1 then
 		Button:SetPoint("BOTTOM", MultiBarBottomLeftButton6, "TOP", 0, 5)
 	else
