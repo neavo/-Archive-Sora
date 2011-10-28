@@ -404,7 +404,11 @@ SRAuraList = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
 				-- 神恩术
-				{AuraID = 31842, UnitID = "player"},			
+				{AuraID = 31842, UnitID = "player"},
+				-- 神圣之盾
+				{AuraID = 20925, UnitID = "player"},
+				-- 智者审判
+				{AuraID = 31930, UnitID = "player"},		
 				-- 复仇之怒
 				{AuraID = 31884, UnitID = "player"},
 				-- 炙热防御者
@@ -451,6 +455,10 @@ SRAuraList = {
 				{AuraID = 10326, UnitID = "target", Caster = "player"},
 				-- 忏悔
 				{AuraID = 20066, UnitID = "target", Caster = "player"},
+				-- 辩护
+				{AuraID = 26017, UnitID = "target", Caster = "player"},
+				-- 圣光道标
+				{AuraID = 53563, UnitID = "target", Caster = "player"},
 			},
 		},
 	},

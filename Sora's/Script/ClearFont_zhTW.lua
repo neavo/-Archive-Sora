@@ -386,7 +386,7 @@ if not (GetLocale() == "zhTW") then return end
 -- -----------------------------------------------------------------------------
 
 	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- ÓA‘O÷µ£∫15
-	if (CanSetFont(MailTextFontNormal)) then 		   	MailTextFontNormal:SetTextColor(0.18, 0.12, 0.06); end		-- ÓA‘O÷µ£∫(0.18, 0.12, 0.06)
+	if (CanSetFont(MailTextFontNormal)) then 		   	MailTextFontNormal:SetTextColor(1, 1, 1); end		-- ÓA‘O÷µ£∫(0.18, 0.12, 0.06)
 --	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetShadowColor(0.54, 0.4, 0.1); end
 --	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetShadowOffset(1, -1); end
    
