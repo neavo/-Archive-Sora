@@ -41,7 +41,7 @@ oUF.Tags["Sora:pp"] = function(u)
     local power = UnitPower(u)
 	local powerMax = UnitPowerMax(u)
 	if str and power > 0 then
-		if powerMax > 130 then
+		if powerMax > 132 then
 			return math.floor(power/powerMax*100+.5).."%".." | "..S.SVal(power)
 		else
 			return S.SVal(power)
@@ -94,6 +94,3 @@ oUF.Tags["Sora:info"] = function(u)
     end
 end
 oUF.TagEvents["Sora:info"] = "UNIT_HEALTH UNIT_CONNECTION"
-
-oUF.UnitlessTagEvents.PLAYER_REGEN_DISABLED = true
-oUF.UnitlessTagEvents.PLAYER_REGEN_ENABLED = true
