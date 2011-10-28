@@ -109,8 +109,25 @@ local function Init()
 	Pos()
 end
 
+-- SetTime
+local function SetTime(self, Timer, duration)
+	if Timer < 0 then
+		if self.Time then self.Time:SetText("N/A") end
+		self.Statusbar:SetMinMaxValues(0, 1) 
+		self.Statusbar:SetValue(0)
+	elseif Timer < 60 then
+		if self.Time then self.Time:SetFormattedText("%.1f", Timer) end
+		self.Statusbar:SetMinMaxValues(0, duration) 
+		self.Statusbar:SetValue(Timer)
+	else
+		if self.Time then self.Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
+		self.Statusbar:SetMinMaxValues(0, duration) 
+		self.Statusbar:SetValue(Timer)
+	end
+end
+
 -- UpdateCD
-local function UpdateCDFrame(index, name, icon, start, duration, bool)
+local function UpdateCDFrame(index, name, icon, start, duration)
 	local Frame = Aura[index][Aura[index].Index]
 	if Frame then Frame:Show() end
 	if Frame.Icon then Frame.Icon:SetTexture(icon) end
@@ -121,25 +138,10 @@ local function UpdateCDFrame(index, name, icon, start, duration, bool)
 	if Frame.Count then Frame.Count:SetText(nil) end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
-		Frame.IsCD = true
-		Frame.duration = duration
-		Frame.start = start
-		Frame.Timer = 0
+		local Timer = 0
 		Frame:SetScript("OnUpdate", function(self, elapsed)
-			self.Timer = self.start+self.duration-GetTime()
-			if self.Timer < 0 then
-				if self.Time then self.Time:SetText("N/A") end
-				self.Statusbar:SetMinMaxValues(0, 1) 
-				self.Statusbar:SetValue(0)
-			elseif self.Timer < 60 then
-				if self.Time then self.Time:SetFormattedText("%.1f", self.Timer) end
-				self.Statusbar:SetMinMaxValues(0, self.duration) 
-				self.Statusbar:SetValue(self.Timer)
-			else
-				if self.Time then self.Time:SetFormattedText("%d:%.2d", self.Timer/60, self.Timer%60) end
-				self.Statusbar:SetMinMaxValues(0, self.duration) 
-				self.Statusbar:SetValue(self.Timer)
-			end
+			Timer = start+duration-GetTime()
+			SetTime(self, Timer, duration)
 		end)
 	end
 	
@@ -152,14 +154,14 @@ local function UpdateCD()
 				if GetSpellCooldown(value.SpellID) and select(2, GetSpellCooldown(value.SpellID)) > 1.5 then
 					local name, _, icon = GetSpellInfo(value.SpellID)
 					local start, duration = GetSpellCooldown(value.SpellID)
-					UpdateCDFrame(KEY, name, icon, start, duration, true)
+					UpdateCDFrame(KEY, name, icon, start, duration)
 				end
 			end
 			if value.ItemID then
 				if select(2, GetItemCooldown(value.ItemID)) > 1.5 then
 					local name, _, _, _, _, _, _, _, _, icon = GetItemInfo(value.ItemID)
 					local start, duration = GetItemCooldown(value.ItemID)
-					UpdateCDFrame(KEY, name, icon, start, duration, false)
+					UpdateCDFrame(KEY, name, icon, start, duration)
 				end
 			end
 		end
@@ -178,24 +180,10 @@ local function UpdateAuraFrame(index, UnitID, name, icon, count, duration, expir
 	end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
-		Frame.duration = duration
-		Frame.expires = expires
-		Frame.Timer = 0
+		local Timer = 0
 		Frame:SetScript("OnUpdate", function(self, elapsed)
-			self.Timer = self.expires-GetTime()
-			if self.Timer < 0 then
-				if self.Time then self.Time:SetText("N/A") end
-				self.Statusbar:SetMinMaxValues(0, 1) 
-				self.Statusbar:SetValue(0)
-			elseif self.Timer < 60 then
-				if self.Time then self.Time:SetFormattedText("%.1f", self.Timer) end
-				self.Statusbar:SetMinMaxValues(0, self.duration) 
-				self.Statusbar:SetValue(self.Timer)
-			else
-				if self.Time then self.Time:SetFormattedText("%d:%.2d", self.Timer/60, self.Timer%60) end
-				self.Statusbar:SetMinMaxValues(0, self.duration) 
-				self.Statusbar:SetValue(self.Timer)
-			end
+			Timer = expires-GetTime()
+			SetTime(self, Timer, duration)
 		end)
 	end
 	
