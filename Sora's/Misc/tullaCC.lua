@@ -1,38 +1,8 @@
-local C = select(2, ...) --retrieve addon table
-
---font settings
-C.fontFace = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"  --what font to use
-C.fontSize = 20  --the base font size to use at a scale of 1
-
---display settings
-C.minScale = 0.4 --the minimum scale we want to show cooldown counts at, anything below this will be hidden
-C.minDuration = 2 --the minimum number of seconds a cooldown"s duration must be to display text
-C.expiringDuration = 5  --the minimum number of seconds a cooldown must be to display in the expiring format
-
---text format strings
-C.expiringFormat = "|cffff0000%d|r" --format for timers that are soon to expire
-C.secondsFormat = "|cffffff00%d|r" --format for timers that have seconds remaining
-C.minutesFormat = "|cffD6BFA5%dm|r" --format for timers that have minutes remaining
-C.hoursFormat = "|cff66ffff%dh|r" --format for timers that have hours remaining
-C.daysFormat = "|cff6666ff%dh|r" --format for timers that have days remaining
-
---[[
-	tullaCooldownCount
-		A basic cooldown count addon
-
-		The purpose of this addon is mainly for me to test performance optimizations
-		and also for people who don"t care about the extra features of OmniCC
---]]
+-- Engines
+local S, _, _, DB = unpack(select(2, ...))
 
 --hacks!
 OmniCC = OmniCC or true --hack to work around detection from other addons for OmniCC
-
---local bindings!
-local C = select(2, ...) --pull in the addon table
-local UIParent = _G["UIParent"]
-local GetTime = _G["GetTime"]
-local floor = math.floor
-local min = math.min
 local round = function(x) return floor(x + 0.5) end
 
 --sexy constants!
@@ -42,16 +12,16 @@ local DAYISH, HOURISH, MINUTEISH = 3600 * 23.5, 60 * 59.5, 59.5 --used for forma
 local HALFDAYISH, HALFHOURISH, HALFMINUTEISH = DAY/2 + 0.5, HOUR/2 + 0.5, MINUTE/2 + 0.5 --used for calculating next update times
 
 --configuration settings
-local FONT_FACE = C.fontFace --what font to use
-local FONT_SIZE = C.fontSize --the base font size to use at a scale of 1
-local MIN_SCALE = C.minScale--the minimum scale we want to show cooldown counts at, anything below this will be hidden
-local MIN_DURATION = C.minDuration --the minimum duration to show cooldown text for
-local EXPIRING_DURATION = C.expiringDuration --the minimum number of seconds a cooldown must be to use to display in the expiring format
-local EXPIRING_FORMAT = C.expiringFormat --format for timers that are soon to expire
-local SECONDS_FORMAT = C.secondsFormat --format for timers that have seconds remaining
-local MINUTES_FORMAT = C.minutesFormat --format for timers that have minutes remaining
-local HOURS_FORMAT = C.hoursFormat --format for timers that have hours remaining
-local DAYS_FORMAT = C.daysFormat --format for timers that have days remaining
+local FONT_FACE = DB.Font --what font to use
+local FONT_SIZE = 18 --the base font size to use at a scale of 1
+local MIN_SCALE = 0.4 --the minimum scale we want to show cooldown counts at, anything below this will be hidden
+local MIN_DURATION = 1.6 --the minimum duration to show cooldown text for
+local EXPIRING_DURATION = 5 --the minimum number of seconds a cooldown must be to use to display in the expiring format
+local EXPIRING_FORMAT = "|cffff0000%d|r" --format for timers that are soon to expire
+local SECONDS_FORMAT = "|cffffff00%d|r"  --format for timers that have seconds remaining
+local MINUTES_FORMAT = "|cffffffff%dm|r" --format for timers that have minutes remaining
+local HOURS_FORMAT = "|cff66ffff%dh|r" --format for timers that have hours remaining
+local DAYS_FORMAT = "|cff6666ff%dh|r" --format for timers that have days remaining
 
 --returns both what text to display, and how long until the next update
 local function getTimeText(s)

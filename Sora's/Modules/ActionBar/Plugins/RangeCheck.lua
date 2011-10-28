@@ -1,7 +1,4 @@
-﻿-- Engines
-local _, _, _, DB = unpack(select(2, ...))
-
--- locals and speed
+﻿-- locals and speed
 local _G = _G
 local UPDATE_DELAY = 0.15
 local ATTACK_BUTTON_FLASH_TIME = ATTACK_BUTTON_FLASH_TIME
@@ -217,7 +214,7 @@ function tullaRange.UpdateButtonUsable(button)
 		tullaRange.SetButtonColor(button, 'unusuable')
 	end
 	local nt = button:GetNormalTexture()
-	nt:SetVertexColor(DB.Colors.normal.r, DB.Colors.normal.g, DB.Colors.normal.b)
+	nt:SetVertexColor(0, 0, 0)
 end
 
 function tullaRange.SetButtonColor(button, colorType)
@@ -252,11 +249,11 @@ end
 -- Configuration
 function tullaRange:GetDefaults()
 	return {
-		normal = {DB.Colors.usable.r, DB.Colors.usable.g, DB.Colors.usable.b},
-		oor = {DB.Colors.outofrange.r, DB.Colors.outofrange.g, DB.Colors.outofrange.b},
-		oom = {DB.Colors.outofmana.r, DB.Colors.outofmana.g, DB.Colors.outofmana.b},
+		normal = {1, 1, 1},
+		oor = {0.8, 0.3, 0.2},
+		oom = {0.3, 0.3, 0.7},
 		ooh = {0.45, 0.45, 1},
-		unusuable = {DB.Colors.unusable.r, DB.Colors.unusable.g, DB.Colors.unusable.b},
+		unusuable = {0.4, 0.4, 0.4},
 	}
 end
 
