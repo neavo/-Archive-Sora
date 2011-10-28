@@ -272,10 +272,9 @@ local function BuildTags(self)
 	end
 	PPTag:SetAlpha(0)
 
-	local PowerBar = self.Power
-	PowerBar:RegisterEvent("PLAYER_REGEN_DISABLED")
-	PowerBar:RegisterEvent("PLAYER_REGEN_ENABLED")
-	PowerBar:SetScript("OnEvent", function(self, event, ...)
+	self.Power:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self.Power:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self.Power:SetScript("OnEvent", function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
 			UIFrameFadeIn(Name, 0.5, 0, 1)
 			UIFrameFadeIn(HPTag, 0.5, 0, 1)
@@ -286,7 +285,7 @@ local function BuildTags(self)
 			UIFrameFadeOut(PPTag, 0.5, 1, 0)	
 		end
 	end)
-	PowerBar:SetScript("OnEnter", function()
+	self.Power:SetScript("OnEnter", function()
 		if not UnitAffectingCombat("player") then
 			UIFrameFadeIn(self.Portrait, 0.5, 0.3, 0)
 			UIFrameFadeIn(Name, 0.5, 0, 1)
@@ -294,7 +293,7 @@ local function BuildTags(self)
 			UIFrameFadeIn(PPTag, 0.5, 0, 1)
 		end
 	end)
-	PowerBar:SetScript("OnLeave", function()
+	self.Power:SetScript("OnLeave", function()
 		if not UnitAffectingCombat("player") then
 			UIFrameFadeOut(self.Portrait, 0.5, 0, 0.3)
 			UIFrameFadeOut(Name, 0.5, 1, 0)
