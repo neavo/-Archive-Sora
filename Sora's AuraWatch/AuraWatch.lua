@@ -169,7 +169,7 @@ local function UpdateCD()
 end
 
 -- UpdateAura
-local function UpdateAuraFrame(index, UnitID, name, icon, count, duration, expires)
+local function UpdateAuraFrame(index, name, icon, count, duration, expires)
 	local Frame = Aura[index][Aura[index].Index]
 	if Frame then Frame:Show() end
 	if Frame.Icon then Frame.Icon:SetTexture(icon) end
@@ -197,12 +197,12 @@ local function AuraFilter(spellID, UnitID, index, bool)
 					local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.UnitID, index)
 					if value.Caster and value.Caster:lower() ~= caster then return false end
 					if value.Stack and count and value.Stack > count then return false end
-					return KEY, value.UnitID, name, icon, count, duration, expires
+					return KEY, name, icon, count, duration, expires
 				else
 					local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.UnitID, index)
 					if value.Caster and value.Caster:lower() ~= caster then return false end
 					if value.Stack and count and value.Stack > count then return false end
-					return KEY, value.UnitID, name, icon, count, duration, expires
+					return KEY, name, icon, count, duration, expires
 				end
 			end
 		end

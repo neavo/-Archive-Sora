@@ -19,13 +19,3 @@ DB.Warning = Media.."Warning.mp3"
 DB.RaidBuffPos = {"TOPLEFT", Minimap, "BOTTOMLEFT", -5, -25}
 DB.ClassBuffPos = {"CENTER", UIParent, -100, 150}
 DB.TooltipPos = {"BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -50, 201}
-DB.Colors = {
-	normal		= {r =   0, g =   0, b =    0},
-	pushed 		= {r =   1, g =   1, b =    1},
-	highlight 	= {r = 0.9, g = 0.8, b =  0.6},
-	checked 	= {r = 0.9, g = 0.8, b =  0.6},
-	outofrange 	= {r = 0.8, g = 0.3, b =  0.2},
-	outofmana 	= {r = 0.3, g = 0.3, b =  0.7},
-	usable 		= {r =   1, g =   1, b =    1},
-	unusable 	= {r = 0.4, g = 0.4, b =  0.4},
-}
