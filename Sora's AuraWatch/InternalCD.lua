@@ -16,7 +16,7 @@ local DB = {
 }
 
 local InternalCD = {
-	-- 职业
+	-- 职业天赋/技能
 	[81094] =  {nil, 12}, -- 新生(德鲁伊)
 	[96171] =  {nil, 45}, -- 大墓地的意志(死亡骑士)
 	[12536] =  {nil, 15}, -- 节能施法(法师)
@@ -33,7 +33,7 @@ local InternalCD = {
 	[85386] = {nil, 120}, -- 剑在人在(战士)
 	[86624] = {nil, 120}, -- 剑在人在(战士)
 
-	-- 套装
+	-- 职业套装
 	[99063] =  {nil, 45}, -- 法师T12x2
 	[99221] =  {nil, 45}, -- 术士T12x2
 	[99035] =  {nil, 45}, -- 平衡德鲁伊T12x2
@@ -192,27 +192,25 @@ local function UpdateFrame(spellID, itemID, duration)
 		Frame.Cooldown:SetCooldown(GetTime(), duration)
 	end
 	if Frame.Count then Frame.Count:SetText(nil) end
-	if Frame.Spellname then Frame.Spellname:SetText(name) end
-	if Frame.Statusbar then
-		Frame.Timer = 0
-		Frame.Statusbar:SetMinMaxValues(0, duration) 
-		Frame:SetScript("OnUpdate", function(self, elapsed)
-			self.Timer = self.Timer + elapsed
-			local Timer = duration-self.Timer 
-			if Timer > 60 then
-				if self.Time then self.Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
-				self.Statusbar:SetValue(Timer)
-			elseif Timer < 60 and Timer > 0 then
-				if self.Time then self.Time:SetFormattedText("%.1f", Timer) end
-				self.Statusbar:SetValue(Timer)
-			else
-				self:SetScript("OnUpdate", nil)
-				self:Hide()
-				tremove(InCD, self.ID)
-				UpdatePos()
-			end
-		end)
-	end
+	if Frame.Spellname then Frame.Spellname:SetText(name) end	
+	if Frame.Statusbar then Frame.Statusbar:SetMinMaxValues(0, duration) end
+	Frame.Timer = 0
+	Frame:SetScript("OnUpdate", function(self, elapsed)
+		self.Timer = self.Timer + elapsed
+		local Timer = duration-self.Timer 
+		if Timer > 60 then
+			if self.Time then self.Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
+			if Frame.Statusbar then self.Statusbar:SetValue(Timer) end
+		elseif Timer < 60 and Timer > 0 then
+			if self.Time then self.Time:SetFormattedText("%.1f", Timer) end
+			if Frame.Statusbar then self.Statusbar:SetValue(Timer) end
+		else
+			self:SetScript("OnUpdate", nil)
+			self:Hide()
+			tremove(InCD, self.ID)
+			UpdatePos()
+		end
+	end)
 end
 
 -- Event
@@ -228,8 +226,9 @@ local EventList = {
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 Event:SetScript("onEvent", function(self, event, ...)
+	if not UnitAffectingCombat("player") then return end
 	if bit.band(select(6, ...), COMBATLOG_OBJECT_AFFILIATION_MINE) == 0 then return end
-	if GetAddOnMemoryUsage("Sora's AuraWatch") > 128 then collectgarbage() end
+	if GetAddOnMemoryUsage("Sora's AuraWatch") > 256 then collectgarbage() end
 	local _, eventType, _, _, sourceName, _, _, _, _, _, _, spellID = ...
 	if InternalCD[spellID] and EventList[eventType] and sourceName == MyName then
 		local itemID, duration = unpack(InternalCD[spellID])
