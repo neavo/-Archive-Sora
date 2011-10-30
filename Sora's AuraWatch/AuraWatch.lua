@@ -81,21 +81,19 @@ end
 local function Pos()
 	for key, VALUE in pairs(Aura) do
 		local value = AuraList[key]
-		local Pre = nil
 		for i = 1, #VALUE do
-			local Frame = VALUE[i]
+			VALUE[i]:ClearAllPoints()
 			if i == 1 then
-				Frame:SetPoint("CENTER", Frame.MoveHandle)
+				VALUE[i]:SetPoint("CENTER", VALUE[i].MoveHandle)
 			elseif value.Direction:lower() == "right" then
-				Frame:SetPoint("LEFT", Pre, "RIGHT", value.Interval, 0)
+				VALUE[i]:SetPoint("LEFT", VALUE[i-1], "RIGHT", value.Interval, 0)
 			elseif value.Direction:lower() == "left" then
-				Frame:SetPoint("RIGHT", Pre, "LEFT", -value.Interval, 0)
+				VALUE[i]:SetPoint("RIGHT", VALUE[i-1], "LEFT", -value.Interval, 0)
 			elseif value.Direction:lower() == "up" then
-				Frame:SetPoint("BOTTOM", Pre, "TOP", 0, value.Interval)
+				VALUE[i]:SetPoint("BOTTOM", VALUE[i-1], "TOP", 0, value.Interval)
 			elseif value.Direction:lower() == "down" then
-				Frame:SetPoint("TOP", Pre, "BOTTOM", 0, -value.Interval)
+				VALUE[i]:SetPoint("TOP", VALUE[i-1], "BOTTOM", 0, -value.Interval)
 			end
-			Pre = Frame
 		end
 	end
 end
