@@ -78,14 +78,10 @@ local function UpdateThreat()
 	wipe(ThreatList)
 	if UnitExists("target") and UnitCanAttack("player", "target") then
 		if GetNumRaidMembers() > 0 then
-			for i = 1, GetNumRaidMembers() do
-				AddThreat("raid"..i, "raid"..i.."pet")
-			end
+			for i = 1, GetNumRaidMembers() do AddThreat("raid"..i, "raid"..i.."pet") end
 		elseif GetNumPartyMembers() > 0 then
 			AddThreat("player", "pet")
-			for i = 1, GetNumPartyMembers() do
-				AddThreat("party"..i, "party"..i.."pet")
-			end
+			for i = 1, GetNumPartyMembers() do AddThreat("party"..i, "party"..i.."pet") end
 		else
 			AddThreat("player", "pet")
 		end	
@@ -104,12 +100,7 @@ local function SortThreat(a, b)
 	return a.rawPercent > b.rawPercent
 end
 local function UpdateThreatFlag()
-	-- 隐藏旧的仇恨标签
-	Tank.Flag:Hide()
-	for key, value in ipairs(ThreatFlag) do
-		value:Hide()
-	end
-	-- 设置Tank仇恨标签
+	for key, value in ipairs(ThreatFlag) do value:Hide() end
 	for key, value in ipairs(ThreatList) do
 		if ThreatList[key].isTanking then
 			local CLASS_COLORS = RAID_CLASS_COLORS[value.class]
@@ -118,11 +109,10 @@ local function UpdateThreatFlag()
 			Tank.Name:SetTextColor(CLASS_COLORS.r, CLASS_COLORS.g, CLASS_COLORS.b)
 			Tank.Flag:Show()
 			tremove(ThreatList, key)
+			break
 		end
 	end
-	-- 仇恨排序
 	table.sort(ThreatList, SortThreat)
-	-- 设置一般仇恨标签
 	for key, value in pairs(ThreatFlag) do
 		if ThreatList[key] then
 			local CLASS_COLORS = RAID_CLASS_COLORS[ThreatList[key].class]
