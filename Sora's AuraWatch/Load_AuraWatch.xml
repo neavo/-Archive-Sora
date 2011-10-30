@@ -4,5 +4,6 @@
 	<Script file = "AuraWatchList.lua"/>
 	<Script file = "Style.lua"/>
 	<Script file = "AuraWatch.lua"/>
+	<Script file = "InternalCD.lua"/>
 	
 </Ui>

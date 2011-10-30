@@ -32,7 +32,7 @@
 		Mode = "BAR",
 		IconSize = 16,
 		BarWidth = 175,
-		Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+		Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 		List = {
 			-- 血之疫病
 			{AuraID = 55078, UnitID = "target", Stack = 1},
@@ -81,7 +81,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -116,7 +116,7 @@ SRAuraList = {
 			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {	
 				-- 挫志咆哮(熊)
 				{AuraID =    99, UnitID = "target", Caster = "player"},
@@ -150,7 +150,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 治疗宠物
 				{AuraID = 136, UnitID = "pet"},
@@ -194,7 +194,7 @@ SRAuraList = {
 			Direction = "UP", Interval = 4,
 			Mode = "BAR",
 			IconSize = 20, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
 				-- 猎人印记
 				{AuraID =  1130 ,UnitID = "target", Caster = "player"},
@@ -214,7 +214,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -248,7 +248,7 @@ SRAuraList = {
 			Direction = "UP", Interval = 4,
 			Mode = "BAR",
 			IconSize = 20, BarWidth = 175 ,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {		
 				-- 点燃
 				{AuraID = 12654 ,UnitID = "target", Caster = "player"},
@@ -268,7 +268,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 盾墙(防御姿态)
 				{AuraID =   871, UnitID = "player"},
@@ -333,7 +333,7 @@ SRAuraList = {
 			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
 				-- 撕裂(战斗,防御姿态)
 				{AuraID = 94009, UnitID = "target", Caster = "player"},
@@ -347,7 +347,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 25},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 25},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -373,7 +373,7 @@ SRAuraList = {
 			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
 				-- 大地震击
 				{AuraID =  8042, UnitID = "target", Caster = "player"},
@@ -395,7 +395,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 圣佑术
 				{AuraID =   498, UnitID = "player"},
@@ -445,7 +445,7 @@ SRAuraList = {
 			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
 				-- 制裁之锤
 				{AuraID =   853, UnitID = "target", Caster = "player"},
@@ -469,7 +469,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -507,7 +507,7 @@ SRAuraList = {
 			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
 				-- 暗言术:痛
 				{AuraID =   589, UnitID = "target", Caster = "player"},
@@ -527,7 +527,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -558,7 +558,7 @@ SRAuraList = {
 			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
 				-- 腐蚀术
 				{AuraID =   172, UnitID = "target", Caster = "player"},
@@ -596,7 +596,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT", Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 佯攻
 				{AuraID =  1966, UnitID = "player"},
@@ -629,7 +629,7 @@ SRAuraList = {
 			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
 				-- 肾击
 				{AuraID =   408, UnitID = "target", Caster = "player"},
@@ -658,7 +658,7 @@ SRAuraList = {
 			Name = "玩家Buff",
 			Direction = "RIGHT",Interval = 6,
 			Mode = "ICON", IconSize = 30,
-			Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", -95, 12},
+			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
 				-- 嗜血
 				{AuraID =  2825, UnitID = "player"},
@@ -700,7 +700,7 @@ SRAuraList = {
 			Name = "目标Debuff",
 			Direction = "UP", Interval = 4,
 			Mode = "BAR", IconSize = 16, BarWidth = 175,
-			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 8, 5},
+			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
 				-- 血之疫病
 				{AuraID = 55078, UnitID = "target", Caster = "player"},

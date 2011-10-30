@@ -7,8 +7,7 @@ local cfg = SR.AuraWatchConfig
 
 local AuraList, Aura, UnitIDTable, MaxFrame = {}, {}, {}, 12
 local MyClass = select(2, UnitClass("player")) 
-local BuildICON = cfg.BuildICON
-local BuildBAR = cfg.BuildBAR
+local BuildICON, BuildBAR = cfg.BuildICON, cfg.BuildBAR
 if not sRawDB then sRawDB = {} end
 
 -- Init
@@ -16,9 +15,7 @@ local function BuildAuraList()
 	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
 	for key, _ in pairs(SRAuraList) do
 		if key == MyClass then
-			for _, value in pairs(SRAuraList[MyClass]) do
-				tinsert(AuraList, value)
-			end
+			for _, value in pairs(SRAuraList[MyClass]) do tinsert(AuraList, value) end
 		end
 	end
 	wipe(SRAuraList)
@@ -110,19 +107,15 @@ local function Init()
 end
 
 -- SetTime
-local function SetTime(self, Timer, duration)
-	if Timer < 0 then
-		if self.Time then self.Time:SetText("N/A") end
-		self.Statusbar:SetMinMaxValues(0, 1) 
-		self.Statusbar:SetValue(0)
-	elseif Timer < 60 then
-		if self.Time then self.Time:SetFormattedText("%.1f", Timer) end
+local function SetTime(self, duration)
+	if self.Timer < 60 then
+		if self.Time then self.Time:SetFormattedText("%.1f", self.Timer) end
 		self.Statusbar:SetMinMaxValues(0, duration) 
-		self.Statusbar:SetValue(Timer)
+		self.Statusbar:SetValue(self.Timer)
 	else
-		if self.Time then self.Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
+		if self.Time then self.Time:SetFormattedText("%d:%.2d", self.Timer/60, self.Timer%60) end
 		self.Statusbar:SetMinMaxValues(0, duration) 
-		self.Statusbar:SetValue(Timer)
+		self.Statusbar:SetValue(self.Timer)
 	end
 end
 
@@ -138,10 +131,10 @@ local function UpdateCDFrame(index, name, icon, start, duration)
 	if Frame.Count then Frame.Count:SetText(nil) end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
-		local Timer = 0
+		Frame.Timer = 0
 		Frame:SetScript("OnUpdate", function(self, elapsed)
-			Timer = start+duration-GetTime()
-			SetTime(self, Timer, duration)
+			self.Timer = start+duration-GetTime()
+			SetTime(self, duration)
 		end)
 	end
 	
@@ -180,10 +173,10 @@ local function UpdateAuraFrame(index, name, icon, count, duration, expires)
 	end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
-		local Timer = 0
+		Frame.Timer = 0
 		Frame:SetScript("OnUpdate", function(self, elapsed)
-			Timer = expires-GetTime()
-			SetTime(self, Timer, duration)
+			self.Timer = expires-GetTime()
+			SetTime(self, duration)
 		end)
 	end
 	
@@ -246,27 +239,26 @@ local function CleanUp()
 	end
 end
 
--- Event
-local Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_ENTERING_WORLD")
-Event:SetScript("onEvent", function(self, event, unitID, ...)
-	if event == "PLAYER_ENTERING_WORLD" then
-		Init()
-		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-	end
-end)
-Event.Timer = 0
-Event:SetScript("OnUpdate", function(self, elapsed)
+-- OnUpdate
+local function OnUpdate(self, elapsed)
 	self.Timer = self.Timer + elapsed
 	if self.Timer > 0.5 then
 		self.Timer = 0
 		CleanUp()
 		UpdateCD()
-		for _, value in pairs(UnitIDTable) do
-			UpdateAura(value)
-		end
+		for _, value in pairs(UnitIDTable) do UpdateAura(value) end
 	end	
+end
+
+-- Event
+local Event = CreateFrame("Frame")
+Event:RegisterEvent("PLAYER_ENTERING_WORLD")
+Event:SetScript("onEvent", function(self, event, unitID, ...)
+	if event == "PLAYER_ENTERING_WORLD" then Init() end
+	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
+Event.Timer = 0
+Event:SetScript("OnUpdate", OnUpdate)
 
 -- Test
 local TestFlag = true
@@ -292,20 +284,8 @@ SlashCmdList.SRAuraWatch = function(msg)
 		else
 			TestFlag = true
 			CleanUp()
-			for _, value in pairs(Aura) do
-				value[1].MoveHandle:Hide()
-			end
-			Event:SetScript("OnUpdate", function(self, elapsed)
-				self.Timer = self.Timer + elapsed
-				if self.Timer > 0.5 then
-					self.Timer = 0
-					CleanUp()
-					UpdateCD()
-					for _, value in pairs(UnitIDTable) do
-						UpdateAura(value)
-					end
-				end	
-			end)
+			for _, value in pairs(Aura) do value[1].MoveHandle:Hide() end
+			Event:SetScript("OnUpdate", OnUpdate)
 		end
 	elseif msg:lower() == "reset" then
 		wipe(sRawDB)
