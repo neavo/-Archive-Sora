@@ -78,21 +78,21 @@ local function BuildAura()
 		tinsert(Aura, FrameTable)
 	end
 end
-local function Pos()
-	for key, VALUE in pairs(Aura) do
-		local value = AuraList[key]
-		for i = 1, #VALUE do
-			VALUE[i]:ClearAllPoints()
+local function UpdatePos()
+	for key, value in pairs(Aura) do
+		local Direction, Interval = AuraList[key].Direction, AuraList[key].Interval
+		for i = 1, MaxFrame do
+			value[i]:ClearAllPoints()
 			if i == 1 then
-				VALUE[i]:SetPoint("CENTER", VALUE[i].MoveHandle)
-			elseif value.Direction:lower() == "right" then
-				VALUE[i]:SetPoint("LEFT", VALUE[i-1], "RIGHT", value.Interval, 0)
-			elseif value.Direction:lower() == "left" then
-				VALUE[i]:SetPoint("RIGHT", VALUE[i-1], "LEFT", -value.Interval, 0)
-			elseif value.Direction:lower() == "up" then
-				VALUE[i]:SetPoint("BOTTOM", VALUE[i-1], "TOP", 0, value.Interval)
-			elseif value.Direction:lower() == "down" then
-				VALUE[i]:SetPoint("TOP", VALUE[i-1], "BOTTOM", 0, -value.Interval)
+				value[i]:SetPoint("CENTER", value[i].MoveHandle)
+			elseif Direction:lower() == "right" then
+				value[i]:SetPoint("LEFT", value[i-1], "RIGHT", Interval, 0)
+			elseif Direction:lower() == "left" then
+				value[i]:SetPoint("RIGHT", value[i-1], "LEFT", -Interval, 0)
+			elseif Direction:lower() == "up" then
+				value[i]:SetPoint("BOTTOM", value[i-1], "TOP", 0, Interval)
+			elseif Direction:lower() == "down" then
+				value[i]:SetPoint("TOP", value[i-1], "BOTTOM", 0, -Interval)
 			end
 		end
 	end
@@ -101,18 +101,16 @@ local function Init()
 	BuildAuraList()
 	BuildUnitIDTable()
 	BuildAura()
-	Pos()
+	UpdatePos()
 end
 
 -- SetTime
-local function SetTime(self, duration)
+local function SetTime(self)
 	if self.Timer < 60 then
 		if self.Time then self.Time:SetFormattedText("%.1f", self.Timer) end
-		self.Statusbar:SetMinMaxValues(0, duration) 
 		self.Statusbar:SetValue(self.Timer)
 	else
 		if self.Time then self.Time:SetFormattedText("%d:%.2d", self.Timer/60, self.Timer%60) end
-		self.Statusbar:SetMinMaxValues(0, duration) 
 		self.Statusbar:SetValue(self.Timer)
 	end
 end
@@ -130,9 +128,10 @@ local function UpdateCDFrame(index, name, icon, start, duration)
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
 		Frame.Timer = 0
+		Frame.Statusbar:SetMinMaxValues(0, duration)
 		Frame:SetScript("OnUpdate", function(self, elapsed)
 			self.Timer = start+duration-GetTime()
-			SetTime(self, duration)
+			SetTime(self)
 		end)
 	end
 	
@@ -172,9 +171,10 @@ local function UpdateAuraFrame(index, name, icon, count, duration, expires)
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then
 		Frame.Timer = 0
+		Frame.Statusbar:SetMinMaxValues(0, duration)
 		Frame:SetScript("OnUpdate", function(self, elapsed)
 			self.Timer = expires-GetTime()
-			SetTime(self, duration)
+			SetTime(self)
 		end)
 	end
 	
@@ -237,7 +237,7 @@ local function CleanUp()
 	end
 end
 
--- OnUpdate
+-- Event
 local function OnUpdate(self, elapsed)
 	self.Timer = self.Timer + elapsed
 	if self.Timer > 0.5 then
@@ -247,16 +247,14 @@ local function OnUpdate(self, elapsed)
 		for _, value in pairs(UnitIDTable) do UpdateAura(value) end
 	end	
 end
-
--- Event
 local Event = CreateFrame("Frame")
 Event:RegisterEvent("PLAYER_ENTERING_WORLD")
-Event:SetScript("onEvent", function(self, event, unitID, ...)
-	if event == "PLAYER_ENTERING_WORLD" then Init() end
+Event:SetScript("OnEvent", function(self, event, ...)
+	Init()
+	self.Timer = 0
+	self:SetScript("OnUpdate", OnUpdate)
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
-Event.Timer = 0
-Event:SetScript("OnUpdate", OnUpdate)
 
 -- Test
 local TestFlag = true
