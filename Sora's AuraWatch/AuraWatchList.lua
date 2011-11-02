@@ -290,7 +290,7 @@ SRAuraList = {
 				{AuraID = 20230, UnitID = "player"},
 				-- 嗜血
 				{AuraID = 23885, UnitID = "player"},
-				-- 法术发射(战斗,防御姿态)
+				-- 法术反射(战斗,防御姿态)
 				{AuraID = 23920, UnitID = "player"},
 				-- 复苏之风(等级1)
 				{AuraID = 29841, UnitID = "player"},
@@ -644,7 +644,7 @@ SRAuraList = {
 				-- 肾击
 				{AuraID =   408, UnitID = "target", Caster = "player"},
 				-- 绞喉
-				{AuraID =   408, UnitID = "target", Caster = "player"},
+				{AuraID =   703, UnitID = "target", Caster = "player"},
 				-- 偷袭
 				{AuraID =  1833, UnitID = "target", Caster = "player"},
 				-- 割裂
