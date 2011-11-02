@@ -7,9 +7,7 @@ local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
 	local cunit = self.unit:gsub("^%l", string.upper)
 
-	if cunit == "Vehicle" then
-		cunit = "Pet"
-	end
+	if cunit == "Vehicle" then cunit = "Pet" end
 
 	if unit == "party" or unit == "partypet" then
 		ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
@@ -106,10 +104,9 @@ local function BuildTags(self)
 	end
 	PPTag:SetAlpha(0)
 	
-	local PowerBar = self.Power
-	PowerBar:RegisterEvent("PLAYER_REGEN_DISABLED")
-	PowerBar:RegisterEvent("PLAYER_REGEN_ENABLED")
-	PowerBar:SetScript("OnEvent", function(self, event, ...)
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:HookScript("OnEvent", function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
 			UIFrameFadeIn(Name, 0.5, 0, 1)
 			UIFrameFadeIn(HPTag, 0.5, 0, 1)
@@ -120,16 +117,16 @@ local function BuildTags(self)
 			UIFrameFadeOut(PPTag, 0.5, 1, 0)	
 		end
 	end)
-	PowerBar:SetScript("OnEnter", function()
-		if not UnitAffectingCombat("player") then
+	self:HookScript("OnEnter", function()
+		if not DB.IsInCombat then
 			UIFrameFadeIn(self.Portrait, 0.5, 0.3, 0)
 			UIFrameFadeIn(Name, 0.5, 0, 1)
 			UIFrameFadeIn(HPTag, 0.5, 0, 1)
 			UIFrameFadeIn(PPTag, 0.5, 0, 1)
 		end
 	end)
-	PowerBar:SetScript("OnLeave", function()
-		if not UnitAffectingCombat("player") then
+	self:HookScript("OnLeave", function()
+		if not DB.IsInCombat then
 			UIFrameFadeOut(self.Portrait, 0.5, 0, 0.3)
 			UIFrameFadeOut(Name, 0.5, 1, 0)
 			UIFrameFadeOut(HPTag, 0.5, 1, 0)

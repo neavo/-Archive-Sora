@@ -335,6 +335,8 @@ SRAuraList = {
 			Mode = "BAR", IconSize = 20, BarWidth = 175,
 			Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5},
 			List = {
+				-- 破甲
+				{AuraID = 58567, UnitID = "target", Caster = "player"},
 				-- 撕裂(战斗,防御姿态)
 				{AuraID = 94009, UnitID = "target", Caster = "player"},
 			},
@@ -459,6 +461,8 @@ SRAuraList = {
 				{AuraID = 26017, UnitID = "target", Caster = "player"},
 				-- 圣光道标
 				{AuraID = 53563, UnitID = "target", Caster = "player"},
+				-- 正义审判
+				{AuraID = 68055, UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -622,6 +626,12 @@ SRAuraList = {
 				{AuraID = 80353, UnitID = "player"},
 				-- 致命冲动
 				{AuraID = 84590, UnitID = "player"},
+				-- 洞悉弱点
+				{AuraID = 84745, UnitID = "player"},
+				-- 洞悉弱点
+				{AuraID = 84746, UnitID = "player"},
+				-- 洞悉弱点
+				{AuraID = 84747, UnitID = "player"},
 			}
 		},
 		
