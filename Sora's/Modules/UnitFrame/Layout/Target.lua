@@ -103,9 +103,10 @@ local function BuildTags(self)
 	end
 	PPTag:SetAlpha(0)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:HookScript("OnEvent", function(self, event, ...)
+	local Event = CreateFrame("Frame")
+	Event:RegisterEvent("PLAYER_REGEN_DISABLED")
+	Event:RegisterEvent("PLAYER_REGEN_ENABLED")
+	Event:SetScript("OnEvent", function(self, event, ...)
 		if event == "PLAYER_REGEN_DISABLED" then
 			UIFrameFadeIn(Name, 0.5, 0, 1)
 			UIFrameFadeIn(HPTag, 0.5, 0, 1)
@@ -117,7 +118,7 @@ local function BuildTags(self)
 		end
 	end)
 	self:HookScript("OnEnter", function()
-		if not DB.IsInCombat then
+		if not UnitAffectingCombat("player") then
 			UIFrameFadeIn(self.Portrait, 0.5, 0.3, 0)
 			UIFrameFadeIn(Name, 0.5, 0, 1)
 			UIFrameFadeIn(HPTag, 0.5, 0, 1)
@@ -125,7 +126,7 @@ local function BuildTags(self)
 		end
 	end)
 	self:HookScript("OnLeave", function()
-		if not DB.IsInCombat then
+		if not UnitAffectingCombat("player") then
 			UIFrameFadeOut(self.Portrait, 0.5, 0, 0.3)
 			UIFrameFadeOut(Name, 0.5, 1, 0)
 			UIFrameFadeOut(HPTag, 0.5, 1, 0)
