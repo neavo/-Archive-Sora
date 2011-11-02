@@ -12,7 +12,7 @@ MultiBarRight:ClearAllPoints()
 MultiBarRight.SetPoint = function() end
 MoveHandle.RightBar = S.MakeMoveHandle(Bar, "侧边栏", "RightBar")
 
-for i=1, 12 do
+for i = 1, 12 do
 	local Button = _G["MultiBarRightButton"..i]
 	Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 	Button:ClearAllPoints()

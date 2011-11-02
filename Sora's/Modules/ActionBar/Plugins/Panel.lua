@@ -5,8 +5,13 @@ local S, _, _, DB = unpack(select(2, ...))
 local function BuildExpBar()
 	local Bar = CreateFrame("StatusBar", nil, UIParent)
 	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetPoint("TOPLEFT", MultiBarBottomRightButton2, "BOTTOMLEFT", 2, -9)
-	Bar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton8, "BOTTOMRIGHT", -2, -14)
+	if ActionBarDB.MainBarLayout == 1 then
+		Bar:SetPoint("TOPLEFT", MultiBarBottomRightButton2, "BOTTOMLEFT", 2, -9)
+		Bar:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton8, "BOTTOMRIGHT", -2, -14)
+	elseif ActionBarDB.MainBarLayout == 2 then
+		Bar:SetPoint("TOPLEFT", ActionButton2, "BOTTOMLEFT", 2, -9)
+		Bar:SetPoint("BOTTOMRIGHT", ActionButton11, "BOTTOMRIGHT", -2, -14)
+	end
 	Bar.Rest = CreateFrame("StatusBar", nil, Bar)
 	Bar.Rest:SetAllPoints()
 	Bar.Rest:SetStatusBarTexture(DB.Statusbar)
@@ -67,12 +72,20 @@ end
 -- BuildExtraBarButton
 local function BuildExtraBarButton()
 	local LeftButton = S.MakeButton(UIParent)
-	LeftButton:SetSize(MultiBarBottomRightButton1:GetWidth(), 9)
-	LeftButton:SetPoint("TOP", MultiBarBottomRightButton1, "BOTTOM", 0, -7)
+	LeftButton:SetSize(ActionBarDB.ButtonSize, 9)
+	if ActionBarDB.MainBarLayout == 1 then
+		LeftButton:SetPoint("TOP", MultiBarBottomRightButton1, "BOTTOM", 0, -7)
+	elseif ActionBarDB.MainBarLayout == 2 then
+		LeftButton:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -7)
+	end
 	LeftButton:SetScript("OnClick", function(self) S.LeftBarFade() end)
 	local RightButton = S.MakeButton(UIParent)
-	RightButton:SetSize(MultiBarBottomRightButton7:GetWidth(), 9)
-	RightButton:SetPoint("TOP", MultiBarBottomRightButton7, "BOTTOM", 0, -7)
+	RightButton:SetSize(ActionBarDB.ButtonSize, 9)
+	if ActionBarDB.MainBarLayout == 1 then
+		RightButton:SetPoint("TOP", MultiBarBottomRightButton7, "BOTTOM", 0, -7)
+	elseif ActionBarDB.MainBarLayout == 2 then
+		RightButton:SetPoint("TOP", ActionButton12, "BOTTOM", 0, -7)
+	end
 	RightButton:SetScript("OnClick", function(self) S.RightBarFade() end)
 end
 

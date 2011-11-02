@@ -1,9 +1,12 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
 
-DB.ActionBar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate") 
-DB.ActionBar:SetWidth(ActionBarDB.ButtonSize*18+3*17)
-DB.ActionBar:SetHeight(ActionBarDB.ButtonSize*2+5)
+DB.ActionBar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
+if ActionBarDB.MainBarLayout == 1 then
+	DB.ActionBar:SetSize(ActionBarDB.ButtonSize*18+3*17, ActionBarDB.ButtonSize*2+5)
+elseif ActionBarDB.MainBarLayout == 2 then
+	DB.ActionBar:SetSize(ActionBarDB.ButtonSize*12+3*11, ActionBarDB.ButtonSize*3+2*5)
+end
 MoveHandle.ActionBar = S.MakeMoveHandle(DB.ActionBar, "主动作条", "ActionBar")
 
 local Page = {
@@ -35,20 +38,14 @@ DB.ActionBar:SetScript("OnEvent", function(self, event, ...)
 			button = _G["ActionButton"..i]
 			self:SetFrameRef("ActionButton"..i, button)
 			end  
-
 			self:Execute([[
-			buttons = table.new()
-			for i = 1, 12 do
-			  table.insert(buttons, self:GetFrameRef("ActionButton"..i))
-			end
+				buttons = table.new()
+				for i = 1, 12 do table.insert(buttons, self:GetFrameRef("ActionButton"..i)) end
 			]])
 
 			self:SetAttribute("_onstate-page", [[ 
-			for i, button in ipairs(buttons) do
-			  button:SetAttribute("actionpage", tonumber(newstate))
-			end
+				for i, button in ipairs(buttons) do button:SetAttribute("actionpage", tonumber(newstate)) end
 			]])
-
 			RegisterStateDriver(self, "page", GetBar())	
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		for i = 1, 12 do
@@ -56,11 +53,18 @@ DB.ActionBar:SetScript("OnEvent", function(self, event, ...)
 			Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 			Button:ClearAllPoints()
 			Button:SetParent(self)
-			if i == 1 then
-				Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "BOTTOMLEFT", ActionBarDB.ButtonSize*3+3*3, 0)
-			else
-				local Pre = _G["ActionButton"..i-1]
-				Button:SetPoint("LEFT", Pre, "RIGHT", 3, 0)
+			if ActionBarDB.MainBarLayout == 1 then
+				if i == 1 then
+					Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "BOTTOMLEFT", ActionBarDB.ButtonSize*3+3*3, 0)
+				else
+					Button:SetPoint("LEFT", _G["ActionButton"..i-1], "RIGHT", 3, 0)
+				end
+			elseif ActionBarDB.MainBarLayout == 2 then
+				if i == 1 then
+					Button:SetPoint("BOTTOMLEFT", DB.ActionBar)
+				else
+					Button:SetPoint("LEFT", _G["ActionButton"..i-1], "RIGHT", 3, 0)
+				end			
 			end
 		end
 	else
