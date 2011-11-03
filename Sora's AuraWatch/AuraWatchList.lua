@@ -484,9 +484,7 @@ SRAuraList = {
 				-- 争分夺秒
 				{AuraID = 59888, UnitID = "player"},			
 				-- 妙手回春
-				{AuraID = 63735, UnitID = "player"},
-				-- 心灵融化
-				{AuraID = 73510, UnitID = "player"},				-- 暗影宝珠
+				{AuraID = 63735, UnitID = "player"},				-- 暗影宝珠
 				{AuraID = 77487, UnitID = "player"},
 				-- 时间扭曲
 				{AuraID = 80353, UnitID = "player"},
@@ -500,6 +498,8 @@ SRAuraList = {
 				{AuraID = 87153, UnitID = "player"},    
 				-- 福音传播
 				{AuraID = 81661, UnitID = "player"},
+				-- 心灵融化
+				{AuraID = 87160, UnitID = "player"},
 				-- 圣光涌动(等级1)
 				{AuraID = 88688, UnitID = "player"},
 				-- 强效暗影

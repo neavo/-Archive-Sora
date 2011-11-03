@@ -122,7 +122,7 @@ local function UpdateCDFrame(index, name, icon, start, duration)
 	if Frame.Icon then Frame.Icon:SetTexture(icon) end
 	if Frame.Cooldown then
 		Frame.Cooldown:SetReverse(false)
-		Frame.Cooldown:SetCooldown(start, duration)
+		CooldownFrame_SetTimer(Frame.Cooldown, start, duration, 1)
 	end
 	if Frame.Count then Frame.Count:SetText(nil) end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
@@ -166,7 +166,7 @@ local function UpdateAuraFrame(index, name, icon, count, duration, expires)
 	if Frame.Count then Frame.Count:SetText(count > 1 and count or nil) end
 	if Frame.Cooldown then
 		Frame.Cooldown:SetReverse(true)
-		Frame.Cooldown:SetCooldown(expires-duration, duration)
+		CooldownFrame_SetTimer(Frame.Cooldown, expires-duration, duration, 1)
 	end
 	if Frame.Spellname then Frame.Spellname:SetText(name) end
 	if Frame.Statusbar then

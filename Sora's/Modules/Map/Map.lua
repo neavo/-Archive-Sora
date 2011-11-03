@@ -1,6 +1,7 @@
 ﻿-- Engines
 local S, _, _, DB = unpack(select(2, ...))
 
+WorldMapFrame:SetFrameStrata("HIGH")
 WorldMapFrame.BG = CreateFrame("Frame", nil, WorldMapFrame)
 WorldMapFrame.BG:SetFrameLevel(0)
 WorldMapFrame.BG:SetPoint("TOPLEFT", -4, 4)
@@ -9,7 +10,7 @@ WorldMapFrame.BG:SetBackdrop({
 	bgFile = DB.bgFile, insets = {left = 5, right = 5, top = 5, bottom = 5},
 	edgeFile = DB.GlowTex, edgeSize = 4
 })
-WorldMapFrame.BG:SetBackdropColor(0, 0, 0, 0.6)
+WorldMapFrame.BG:SetBackdropColor(0, 0, 0, 0.8)
 WorldMapFrame.BG:SetBackdropBorderColor(0, 0, 0, 1)
 
 WorldMapZoomOutButton:SetPoint("LEFT", WorldMapZoneDropDown, "RIGHT", 0, 4)
@@ -20,33 +21,37 @@ local function SmallSkin()
 	WorldMapFrame.BG:ClearAllPoints()
 	WorldMapFrame.BG:SetPoint("TOPLEFT", -4, 4)
 	WorldMapFrame.BG:SetPoint("BOTTOMRIGHT", 4, -4)
+	WorldMapFrameSizeUpButton:Show()
+	WorldMapFrameSizeDownButton:Hide()
 	WorldMapLevelDropDown:ClearAllPoints()
 	WorldMapLevelDropDown:SetPoint("TOPLEFT", WorldMapDetailFrame, "TOPLEFT", -17, 27)
 end
 
 local function LargeSkin()
 	if not InCombatLockdown() then
-		WorldMapFrame:SetParent(UIParent)
 		WorldMapFrame:EnableMouse(false)
 		WorldMapFrame:EnableKeyboard(false)
 		SetUIPanelAttribute(WorldMapFrame, "area", "center")
-		SetUIPanelAttribute(WorldMapFrame, "allowOtherPanels", true)
+		SetUIPanelAttribute(WorldMapFrame, "allowOtherPanels", true)	
 	end
+	WorldMapFrameSizeUpButton:Hide()
+	WorldMapFrameSizeDownButton:Show()
 	WorldMapFrame.BG:ClearAllPoints()
-	WorldMapFrame.BG:SetPoint("TOPLEFT", WorldMapDetailFrame, -25, 75)
-	WorldMapFrame.BG:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, 330, -240)  
+	WorldMapFrame.BG:SetPoint("TOPLEFT", WorldMapDetailFrame, -25, 70)
+	WorldMapFrame.BG:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, 25, -30)
 end
 
 local function QuestSkin()
 	if not InCombatLockdown() then
-		WorldMapFrame:SetParent(UIParent)
 		WorldMapFrame:EnableMouse(false)
 		WorldMapFrame:EnableKeyboard(false)
 		SetUIPanelAttribute(WorldMapFrame, "area", "center")
 		SetUIPanelAttribute(WorldMapFrame, "allowOtherPanels", true)
 	end
+	WorldMapFrameSizeUpButton:Hide()
+	WorldMapFrameSizeDownButton:Show()
 	WorldMapFrame.BG:ClearAllPoints()
-	WorldMapFrame.BG:SetPoint("TOPLEFT", WorldMapDetailFrame, -25, 75)
+	WorldMapFrame.BG:SetPoint("TOPLEFT", WorldMapDetailFrame, -25, 70)
 	WorldMapFrame.BG:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, 330, -240)  
 end			
 
@@ -64,10 +69,7 @@ local function FixSkin()
 		QuestSkin()
 	end
 
-	if not InCombatLockdown() then
-		WorldMapFrameSizeDownButton:Show()
-		WorldMapFrame:SetFrameLevel(10)
-	else
+	if InCombatLockdown() then
 		WorldMapFrameSizeDownButton:Disable()
 		WorldMapFrameSizeUpButton:Disable()
 	end	
