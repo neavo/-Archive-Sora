@@ -83,14 +83,14 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
-				-- 嗜血
+				-- 英勇气概
 				{AuraID =  2825, UnitID = "player"},
+				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 节能施法
 				{AuraID = 16870, UnitID = "player"},
 				-- 自然之赐
 				{AuraID = 16886, UnitID = "player"},
-				-- 英勇气概
-				{AuraID = 32182, UnitID = "player"},
 				-- 日蚀
 				{AuraID = 48517, UnitID = "player"},			
 				-- 月蚀
@@ -99,8 +99,6 @@ SRAuraList = {
 				{AuraID = 50334, UnitID = "player"},
 				-- 野蛮咆哮(猫)
 				{AuraID = 52610, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 				-- 粉碎
 				{AuraID = 80951, UnitID = "player"},
 				-- 月光淋漓
@@ -152,14 +150,14 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
+				-- 英勇气概
+				{AuraID =  2825, UnitID = "player"},
+				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 治疗宠物
 				{AuraID = 136, UnitID = "pet"},
-				-- 嗜血
-				{AuraID =  2825, UnitID = "player"},
 				-- 急速射击
 				{AuraID =  3045, UnitID = "player"},
-				-- 英勇气概
-				{AuraID = 32182, UnitID = "player"},
 				-- 野兽之心
 				{AuraID = 34471, UnitID = "player"},
 				-- 误导
@@ -174,8 +172,6 @@ SRAuraList = {
 				{AuraID = 56453, UnitID = "player"},
 				-- 攻击弱点
 				{AuraID = 70728, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 				-- 准备,端枪,瞄准... ...
 				{AuraID = 82925, UnitID = "player"},
 				-- 开火!
@@ -216,14 +212,14 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
-				-- 嗜血
+				-- 英勇气概
 				{AuraID =  2825, UnitID = "player"},
+				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 奥术强化
 				{AuraID = 12042, UnitID = "player"},
 				-- 唤醒
 				{AuraID = 12051, UnitID = "player"},
-				-- 英勇气概
-				{AuraID = 32182, UnitID = "player"},
 				-- 奥术冲击
 				{AuraID = 36032, UnitID = "player"},				
 				-- 寒冰指
@@ -236,8 +232,6 @@ SRAuraList = {
 				{AuraID = 64343, UnitID = "player"},
 				-- 奥术飞弹!
 				{AuraID = 79683, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 				-- 灸灼
 				{AuraID = 87023, UnitID = "player"},
 			},
@@ -270,14 +264,16 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
+				-- 英勇气概
+				{AuraID =  2825, UnitID = "player"},
+				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 盾墙(防御姿态)
 				{AuraID =   871, UnitID = "player"},
 				-- 怒火中烧
 				{AuraID =  1134, UnitID = "player"},
 				-- 盾牌格挡(防御姿态)
-				{AuraID =  2565, UnitID = "player"},
-				-- 嗜血
-				{AuraID =  2825, UnitID = "player"},				
+				{AuraID =  2565, UnitID = "player"},			
 				-- 横扫攻击(战斗,狂暴姿态)
 				{AuraID = 12328, UnitID = "player"},
 				-- 战斗专注
@@ -294,8 +290,6 @@ SRAuraList = {
 				{AuraID = 23920, UnitID = "player"},
 				-- 复苏之风(等级1)
 				{AuraID = 29841, UnitID = "player"},
-				-- 英勇气概
-				{AuraID = 32182, UnitID = "player"},
 				-- 胜利
 				{AuraID = 32216, UnitID = "player"},
 				-- 血脉喷张
@@ -310,8 +304,6 @@ SRAuraList = {
 				{AuraID = 60503, UnitID = "player"},
 				-- 主宰
 				{AuraID = 65156, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 				-- 胜利
 				{AuraID = 82368, UnitID = "player"},
 				-- 屠夫(等级3)
@@ -351,14 +343,14 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 25},
 			List = {
-				-- 嗜血
+				-- 英勇气概
 				{AuraID =  2825, UnitID = "player"},
+				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 闪电之盾
 				{AuraID =   324, UnitID = "player"},
 				-- 萨满之怒
 				{AuraID = 30823, UnitID = "player"},
-				-- 英勇气概
-				{AuraID = 32182, UnitID = "player"},
 				-- 水之护盾
 				{AuraID = 52127, UnitID = "player"},
 				-- 潮汐奔涌
@@ -367,8 +359,6 @@ SRAuraList = {
 				{AuraID = 53817, UnitID = "player", Stack = 5},
 				-- 灵魂行者的恩赐
 				{AuraID = 79206, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 			},
 		},
 		{
@@ -399,12 +389,14 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
+				-- 英勇气概
+				{AuraID =  2825, UnitID = "player"},
+				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 圣佑术
 				{AuraID =   498, UnitID = "player"},
 				-- 圣盾术
 				{AuraID =   642, UnitID = "player"},
-				-- 嗜血
-				{AuraID =  2825, UnitID = "player"},
 				-- 神恩术
 				{AuraID = 31842, UnitID = "player"},
 				-- 神圣之盾
@@ -415,8 +407,6 @@ SRAuraList = {
 				{AuraID = 31884, UnitID = "player"},
 				-- 炙热防御者
 				{AuraID = 31850, UnitID = "player"},
-				-- 英勇气概
-				{AuraID = 32182, UnitID = "player"},
 				-- 纯洁审判(等级3)
 				{AuraID = 53657, UnitID = "player"},
 				-- 圣光灌注(等级2)
@@ -425,8 +415,6 @@ SRAuraList = {
 				{AuraID = 54428, UnitID = "player"},
 				-- 战争艺术
 				{AuraID = 59578, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 				-- 异端裁决
 				{AuraID = 84963, UnitID = "player"},
 				-- 大十字军 (复仇盾)
@@ -477,19 +465,35 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
-				-- 嗜血
+				-- 英勇
 				{AuraID =  2825, UnitID = "player"},
-				-- 英勇气概
 				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
+				-- 渐隐
+				{AuraID =  586, UnitID = "player"},
+				-- 心灵专注
+				{AuraID =  14751, UnitID = "player"},				
+				-- 灵感
+				{AuraID =  14893, UnitID = "player"},
+				{AuraID =  15357, UnitID = "player"},
+				-- 圣光涌动
+				{AuraID = 33150, UnitID = "player"},
+				{AuraID = 33154, UnitID = "player"},
 				-- 消散
 				{AuraID = 47585, UnitID = "player"},
+				-- 守护之魂
+				{AuraID = 47788, UnitID = "player"},
 				-- 争分夺秒
+				{AuraID = 59887, UnitID = "player"},			
 				{AuraID = 59888, UnitID = "player"},			
+				{AuraID = 59889, UnitID = "player"},			
 				-- 妙手回春
-				{AuraID = 63735, UnitID = "player"},				-- 暗影宝珠
+				{AuraID = 63735, UnitID = "player"},
+				-- 好运
+				{AuraID = 63731, UnitID = "player"},				-- 暗影宝珠
 				{AuraID = 77487, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
+				-- 精神分流雕文
+				{AuraID = 81301, UnitID = "player"},
 				-- 真言术:障
 				{AuraID = 81782, UnitID = "player"},
 				-- 黑暗福音
@@ -497,13 +501,11 @@ SRAuraList = {
 				-- 天使长
 				{AuraID = 87152, UnitID = "player"},
 				-- 黑暗天使长
-				{AuraID = 87153, UnitID = "player"},    
+				{AuraID = 87153, UnitID = "player"},
 				-- 福音传播
 				{AuraID = 81661, UnitID = "player"},
 				-- 心灵融化
 				{AuraID = 87160, UnitID = "player"},
-				-- 圣光涌动(等级1)
-				{AuraID = 88688, UnitID = "player"},
 				-- 强效暗影
 				{AuraID = 95799, UnitID = "player"},
 			},
@@ -523,6 +525,12 @@ SRAuraList = {
 				{AuraID =  6788, UnitID = "target", Caster = "player"},
 				-- 吸血鬼之触
 				{AuraID = 34914, UnitID = "target", Caster = "player"},
+				-- 神圣庇护
+				{AuraID = 47753, UnitID = "target", Caster = "player"},
+				-- 圣言术：罚
+				{AuraID = 88625, UnitID = "target", Caster = "player"},
+				-- 圣言术：静
+				{AuraID = 88684, UnitID = "target", Caster = "player"},
 			},
 		},
 	},
@@ -535,12 +543,12 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
-				-- 嗜血
+				-- 英勇气概
 				{AuraID =  2825, UnitID = "player"},
+				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 暗影冥思
 				{AuraID = 17941, UnitID = "player"},
-				-- 英勇气概
-				{AuraID = 32182, UnitID = "player"},
 				-- 反冲(等级3)
 				{AuraID = 34939, UnitID = "player"},
 				-- 小鬼增效
@@ -551,8 +559,6 @@ SRAuraList = {
 				{AuraID = 63167, UnitID = "player"},
 				-- 熔火之心
 				{AuraID = 71165, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 				-- 强化灵魂之火
 				{AuraID = 85383, UnitID = "player"},
 				-- 魔能火花
@@ -604,18 +610,18 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
+				-- 英勇气概
+				{AuraID =  2825, UnitID = "player"},
+				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 佯攻
 				{AuraID =  1966, UnitID = "player"},
-				-- 嗜血
-				{AuraID =  2825, UnitID = "player"},
 				-- 切割
 				{AuraID =  5171, UnitID = "player"},
 				-- 冷血
 				{AuraID = 14177, UnitID = "player"},
 				-- 毒伤
 				{AuraID = 32645, UnitID = "player"},
-				-- 英勇气概
-				{AuraID = 32182, UnitID = "player"},
 				-- 嫁祸诀窍
 				{AuraID = 57934, UnitID = "player"},			
 				-- 灭绝
@@ -624,15 +630,11 @@ SRAuraList = {
 				{AuraID = 59628, UnitID = "player"},
 				-- 养精蓄锐
 				{AuraID = 73651, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 				-- 致命冲动
 				{AuraID = 84590, UnitID = "player"},
 				-- 洞悉弱点
 				{AuraID = 84745, UnitID = "player"},
-				-- 洞悉弱点
 				{AuraID = 84746, UnitID = "player"},
-				-- 洞悉弱点
 				{AuraID = 84747, UnitID = "player"},
 			}
 		},
@@ -672,10 +674,10 @@ SRAuraList = {
 			Mode = "ICON", IconSize = 30,
 			Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12},
 			List = {
-				-- 嗜血
-				{AuraID =  2825, UnitID = "player"},
 				-- 英勇气概
+				{AuraID =  2825, UnitID = "player"},
 				{AuraID = 32182, UnitID = "player"},
+				{AuraID = 80353, UnitID = "player"},
 				-- 利刃屏障
 				{AuraID = 64856, UnitID = "player"},
 				-- 反魔法护罩
@@ -696,8 +698,6 @@ SRAuraList = {
 				{AuraID = 55233, UnitID = "player"},
 				-- 冰冻之雾
 				{AuraID = 59052, UnitID = "player"},
-				-- 时间扭曲
-				{AuraID = 80353, UnitID = "player"},
 				-- 赤色天灾
 				{AuraID = 81141, UnitID = "player"},
 				-- 大墓地的意志
