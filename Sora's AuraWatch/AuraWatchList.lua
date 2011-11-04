@@ -441,6 +441,8 @@ SRAuraList = {
 				{AuraID = 88819, UnitID = "player"},
 				-- 神圣意志
 				{AuraID = 90174, UnitID = "player"},
+				-- 烈焰庇护
+				{AuraID = 99090, UnitID = "player"},
 			},
 		},
 		{
