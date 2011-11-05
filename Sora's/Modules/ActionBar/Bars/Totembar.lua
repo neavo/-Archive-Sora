@@ -45,12 +45,3 @@ Event:SetScript("OnUpdate", function(self, elapsed)
 		end
 	end
 end)
-
-
-
-
-
-
-
-
-

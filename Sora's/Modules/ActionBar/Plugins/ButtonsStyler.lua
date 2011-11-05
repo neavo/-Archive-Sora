@@ -222,10 +222,10 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Button.Shadow = S.MakeTexShadow(Button, Button.background, 4)
 		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 		Button:ClearAllPoints()
-		if index < 3 then
-			Button:SetPoint("BOTTOM", _G["MultiBarBottomRightButton"..index+4], "TOP", 0, 5)
+		if index == 1 then
+			Button:SetPoint("LEFT", MultiCastSummonSpellButton, "RIGHT", 3, 0)
 		else
-			Button:SetPoint("BOTTOM", _G["MultiBarBottomLeftButton"..index-2], "TOP", 0, 5)			
+			Button:SetPoint("LEFT", _G["MultiCastSlotButton"..index-1], "RIGHT", 3, 0)			
 		end
 		StyleButton(Button)
 	end
@@ -261,7 +261,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Button:GetNormalTexture():SetTexture(nil)
 		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 		Button:ClearAllPoints()
-		Button:SetPoint("BOTTOM", MultiBarBottomRightButton4, "TOP", 0, 5)
+		Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", 0, 5)
 		_G[Button:GetName().."Highlight"]:SetTexture(nil)
 		_G[Button:GetName().."NormalTexture"]:SetTexture(nil)
 		StyleButton(Button)
@@ -276,7 +276,7 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 		Button:GetNormalTexture():SetTexture(nil)
 		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 		Button:ClearAllPoints()
-		Button:SetPoint("BOTTOM", MultiBarBottomLeftButton3, "TOP", 0, 5)
+		Button:SetPoint("LEFT", MultiCastSlotButton4, "RIGHT", 3, 0)	
 		_G[Button:GetName().."Highlight"]:SetTexture(nil)
 		_G[Button:GetName().."NormalTexture"]:SetTexture(nil)
 		StyleButton(Button)
