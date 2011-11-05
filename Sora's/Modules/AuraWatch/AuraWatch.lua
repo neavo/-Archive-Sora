@@ -3,20 +3,11 @@ local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local addon = Sora:NewModule("AuraWatch")
 
-local AuraList, Aura, UnitIDTable, MaxFrame = {}, {}, {}, 12
+local Aura, UnitIDTable, MaxFrame = {}, {}, 12
 
 -- Init
-local function BuildAuraList()
-	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
-	for key, _ in pairs(SRAuraList) do
-		if key == DB.MyClass then
-			for _, value in pairs(SRAuraList[DB.MyClass]) do tinsert(AuraList, value) end
-		end
-	end
-	wipe(SRAuraList)
-end
 local function BuildUnitIDTable()
-	for _, VALUE in pairs(AuraList) do
+	for _, VALUE in pairs(AuraWatchDB) do
 		for _, value in pairs(VALUE.List) do
 			local Flag = true
 			for _,v in pairs(UnitIDTable) do
@@ -27,7 +18,7 @@ local function BuildUnitIDTable()
 	end
 end
 local function BuildAura()
-	for key, value in pairs(AuraList) do
+	for key, value in pairs(AuraWatchDB) do
 		local FrameTable = {}
 		for i = 1, MaxFrame do
 			if value.Mode:lower() == "icon" then
@@ -44,7 +35,7 @@ local function BuildAura()
 end
 local function UpdatePos()
 	for key, value in pairs(Aura) do
-		local Pos, Direction, Interval = AuraList[key].Pos, AuraList[key].Direction, AuraList[key].Interval
+		local Pos, Direction, Interval = AuraWatchDB[key].Pos, AuraWatchDB[key].Direction, AuraWatchDB[key].Interval
 		for i = 1, MaxFrame do
 			value[i]:ClearAllPoints()
 			if i == 1 then
@@ -96,7 +87,7 @@ local function UpdateCDFrame(index, name, icon, start, duration)
 	Aura[index].Index = (Aura[index].Index + 1 > MaxFrame) and MaxFrame or Aura[index].Index + 1
 end
 local function UpdateCD()
-	for KEY, VALUE in pairs(AuraList) do
+	for KEY, VALUE in pairs(AuraWatchDB) do
 		for _, value in pairs(VALUE.List) do
 			if value.SpellID then
 				if GetSpellCooldown(value.SpellID) and select(2, GetSpellCooldown(value.SpellID)) > 1.5 then
@@ -139,7 +130,7 @@ local function UpdateAuraFrame(index, name, icon, count, duration, expires)
 	Aura[index].Index = (Aura[index].Index + 1 > MaxFrame) and MaxFrame or Aura[index].Index + 1
 end
 local function AuraFilter(spellID, UnitID, index, bool)
-	for KEY, VALUE in pairs(AuraList) do
+	for KEY, VALUE in pairs(AuraWatchDB) do
 		for key, value in pairs(VALUE.List) do
 			if value.AuraID == spellID and value.UnitID == UnitID then
 				if bool then
@@ -196,7 +187,6 @@ local function CleanUp()
 end
 
 function addon:OnInitialize()
-	BuildAuraList()
 	BuildUnitIDTable()
 end
 
