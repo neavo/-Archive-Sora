@@ -1,8 +1,8 @@
 ﻿-- Engines
 local _, C, _, DB = unpack(select(2, ...))
 
--- BuildClass
-C.Skin = CreateFrame("Frame")
+-- Init
+C.Skin = {}
 
 -- LoadSettings
 function C.Skin.LoadSettings()
@@ -13,6 +13,7 @@ function C.Skin.LoadSettings()
 	for key, value in pairs(Default) do
 		if SkinDB[key] == nil then SkinDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault

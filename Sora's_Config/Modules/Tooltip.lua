@@ -1,8 +1,8 @@
 ﻿-- Engines
 local S, C, _, _ = unpack(select(2, ...))
 
--- BuildClass
-C.Tooltip = CreateFrame("Frame")
+-- Init
+C.Tooltip = {}
 
 -- LoadSettings
 function C.Tooltip.LoadSettings()
@@ -14,6 +14,7 @@ function C.Tooltip.LoadSettings()
 	for key, value in pairs(Default) do
 		if TooltipDB[key] == nil then TooltipDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault

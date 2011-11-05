@@ -2,6 +2,6 @@
 
 	<Script file = "Style.lua"/>
 	<Script file = "AuraWatch.lua"/>
-	<Script file = "InternalCD.lua"/>
+	<!--Script file = "InternalCD.lua"/-->
 	
 </Ui>

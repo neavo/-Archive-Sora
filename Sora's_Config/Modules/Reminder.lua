@@ -1,8 +1,8 @@
 ﻿-- Engines
 local S, C, _, _ = unpack(select(2, ...))
 
--- BuildClass
-C.Reminder = CreateFrame("Frame")
+-- Init
+C.Reminder = {}
 
 -- LoadSettings
 function C.Reminder.LoadSettings()
@@ -19,6 +19,7 @@ function C.Reminder.LoadSettings()
 	for key, value in pairs(Default) do
 		if ReminderDB[key] == nil then ReminderDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault

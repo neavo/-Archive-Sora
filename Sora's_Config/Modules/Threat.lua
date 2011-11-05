@@ -1,8 +1,8 @@
 ﻿-- Engines
 local _, C, _, DB = unpack(select(2, ...))
 
--- BuildClass
-C.Threat = CreateFrame("Frame")
+-- Init
+C.Threat = {}
 
 -- LoadSettings
 function C.Threat.LoadSettings()
@@ -16,6 +16,7 @@ function C.Threat.LoadSettings()
 	for key, value in pairs(Default) do
 		if ThreatDB[key] == nil then ThreatDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault

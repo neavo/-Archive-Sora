@@ -1,7 +1,7 @@
 ﻿-- Engines
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local addon = Sora:NewModule("AuraWatch")
+local Module = Sora:NewModule("AuraWatch")
 
 local Aura, UnitIDTable, MaxFrame = {}, {}, 12
 
@@ -186,11 +186,11 @@ local function CleanUp()
 	end
 end
 
-function addon:OnInitialize()
+function Module:OnInitialize()
 	BuildUnitIDTable()
 end
 
-function addon:OnEnable()
+function Module:OnEnable()
 	BuildAura()
 	UpdatePos()
 	local Timer = 0

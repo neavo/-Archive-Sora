@@ -1,8 +1,8 @@
 ﻿-- Engines
 local S, C, _, _ = unpack(select(2, ...))
 
--- BuildClass
-C.ActionBar = CreateFrame("Frame")
+-- Init
+C.ActionBar = {}
 
 -- LoadSettings
 function C.ActionBar.LoadSettings()
@@ -18,6 +18,7 @@ function C.ActionBar.LoadSettings()
 	for key, value in pairs(Default) do
 		if ActionBarDB[key] == nil then ActionBarDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault

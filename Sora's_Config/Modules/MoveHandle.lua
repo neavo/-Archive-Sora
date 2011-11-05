@@ -1,8 +1,8 @@
 ﻿-- Engines
 local S, C, _, DB = unpack(select(2, ...))
 
--- BuildClass
-C.MoveHandle = CreateFrame("Frame")
+-- Init
+C.MoveHandle = {}
 
 -- LoadSettings
 function C.MoveHandle.LoadSettings()
@@ -26,6 +26,7 @@ function C.MoveHandle.LoadSettings()
 	for key, value in pairs(Default) do
 		if MoveHandleDB[key] == nil then MoveHandleDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault

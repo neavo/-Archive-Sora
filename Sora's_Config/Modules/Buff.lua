@@ -1,8 +1,8 @@
 ﻿-- Engines
 local _, C, _, _ = unpack(select(2, ...))
 
--- BuildClass
-C.Buff = CreateFrame("Frame")
+-- Init
+C.Buff = {}
 
 -- LoadSettings
 function C.Buff.LoadSettings()
@@ -18,6 +18,7 @@ function C.Buff.LoadSettings()
 	for key, value in pairs(Default) do
 		if BuffDB[key] == nil then BuffDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault

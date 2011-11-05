@@ -1,7 +1,7 @@
 ﻿-- Engines
 local S, C, _, _ = unpack(select(2, ...))
 
--- BuildClass
+-- Init
 C.AuraWatch = {}
 
 -- LoadSettings

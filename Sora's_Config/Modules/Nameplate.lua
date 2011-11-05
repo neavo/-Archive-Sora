@@ -1,8 +1,8 @@
 ﻿-- Engines
 local S, C, _, _ = unpack(select(2, ...))
 
--- BuildClass
-C.Nameplate = CreateFrame("Frame")
+-- Init
+C.Nameplate = {}
 
 -- LoadSettings
 function C.Nameplate.LoadSettings()
@@ -19,6 +19,7 @@ function C.Nameplate.LoadSettings()
 	for key, value in pairs(Default) do
 		if NameplateDB[key] == nil then NameplateDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault
