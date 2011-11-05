@@ -45,9 +45,6 @@
 
 ]]
 
-local _, SR = ...
-local cfg = SR.AuraWatchConfig
-
 SRAuraList = {
 	-- 全职业
 	["ALL"] = {

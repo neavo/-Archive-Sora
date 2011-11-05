@@ -1,6 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Include file = "ActionBar\Load_ActionBar.xml"/>
+	<Include file = "AuraWatch\Load_AuraWatch.xml"/>
 	<Include file = "Bags\Load_Bags.xml"/>
 	<Include file = "Buff\Load_Buff.xml"/>
 	<Include file = "Chat\Load_Chat.xml"/>

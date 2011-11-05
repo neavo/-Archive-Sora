@@ -1,21 +1,16 @@
-﻿----------------
---  命名空间  --
-----------------
-
-local _, SR = ...
-local cfg = SR.AuraWatchConfig
+﻿-- Engines
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local addon = Sora:NewModule("AuraWatch")
 
 local AuraList, Aura, UnitIDTable, MaxFrame = {}, {}, {}, 12
-local MyClass = select(2, UnitClass("player")) 
-local BuildICON, BuildBAR = cfg.BuildICON, cfg.BuildBAR
-if not sRawDB then sRawDB = {} end
 
 -- Init
 local function BuildAuraList()
 	AuraList = SRAuraList["ALL"] and SRAuraList["ALL"] or {}
 	for key, _ in pairs(SRAuraList) do
-		if key == MyClass then
-			for _, value in pairs(SRAuraList[MyClass]) do tinsert(AuraList, value) end
+		if key == DB.MyClass then
+			for _, value in pairs(SRAuraList[DB.MyClass]) do tinsert(AuraList, value) end
 		end
 	end
 	wipe(SRAuraList)
@@ -31,46 +26,15 @@ local function BuildUnitIDTable()
 		end
 	end
 end
-local function MakeMoveHandle(Frame, Text, key, Pos)
-	local MoveHandle = CreateFrame("Frame", nil, UIParent)
-	MoveHandle:SetWidth(Frame:GetWidth())
-	MoveHandle:SetHeight(Frame:GetHeight())
-	MoveHandle:SetFrameStrata("HIGH")
-	MoveHandle:SetBackdrop({bgFile = cfg.Solid})
-	MoveHandle:SetBackdropColor(0, 0, 0, 0.9)
-	MoveHandle.Text = MoveHandle:CreateFontString(nil, "OVERLAY")
-	MoveHandle.Text:SetFont(cfg.Font, 10, "THINOUTLINE")
-	MoveHandle.Text:SetPoint("CENTER")
-	MoveHandle.Text:SetText(Text)
-	if not sRawDB[key] then 
-		MoveHandle:SetPoint(unpack(Pos))
-	else
-		MoveHandle:SetPoint(unpack(sRawDB[key]))		
-	end
-	MoveHandle:EnableMouse(true)
-	MoveHandle:SetMovable(true)
-	MoveHandle:RegisterForDrag("LeftButton")
-	MoveHandle:SetScript("OnDragStart", function(self) MoveHandle:StartMoving() end)
-	MoveHandle:SetScript("OnDragStop", function(self)
-		self:StopMovingOrSizing()
-		local AnchorF, _, AnchorT, X, Y = self:GetPoint()
-		sRawDB[key] = {AnchorF, "UIParent", AnchorT, X, Y}
-	end)
-	MoveHandle:Hide()
-	Frame:SetPoint("CENTER", MoveHandle)
-	return MoveHandle
-end
 local function BuildAura()
 	for key, value in pairs(AuraList) do
 		local FrameTable = {}
 		for i = 1, MaxFrame do
 			if value.Mode:lower() == "icon" then
-				local Frame = BuildICON(value.IconSize)
-				if i == 1 then Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos) end
+				local Frame = S.BuildICON(value.IconSize)
 				tinsert(FrameTable, Frame)
 			elseif value.Mode:lower() == "bar" then
-				local Frame = BuildBAR(value.BarWidth, value.IconSize)
-				if i == 1 then Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos) end
+				local Frame = S.BuildBAR(value.BarWidth, value.IconSize)
 				tinsert(FrameTable, Frame)
 			end
 		end
@@ -80,11 +44,11 @@ local function BuildAura()
 end
 local function UpdatePos()
 	for key, value in pairs(Aura) do
-		local Direction, Interval = AuraList[key].Direction, AuraList[key].Interval
+		local Pos, Direction, Interval = AuraList[key].Pos, AuraList[key].Direction, AuraList[key].Interval
 		for i = 1, MaxFrame do
 			value[i]:ClearAllPoints()
 			if i == 1 then
-				value[i]:SetPoint("CENTER", value[i].MoveHandle)
+				value[i]:SetPoint(unpack(Pos))
 			elseif Direction:lower() == "right" then
 				value[i]:SetPoint("LEFT", value[i-1], "RIGHT", Interval, 0)
 			elseif Direction:lower() == "left" then
@@ -96,12 +60,6 @@ local function UpdatePos()
 			end
 		end
 	end
-end
-local function Init()
-	BuildAuraList()
-	BuildUnitIDTable()
-	BuildAura()
-	UpdatePos()
 end
 
 -- SetTime
@@ -237,59 +195,23 @@ local function CleanUp()
 	end
 end
 
--- Event
-local function OnUpdate(self, elapsed)
-	self.Timer = self.Timer + elapsed
-	if self.Timer > 0.5 then
-		self.Timer = 0
-		CleanUp()
-		UpdateCD()
-		for _, value in pairs(UnitIDTable) do UpdateAura(value) end
-	end	
+function addon:OnInitialize()
+	BuildAuraList()
+	BuildUnitIDTable()
 end
-local Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_ENTERING_WORLD")
-Event:SetScript("OnEvent", function(self, event, ...)
-	Init()
-	self.Timer = 0
-	self:SetScript("OnUpdate", OnUpdate)
-	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-end)
 
--- Test
-local TestFlag = true
-SlashCmdList.SRAuraWatch = function(msg)
-	if msg:lower() == "test" then
-		if TestFlag then
-			TestFlag = false
-			Event:SetScript("OnUpdate", nil)
-			for _, value in pairs(Aura) do
-				for i = 1, MaxFrame do
-					if value[i] then
-						value[i]:SetScript("OnUpdate", nil)
-						value[i]:Show()	
-					end		
-					if value[i].Icon then value[i].Icon:SetTexture(select(3, GetSpellInfo(118))) end
-					if value[i].Count then value[i].Count:SetText("9") end
-					if value[i].Time then value[i].Time:SetText("59.59") end
-					if value[i].Statusbar then value[i].Statusbar:SetValue(1) end
-					if value[i].Spellname then value[i].Spellname:SetText("变形术") end				
-				end
-				value[1].MoveHandle:Show()
-			end
-		else
-			TestFlag = true
+function addon:OnEnable()
+	BuildAura()
+	UpdatePos()
+	local Timer = 0
+	local Update = CreateFrame("Frame")
+	Update:SetScript("OnUpdate", function(self, elapsed)
+		Timer = Timer + elapsed
+		if Timer > 0.5 then
+			Timer = 0
 			CleanUp()
-			for _, value in pairs(Aura) do value[1].MoveHandle:Hide() end
-			Event:SetScript("OnUpdate", OnUpdate)
-		end
-	elseif msg:lower() == "reset" then
-		wipe(sRawDB)
-		ReloadUI()
-	else
-		print("/sRaw Test -- 测试模式")
-		print("/sRaw Reset -- 恢复默认设置")
-	end
+			UpdateCD()
+			for _, value in pairs(UnitIDTable) do UpdateAura(value) end
+		end	
+	end)
 end
-SLASH_SRAuraWatch1 = "/sRaw"
-

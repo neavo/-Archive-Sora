@@ -1,15 +1,9 @@
-﻿----------------
---  命名空间  --
-----------------
-
-local _, SR = ...
-local cfg = SR.AuraWatchConfig
+﻿-- Engines
+local S, C, L, DB = unpack(select(2, ...))
 
 local MyName = UnitName("player")
-local MyClass = select(2, UnitClass("player")) 
-local BuildICON, BuildBAR = cfg.BuildICON, cfg.BuildBAR
 local InCD = {}
-local DB = {
+local Settings = {
 	Direction = "UP", Interval = 4,
 	Mode = "BAR", IconSize = 20, BarWidth = 175,
 	Pos = {"BOTTOM", "oUF_SoraPlayer", "TOP", 12, 55},
@@ -158,15 +152,15 @@ local function UpdatePos()
 	for i = 1, #InCD do
 		InCD[i]:ClearAllPoints()
 		if i == 1 then
-			InCD[i]:SetPoint(unpack(DB.Pos))
-		elseif DB.Direction:lower() == "right" then
-			InCD[i]:SetPoint("LEFT", InCD[i-1], "RIGHT", DB.Interval, 0)
-		elseif DB.Direction:lower() == "left" then
-			InCD[i]:SetPoint("RIGHT", InCD[i-1], "LEFT", -DB.Interval, 0)
-		elseif DB.Direction:lower() == "up" then
-			InCD[i]:SetPoint("BOTTOM", InCD[i-1], "TOP", 0, DB.Interval)
-		elseif DB.Direction:lower() == "down" then
-			InCD[i]:SetPoint("TOP", InCD[i-1], "BOTTOM", 0, -DB.Interval)
+			InCD[i]:SetPoint(unpack(Settings.Pos))
+		elseif Settings.Direction:lower() == "right" then
+			InCD[i]:SetPoint("LEFT", InCD[i-1], "RIGHT", Settings.Interval, 0)
+		elseif Settings.Direction:lower() == "left" then
+			InCD[i]:SetPoint("RIGHT", InCD[i-1], "LEFT", -Settings.Interval, 0)
+		elseif Settings.Direction:lower() == "up" then
+			InCD[i]:SetPoint("BOTTOM", InCD[i-1], "TOP", 0, Settings.Interval)
+		elseif Settings.Direction:lower() == "down" then
+			InCD[i]:SetPoint("TOP", InCD[i-1], "BOTTOM", 0, -Settings.Interval)
 		end
 		InCD[i].ID = i
 	end
@@ -174,7 +168,7 @@ end
 
 -- UpdateFrame
 local function UpdateFrame(spellID, itemID, duration)
-	local Frame = DB.Mode == "BAR" and BuildBAR(DB.BarWidth, DB.IconSize) or BuildICON(DB.IconSize)
+	local Frame = Settings.Mode == "BAR" and S.BuildBAR(Settings.BarWidth, Settings.IconSize) or S.BuildICON(Settings.IconSize)
 	local name, icon = nil, nil
 	if itemID then
 		name, _, _, _, _, _, _, _, _, icon = GetItemInfo(itemID)
@@ -228,7 +222,6 @@ Event:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 Event:SetScript("onEvent", function(self, event, ...)
 	if not UnitAffectingCombat("player") then return end
 	if bit.band(select(6, ...), COMBATLOG_OBJECT_AFFILIATION_MINE) == 0 then return end
-	if GetAddOnMemoryUsage("Sora's AuraWatch") > 256 then collectgarbage() end
 	local _, eventType, _, _, sourceName, _, _, _, _, _, _, spellID = ...
 	if InternalCD[spellID] and EventList[eventType] and sourceName == MyName then
 		local itemID, duration = unpack(InternalCD[spellID])
