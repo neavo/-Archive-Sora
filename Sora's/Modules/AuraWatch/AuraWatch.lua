@@ -2,8 +2,8 @@
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("AuraWatch")
-
 local Aura, UnitIDTable, MaxFrame = {}, {}, 12
+if not MoveHandleDB["AuraWatch"] then MoveHandleDB["AuraWatch"] = {} end
 
 -- Init
 local function BuildUnitIDTable()
@@ -17,17 +17,48 @@ local function BuildUnitIDTable()
 		end
 	end
 end
+local function MakeMoveHandle(Frame, Text, key, Pos)
+	local MoveHandle = CreateFrame("Frame", nil, UIParent)
+	MoveHandle:SetSize(Frame:GetWidth(), Frame:GetHeight())
+	MoveHandle:SetFrameStrata("HIGH")
+	MoveHandle:SetBackdrop({bgFile = DB.Solid})
+	MoveHandle:SetBackdropColor(0, 0, 0, 0.9)
+	MoveHandle.Text = S.MakeFontString(MoveHandle, 10)
+	MoveHandle.Text:SetPoint("CENTER")
+	MoveHandle.Text:SetText(Text)
+	if not MoveHandleDB["AuraWatch"][key] then 
+		MoveHandle:SetPoint(unpack(Pos))
+	else
+		MoveHandle:SetPoint(unpack(MoveHandleDB["AuraWatch"][key]))		
+	end
+	MoveHandle:EnableMouse(true)
+	MoveHandle:SetMovable(true)
+	MoveHandle:RegisterForDrag("LeftButton")
+	MoveHandle:SetScript("OnDragStart", function(self) MoveHandle:StartMoving() end)
+	MoveHandle:SetScript("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+		local AnchorF, _, AnchorT, X, Y = self:GetPoint()
+		MoveHandleDB["AuraWatch"][key] = {AnchorF, "UIParent", AnchorT, X, Y}
+	end)
+	MoveHandle:Hide()
+	Frame:SetPoint("CENTER", MoveHandle)
+	return MoveHandle
+end
 local function BuildAura()
 	for key, value in pairs(AuraWatchDB) do
 		local FrameTable = {}
 		for i = 1, MaxFrame do
+			local Frame = nil
 			if value.Mode:lower() == "icon" then
-				local Frame = S.BuildICON(value.IconSize)
-				tinsert(FrameTable, Frame)
+				Frame = S.BuildICON(value.IconSize)
 			elseif value.Mode:lower() == "bar" then
-				local Frame = S.BuildBAR(value.BarWidth, value.IconSize)
-				tinsert(FrameTable, Frame)
+				Frame = S.BuildBAR(value.BarWidth, value.IconSize)
 			end
+			if i == 1 then
+				Frame.MoveHandle = MakeMoveHandle(Frame, value.Name, key, value.Pos)
+				MoveHandle["AuraWatch_"..key] = Frame.MoveHandle
+			end
+			tinsert(FrameTable, Frame)
 		end
 		FrameTable.Index = 1
 		tinsert(Aura, FrameTable)
@@ -35,11 +66,11 @@ local function BuildAura()
 end
 local function UpdatePos()
 	for key, value in pairs(Aura) do
-		local Pos, Direction, Interval = AuraWatchDB[key].Pos, AuraWatchDB[key].Direction, AuraWatchDB[key].Interval
+		local Direction, Interval = AuraWatchDB[key].Direction, AuraWatchDB[key].Interval
 		for i = 1, MaxFrame do
 			value[i]:ClearAllPoints()
 			if i == 1 then
-				value[i]:SetPoint(unpack(Pos))
+				value[i]:SetPoint("CENTER", value[i].MoveHandle)
 			elseif Direction:lower() == "right" then
 				value[i]:SetPoint("LEFT", value[i-1], "RIGHT", Interval, 0)
 			elseif Direction:lower() == "left" then

@@ -180,8 +180,7 @@ end
 
 function S.MakeMoveHandle(Frame, Text, key)
 	local MoveHandle = CreateFrame("Frame", nil, UIParent)
-	MoveHandle:SetWidth(Frame:GetWidth())
-	MoveHandle:SetHeight(Frame:GetHeight())
+	MoveHandle:SetSize(Frame:GetWidth(), Frame:GetHeight())
 	MoveHandle:SetFrameStrata("HIGH")
 	MoveHandle:SetBackdrop({bgFile = DB.Solid})
 	MoveHandle:SetBackdropColor(0, 0, 0, 0.9)

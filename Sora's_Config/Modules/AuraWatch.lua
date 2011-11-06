@@ -7,8 +7,8 @@ C.AuraWatch = {}
 -- LoadSettings
 function C.AuraWatch.LoadSettings()
 	local Default = {
-		-- 全职业
-		["ALL"] = {
+		-- 德鲁伊
+		["DRUID"] = {
 			{
 				Name = "玩家Debuff", 
 				Direction = "RIGHT", Interval = 4, 
@@ -31,9 +31,6 @@ function C.AuraWatch.LoadSettings()
 					{AuraID =  1715, UnitID = "player"}, 
 				}, 
 			}, 
-		}, 
-		-- 德鲁伊
-		["DRUID"] = {
 			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
@@ -100,6 +97,28 @@ function C.AuraWatch.LoadSettings()
 		-- 猎人
 		["HUNTER"] = {
 			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
+			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
@@ -160,6 +179,28 @@ function C.AuraWatch.LoadSettings()
 		-- 法师
 		["MAGE"] = {
 			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
+			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
@@ -209,6 +250,28 @@ function C.AuraWatch.LoadSettings()
 		}, 
 		-- 战士
 		["WARRIOR"] = {
+			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
 			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
@@ -287,6 +350,28 @@ function C.AuraWatch.LoadSettings()
 		-- 萨满
 		["SHAMAN"] = {
 			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
+			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
@@ -331,6 +416,28 @@ function C.AuraWatch.LoadSettings()
 		}, 
 		-- 圣骑士
 		["PALADIN"] = {
+			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
 			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
@@ -406,6 +513,28 @@ function C.AuraWatch.LoadSettings()
 		}, 
 		-- 牧师
 		["PRIEST"] = {
+			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
 			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
@@ -484,6 +613,28 @@ function C.AuraWatch.LoadSettings()
 		-- 术士
 		["WARLOCK"] = {
 			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
+			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
@@ -549,6 +700,28 @@ function C.AuraWatch.LoadSettings()
 		-- 盗贼
 		["ROGUE"] = {
 			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
+			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
@@ -610,6 +783,28 @@ function C.AuraWatch.LoadSettings()
 		}, 
 		-- 死亡骑士
 		["DEATHKNIGHT"] = {
+			{
+				Name = "玩家Debuff", 
+				Direction = "RIGHT", Interval = 4, 
+				Mode = "ICON", IconSize = 54, 
+				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
+				List = {
+					-- 变羊
+					{AuraID =   118, UnitID = "player"}, 
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"}, 
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"}, 
+					-- 沉默
+					{AuraID = 55021, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+				}, 
+			}, 
 			{
 				Name = "玩家Buff", 
 				Direction = "RIGHT", Interval = 6, 

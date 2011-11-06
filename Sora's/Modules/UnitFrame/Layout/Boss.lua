@@ -293,10 +293,13 @@ function Module:OnInitialize()
 	oUF:RegisterStyle("SoraBoss", BuildBossFrame)
 	oUF:SetActiveStyle("SoraBoss")
 	DB.BossFrame = {}
+	local BossFramePos = CreateFrame("Frame", nil, UIParent)
+	BossFramePos:SetSize(220, 30*MAX_BOSS_FRAMES+60*(MAX_BOSS_FRAMES-1))
+	MoveHandle.BossFrame = S.MakeMoveHandle(BossFramePos, "首领框体", "BossFrame")
 	for i = 1, MAX_BOSS_FRAMES do
 		DB.BossFrame[i] = oUF:Spawn("boss"..i)
 		if i == 1 then
-			MoveHandle.BossFrame = S.MakeMoveHandle(DB.BossFrame[i], "首领框体", "BossFrame")
+			DB.BossFrame[i]:SetPoint("TOP", BossFramePos)
 		else
 			DB.BossFrame[i]:SetPoint("TOP", DB.BossFrame[i-1], "BOTTOM", 0, -60)
 		end
