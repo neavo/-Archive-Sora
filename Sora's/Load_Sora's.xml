@@ -1,6 +1,9 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
+	<Include file = "Lib\Load_Lib.xml"/>
+
 	<Script file = "Init.lua"/>
+	<Include file = "Config\Load_Config.xml"/>
 	<Include file = "Function\Load_Function.xml"/>
 	<Include file = "Misc\Load_Misc.xml"/>
 	<Include file = "Modules\Load_Modules.xml"/>

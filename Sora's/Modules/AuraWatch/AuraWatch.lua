@@ -3,7 +3,7 @@ local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("AuraWatch")
 local Aura, UnitIDTable, MaxFrame = {}, {}, 12
-if not MoveHandleDB["AuraWatch"] then MoveHandleDB["AuraWatch"] = {} end
+
 
 -- Init
 local function BuildUnitIDTable()
@@ -218,6 +218,7 @@ local function CleanUp()
 end
 
 function Module:OnInitialize()
+	if not MoveHandleDB["AuraWatch"] then MoveHandleDB["AuraWatch"] = {} end
 	BuildUnitIDTable()
 end
 

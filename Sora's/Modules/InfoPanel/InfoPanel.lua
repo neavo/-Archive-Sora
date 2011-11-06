@@ -37,12 +37,6 @@ local function BuildClock()
 	Clock.Text = S.MakeFontString(Clock, 14)
 	Clock.Text:SetPoint("TOP", MoveHandle.InfoPanel)
 	Clock:SetAllPoints(Clock.Text)
-	Clock:RegisterEvent("PLAYER_LOGIN")
-	Clock:SetScript("OnEvent", function(self, event, ...)
-		RequestRaidInfo()
-		TimeManagerClockButton:Hide()
-		GameTimeFrame:Hide()
-	end)
 	Clock:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
 		GameTooltip:ClearLines()
@@ -90,6 +84,9 @@ local function BuildClock()
 			self.Text:SetText(Text:sub(index-2, index-1).." : "..Text:sub(index+1, index+2))
 		end
 	end)
+	RequestRaidInfo()
+	TimeManagerClockButton:Hide()
+	GameTimeFrame:Hide()
 	return Clock
 end
 

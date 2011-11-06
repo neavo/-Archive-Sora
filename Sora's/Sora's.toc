@@ -2,7 +2,7 @@
 ## Title: |cff70C0F5Sora's|r
 ## Notes: Sora's O(∩_∩)O
 ## Author: Neavo
-## RequiredDeps: Sora's_Config
+## SavedVariablesPerCharacter: SoraVersion, ActionBarDB, AuraWatchDB, BuffDB, NameplateDB, ReminderDB, ThreatDB, TooltipDB, UnitFrameDB, MoveHandleDB, SkinDB
 
 ## X-Email:neavo7@Gmail.com
 

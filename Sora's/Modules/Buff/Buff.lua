@@ -3,14 +3,6 @@ local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("Buff")
 
-local BuffPos = CreateFrame("Frame", nil, UIParent)
-BuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
-MoveHandle.Buff = S.MakeMoveHandle(BuffPos, "Buff", "Buff")
-local DebuffPos = CreateFrame("Frame", nil, UIParent)
-DebuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
-MoveHandle.Debuff = S.MakeMoveHandle(DebuffPos, "Debuff", "Debuff")
-
--- BUFF/DEBUFF样式
 local function Style(buttonName, i)
 	local Button	= _G[buttonName..i]
 	local Icon		= _G[buttonName..i.."Icon"]
@@ -31,6 +23,12 @@ local function Style(buttonName, i)
 end
 
 function Module:OnEnable()
+	local BuffPos = CreateFrame("Frame", nil, UIParent)
+	BuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
+	MoveHandle.Buff = S.MakeMoveHandle(BuffPos, "Buff", "Buff")
+	local DebuffPos = CreateFrame("Frame", nil, UIParent)
+	DebuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
+	MoveHandle.Debuff = S.MakeMoveHandle(DebuffPos, "Debuff", "Debuff")
 	SetCVar("consolidateBuffs", 0)
 	SetCVar("buffDurations", 1)
 	hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", function()
