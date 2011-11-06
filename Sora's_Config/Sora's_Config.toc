@@ -1,8 +1,0 @@
-﻿## Interface: 40200
-## Title: |cff70C0F5Sora's|r Config
-## Notes: Sora's O(∩_∩)O
-## Author: Neavo
-## SavedVariablesPerCharacter: SoraVersion, ActionBarDB, AuraWatchDB, BuffDB, NameplateDB, ReminderDB, ThreatDB, TooltipDB, UnitFrameDB, MoveHandleDB, SkinDB
-## X-Email:neavo7@Gmail.com
-
-Load_Config.xml

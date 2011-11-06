@@ -9,6 +9,7 @@
 	<Script file = "Glow.lua"/>
 	<Script file = "HoverTips.lua"/>
 	<Script file = "Mail.lua"/>
+	<Script file = "stAddonManager.lua"/>
 	<Script file = "Roster.lua"/>
 	<Script file = "tekKompare.lua"/>
 	<Script file = "TradeTab.lua"/>

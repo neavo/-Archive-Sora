@@ -1,12 +1,10 @@
 ﻿-- Engines
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("ModuleName")
-function Module:OnInitialize() end
-
-local NewMail = false
+local Module = Sora:NewModule("MiniMap")
 
 function Module:OnEnable()
+	local NewMail = false
 	Minimap:SetMaskTexture("Interface\\Buttons\\WHITE8x8")
 	Minimap:SetFrameStrata("BACKGROUND")
 	Minimap:ClearAllPoints()

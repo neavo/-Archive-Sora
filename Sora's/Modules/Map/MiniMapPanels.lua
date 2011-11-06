@@ -1,5 +1,7 @@
 ﻿-- Engines
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("MiniMapPanels")
 
 -- BuildTopFrame
 local function InitMiniMapTracking(TopFrame)
@@ -163,5 +165,7 @@ local function BuildBottomFrame()
 	BuildBottomLeftFrame(BottomFrame)
 end
 
-BuildTopFrame()
-BuildBottomFrame()
+function Module:OnEnable()
+	BuildTopFrame()
+	BuildBottomFrame()
+end
