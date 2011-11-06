@@ -25,14 +25,13 @@ end
 -- ResetToDefault
 function C.Nameplate.ResetToDefault()
 	wipe(NameplateDB)
-	C.Nameplate.LoadSettings()
 end
 
 -- BuildGUI
 function C.Nameplate.BuildGUI()
 	if Modules then
 		Modules["Nameplate"] =  {
-			type = "group",
+			type = "group", order = 2,
 			name = "姓名板",
 			args = {
 				Fontsize = {

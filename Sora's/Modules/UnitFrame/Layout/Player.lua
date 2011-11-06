@@ -1,7 +1,9 @@
 ﻿-- Engines
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("PlayerFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -424,7 +426,10 @@ local function BuildPlayerFrame(self, ...)
 
 end
 
-oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)
-oUF:SetActiveStyle("SoraPlayer")
-DB.PlayerFrame = oUF:Spawn("player")
-MoveHandle.PlayerFrame = S.MakeMoveHandle(DB.PlayerFrame, "玩家框体", "PlayerFrame")
+function Module:OnInitialize()
+	if not UnitFrameDB.ShowPlayerFrame then return end
+	oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)
+	oUF:SetActiveStyle("SoraPlayer")
+	DB.PlayerFrame = oUF:Spawn("player")
+	MoveHandle.PlayerFrame = S.MakeMoveHandle(DB.PlayerFrame, "玩家框体", "PlayerFrame")
+end

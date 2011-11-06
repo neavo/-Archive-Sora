@@ -3,6 +3,8 @@
 	local S, C, L, DB = unpack(select(2, ...))
 	local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 	local Module = Sora:NewModule("ModuleName")
+	function Module:OnInitialize() end
+	function Module:OnEnable() end
 ]]
 
 local Sora = LibStub("AceAddon-3.0"):NewAddon("Sora")

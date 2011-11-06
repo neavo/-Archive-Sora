@@ -32,7 +32,6 @@ end
 -- ResetToDefault
 function C.MoveHandle.ResetToDefault()
 	wipe(MoveHandleDB)
-	C.MoveHandle.LoadSettings()
 end
 
 -- BuildGUI

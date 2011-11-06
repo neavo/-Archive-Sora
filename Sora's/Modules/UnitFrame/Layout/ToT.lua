@@ -1,7 +1,9 @@
 ﻿-- Engines
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("ToTFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -78,7 +80,8 @@ local function BuildToTFrame(self, ...)
 
 end
 
-if UnitFrameDB.ShowToT then
+function Module:OnInitialize()
+	if not (UnitFrameDB.ShowTargetFrame and UnitFrameDB.ShowToT) then return end
 	oUF:RegisterStyle("SoraToT", BuildToTFrame)
 	oUF:SetActiveStyle("SoraToT")
 	DB.ToTFrame = oUF:Spawn("targettarget")

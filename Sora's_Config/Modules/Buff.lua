@@ -24,15 +24,14 @@ end
 -- ResetToDefault
 function C.Buff.ResetToDefault()
 	wipe(BuffDB)
-	C.Buff.LoadSettings()
 end
 
 -- BuildGUI
 function C.Buff.BuildGUI()
 	if Modules then
 		Modules["Buff"] =  {
-			type = "group",
-			name = "BUFF",
+			type = "group", order = 4,
+			name = "增益效果",
 			args = {
 				IconSize = {
 					type = "input",

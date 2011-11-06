@@ -5,9 +5,6 @@ local Version = 1026
 
 -- SetDefault
 local function SetDefault()
-	for _, value in pairs({ActionBarDB, BuffDB, NameplateDB, ReminderDB, ThreatDB, TooltipDB, UnitFrameDB, MoveHandleDB, SkinDB}) do
-		wipe(value)
-	end
 	SlashCmdList.AutoSet()
 	SoraVersion = Version
 	-- 聊天频道职业染色
@@ -43,9 +40,7 @@ Modules = {
 		name = "恢复默认设置",
 		order = 1,
 		func = function()
-			for _, value in pairs(C) do
-				value.ResetToDefault()
-			end
+			for _, value in pairs(C) do value.ResetToDefault() end
 			SetDefault()
 			ReloadUI()
 		end
@@ -56,9 +51,7 @@ Modules = {
 		order = 2,
 		func = function()
 			if not UnitAffectingCombat("player") then
-				for _, value in pairs(MoveHandle) do
-					value:Show()
-				end
+				for _, value in pairs(MoveHandle) do value:Show() end
 			end		
 		end,
 	},
@@ -68,9 +61,7 @@ Modules = {
 		order = 3,
 		func = function()
 			if not UnitAffectingCombat("player") then
-				for _, value in pairs(MoveHandle) do
-					value:Hide()
-				end
+				for _, value in pairs(MoveHandle) do value:Hide() end
 			end
 		end,
 	},
@@ -84,7 +75,7 @@ Modules = {
 
 -- ShowConfig
 local function ShowConfig()
-	LibStub("AceConfigDialog-3.0"):SetDefaultSize("Sora's Config", 760, 500)
+	LibStub("AceConfigDialog-3.0"):SetDefaultSize("Sora's Config", 780, 550)
 	LibStub("AceConfigDialog-3.0"):Open("Sora's Config")
 end
 

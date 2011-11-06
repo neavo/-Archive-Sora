@@ -1,7 +1,9 @@
 ﻿-- Engines
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("RaidFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -241,7 +243,8 @@ local function BuildRaidFrame(self, ...)
 	self.Health.PostUpdate = PostUpdateRaidFrame
 end
 
-if UnitFrameDB.ShowRaidFrame then
+function Module:OnInitialize()
+	if not UnitFrameDB.ShowRaidFrame then return end
 	-- Hide the Blizzard raid frames
 	CompactRaidFrameManager:UnregisterAllEvents()
 	CompactRaidFrameManager.Show = function() end

@@ -20,14 +20,13 @@ end
 -- ResetToDefault
 function C.Tooltip.ResetToDefault()
 	wipe(TooltipDB)
-	C.Tooltip.LoadSettings()
 end
 
 -- BuildGUI
 function C.Tooltip.BuildGUI()
 	if Modules then
 		Modules["Tooltip"] =  {
-			type = "group",
+			type = "group", order = 3,
 			name = "鼠标提示",
 			args = {
 				Cursor = {

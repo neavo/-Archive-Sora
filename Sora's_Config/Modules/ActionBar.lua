@@ -24,14 +24,13 @@ end
 -- ResetToDefault
 function C.ActionBar.ResetToDefault()
 	wipe(ActionBarDB)
-	C.ActionBar.LoadSettings()
 end
 
 -- BuildGUI
 function C.ActionBar.BuildGUI()
 	if Modules then
 		Modules["ActionBar"] =  {
-			type = "group",
+			type = "group", order = 1,
 			name = "动作条",
 			args = {
 				MainBarLayout = {

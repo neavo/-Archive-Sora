@@ -19,15 +19,14 @@ end
 -- ResetToDefault
 function C.Skin.ResetToDefault()
 	wipe(SkinDB)
-	C.Skin.LoadSettings()
 end
 
 -- BuildGUI
 function C.Skin.BuildGUI()
 	if Modules then
 		Modules["Skin"] =  {
-			type = "group",
-			name = "皮肤",
+			type = "group", order = 8,
+			name = "界面皮肤",
 			args = {
 				EnableDBMSkin = {
 					type = "toggle",

@@ -1,7 +1,9 @@
 ﻿-- Engines
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("BossFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -286,7 +288,8 @@ local function BuildBossFrame(self, ...)
 	BuildCombatIcon(self)
 end
 
-if UnitFrameDB.ShowBoss then
+function Module:OnInitialize()
+	if not UnitFrameDB.ShowBoss then return end
 	oUF:RegisterStyle("SoraBoss", BuildBossFrame)
 	oUF:SetActiveStyle("SoraBoss")
 	DB.BossFrame = {}

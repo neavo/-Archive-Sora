@@ -1,7 +1,9 @@
 ﻿-- Engines
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("PetFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -78,7 +80,8 @@ local function BuildPetFrame(self, ...)
 
 end
 
-if UnitFrameDB.ShowPet then
+function Module:OnInitialize()
+	if not (UnitFrameDB.ShowPet and UnitFrameDB.ShowPlayerFrame)then return end
 	oUF:RegisterStyle("SoraPet", BuildPetFrame)
 	oUF:SetActiveStyle("SoraPet")
 	DB.PetFrame = oUF:Spawn("pet")

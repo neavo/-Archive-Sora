@@ -1,7 +1,9 @@
 ﻿-- Engines
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("FocusTargetFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -78,7 +80,8 @@ local function BuildFocusTargetFrame(self, ...)
 
 end
 
-if UnitFrameDB.ShowFocusTarget then
+function Module:OnInitialize()
+	if not (UnitFrameDB.ShowFocusFrame and UnitFrameDB.ShowFocusTarget) then return end
 	oUF:RegisterStyle("SoraFocusTarget", BuildFocusTargetFrame)
 	oUF:SetActiveStyle("SoraFocusTarget")
 	DB.FocusTargetFrame = oUF:Spawn("focustarget")

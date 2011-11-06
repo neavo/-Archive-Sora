@@ -25,15 +25,14 @@ end
 -- ResetToDefault
 function C.Reminder.ResetToDefault()
 	wipe(ReminderDB)
-	C.Reminder.LoadSettings()
 end
 
 -- BuildGUI
 function C.Reminder.BuildGUI()
 	if Modules then
 		Modules["Reminder"] =  {
-			type = "group",
-			name = "增益缺失提醒",
+			type = "group", order = 7,
+			name = "缺失提醒",
 			args = {
 				Header_1 = {
 					type = "header",

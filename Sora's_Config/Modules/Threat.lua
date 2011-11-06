@@ -22,15 +22,14 @@ end
 -- ResetToDefault
 function C.Threat.ResetToDefault()
 	wipe(ThreatDB)
-	C.Threat.LoadSettings()
 end
 
 -- BuildGUI
 function C.Threat.BuildGUI()
 	if Modules then
 		Modules["Threat"] =  {
-			type = "group",
-			name = "仇恨条",
+			type = "group", order = 5,
+			name = "仇恨监视",
 			args = {
 				ThreatBarWidth = {
 					type = "input",

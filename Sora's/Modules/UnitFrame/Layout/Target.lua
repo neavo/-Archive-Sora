@@ -1,7 +1,9 @@
 ﻿-- Engines
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("TargetFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -299,7 +301,10 @@ local function BuildTargetFrame(self, ...)
 	BuildCombatIcon(self)
 end
 
-oUF:RegisterStyle("SoraTarget", BuildTargetFrame)
-oUF:SetActiveStyle("SoraTarget")
-DB.TargetFrame = oUF:Spawn("target")
-MoveHandle.TargetFrame = S.MakeMoveHandle(DB.TargetFrame, "目标框体", "TargetFrame")
+function Module:OnInitialize()
+	if not UnitFrameDB.ShowTargetFrame then return end
+	oUF:RegisterStyle("SoraTarget", BuildTargetFrame)
+	oUF:SetActiveStyle("SoraTarget")
+	DB.TargetFrame = oUF:Spawn("target")
+	MoveHandle.TargetFrame = S.MakeMoveHandle(DB.TargetFrame, "目标框体", "TargetFrame")
+end
