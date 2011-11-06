@@ -12,6 +12,20 @@ function S.MakeShadow(Parent, Size)
 	return Shadow
 end
 
+function S.MakeBG(Parent, Size)
+	local BG = CreateFrame("Frame", nil, Parent)
+	BG:SetFrameLevel(0)
+	BG:SetPoint("TOPLEFT", -Size, Size)
+	BG:SetPoint("BOTTOMRIGHT", Size, -Size)
+	BG:SetBackdrop({
+		bgFile = DB.bgFile, insets = {left = Size, right = Size, top = Size, bottom = Size},
+		edgeFile = DB.GlowTex, edgeSize = Size-1,
+	})
+	BG:SetBackdropColor(0, 0, 0, 0.6)
+	BG:SetBackdropBorderColor(0, 0, 0, 1)
+	return BG
+end
+
 function S.MakeTexShadow(Parent, Anchor, Size)
 	local Shadow = CreateFrame("Frame", nil, Parent)
 	Shadow:SetPoint("TOPLEFT", Anchor, -Size, Size)
@@ -97,8 +111,8 @@ end
 
 local function CreateBD(f, a)
 	f:SetBackdrop({
-		bgFile = DB.bgFile, 
-		edgeFile = DB.bgFile, 
+		bgFile = "Interface\\ChatFrame\\ChatFrameBackground", 
+		edgeFile = "Interface\\ChatFrame\\ChatFrameBackground", 
 		edgeSize = 1, 
 	})
 	f:SetBackdropColor(0, 0, 0, a or alpha)
@@ -135,7 +149,7 @@ local function StopGlow(f)
 	f.glow:SetScript("OnUpdate", nil)
 	f.glow:SetAlpha(0)
 end
-local function Reskin(f)
+function S.Reskin(f)
 	f:SetNormalTexture("")
 	f:SetHighlightTexture("")
 	f:SetPushedTexture("")
@@ -156,7 +170,7 @@ local function Reskin(f)
 	local tex = f:CreateTexture(nil, "BACKGROUND")
 	tex:SetPoint("TOPLEFT")
 	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(DB.bgFile)
+	tex:SetTexture("Interface\\ChatFrame\\ChatFrameBackground")
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
 
 	f.glow = CreateFrame("Frame", nil, f)
@@ -174,7 +188,7 @@ local function Reskin(f)
 end
 function S.MakeButton(Parent)
 	local Button = CreateFrame("Button", nil, Parent)
-	Reskin(Button)
+	S.Reskin(Button)
 	return Button
 end
 
