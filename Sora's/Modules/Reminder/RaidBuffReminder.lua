@@ -53,9 +53,7 @@ local function Init()
 		Temp.Flag.Border = CreateFrame("Frame", nil, Temp)
 		Temp.Flag.Border:SetPoint("TOPLEFT", Temp.Flag, "TOPLEFT", -1, 1)
 		Temp.Flag.Border:SetPoint("BOTTOMRIGHT", Temp.Flag, "BOTTOMRIGHT", 1, -1)
-		Temp.Flag.Border:SetBackdrop({
-			edgeFile = DB.Solid, edgeSize = 1,
-		})
+		Temp.Flag.Border:SetBackdrop({edgeFile = DB.Solid, edgeSize = 1})
 		Temp.Flag.Border:SetBackdropBorderColor(0, 0, 0, 1)
 
 		Temp:SetAlpha(0)	

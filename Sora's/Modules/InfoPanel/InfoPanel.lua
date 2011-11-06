@@ -1,5 +1,8 @@
 -- Engines
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("InfoPanel")
+
 local CurrencyTable = {}
 local Slots = {
 	[1] = {1, "头部", 1000},
@@ -27,11 +30,6 @@ local tokens = {
 	{402, 10},	 -- Chef's Award 
 	{416, 300}, -- Mark of the World Tree
 }
-
--- InfoPanelPos
-local InfoPanelPos = CreateFrame("Frame", nil, UIParent)
-InfoPanelPos:SetSize(480, 20)
-MoveHandle.InfoPanel = S.MakeMoveHandle(InfoPanelPos, "信息面板", "InfoPanel")
 
 -- BuildClock
 local function BuildClock()
@@ -279,41 +277,37 @@ end
 
 -- BuildCurrency
 local function BuildCurrencyTable(Anchor)
-	local Event = CreateFrame("Frame")
-	Event:RegisterEvent("PLAYER_LOGIN")	
-	Event:SetScript("OnEvent", function(self)
-		for _, value in ipairs(tokens) do
-			local CurrencyID, CurrencyMax = unpack(value)
-			local name, amount, icon = GetCurrencyInfo(CurrencyID)
-			if name and amount > 0 then
-				local StatusBar = CreateFrame("StatusBar", nil, UIParent)
-				StatusBar:SetHeight(6)	
-				StatusBar:SetWidth(120)
-				StatusBar:SetStatusBarTexture(DB.Statusbar)
-				StatusBar:SetMinMaxValues(0, CurrencyMax)
-				StatusBar:SetStatusBarColor(0, 0.4, 1, 0.6)
-				StatusBar.Shaodw = S.MakeShadow(StatusBar, 3)
-				StatusBar.Text = S.MakeFontString(StatusBar, 10)
-				StatusBar.Text:SetPoint("CENTER")
-				StatusBar.Icon = StatusBar:CreateTexture(nil, "OVERLAY")
-				StatusBar.Icon:SetPoint("RIGHT", StatusBar, "LEFT", -5, 0)
-				StatusBar.Icon:SetWidth(16)
-				StatusBar.Icon:SetHeight(16)
-				StatusBar.Icon.Shaodow = S.MakeTexShadow(StatusBar, StatusBar.Icon, 3)
-				StatusBar.CurrencyID = CurrencyID
-				StatusBar.CurrencyMax = CurrencyMax
-				StatusBar:Hide()
-				tinsert(CurrencyTable, StatusBar)
-			end
+	for _, value in ipairs(tokens) do
+		local CurrencyID, CurrencyMax = unpack(value)
+		local name, amount, icon = GetCurrencyInfo(CurrencyID)
+		if name and amount > 0 then
+			local StatusBar = CreateFrame("StatusBar", nil, UIParent)
+			StatusBar:SetHeight(6)	
+			StatusBar:SetWidth(120)
+			StatusBar:SetStatusBarTexture(DB.Statusbar)
+			StatusBar:SetMinMaxValues(0, CurrencyMax)
+			StatusBar:SetStatusBarColor(0, 0.4, 1, 0.6)
+			StatusBar.Shaodw = S.MakeShadow(StatusBar, 3)
+			StatusBar.Text = S.MakeFontString(StatusBar, 10)
+			StatusBar.Text:SetPoint("CENTER")
+			StatusBar.Icon = StatusBar:CreateTexture(nil, "OVERLAY")
+			StatusBar.Icon:SetPoint("RIGHT", StatusBar, "LEFT", -5, 0)
+			StatusBar.Icon:SetWidth(16)
+			StatusBar.Icon:SetHeight(16)
+			StatusBar.Icon.Shaodow = S.MakeTexShadow(StatusBar, StatusBar.Icon, 3)
+			StatusBar.CurrencyID = CurrencyID
+			StatusBar.CurrencyMax = CurrencyMax
+			StatusBar:Hide()
+			tinsert(CurrencyTable, StatusBar)
 		end
-		for key, value in ipairs(CurrencyTable) do
-			if key == 1 then
-				value:SetPoint("TOP", Anchor, "BOTTOM", 8, -30)
-			else
-				value:SetPoint("TOP", CurrencyTable[key-1], "BOTTOM", 0, -20)
-			end
+	end
+	for key, value in ipairs(CurrencyTable) do
+		if key == 1 then
+			value:SetPoint("TOP", Anchor, "BOTTOM", 8, -30)
+		else
+			value:SetPoint("TOP", CurrencyTable[key-1], "BOTTOM", 0, -20)
 		end
-	end)
+	end
 end
 local function UpdateCurrencyData()
 	for _, value in ipairs(CurrencyTable) do
@@ -360,8 +354,13 @@ local function BuildCurrency(Anchor)
 	return StatusBar
 end
 
-local Clock = BuildClock()
-local Memory = BuildMemory(Clock)
-local Ping = BuildPing(Memory)
-local Durability = BuildDurability(Clock)
-local Currency = BuildCurrency(Durability)
+function Module:OnEnable()
+	local InfoPanelPos = CreateFrame("Frame", nil, UIParent)
+	InfoPanelPos:SetSize(480, 20)
+	MoveHandle.InfoPanel = S.MakeMoveHandle(InfoPanelPos, "信息面板", "InfoPanel")
+	local Clock = BuildClock()
+	local Memory = BuildMemory(Clock)
+	local Ping = BuildPing(Memory)
+	local Durability = BuildDurability(Clock)
+	local Currency = BuildCurrency(Durability)
+end

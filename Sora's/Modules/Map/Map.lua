@@ -1,21 +1,7 @@
 ﻿-- Engines
-local S, _, _, DB = unpack(select(2, ...))
-
-WorldMapFrame:SetFrameStrata("HIGH")
-WorldMapFrame.BG = CreateFrame("Frame", nil, WorldMapFrame)
-WorldMapFrame.BG:SetFrameLevel(0)
-WorldMapFrame.BG:SetPoint("TOPLEFT", -4, 4)
-WorldMapFrame.BG:SetPoint("BOTTOMRIGHT", 4, -4)
-WorldMapFrame.BG:SetBackdrop({
-	bgFile = DB.bgFile, insets = {left = 5, right = 5, top = 5, bottom = 5},
-	edgeFile = DB.GlowTex, edgeSize = 4
-})
-WorldMapFrame.BG:SetBackdropColor(0, 0, 0, 0.8)
-WorldMapFrame.BG:SetBackdropBorderColor(0, 0, 0, 1)
-
-WorldMapZoomOutButton:SetPoint("LEFT", WorldMapZoneDropDown, "RIGHT", 0, 4)
-WorldMapLevelUpButton:SetPoint("TOPLEFT", WorldMapLevelDropDown, "TOPRIGHT", -2, 8)
-WorldMapLevelDownButton:SetPoint("BOTTOMLEFT", WorldMapLevelDropDown, "BOTTOMRIGHT", -2, 2)
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("Map")
 
 local function SmallSkin()
 	WorldMapFrame.BG:ClearAllPoints()
@@ -26,7 +12,6 @@ local function SmallSkin()
 	WorldMapLevelDropDown:ClearAllPoints()
 	WorldMapLevelDropDown:SetPoint("TOPLEFT", WorldMapDetailFrame, "TOPLEFT", -17, 27)
 end
-
 local function LargeSkin()
 	if not InCombatLockdown() then
 		WorldMapFrame:EnableMouse(false)
@@ -40,7 +25,6 @@ local function LargeSkin()
 	WorldMapFrame.BG:SetPoint("TOPLEFT", WorldMapDetailFrame, -25, 70)
 	WorldMapFrame.BG:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, 25, -30)
 end
-
 local function QuestSkin()
 	if not InCombatLockdown() then
 		WorldMapFrame:EnableMouse(false)
@@ -54,7 +38,6 @@ local function QuestSkin()
 	WorldMapFrame.BG:SetPoint("TOPLEFT", WorldMapDetailFrame, -25, 70)
 	WorldMapFrame.BG:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, 330, -240)  
 end			
-
 local function FixSkin()
 	for i = 1, WorldMapFrame:GetNumRegions() do
 		local region = select(i, WorldMapFrame:GetRegions())
@@ -75,18 +58,27 @@ local function FixSkin()
 	end	
 end
 
-WorldMapFrame:HookScript("OnShow", FixSkin)
-hooksecurefunc("WorldMapFrame_SetFullMapView", LargeSkin)
-hooksecurefunc("WorldMapFrame_SetQuestMapView", QuestSkin)
-hooksecurefunc("WorldMap_ToggleSizeUp", FixSkin)
+function Module:OnEnable()
+	WorldMapFrame:SetFrameStrata("HIGH")
+	WorldMapFrame.BG = CreateFrame("Frame", nil, WorldMapFrame)
+	WorldMapFrame.BG:SetFrameLevel(0)
+	WorldMapFrame.BG:SetPoint("TOPLEFT", -4, 4)
+	WorldMapFrame.BG:SetPoint("BOTTOMRIGHT", 4, -4)
+	WorldMapFrame.BG:SetBackdrop({
+		bgFile = DB.bgFile, insets = {left = 5, right = 5, top = 5, bottom = 5},
+		edgeFile = DB.GlowTex, edgeSize = 4
+	})
+	WorldMapFrame.BG:SetBackdropColor(0, 0, 0, 0.8)
+	WorldMapFrame.BG:SetBackdropBorderColor(0, 0, 0, 1)
 
-WorldMapFrame:RegisterEvent("PLAYER_LOGIN")
-WorldMapFrame:HookScript("OnEvent", function(self, event)
-	if event == "PLAYER_LOGIN" then
-		if not GetCVarBool("miniWorldMap") then ToggleFrame(WorldMapFrame) end
-	end
-end)
+	WorldMapZoomOutButton:SetPoint("LEFT", WorldMapZoneDropDown, "RIGHT", 0, 4)
+	WorldMapLevelUpButton:SetPoint("TOPLEFT", WorldMapLevelDropDown, "TOPRIGHT", -2, 8)
+	WorldMapLevelDownButton:SetPoint("BOTTOMLEFT", WorldMapLevelDropDown, "BOTTOMRIGHT", -2, 2)
 
+	WorldMapFrame:HookScript("OnShow", FixSkin)
+	hooksecurefunc("WorldMapFrame_SetFullMapView", LargeSkin)
+	hooksecurefunc("WorldMapFrame_SetQuestMapView", QuestSkin)
+	hooksecurefunc("WorldMap_ToggleSizeUp", FixSkin)
 
-
-
+	if not GetCVarBool("miniWorldMap") then ToggleFrame(WorldMapFrame) end
+end

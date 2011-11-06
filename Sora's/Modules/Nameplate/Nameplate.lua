@@ -1,26 +1,15 @@
 ﻿-- Engines
-local _, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("Nameplate")
+local numChildren, frames = -1, {}
 
-local numChildren = -1
-local frames = {}
-
--- format numbers
 function round(val, idp)
 	if idp and idp > 0 then
 		local mult = 10^idp
 		return math.floor(val * mult + 0.5) / mult
 	end
 	return math.floor(val + 0.5)
-end
-
-function SVal(val)
-	if val >= 1e6 then
-		return round(val/1e6, 1).."m"
-	elseif val >= 1e3 then
-		return round(val/1e3, 1).."k"
-	else
-		return val
-	end
 end
 
 local function QueueObject(parent, object)
@@ -135,7 +124,7 @@ local function UpdateCastbar(frame)
 	end
 end	
 
-local OnValueChanged = function(self)
+local function OnValueChanged(self)
 	if self.needFix then
 		UpdateCastbar(self)
 		self.needFix = nil
@@ -148,7 +137,7 @@ local OnValueChanged = function(self)
 	end 
 end
 
-local OnSizeChanged = function(self)
+local function OnSizeChanged(self)
 	self.needFix = true
 end
 
@@ -244,12 +233,10 @@ local function SkinObjects(frame)
 	frames[frame] = true
 end
 
-local select = select
 local function HookFrames(...)
 	for index = 1, select("#", ...) do
 		local frame = select(index, ...)
 		local region = frame:GetRegions()
-
 		if(not frames[frame] and (frame:GetName() and frame:GetName():find("NamePlate%d")) and region and region:GetObjectType() == "Texture" ) then
 			SkinObjects(frame)
 			frame.region = region
@@ -257,40 +244,36 @@ local function HookFrames(...)
 	end
 end
 
--- Event
-local Event = CreateFrame("Frame")
-Event:RegisterEvent("PLAYER_LOGIN")
-Event:RegisterEvent("PLAYER_REGEN_ENABLED")
-Event:RegisterEvent("PLAYER_REGEN_DISABLED")
-Event:SetScript("OnEvent", function(self, event, ...)
-	if event == "PLAYER_LOGIN" then
-		SetCVar("bloatthreat", 0)
-		SetCVar("bloattest", 0)
-		SetCVar("bloatnameplates", 0.0)
-		SetCVar("ShowClassColorInNameplate", 1)
-	elseif NameplateDB.CombatToggle and event == "PLAYER_REGEN_ENABLED" then
-		SetCVar("nameplateShowEnemies", 0)
-	elseif NameplateDB.CombatToggle and event == "PLAYER_REGEN_DISABLED" then
-		SetCVar("nameplateShowEnemies", 1)
-	end
-end)
-Event:SetScript("OnUpdate", function(self, elapsed)
-	if WorldFrame:GetNumChildren() ~= numChildren then
-		numChildren = WorldFrame:GetNumChildren()
-		HookFrames(WorldFrame:GetChildren())
-	end
+-- OnInitialize
+function Module:OnInitialize()
+	SetCVar("bloatthreat", 0)
+	SetCVar("bloattest", 0)
+	SetCVar("bloatnameplates", 0.0)
+	SetCVar("ShowClassColorInNameplate", 1)
+end
 
-	if self.elapsed and self.elapsed > 0.1 then
-		for frame in pairs(frames) do
-			UpdateThreat(frame)
+-- OnEnable
+function Module:OnEnable()
+	local Event = CreateFrame("Frame")
+	Event:RegisterEvent("PLAYER_REGEN_ENABLED")
+	Event:RegisterEvent("PLAYER_REGEN_DISABLED")
+	Event:SetScript("OnEvent", function(self, event, ...)
+		if NameplateDB.CombatToggle and event == "PLAYER_REGEN_ENABLED" then
+			SetCVar("nameplateShowEnemies", 0)
+		elseif NameplateDB.CombatToggle and event == "PLAYER_REGEN_DISABLED" then
+			SetCVar("nameplateShowEnemies", 1)
 		end
-
-		self.elapsed = 0
-	else
-		self.elapsed = (self.elapsed or 0) + elapsed
-	end
-end)
-
-
-
-
+	end)
+	Event:SetScript("OnUpdate", function(self, elapsed)
+		if WorldFrame:GetNumChildren() ~= numChildren then
+			numChildren = WorldFrame:GetNumChildren()
+			HookFrames(WorldFrame:GetChildren())
+		end
+		if self.elapsed and self.elapsed > 0.1 then
+			for frame in pairs(frames) do UpdateThreat(frame) end
+			self.elapsed = 0
+		else
+			self.elapsed = (self.elapsed or 0) + elapsed
+		end
+	end)
+end

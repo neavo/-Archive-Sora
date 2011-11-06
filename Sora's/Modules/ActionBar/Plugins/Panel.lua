@@ -1,7 +1,8 @@
 ﻿-- Engines
-local S, _, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+local Module = Sora:NewModule("ActionBarPanel")
 
--- BuildExpBar
 local function BuildExpBar()
 	local Bar = CreateFrame("StatusBar", nil, UIParent)
 	Bar:SetStatusBarTexture(DB.Statusbar)
@@ -68,8 +69,6 @@ local function BuildExpBar()
 		end
 	end)
 end
-
--- BuildExtraBarButton
 local function BuildExtraBarButton()
 	local LeftButton = S.MakeButton(UIParent)
 	LeftButton:SetSize(ActionBarDB.ButtonSize, 9)
@@ -89,5 +88,9 @@ local function BuildExtraBarButton()
 	RightButton:SetScript("OnClick", function(self) S.RightBarFade() end)
 end
 
-BuildExpBar()
-BuildExtraBarButton()
+function Module:OnEnable()
+	BuildExpBar()
+	BuildExtraBarButton()
+end
+
+
