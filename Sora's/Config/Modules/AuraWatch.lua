@@ -11,38 +11,138 @@ function C.AuraWatch.LoadSettings()
 		["DRUID"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 节能施法
 					{AuraID = 16870, UnitID = "player"}, 
 					-- 自然之赐
@@ -64,7 +164,7 @@ function C.AuraWatch.LoadSettings()
 				}, 
 			}, 
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", IconSize = 20, BarWidth = 175, 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
@@ -96,40 +196,140 @@ function C.AuraWatch.LoadSettings()
 		["HUNTER"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 治疗宠物
-					{AuraID =   136, UnitID = "pet"}, 
+					{AuraID =   136, UnitID =    "pet"}, 
 					-- 急速射击
 					{AuraID =  3045, UnitID = "player"}, 
 					-- 野兽之心
@@ -159,7 +359,7 @@ function C.AuraWatch.LoadSettings()
 				}, 
 			}, 
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", 
 				IconSize = 20, BarWidth = 175, 
@@ -180,73 +380,193 @@ function C.AuraWatch.LoadSettings()
 		["MAGE"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
+					-- 烈焰风暴
+					{AuraID =  2120, UnitID = "player"},
 					-- 奥术强化
-					{AuraID = 12042, UnitID = "player"}, 
+					{AuraID = 12042, UnitID = "player"},
 					-- 唤醒
-					{AuraID = 12051, UnitID = "player"}, 
+					{AuraID = 12051, UnitID = "player"},
+					-- 节能施法
+					{AuraID = 12536, UnitID = "player"},
+					-- 龙息术
+					{AuraID = 31661, UnitID = "player"},
+					-- 隐形术
+					{AuraID = 32612, UnitID = "player"},
 					-- 奥术冲击
-					{AuraID = 36032, UnitID = "player"}, 				
+					{AuraID = 36032, UnitID = "player"},
+					-- 咒术吸收
+					{AuraID = 44413, UnitID = "player"},
 					-- 寒冰指
-					{AuraID = 44544, UnitID = "player"}, 
+					{AuraID = 44544, UnitID = "player"},
 					-- 法术连击
-					{AuraID = 48108, UnitID = "player"}, 
-					-- 冰冷智慧
-					{AuraID = 57761, UnitID = "player"}, 
-					-- 冲击(等级1)
-					{AuraID = 64343, UnitID = "player"}, 
-					-- 奥术飞弹!
-					{AuraID = 79683, UnitID = "player"}, 
+					{AuraID = 48108, UnitID = "player"},
+					-- 镜像
+					{AuraID = 55342, UnitID = "player"},
+					-- 专注魔法
+					{AuraID = 54648, UnitID = "player"},
+					-- 火球！
+					{AuraID = 57761, UnitID = "player"},
+					-- 冲击
+					{AuraID = 64343, UnitID = "player"},
+					-- 奥术飞弹！
+					{AuraID = 79683, UnitID = "player"},
 					-- 灸灼
-					{AuraID = 87023, UnitID = "player"}, 
+					{AuraID = 87023, UnitID = "player"},	
+					-- 强化法力宝石
+					{AuraID = 83098, UnitID = "player"},
 				}, 
 			}, 
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", 
 				IconSize = 20, BarWidth = 175 , 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
 				List = {		
 					-- 点燃
-					{AuraID = 12654 , UnitID = "target", Caster = "player"}, 
-					-- 临界炽焰
-					{AuraID = 22959 , UnitID = "target", Caster = "player"}, 
+					{AuraID = 12654 ,UnitID = "target", Caster = "player"},
+					-- 强化灼烧
+					{AuraID = 22959 ,UnitID = "target", Caster = "player"},
 					-- 减速
-					{AuraID = 31589 , UnitID = "target", Caster = "player"}, 
+					{AuraID = 31589 ,UnitID = "target", Caster = "player"},
+					-- 深度冻结
+					{AuraID = 44572, UnitID = "target", Caster = "player"},
 					-- 活动炸弹
-					{AuraID = 44457 , UnitID = "target", Caster = "player"}, 
+					{AuraID = 44457 ,UnitID = "target", Caster = "player"},
+					-- 燃烧
+					{AuraID = 83853, UnitID = "target", Caster = "player"},
 				}, 
 			}, 
 		}, 
@@ -254,38 +574,138 @@ function C.AuraWatch.LoadSettings()
 		["WARRIOR"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 盾墙(防御姿态)
 					{AuraID =   871, UnitID = "player"}, 
 					-- 怒火中烧
@@ -339,14 +759,14 @@ function C.AuraWatch.LoadSettings()
 				}, 
 			}, 	
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", IconSize = 20, BarWidth = 175, 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
 				List = {
 					-- 破甲
 					{AuraID = 58567, UnitID = "target", Caster = "player"}, 
-					-- 撕裂(战斗, 防御姿态)
+					-- 撕裂
 					{AuraID = 94009, UnitID = "target", Caster = "player"}, 
 				}, 
 			}, 
@@ -355,38 +775,138 @@ function C.AuraWatch.LoadSettings()
 		["SHAMAN"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 58},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 25}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 闪电之盾
 					{AuraID =   324, UnitID = "player"}, 
 					-- 萨满之怒
@@ -402,7 +922,7 @@ function C.AuraWatch.LoadSettings()
 				}, 
 			}, 
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", IconSize = 20, BarWidth = 175, 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
@@ -424,38 +944,138 @@ function C.AuraWatch.LoadSettings()
 		["PALADIN"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 圣佑术
 					{AuraID =   498, UnitID = "player"}, 
 					-- 圣盾术
@@ -497,7 +1117,7 @@ function C.AuraWatch.LoadSettings()
 				}, 
 			}, 
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", IconSize = 20, BarWidth = 175, 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
@@ -523,38 +1143,138 @@ function C.AuraWatch.LoadSettings()
 		["PRIEST"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 渐隐
 					{AuraID =  586, UnitID = "player"}, 
 					-- 心灵专注
@@ -594,7 +1314,7 @@ function C.AuraWatch.LoadSettings()
 				}, 
 			}, 
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", IconSize = 20, BarWidth = 175, 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
@@ -620,38 +1340,138 @@ function C.AuraWatch.LoadSettings()
 		["WARLOCK"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
 					{AuraID =   408, UnitID = "player"},
 					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
 					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 暗影冥思
 					{AuraID = 17941, UnitID = "player"}, 
 					-- 反冲
@@ -671,7 +1491,7 @@ function C.AuraWatch.LoadSettings()
 				}, 
 			}, 
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", IconSize = 20, BarWidth = 175, 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
@@ -709,42 +1529,146 @@ function C.AuraWatch.LoadSettings()
 		["ROGUE"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 佯攻
 					{AuraID =  1966, UnitID = "player"}, 
 					-- 切割
 					{AuraID =  5171, UnitID = "player"}, 
+					-- 冲动
+					{AuraID = 13750, UnitID = "player"},
+					-- 剑刃乱舞
+					{AuraID = 13877, UnitID = "player"},
 					-- 冷血
 					{AuraID = 14177, UnitID = "player"}, 
 					-- 毒伤
@@ -753,8 +1677,6 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 57934, UnitID = "player"}, 			
 					-- 灭绝
 					{AuraID = 58427, UnitID = "player"}, 
-					-- 嫁祸诀窍
-					{AuraID = 59628, UnitID = "player"}, 
 					-- 养精蓄锐
 					{AuraID = 73651, UnitID = "player"}, 
 					-- 致命冲动
@@ -768,7 +1690,7 @@ function C.AuraWatch.LoadSettings()
 				}
 			}, 
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", IconSize = 20, BarWidth = 175, 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
@@ -797,38 +1719,138 @@ function C.AuraWatch.LoadSettings()
 		["DEATHKNIGHT"] = {
 			{
 				Name = "玩家Debuff", 
-				Direction = "RIGHT", Interval = 4, 
-				Mode = "ICON", IconSize = 54, 
+				Direction = "RIGHT", Interval = 10, 
+				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
 				List = {
-					-- 变羊
-					{AuraID =   118, UnitID = "player"}, 
-					-- 制裁之锤
-					{AuraID =   853, UnitID = "player"}, 
+					-- 变形术
+					{AuraID =   118, UnitID = "player"},
 					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
-					-- 撕扯
-					{AuraID = 47481, UnitID = "player"}, 
-					-- 沉默
-					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
+					{AuraID =   408, UnitID = "player"},
+					-- 制裁之锤
+					{AuraID =   853, UnitID = "player"},
 					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
-				}, 
-			}, 
+					{AuraID =  1715, UnitID = "player"},
+					-- 恐惧嚎叫
+					{AuraID =  5484, UnitID = "player"},
+					-- 恐惧
+					{AuraID =  5782, UnitID = "player"},
+					-- 心灵尖啸
+					{AuraID =  8122, UnitID = "player"},
+					-- 沉默
+					{AuraID = 15487, UnitID = "player"},
+					-- 脚踢 - 沉默
+					{AuraID = 18425, UnitID = "player"},
+					-- 法术反制 - 沉默
+					{AuraID = 18469, UnitID = "player"},
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"},
+					-- 震荡波
+					{AuraID = 46968, UnitID = "player"},
+					-- 绞袭
+					{AuraID = 47476, UnitID = "player"},
+					-- 撕扯
+					{AuraID = 47481, UnitID = "player"},
+					-- 沉默 - 强化法术反制
+					{AuraID = 55021, UnitID = "player"},
+					-- 心灵惊骇
+					{AuraID = 64058, UnitID = "player"},
+					-- 罪与罚
+					{AuraID = 87204, UnitID = "player"},
+					-- 沉默 - 强化脚踢
+					{AuraID = 86759, UnitID = "player"},
+					-- 寒冰锁链
+					{AuraID = 45524, UnitID = "player"},
+					-- 爆裂灰烬
+					{AuraID = 79339, UnitID = "player"},
+					-- 闪电魔棒
+					{AuraID = 83099, UnitID = "player"},
+					-- 噬体魔法
+					{AuraID = 86622, UnitID = "player"},
+					-- 暮光陨星
+					{AuraID = 88518, UnitID = "player"},
+					-- 熔岩打击
+					{AuraID = 98492, UnitID = "player"},
+					-- 灼熱種子
+					{AuraID = 98450, UnitID = "player"},
+					-- 受到折磨
+					{AuraID = 99257, UnitID = "player"},
+					-- 凝視
+					{AuraID = 99849, UnitID = "player"},
+					-- 燃燒之球
+					{AuraID = 100210, UnitID = "player"},
+					-- 折磨
+					{AuraID = 100230, UnitID = "player"},
+				},
+			},
 			{
-				Name = "玩家Buff", 
+				Name = "玩家重要增益",
+				Direction = "RIGHT", Interval = 6, 
+				Mode = "ICON", IconSize = 30, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				List = {
+					-- 邪恶狂热
+					{AuraID =  8699, UnitID = "player"},
+					-- 能量灌注
+					{AuraID = 10060, UnitID = "player"},
+					-- 英勇
+					{AuraID = 32182, UnitID = "player"}, 
+					-- 痛苦压制
+					{AuraID = 33206, UnitID = "player"},
+					-- 反魔法领域
+					{AuraID = 50461, UnitID = "player"},
+					-- 神性犧牲
+					{AuraID = 64205, UnitID = "player"},
+					-- 能量洪流
+					{AuraID = 74241, UnitID = "player"},
+					-- 山崩
+					{AuraID = 74245, UnitID = "player"},
+					-- 亮纹
+					{AuraID = 75170, UnitID = "player"},
+					-- 火山能量
+					{AuraID = 79476, UnitID = "player"},
+					-- 托维尔敏捷
+					{AuraID = 79633, UnitID = "player"},
+					-- 傀儡的力量
+					{AuraID = 79634, UnitID = "player"},
+					-- 时间扭曲
+					{AuraID = 80353, UnitID = "player"},
+					-- 真言术：障
+					{AuraID = 81781, UnitID = "player"},
+					-- 火山毁灭
+					{AuraID = 89091, UnitID = "player"},
+					-- 远古狂乱
+					{AuraID = 90355, UnitID = "player"},
+					-- 灾难魔法
+					{AuraID = 92318, UnitID = "player"},
+					-- 吞噬
+					{AuraID = 96911, UnitID = "player"},
+					-- 神经元弹簧
+					{AuraID = 96230, UnitID = "player"},
+					-- 电荷
+					{AuraID = 96890, UnitID = "player"},
+					-- 火焰之王的印记
+					{AuraID = 97007, UnitID = "player"},
+					-- 火焰精粹
+					{AuraID = 97008, UnitID = "player"},
+					-- 上古化石种子
+					{AuraID = 97009, UnitID = "player"},
+					-- 灵魂残片
+					{AuraID = 97131, UnitID = "player"},
+					-- 集结呐喊
+					{AuraID = 97463, UnitID = "player"},
+					-- 灵魂链接图腾
+					{AuraID = 98007, UnitID = "player"},
+					-- 燧鎖的發射器
+					{AuraID = 99621, UnitID = "player"},
+				},
+			},
+			{
+				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 嗜血
-					{AuraID =  2825, UnitID = "player"}, 
-					-- 英勇
-					{AuraID = 32182, UnitID = "player"}, 
-					-- 时间扭曲
-					{AuraID = 80353, UnitID = "player"}, 
 					-- 利刃屏障
 					{AuraID = 64856, UnitID = "player"}, 
 					-- 反魔法护罩
@@ -860,7 +1882,7 @@ function C.AuraWatch.LoadSettings()
 				}, 
 			}, 	
 			{
-				Name = "目标Debuff", 
+				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", IconSize = 16, BarWidth = 175, 
 				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
