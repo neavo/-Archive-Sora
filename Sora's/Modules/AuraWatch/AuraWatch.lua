@@ -31,6 +31,7 @@ local function MakeMoveHandle(Frame, Text, key, Pos)
 	Frame:SetPoint("CENTER", MoveHandle)
 	return MoveHandle
 end
+
 local function BuildAura()
 	for key, value in pairs(AuraWatchDB) do
 		local FrameTable = {}
@@ -50,6 +51,7 @@ local function BuildAura()
 		tinsert(Aura, FrameTable)
 	end
 end
+
 local function UpdatePos()
 	for key, value in pairs(Aura) do
 		local Direction, Interval = AuraWatchDB[key].Direction, AuraWatchDB[key].Interval
@@ -87,6 +89,7 @@ local function CleanUp()
 		end
 	end
 end
+
 local function SetTime(self)
 	if self.Timer < 60 then
 		if self.Time then self.Time:SetFormattedText("%.1f", self.Timer) end
@@ -96,6 +99,7 @@ local function SetTime(self)
 		self.Statusbar:SetValue(self.Timer)
 	end
 end
+
 local function UpdateAuraFrame(KEY, name, icon, count, duration, expires)
 	local Frame = Aura[KEY][Index]
 	if Frame then Frame:Show() end
@@ -116,6 +120,7 @@ local function UpdateAuraFrame(KEY, name, icon, count, duration, expires)
 	end
 	Index = Index + 1
 end
+
 local function UpdateCDFrame(KEY, name, icon, start, duration)
 	local Frame = Aura[KEY][Index]
 	if Frame then Frame:Show() end
@@ -136,6 +141,7 @@ local function UpdateCDFrame(KEY, name, icon, start, duration)
 	end
 	Index = Index + 1
 end
+
 local function UpdateFrame()
 	Index = 1
 	for KEY, VALUE in pairs(AuraWatchDB) do
@@ -176,6 +182,7 @@ local function OnUpdate()
 	CleanUp()
 	UpdateFrame()
 end
+
 function Module:OnEnable()
 	if not MoveHandleDB["AuraWatch"] then MoveHandleDB["AuraWatch"] = {} end
 	BuildAura()
