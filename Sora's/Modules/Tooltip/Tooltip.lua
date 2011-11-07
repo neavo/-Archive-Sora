@@ -4,7 +4,7 @@ local S, _, _, DB = unpack(select(2, ...))
 
 local classification = {elite = "精英", rare = "稀有", rareelite = "稀有精英"}
 
-local tooltips = {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip, WorldMapTooltip, DropDownList1MenuBackdrop, DropDownList2MenuBackdrop,}
+local tooltips = {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip, DropDownList1MenuBackdrop, DropDownList2MenuBackdrop}
 
 local function unitColor(unit)
     local color = { r=1, g=1, b=1 }

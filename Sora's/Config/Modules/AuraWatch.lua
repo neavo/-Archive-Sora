@@ -37,9 +37,11 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 节能施法
 					{AuraID = 16870, UnitID = "player"}, 
@@ -49,8 +51,6 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 48517, UnitID = "player"}, 			
 					-- 月蚀
 					{AuraID = 48518, UnitID = "player"}, 
-					-- 狂暴(猫&熊)
-					{AuraID = 50334, UnitID = "player"}, 
 					-- 野蛮咆哮(猫)
 					{AuraID = 52610, UnitID = "player"}, 
 					-- 粉碎
@@ -81,8 +81,6 @@ function C.AuraWatch.LoadSettings()
 					{AuraID =  5570, UnitID = "target", Caster = "player"}, 
 					-- 月火术
 					{AuraID =  8921, UnitID = "target", Caster = "player"}, 
-					-- 割伤(熊)
-					{AuraID = 33745, UnitID = "target", Caster = "player"}, 
 					-- 生命绽放
 					{AuraID = 33763, UnitID = "target", Caster = "player"}, 			
 					-- 裂伤(猫)
@@ -124,12 +122,14 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 治疗宠物
-					{AuraID = 136, UnitID = "pet"}, 
+					{AuraID =   136, UnitID = "pet"}, 
 					-- 急速射击
 					{AuraID =  3045, UnitID = "player"}, 
 					-- 野兽之心
@@ -206,9 +206,11 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 奥术强化
 					{AuraID = 12042, UnitID = "player"}, 
@@ -278,9 +280,11 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 盾墙(防御姿态)
 					{AuraID =   871, UnitID = "player"}, 
@@ -377,9 +381,11 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 25}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 闪电之盾
 					{AuraID =   324, UnitID = "player"}, 
@@ -444,9 +450,11 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 圣佑术
 					{AuraID =   498, UnitID = "player"}, 
@@ -462,9 +470,9 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 31884, UnitID = "player"}, 
 					-- 炙热防御者
 					{AuraID = 31850, UnitID = "player"}, 
-					-- 纯洁审判(等级3)
+					-- 纯洁审判
 					{AuraID = 53657, UnitID = "player"}, 
-					-- 圣光灌注(等级2)
+					-- 圣光灌注
 					{AuraID = 54149, UnitID = "player"}, 
 					-- 神圣恳求
 					{AuraID = 54428, UnitID = "player"}, 
@@ -472,9 +480,9 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 59578, UnitID = "player"}, 
 					-- 异端裁决
 					{AuraID = 84963, UnitID = "player"}, 
-					-- 大十字军 (复仇盾)
+					-- 大十字军(刷新飞盾)
 					{AuraID = 85043, UnitID = "player"}, 
-					-- 神圣使命 (盾击必暴)
+					-- 神圣使命(盾猛必暴)
 					{AuraID = 85433, UnitID = "player"}, 
 					-- 狂热
 					{AuraID = 85696, UnitID = "player"}, 
@@ -484,7 +492,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 88819, UnitID = "player"}, 
 					-- 神圣意志
 					{AuraID = 90174, UnitID = "player"}, 
-					-- 烈焰庇护
+					-- 烈焰庇护(防护T12x4)
 					{AuraID = 99090, UnitID = "player"}, 
 				}, 
 			}, 
@@ -541,28 +549,26 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 渐隐
 					{AuraID =  586, UnitID = "player"}, 
 					-- 心灵专注
-					{AuraID =  14751, UnitID = "player"}, 				
+					{AuraID = 14751, UnitID = "player"}, 				
 					-- 灵感
-					{AuraID =  14893, UnitID = "player"}, 
-					{AuraID =  15357, UnitID = "player"}, 
+					{AuraID = 14893, UnitID = "player"}, 
 					-- 圣光涌动
-					{AuraID = 33150, UnitID = "player"}, 
-					{AuraID = 33154, UnitID = "player"}, 
+					{AuraID = 33150, UnitID = "player"},
 					-- 消散
 					{AuraID = 47585, UnitID = "player"}, 
 					-- 守护之魂
 					{AuraID = 47788, UnitID = "player"}, 
 					-- 争分夺秒
-					{AuraID = 59887, UnitID = "player"}, 			
-					{AuraID = 59888, UnitID = "player"}, 			
-					{AuraID = 59889, UnitID = "player"}, 			
+					{AuraID = 59887, UnitID = "player"},			
 					-- 妙手回春
 					{AuraID = 63735, UnitID = "player"}, 
 					-- 好运
@@ -620,18 +626,18 @@ function C.AuraWatch.LoadSettings()
 				List = {
 					-- 变羊
 					{AuraID =   118, UnitID = "player"}, 
+					-- 肾击
+					{AuraID =   408, UnitID = "player"},
 					-- 制裁之锤
 					{AuraID =   853, UnitID = "player"}, 
-					-- 肾击
-					{AuraID =   408, UnitID = "player"}, 
+					-- 断筋
+					{AuraID =  1715, UnitID = "player"}, 
+					-- 割碎
+					{AuraID = 22570, UnitID = "player"}, 
 					-- 撕扯
 					{AuraID = 47481, UnitID = "player"}, 
 					-- 沉默
 					{AuraID = 55021, UnitID = "player"}, 
-					-- 割碎
-					{AuraID = 22570, UnitID = "player"}, 
-					-- 断筋
-					{AuraID =  1715, UnitID = "player"}, 
 				}, 
 			}, 
 			{
@@ -640,17 +646,19 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 暗影冥思
 					{AuraID = 17941, UnitID = "player"}, 
-					-- 反冲(等级3)
+					-- 反冲
 					{AuraID = 34939, UnitID = "player"}, 
 					-- 小鬼增效
 					{AuraID = 47283, UnitID = "player"}, 			
-					-- 灭杀(等级2)
+					-- 灭杀
 					{AuraID = 63158, UnitID = "player"}, 
 					-- 灭杀
 					{AuraID = 63167, UnitID = "player"}, 
@@ -727,9 +735,11 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 佯攻
 					{AuraID =  1966, UnitID = "player"}, 
@@ -749,9 +759,11 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 73651, UnitID = "player"}, 
 					-- 致命冲动
 					{AuraID = 84590, UnitID = "player"}, 
-					-- 洞悉弱点
-					{AuraID = 84745, UnitID = "player"}, 
+					-- 初步洞悉
+					{AuraID = 84745, UnitID = "player"},
+					-- 中等洞悉
 					{AuraID = 84746, UnitID = "player"}, 
+					-- 深度洞悉
 					{AuraID = 84747, UnitID = "player"}, 
 				}
 			}, 
@@ -811,9 +823,11 @@ function C.AuraWatch.LoadSettings()
 				Mode = "ICON", IconSize = 30, 
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
-					-- 英勇气概
+					-- 嗜血
 					{AuraID =  2825, UnitID = "player"}, 
+					-- 英勇
 					{AuraID = 32182, UnitID = "player"}, 
+					-- 时间扭曲
 					{AuraID = 80353, UnitID = "player"}, 
 					-- 利刃屏障
 					{AuraID = 64856, UnitID = "player"}, 
