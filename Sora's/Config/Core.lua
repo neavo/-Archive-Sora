@@ -2,7 +2,7 @@
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("Congig", "AceConsole-3.0")
-local Version = 1026
+local Version = 1106
 
 -- SetDefault
 local function SetDefault()
@@ -74,10 +74,23 @@ Modules = {
 	},
 }
 
--- ShowConfig
 local function ShowConfig()
 	LibStub("AceConfigDialog-3.0"):SetDefaultSize("Sora's Config", 780, 550)
 	LibStub("AceConfigDialog-3.0"):Open("Sora's Config")
+end
+
+local function BuildGameMenuButton()
+	local Button = CreateFrame("Button", "SoraGameMenuButton", GameMenuFrame, "GameMenuButtonTemplate")
+	S.Reskin(Button)
+	Button:SetSize(GameMenuButtonHelp:GetWidth(), GameMenuButtonHelp:GetHeight())
+	Button:SetText("|cff70C0F5Sora's|r")
+	Button:SetPoint(GameMenuButtonHelp:GetPoint())
+	Button:SetScript("OnClick", function()
+		HideUIPanel(GameMenuFrame)
+		ShowConfig()
+	end)
+	GameMenuButtonHelp:SetPoint("TOP", Button, "BOTTOM", 0, -1)
+	GameMenuFrame:SetHeight(GameMenuFrame:GetHeight()+Button:GetHeight())	
 end
 
 -- OnInitialize
@@ -96,6 +109,7 @@ end
 
 -- OnEnable
 function Module:OnEnable()
+	BuildGameMenuButton()
 	if not SoraVersion or SoraVersion < Version then
 		StaticPopupDialogs["Sora's"] = {
 			text = "欢迎使用|cff70C0F5Sora's|r\n\n请点击确定按钮加载默认配置\n",
