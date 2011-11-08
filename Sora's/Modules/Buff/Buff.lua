@@ -4,11 +4,13 @@ local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("Buff")
 
 local function Style(buttonName, i)
+	if not _G[buttonName..i] then return end
+	
 	local Button	= _G[buttonName..i]
 	local Icon		= _G[buttonName..i.."Icon"]
 	local Duration	= _G[buttonName..i.."Duration"]
 	local Count 	= _G[buttonName..i.."Count"]
-	
+
 	Button:SetSize(BuffDB.IconSize, BuffDB.IconSize)
 	Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	Duration:ClearAllPoints()
@@ -22,6 +24,11 @@ local function Style(buttonName, i)
 	if not Button.Shadow then Button.Shadow = S.MakeShadow(Button, 3) end
 end
 
+function Module:OnInitialize()
+	SetCVar("consolidateBuffs", 0)
+	SetCVar("buffDurations", 1)
+end
+
 function Module:OnEnable()
 	local BuffPos = CreateFrame("Frame", nil, UIParent)
 	BuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
@@ -29,8 +36,6 @@ function Module:OnEnable()
 	local DebuffPos = CreateFrame("Frame", nil, UIParent)
 	DebuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
 	MoveHandle.Debuff = S.MakeMoveHandle(DebuffPos, "Debuff", "Debuff")
-	SetCVar("consolidateBuffs", 0)
-	SetCVar("buffDurations", 1)
 	hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", function()
 		local Temp = {[1]={}, [2]={}}
 		for i=1, BUFF_ACTUAL_DISPLAY do	
@@ -56,11 +61,11 @@ function Module:OnEnable()
 		if hasThrownEnchant then Num = Num + 1 end
 		for i = 1, Num do
 			Style("TempEnchant", i)
-			table.insert(BuffSort, _G["TempEnchant"..i])
+			tinsert(BuffSort, _G["TempEnchant"..i])
 		end
 		for i=1, 2 do
 			for t=1, #Temp[i] do
-				table.insert(BuffSort, Temp[i][t])
+				tinsert(BuffSort, Temp[i][t])
 			end
 		end
 		for i=1, BUFF_ACTUAL_DISPLAY + Num do
