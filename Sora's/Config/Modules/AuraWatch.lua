@@ -91,7 +91,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -276,7 +276,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -460,7 +460,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -654,7 +654,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -855,7 +855,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -1024,7 +1024,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -1223,7 +1223,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -1420,7 +1420,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -1609,7 +1609,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
@@ -1799,7 +1799,7 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 33206, UnitID = "player"},
 					-- 反魔法领域
 					{AuraID = 50461, UnitID = "player"},
-					-- 神性犧牲
+					-- 神圣牺牲
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},

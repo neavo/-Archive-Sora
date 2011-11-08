@@ -73,18 +73,18 @@ local function UpdatePos()
 end
 
 local function CleanUp()
-	for _, value in pairs(Aura) do
-		for i = 1, MaxFrame do
-			if value[i] then
-				value[i]:Hide()
-				value[i]:SetScript("OnUpdate", nil)
+	for _, VALUE in pairs(Aura) do
+		for _, value in pairs(VALUE) do
+			if value then
+				value:Hide()
+				value:SetScript("OnUpdate", nil)
 			end
-			if value[i].Icon then value[i].Icon:SetTexture(nil) end
-			if value[i].Count then value[i].Count:SetText(nil) end
-			if value[i].Spellname then value[i].Spellname:SetText(nil) end
-			if value[i].Statusbar then
-				value[i].Statusbar:SetMinMaxValues(0, 1) 
-				value[i].Statusbar:SetValue(0)
+			if value.Icon then value.Icon:SetTexture(nil) end
+			if value.Count then value.Count:SetText(nil) end
+			if valueSpellname then value.Spellname:SetText(nil) end
+			if value.Statusbar then
+				value.Statusbar:SetMinMaxValues(0, 1) 
+				value.Statusbar:SetValue(0)
 			end
 		end
 	end
@@ -143,8 +143,8 @@ local function UpdateCDFrame(KEY, name, icon, start, duration)
 end
 
 local function UpdateFrame()
-	Index = 1
 	for KEY, VALUE in pairs(AuraWatchDB) do
+		Index = 1
 		for _, value in pairs(VALUE.List) do
 			if value.AuraID then
 				local name = GetSpellInfo(value.AuraID)
