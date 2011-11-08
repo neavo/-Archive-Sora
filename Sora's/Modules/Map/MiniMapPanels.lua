@@ -194,9 +194,15 @@ local function BuildBottomFrame()
 	BuildBottomLeftFrame(Frame)
 end
 
+function Module:DelayOnEnable()
+	for _, value in pairs(MiniMapButton) do
+		value:Hide()
+	end
+end
+
 function Module:OnEnable()
 	BuildTopFrame()
 	BuildBottomFrame()
 	UpdateMiniMapButton()
-	for _, value in pairs(MiniMapButton) do value:Hide() end
+	Module:ScheduleTimer("DelayOnEnable", 3)
 end
