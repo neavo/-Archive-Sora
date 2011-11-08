@@ -1,7 +1,22 @@
 ﻿-- Engines
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("MiniMapPanels")
+local Module = Sora:NewModule("MiniMapPanels", "AceTimer-3.0")
+local MiniMapButton, RaidButton = {}, {}
+local BlackList = { 
+	["MiniMapTracking"] = true,
+	["MiniMapVoiceChatFrame"] = true,
+	["MiniMapWorldMapButton"] = true,
+	["MiniMapLFGFrame"] = true,
+	["MinimapZoomIn"] = true,
+	["MinimapZoomOut"] = true,
+	["MiniMapMailFrame"] = true,
+	["MiniMapBattlefieldFrame"] = true,
+	["MinimapBackdrop"] = true,
+	["GameTimeFrame"] = true,
+	["TimeManagerClockButton"] = true,
+	["FeedbackUIButton"] = true,
+}
 
 -- BuildTopFrame
 local function InitMiniMapTracking(TopFrame)
@@ -21,9 +36,8 @@ local function BuildTopFrame()
 	TopFrame:SetAlpha(0.2)
 	TopFrame:HookScript("OnEnter", function(self) self:SetAlpha(1) end)
 	TopFrame:HookScript("OnLeave", function(self) self:SetAlpha(0.2) end)
-	TopFrame.Text = TopFrame:CreateFontString(nil, "OVERLAY")
-	TopFrame.Text:SetPoint("CENTER", TopFrame, "CENTER", 0, 0)
-	TopFrame.Text:SetFont(DB.Font, 10, "THINOUTLINE")
+	TopFrame.Text = S.MakeFontString(TopFrame, 10)
+	TopFrame.Text:SetPoint("CENTER")
 	TopFrame.Timer = 0
 	TopFrame:SetScript("OnUpdate", function(self, elapsed)
 		self.Timer = self.Timer + elapsed
@@ -36,33 +50,53 @@ local function BuildTopFrame()
 end
 
 -- BuildBottomFrame
-local function BuildBottomRightFrame(BottomFrame)
-	BottomFrame.Right = CreateFrame("Button", nil, BottomFrame)
-	BottomFrame.Right:SetSize(16, 16)
-	BottomFrame.Right:SetPoint("RIGHT")
-	BottomFrame.Right:SetScript("OnEnter", function(self)
-		BottomFrame:SetAlpha(1)
-		self.Text:SetTextColor(1, 0, 0)
-	end)
-	BottomFrame.Right:SetScript("OnLeave", function(self)
-		BottomFrame:SetAlpha(0.2)
-		self.Text:SetTextColor(1, 1, 1)
-	end)
-	BottomFrame.Right:SetScript("OnMouseDown", function(self, button, ...)
-		if NBB:IsShown() then
-			NBB:Hide()
+local function UpdateMiniMapButton()
+	wipe(MiniMapButton)
+	for _, value in ipairs({Minimap:GetChildren()}) do
+		if not BlackList[value:GetName()] then
+			if value:GetObjectType() == "Button" and value:GetNumRegions() >= 3 then
+				value:SetScale(0.8)
+				tinsert(MiniMapButton, value)
+			end
+		end
+	end
+	for key, value in pairs(MiniMapButton) do
+		value:ClearAllPoints()
+		if key == 1 then
+			value:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", -5, -30)
 		else
-			NBB:Show()
+			value:SetPoint("LEFT", MiniMapButton[key-1], "RIGHT", 5, 0)
+		end
+	end
+end
+local function BuildBottomLeftFrame(Frame)
+	local Button = CreateFrame("Button", nil, Frame)
+	Button:SetSize(16, 16)
+	Button:SetPoint("LEFT")
+	local Text = S.MakeFontString(Button, 9)
+	Text:SetPoint("CENTER")
+	Text:SetText("B")
+	Button:SetScript("OnEnter", function(self)
+		Frame:SetAlpha(1)
+		Text:SetTextColor(1, 0, 0)
+	end)
+	Button:SetScript("OnLeave", function(self)
+		Frame:SetAlpha(0.2)
+		Text:SetTextColor(1, 1, 1)
+	end)
+	Button:SetScript("OnClick", function(self, button, ...)
+		UpdateMiniMapButton()
+		for _, value in pairs(MiniMapButton) do
+			if value:IsShown() then
+				value:Hide()
+			else
+				value:Show()
+			end
 		end
 		PlaySound("igMiniMapOpen")
 	end)
-	BottomFrame.Right.Text = BottomFrame.Right:CreateFontString(nil, "OVERLAY")
-	BottomFrame.Right.Text:SetPoint("CENTER")
-	BottomFrame.Right.Text:SetFont(DB.Font, 9, "THINOUTLINE")
-	BottomFrame.Right.Text:SetText("B")
 end
-local function BuildButtonTable()
-	local ButtonTable = {}
+local function BuildRaidButton()
 	for i = 1, 5 do
 		local Button = S.MakeButton(UIParent)
 		Button:SetSize(80, 20)
@@ -79,19 +113,19 @@ local function BuildButtonTable()
 			Button.Text:SetText("就位确认")
 			Button:SetScript("OnMouseDown", function(self, button, ...) DoReadyCheck() PlaySound("igMiniMapOpen") end)
 		elseif i == 2 then
-			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -10)
+			Button:SetPoint("TOP", RaidButton[i-1], "BOTTOM", 0, -10)
 			Button.Text:SetText("角色检查")
 			Button:SetScript("OnMouseDown", function(self, button, ...) InitiateRolePoll() PlaySound("igMiniMapOpen") end)
 		elseif i == 3 then
-			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -10)
+			Button:SetPoint("TOP", RaidButton[i-1], "BOTTOM", 0, -10)
 			Button.Text:SetText("转化为团队")
 			Button:SetScript("OnMouseDown", function(self, button, ...) ConvertToRaid() PlaySound("igMiniMapOpen") end)
 		elseif i == 4 then
-			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -10)
+			Button:SetPoint("TOP", RaidButton[i-1], "BOTTOM", 0, -10)
 			Button.Text:SetText("转化为小队")
 			Button:SetScript("OnMouseDown", function(self, button, ...) ConvertToParty() PlaySound("igMiniMapOpen") end)
 		elseif i == 5 then
-			Button:SetPoint("TOP", ButtonTable[i-1], "BOTTOM", 0, -10)
+			Button:SetPoint("TOP", RaidButton[i-1], "BOTTOM", 0, -10)
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonLeft:SetAlpha(0)
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonMiddle:SetAlpha(0)
 			CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButtonRight:SetAlpha(0)
@@ -104,68 +138,65 @@ local function BuildButtonTable()
 		end
 		
 		Button:SetAlpha(0)
-		tinsert(ButtonTable, Button)
+		tinsert(RaidButton, Button)
 	end
-	return ButtonTable
 end
-local function BuildBottomLeftFrame(BottomFrame)
-	local ButtonTable = BuildButtonTable()
-	BottomFrame.Left = CreateFrame("Button", nil, BottomFrame)
-	BottomFrame.Left:SetSize(16, 16)
-	BottomFrame.Left:SetPoint("LEFT")
-	BottomFrame.Left:SetScript("OnEnter", function(self)
-		BottomFrame:SetAlpha(1)
-		self.Text:SetTextColor(1, 0, 0)
+local function BuildBottomRightFrame(Frame)
+	BuildRaidButton()
+	local Button = CreateFrame("Button", nil, Frame)
+	Button:SetSize(16, 16)
+	Button:SetPoint("RIGHT")
+	local Text = S.MakeFontString(Button, 9)
+	Text:SetPoint("CENTER")
+	Text:SetText("G")
+	Button:SetScript("OnEnter", function(self)
+		Frame:SetAlpha(1)
+		Text:SetTextColor(1, 0, 0)
 	end)
-	BottomFrame.Left:SetScript("OnLeave", function(self)
-		BottomFrame:SetAlpha(0.2)
-		self.Text:SetTextColor(1, 1, 1)
+	Button:SetScript("OnLeave", function(self)
+		Frame:SetAlpha(0.2)
+		Text:SetTextColor(1, 1, 1)
 	end)
-	BottomFrame.Left:SetScript("OnMouseDown", function(self, button, ...)
-		if ButtonTable[1]:GetAlpha() > 0.95 then
-			for _, value in pairs(ButtonTable) do
+	Button:SetScript("OnClick", function(self, ...)
+		if RaidButton[1]:GetAlpha() > 0.95 then
+			for _, value in pairs(RaidButton) do
 				UIFrameFadeOut(value, 0.5, 1, 0)
 				value.HideFrame:Show()
 			end
 		else
-			for _, value in pairs(ButtonTable) do
+			for _, value in pairs(RaidButton) do
 				UIFrameFadeIn(value, 0.5, 0, 1)
 				value.HideFrame:Hide()
 			end
 		end
 		PlaySound("igMiniMapOpen")
 	end)
-	BottomFrame.Left.Text = BottomFrame.Left:CreateFontString(nil, "OVERLAY")
-	BottomFrame.Left.Text:SetPoint("CENTER")
-	BottomFrame.Left.Text:SetFont(DB.Font, 9, "THINOUTLINE")
-	BottomFrame.Left.Text:SetText("G")
 end
 local function BuildBottomFrame()
-	local BottomFrame = S.MakeButton(UIParent)
-	BottomFrame:SetSize(Minimap:GetWidth()+2, 16)
-	BottomFrame:SetPoint("TOP", Minimap, "BOTTOM", 0, -3)
-	BottomFrame:SetAlpha(0.2)
-	BottomFrame:HookScript("OnEnter", function(self) self:SetAlpha(1) end)
-	BottomFrame:HookScript("OnLeave", function(self) self:SetAlpha(0.2) end)
-	BottomFrame.Text = BottomFrame:CreateFontString(nil, "OVERLAY")
-	BottomFrame.Text:SetPoint("CENTER", BottomFrame, "CENTER", 0, 0)
-	BottomFrame.Text:SetFont(DB.Font, 10, "THINOUTLINE")
-	local x, y = 0, 0
-	BottomFrame.Timer = 0
-	BottomFrame:SetScript("OnUpdate", function(self, elapsed)
+	local Frame = S.MakeButton(UIParent)
+	Frame:SetSize(Minimap:GetWidth()+2, 16)
+	Frame:SetPoint("TOP", Minimap, "BOTTOM", 0, -3)
+	Frame:SetAlpha(0.2)
+	Frame:HookScript("OnEnter", function(self) self:SetAlpha(1) end)
+	Frame:HookScript("OnLeave", function(self) self:SetAlpha(0.2) end)
+	Frame.Text = S.MakeFontString(Frame, 10)
+	Frame.Text:SetPoint("CENTER")
+	Frame.Timer = 0
+	Frame:SetScript("OnUpdate", function(self, elapsed)
 		self.Timer = self.Timer + elapsed
 		if self.Timer > 1 then
 			self.Timer = 0
-			x, y = GetPlayerMapPosition("player")
+			local x, y = GetPlayerMapPosition("player")
 			self.Text:SetText(format("|　%.2d  :  %.2d　|", 100*x, 100*y))
 		end
 	end)
-	
-	BuildBottomRightFrame(BottomFrame)
-	BuildBottomLeftFrame(BottomFrame)
+	BuildBottomRightFrame(Frame)
+	BuildBottomLeftFrame(Frame)
 end
 
 function Module:OnEnable()
 	BuildTopFrame()
 	BuildBottomFrame()
+	UpdateMiniMapButton()
+	for _, value in pairs(MiniMapButton) do value:Hide() end
 end

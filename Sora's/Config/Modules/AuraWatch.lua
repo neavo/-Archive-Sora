@@ -10,7 +10,7 @@ function C.AuraWatch.LoadSettings()
 		-- 德鲁伊
 		["DRUID"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -79,7 +79,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -195,7 +195,7 @@ function C.AuraWatch.LoadSettings()
 		-- 猎人
 		["HUNTER"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -264,7 +264,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -379,7 +379,7 @@ function C.AuraWatch.LoadSettings()
 		-- 法师
 		["MAGE"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -448,7 +448,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -573,7 +573,7 @@ function C.AuraWatch.LoadSettings()
 		-- 战士
 		["WARRIOR"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -642,7 +642,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -774,7 +774,7 @@ function C.AuraWatch.LoadSettings()
 		-- 萨满
 		["SHAMAN"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -843,7 +843,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 58},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 68},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -943,7 +943,7 @@ function C.AuraWatch.LoadSettings()
 		-- 圣骑士
 		["PALADIN"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -1012,7 +1012,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -1142,7 +1142,7 @@ function C.AuraWatch.LoadSettings()
 		-- 牧师
 		["PRIEST"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -1211,7 +1211,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -1339,7 +1339,7 @@ function C.AuraWatch.LoadSettings()
 		-- 术士
 		["WARLOCK"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -1408,7 +1408,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -1528,7 +1528,7 @@ function C.AuraWatch.LoadSettings()
 		-- 盗贼
 		["ROGUE"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -1597,7 +1597,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -1718,7 +1718,7 @@ function C.AuraWatch.LoadSettings()
 		-- 死亡骑士
 		["DEATHKNIGHT"] = {
 			{
-				Name = "玩家Debuff", 
+				Name = "玩家减益", 
 				Direction = "RIGHT", Interval = 10, 
 				Mode = "ICON", IconSize = 48, 
 				Pos = {"CENTER", "UIParent", "CENTER", -200, 200}, 
@@ -1787,7 +1787,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 45},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
