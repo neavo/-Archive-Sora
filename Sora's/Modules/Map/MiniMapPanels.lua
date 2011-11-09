@@ -195,6 +195,7 @@ local function BuildBottomFrame()
 end
 
 function Module:DelayOnEnable()
+	UpdateMiniMapButton()
 	for _, value in pairs(MiniMapButton) do
 		value:Hide()
 	end
@@ -203,6 +204,5 @@ end
 function Module:OnEnable()
 	BuildTopFrame()
 	BuildBottomFrame()
-	UpdateMiniMapButton()
-	Module:ScheduleTimer("DelayOnEnable", 3)
+	Module:ScheduleTimer("DelayOnEnable", 2)
 end
