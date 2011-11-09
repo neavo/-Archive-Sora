@@ -90,6 +90,7 @@ function Module:OnEnable()
 		{text = GUILD, func = function() ToggleGuildFrame(1) end}, 
 		{text = PLAYER_V_PLAYER, func = function() ToggleFrame(PVPFrame) end}, 
 		{text = HELP_BUTTON, func = function() ToggleHelpFrame() end}, 
+		{text = "打开背包", func = function() ToggleBackpack() end}, 
 		{text = "日历", func = function()
 			if not CalendarFrame then LoadAddOn("Blizzard_Calendar") end
 			Calendar_Toggle()
