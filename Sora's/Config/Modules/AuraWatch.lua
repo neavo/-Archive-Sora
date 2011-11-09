@@ -1276,13 +1276,11 @@ function C.AuraWatch.LoadSettings()
 				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
 					-- 渐隐
-					{AuraID =  586, UnitID = "player"}, 
+					{AuraID =   586, UnitID = "player"}, 
 					-- 心灵专注
 					{AuraID = 14751, UnitID = "player"}, 				
 					-- 灵感
 					{AuraID = 14893, UnitID = "player"}, 
-					-- 圣光涌动
-					{AuraID = 33150, UnitID = "player"},
 					-- 消散
 					{AuraID = 47585, UnitID = "player"}, 
 					-- 守护之魂
@@ -1297,6 +1295,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 77487, UnitID = "player"}, 
 					-- 精神分流雕文
 					{AuraID = 81301, UnitID = "player"}, 
+					-- 福音传播
+					{AuraID = 81661, UnitID = "player"}, 
 					-- 真言术:障
 					{AuraID = 81782, UnitID = "player"}, 
 					-- 黑暗福音
@@ -1305,8 +1305,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 87152, UnitID = "player"}, 
 					-- 黑暗天使长
 					{AuraID = 87153, UnitID = "player"}, 
-					-- 福音传播
-					{AuraID = 81661, UnitID = "player"}, 
+					-- 圣光涌动
+					{AuraID = 88688, UnitID = "player"},
 					-- 心灵融化
 					{AuraID = 87160, UnitID = "player"}, 
 					-- 强效暗影
@@ -1960,9 +1960,9 @@ local function UpdateAuraList()
 			end, 
 			set = function(_, value)
 				local Aura = AuraWatchDB[GroupSelectValue]["List"][AuraSelectValue]
-				if Aura["AuraID"] then Aura["AuraID"] = tonumber(value) end
-				if Aura["SpellID"] then Aura["SpellID"] = tonumber(value) end
-				if Aura["ItemID"] then Aura["ItemID"] = tonumber(value) end
+				if Aura["AuraID"] and GetSpellInfo(value) then Aura["AuraID"] = tonumber(value) return end
+				if Aura["SpellID"] and GetSpellInfo(value) then Aura["SpellID"] = tonumber(value) return end
+				if Aura["ItemID"] and GetItemInfo(value) then Aura["ItemID"] = tonumber(value) return end
 			end,
 		}, 
 		Mode = {
