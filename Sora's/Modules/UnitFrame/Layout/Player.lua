@@ -59,30 +59,57 @@ local function BuildPowerBar(self)
 	self.Power = Bar
 end
 
+local function Override(self, event, unit, powerType)
+	if self.unit ~= unit or (powerType and (powerType ~= "HOLY_POWER" and powerType ~= "SOUL_SHARDS")) then return end
+	if self.HolyPower then
+		local HolyPower = self.HolyPower
+		for i = 1, MAX_HOLY_POWER do
+			if i <= UnitPower(unit, SPELL_POWER_HOLY_POWER) then
+				HolyPower[i]:SetAlpha(1)
+			else
+				HolyPower[i]:SetAlpha(0.3)
+			end
+		end
+	end
+	if self.SoulShards then
+		local SoulShards = self.SoulShards
+		for i = 1, SHARD_BAR_NUM_SHARDS do
+			if i <= UnitPower(unit, SPELL_POWER_SOUL_SHARDS) then
+				SoulShards[i]:SetAlpha(1)
+			else
+				SoulShards[i]:SetAlpha(0.3)
+			end
+		end
+	end
+end
+local function Totems_PostUpdate(self, slot, haveTotem, name, start, duration)
+	local Totem = Totems[slot]
+	Totem:SetMinMaxValues(0, duration)
+	if haveTotem then
+		Totem:SetScript("OnUpdate", function(self) Totem:SetValue(GetTotemTimeLeft(slot)) end)
+	else
+		Totem:SetScript("OnUpdate", nil)
+	end
+end
 local function BuildClassPowerBar(self)
-	local _, Class = UnitClass("player")
-	if Class == "DEATHKNIGHT" then
+	if DB.MyClass == "DEATHKNIGHT" then
 		local Runes = CreateFrame("Frame")
-		for i= 1, 6 do
+		for i = 1, 6 do
 			local Rune = CreateFrame("StatusBar", nil, self)
 			Rune:SetSize((self:GetWidth()-15)/6, 3)
-			Rune:SetStatusBarTexture(DB.Statusbar)			
-			Rune.BG = Rune:CreateTexture(nil, "BACKGROUND")
-			Rune.BG:SetAllPoints()
-			Rune.BG:SetTexture(DB.Statusbar)
-			Rune.BG:SetVertexColor(0.1, 0.1, 0.1)			
+			Rune:SetStatusBarTexture(DB.Statusbar)					
 			Rune.Shadow = S.MakeShadow(Rune, 3)
-			
 			if i == 1 then
-				Rune:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
+				Rune:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
 			else
 				Rune:SetPoint("LEFT", Runes[i-1], "RIGHT", 3, 0)
 			end
 			Runes[i] = Rune
 		end
 		self.Runes = Runes
+		self.Runes.Override = Override
 	end
-	if Class == "PALADIN" then
+	if DB.MyClass == "PALADIN" then
 		local HolyPower = CreateFrame("Frame")
 		for i = 1, 3 do
 			local HolyShard = CreateFrame("StatusBar", nil, self)
@@ -98,24 +125,9 @@ local function BuildClassPowerBar(self)
 			HolyPower[i] = HolyShard
 		end
 		self.HolyPower = HolyPower
-		
-		local function Override(self, event, unit, powerType)
-			if self.unit ~= unit or (powerType and powerType ~= "HOLY_POWER") then return end
-			local HolyPower = self.HolyPower
-			if HolyPower.PreUpdate then 
-				HolyPower:PreUpdate(unit) 
-			end	
-			for i = 1, MAX_HOLY_POWER do
-				if i <= UnitPower(unit, SPELL_POWER_HOLY_POWER) then
-					HolyPower[i]:SetAlpha(1)
-				else
-					HolyPower[i]:SetAlpha(0.2)
-				end
-			end
-		end
 		self.HolyPower.Override = Override
 	end
-	if Class == "WARLOCK" then
+	if DB.MyClass == "WARLOCK" then
 		local SoulShards = CreateFrame("Frame")
 		for i= 1, 3 do
 			local SoulShard = CreateFrame("StatusBar", nil, self)
@@ -130,22 +142,10 @@ local function BuildClassPowerBar(self)
 			end
 			SoulShards[i] = SoulShard
 		end
-		self.SoulShards = SoulShards
-		
-		local function Override(self, event, unit, powerType)
-			if self.unit ~= unit or (powerType and powerType ~= "SOUL_SHARDS") then return end
-			local SoulShards = self.SoulShards
-			for i = 1, SHARD_BAR_NUM_SHARDS do
-				if i <= UnitPower(unit, SPELL_POWER_SOUL_SHARDS) then
-					SoulShards[i]:SetAlpha(1)
-				else
-					SoulShards[i]:SetAlpha(0.3)
-				end
-			end
-		end
-		self.SoulShards.Override = Override
+		self.SoulShards = Override
+		self.SoulShards.Override = SoulShards_Override
 	end
-	if Class == "DRUID" then
+	if DB.MyClass == "DRUID" then
 		local EclipseBar = CreateFrame("Frame", nil, self)
 		EclipseBar:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
 		EclipseBar:SetHeight(3)
@@ -166,48 +166,29 @@ local function BuildClassPowerBar(self)
 		self:Tag(EclipseBar.Text, "[pereclipse]")
 		self.EclipseBar = EclipseBar
 	end
-	if Class == "SHAMAN" then
-		oUF.colors.totems = {
-			{ 233/255, 46/255,   16/255 }, 	-- fire
-			{ 173/255, 217/255,  25/255 }, 	-- earth
-			{  35/255, 127/255, 255/255 }, 	-- water
-			{ 178/255,  53/255, 240/255 }, 	-- air
-		}
-		local TotemBar = CreateFrame("Frame", nil, self)
+	if DB.MyClass == "SHAMAN" then
+		local Totems = CreateFrame("Frame", nil, self)
 		for i = 1, 4 do
-			local Totem = CreateFrame("Frame", nil, TotemBar)
-			Totem:SetHeight(3)
-			Totem:SetWidth((self.Health:GetWidth()-15)/4)
-			Totem.StatusBar = CreateFrame("StatusBar", nil, Totem)
-			Totem.StatusBar:SetAllPoints()
-			Totem.StatusBar:SetStatusBarTexture(DB.Statusbar)	
+			local Totem = CreateFrame("StatusBar", nil, self)
+			Totem:SetSize((self:GetWidth()-15)/4, 3)
+			Totem:SetStatusBarTexture(DB.Statusbar)
+			Totem:SetStatusBarColor(unpack(oUF.colors.totems[i]))
 			Totem.BG = Totem:CreateTexture(nil, "BACKGROUND")
 			Totem.BG:SetAllPoints()
 			Totem.BG:SetTexture(DB.Statusbar)
-			Totem.BG:SetVertexColor(0.2, 0.2, 0.2, 0.8)
+			Totem.BG:SetVertexColor(0.1, 0.1, 0.1)	
 			Totem.Shadow = S.MakeShadow(Totem, 3)
-			Totem.Text = S.MakeFontString(Totem, 8)
-			Totem.Text.Colors = {
-				{173/255, 217/255,  25/255}, 	-- earth
-				{233/255,  46/255,  16/255}, 	-- fire
-				{ 35/255, 127/255, 255/255}, 	-- water
-				{178/255,  53/255, 240/255}, 	-- air
-			}
-			Totem.Text:SetPoint("CENTER", 0, 10)
-			Totem.Text:SetTextColor(unpack(Totem.Text.Colors[i]))
 			if i == 1 then
-				Totem:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
+				Totem:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
 			else
-				Totem:SetPoint("TOPLEFT", TotemBar[i-1], "TOPRIGHT", 5, 0)
+				Totem:SetPoint("LEFT", Totems[i-1], "RIGHT", 5, 0)
 			end	
-			TotemBar[i] = Totem
+			Totems[i] = Totem
 		end
-		TotemBar.Destroy = true
-		TotemBar.AbbreviateNames = true
-		TotemBar.UpdateColors = true
-		self.TotemBar = TotemBar
+		self.Totems = Totems
+		self.Totems.PostUpdate = Totems_PostUpdate
 	end
-	if Class == "ROGUE" or Class == "DRUID" then	
+	if DB.MyClass == "ROGUE" or DB.MyClass == "DRUID" then	
 		local CPoints = CreateFrame("Frame", nil, self)	
 		for i = 1, MAX_COMBO_POINTS do
 			local CPoint = CreateFrame("StatusBar", nil, self)
