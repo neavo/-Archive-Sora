@@ -213,9 +213,13 @@ function Module:OnEnable()
 			Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 			Button:ClearAllPoints()
 			if index == 1 then
+				Button:SetPoint("LEFT", MultiCastSummonSpellButton, "RIGHT", ActionBarDB.ButtonSize+3*2, 0)
+			elseif index == 2 then
 				Button:SetPoint("LEFT", MultiCastSummonSpellButton, "RIGHT", 3, 0)
-			else
-				Button:SetPoint("LEFT", _G["MultiCastSlotButton"..index-1], "RIGHT", 3, 0)			
+			elseif index == 3 then
+				Button:SetPoint("LEFT", MultiCastSlotButton1, "RIGHT", 3, 0)
+			elseif index == 4 then
+				Button:SetPoint("LEFT", MultiCastSlotButton3, "RIGHT", 3, 0)		
 			end
 			StyleButton(Button)
 		end

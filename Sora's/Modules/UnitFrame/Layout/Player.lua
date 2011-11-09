@@ -82,15 +82,6 @@ local function Override(self, event, unit, powerType)
 		end
 	end
 end
-local function Totems_PostUpdate(self, slot, haveTotem, name, start, duration)
-	local Totem = Totems[slot]
-	Totem:SetMinMaxValues(0, duration)
-	if haveTotem then
-		Totem:SetScript("OnUpdate", function(self) Totem:SetValue(GetTotemTimeLeft(slot)) end)
-	else
-		Totem:SetScript("OnUpdate", nil)
-	end
-end
 local function BuildClassPowerBar(self)
 	if DB.MyClass == "DEATHKNIGHT" then
 		local Runes = CreateFrame("Frame")
@@ -99,6 +90,10 @@ local function BuildClassPowerBar(self)
 			Rune:SetSize((self:GetWidth()-15)/6, 3)
 			Rune:SetStatusBarTexture(DB.Statusbar)					
 			Rune.Shadow = S.MakeShadow(Rune, 3)
+			Rune.BG = Rune:CreateTexture(nil, "BACKGROUND")
+			Rune.BG:SetAllPoints()
+			Rune.BG:SetTexture(DB.Statusbar)
+			Rune.BG:SetVertexColor(0.1, 0.1, 0.1)	
 			if i == 1 then
 				Rune:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
 			else
@@ -107,7 +102,6 @@ local function BuildClassPowerBar(self)
 			Runes[i] = Rune
 		end
 		self.Runes = Runes
-		self.Runes.Override = Override
 	end
 	if DB.MyClass == "PALADIN" then
 		local HolyPower = CreateFrame("Frame")
@@ -186,6 +180,16 @@ local function BuildClassPowerBar(self)
 			Totems[i] = Totem
 		end
 		self.Totems = Totems
+		
+		local function Totems_PostUpdate(self, slot, haveTotem, name, start, duration)
+			local Totem = Totems[slot]
+			Totem:SetMinMaxValues(0, duration)
+			if haveTotem then
+				Totem:SetScript("OnUpdate", function(self) Totem:SetValue(GetTotemTimeLeft(slot)) end)
+			else
+				Totem:SetScript("OnUpdate", nil)
+			end
+		end
 		self.Totems.PostUpdate = Totems_PostUpdate
 	end
 	if DB.MyClass == "ROGUE" or DB.MyClass == "DRUID" then	

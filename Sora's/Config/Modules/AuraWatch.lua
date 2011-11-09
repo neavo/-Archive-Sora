@@ -843,7 +843,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家重要增益",
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 68},
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 55},
 				List = {
 					-- 邪恶狂热
 					{AuraID =  8699, UnitID = "player"},
@@ -905,7 +905,7 @@ function C.AuraWatch.LoadSettings()
 				Name = "玩家增益", 
 				Direction = "RIGHT", Interval = 6, 
 				Mode = "ICON", IconSize = 30, 
-				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 25}, 
+				Pos = {"BOTTOMLEFT", "oUF_SoraPlayer", "TOPLEFT", 0, 12}, 
 				List = {
 					-- 闪电之盾
 					{AuraID =   324, UnitID = "player"}, 
