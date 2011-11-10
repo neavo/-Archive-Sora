@@ -68,13 +68,19 @@ function C.UnitFrame.BuildGUI()
 			type = "group", order = 9,
 			name = "玩家框体",
 			args = {
-				ShowPlayerFrame = {
-					type = "toggle", order = 1,
-					name = "启用玩家框体",		
-					get = function() return UnitFrameDB.ShowPlayerFrame end,
-					set = function(_, value) UnitFrameDB.ShowPlayerFrame = value end,
-				},
 				Gruop_1 = {
+					type = "group", order = 1,
+					name = " ", guiInline = true,
+					args = {
+						ShowPlayerFrame = {
+							type = "toggle", order = 1,
+							name = "启用玩家框体",		
+							get = function() return UnitFrameDB.ShowPlayerFrame end,
+							set = function(_, value) UnitFrameDB.ShowPlayerFrame = value end,
+						},
+					}
+				},
+				Gruop_2 = {
 					type = "group", order = 2,
 					name = " ", guiInline = true,
 					disabled = not UnitFrameDB["ShowPlayerFrame"],	
@@ -87,7 +93,7 @@ function C.UnitFrame.BuildGUI()
 						},
 					}
 				},
-				Gruop_2 = {
+				Gruop_3 = {
 					type = "group", order = 3,
 					name = " ", guiInline = true,
 					disabled = not UnitFrameDB["ShowPlayerFrame"],	
@@ -127,12 +133,14 @@ function C.UnitFrame.BuildGUI()
 							type = "select", order = 4,
 							name = "状态数值：", desc = "请选择状态数值模式",
 							values = {["Short"] = "缩略", ["Full"] = "详细"},
-							get = function() return UnitFrameDB.PlayerTagMode end,
-							set = function(_, value) UnitFrameDB.PlayerTagMode = value end,
+							get = function() return UnitFrameDB["PlayerTagMode"] end,
+							set = function(_, value)
+								UnitFrameDB["PlayerTagMode"] = value
+							end,
 						},
 					},
 				},
-				Gruop_3 = {
+				Gruop_4 = {
 					type = "group", order = 4,
 					name = " ", guiInline = true,
 					disabled = not UnitFrameDB["ShowPlayerFrame"],	

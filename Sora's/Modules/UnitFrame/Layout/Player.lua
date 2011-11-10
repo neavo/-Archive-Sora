@@ -262,6 +262,7 @@ local function BuildPortrait(self)
 	self.Portrait = Portrait
 end
 
+
 local function BuildTags(self)
 	local Name = S.MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
@@ -269,21 +270,11 @@ local function BuildTags(self)
 	Name:SetAlpha(0)
 	local HPTag = S.MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.PlayerTagMode == "Short" then
-		self:Tag(HPTag, "[Sora:color][Sora:hp]")
-	else
-		self:Tag(HPTag, "[Sora:color][curhp] | [perhp]%")		
-	end
 	HPTag:SetAlpha(0)
 	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.PlayerTagMode == "Short" then
-		self:Tag(PPTag, "[Sora:pp]")
-	else
-		self:Tag(PPTag, "[curpp] | [perpp]%")
-	end
 	PPTag:SetAlpha(0)
-
+	
 	local Event = CreateFrame("Frame")
 	Event:RegisterEvent("PLAYER_REGEN_DISABLED")
 	Event:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -314,6 +305,12 @@ local function BuildTags(self)
 			UIFrameFadeOut(PPTag, 0.5, 1, 0)
 		end
 	end)
+
+	function Module:UpdateTags(value)
+		Parent:Tag(HPTag, value == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
+		Parent:Tag(PPTag, value == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")
+	end
+	Module:UpdateTags(UnitFrameDB["PlayerTagMode"])	
 end
 
 local function BuildRaidIcon(self)

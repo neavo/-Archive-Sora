@@ -1664,7 +1664,9 @@ function C.AuraWatch.LoadSettings()
 					-- 佯攻
 					{AuraID =  1966, UnitID = "player"}, 
 					-- 切割
-					{AuraID =  5171, UnitID = "player"}, 
+					{AuraID =  5171, UnitID = "player"},
+					-- 闪避
+					{AuraID =  5277, UnitID = "player"}, 
 					-- 冲动
 					{AuraID = 13750, UnitID = "player"},
 					-- 剑刃乱舞
@@ -2033,6 +2035,7 @@ local function UpdateGruopValue()
 				GroupSelectValue = value
 				UpdateGruopValue()
 				UpdateAuraList()
+				AuraSelectValue = 1
 			end, 
 		}, 
 		AddNewGroup = {
