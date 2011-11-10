@@ -60,8 +60,8 @@ local function BuildPowerBar(self)
 end
 
 local function Override(self, event, unit, powerType)
-	if self.unit ~= unit or (powerType and (powerType ~= "HOLY_POWER" and powerType ~= "SOUL_SHARDS")) then return end
-	if self.HolyPower then
+	if self.unit ~= unit then return end
+	if self.HolyPower and (not powerType or powerType == "HOLY_POWER") then
 		local HolyPower = self.HolyPower
 		for i = 1, MAX_HOLY_POWER do
 			if i <= UnitPower(unit, SPELL_POWER_HOLY_POWER) then
@@ -71,7 +71,7 @@ local function Override(self, event, unit, powerType)
 			end
 		end
 	end
-	if self.SoulShards then
+	if self.SoulShards and (not powerType or powerType == "SOUL_SHARDS" ) then
 		local SoulShards = self.SoulShards
 		for i = 1, SHARD_BAR_NUM_SHARDS do
 			if i <= UnitPower(unit, SPELL_POWER_SOUL_SHARDS) then
@@ -80,6 +80,15 @@ local function Override(self, event, unit, powerType)
 				SoulShards[i]:SetAlpha(0.3)
 			end
 		end
+	end
+end
+local function Totems_PostUpdate(self, slot, haveTotem, name, start, duration)
+	local Totem = self[slot]
+	Totem:SetMinMaxValues(0, duration)
+	if haveTotem then
+		Totem:SetScript("OnUpdate", function(self) Totem:SetValue(GetTotemTimeLeft(slot)) end)
+	else
+		Totem:SetScript("OnUpdate", nil)
 	end
 end
 local function BuildClassPowerBar(self)
@@ -123,7 +132,7 @@ local function BuildClassPowerBar(self)
 	end
 	if DB.MyClass == "WARLOCK" then
 		local SoulShards = CreateFrame("Frame")
-		for i= 1, 3 do
+		for i = 1, 3 do
 			local SoulShard = CreateFrame("StatusBar", nil, self)
 			SoulShard:SetSize((self:GetWidth()-10)/3, 3)
 			SoulShard:SetStatusBarTexture(DB.Statusbar)
@@ -137,7 +146,7 @@ local function BuildClassPowerBar(self)
 			SoulShards[i] = SoulShard
 		end
 		self.SoulShards = Override
-		self.SoulShards.Override = SoulShards_Override
+		self.SoulShards.Override = Override
 	end
 	if DB.MyClass == "DRUID" then
 		local EclipseBar = CreateFrame("Frame", nil, self)
@@ -181,15 +190,7 @@ local function BuildClassPowerBar(self)
 		end
 		self.Totems = Totems
 		
-		local function Totems_PostUpdate(self, slot, haveTotem, name, start, duration)
-			local Totem = Totems[slot]
-			Totem:SetMinMaxValues(0, duration)
-			if haveTotem then
-				Totem:SetScript("OnUpdate", function(self) Totem:SetValue(GetTotemTimeLeft(slot)) end)
-			else
-				Totem:SetScript("OnUpdate", nil)
-			end
-		end
+
 		self.Totems.PostUpdate = Totems_PostUpdate
 	end
 	if DB.MyClass == "ROGUE" or DB.MyClass == "DRUID" then	

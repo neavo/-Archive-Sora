@@ -17,10 +17,10 @@ function Module:OnEnable()
 		MultiCastActionBarFrame.SetPoint = function() end
 	end
 	local Color = {
-		{0.5, 0.7,   0}, -- earth
-		{0.8, 0.4, 0.2}, -- fire
-		{0.3, 0.7, 0.8}, -- water
-		{0.8, 0.5, 0.9}, -- air
+		[EARTH_TOTEM_SLOT] = { 074/255, 142/255, 041/255 },
+		[FIRE_TOTEM_SLOT] = { 181/255, 073/255, 033/255 },
+		[WATER_TOTEM_SLOT] = { 057/255, 146/255, 181/255 },
+		[AIR_TOTEM_SLOT] = { 132/255, 056/255, 231/255 }
 	}
 	local TotemTime = {}
 	for i = 1, 4 do

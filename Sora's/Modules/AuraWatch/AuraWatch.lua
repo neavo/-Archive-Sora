@@ -100,7 +100,9 @@ local function SetTime(self)
 	end
 end
 
-local function UpdateAuraFrame(KEY, name, icon, count, duration, expires)
+local function UpdateAuraFrame(KEY, value, name, icon, count, duration, expires, caster)
+	if value.Caster and value.Caster ~= caster then return end
+	if value.Stack and count and value.Stack > count then return end
 	local Frame = Aura[KEY][Index]
 	if Frame then Frame:Show() end
 	if Frame.Icon then Frame.Icon:SetTexture(icon) end
@@ -150,14 +152,10 @@ local function UpdateFrame()
 				local name = GetSpellInfo(value.AuraID)
 				if UnitBuff(value.UnitID, name) then
 					local name, _, icon, count, _, duration, expires, caster = UnitBuff(value.UnitID, name)
-					if not (value.Caster and value.Caster ~= caster) or not (value.Stack and count and value.Stack > count) then
-						UpdateAuraFrame(KEY, name, icon, count, duration, expires)
-					end
+					UpdateAuraFrame(KEY, value, name, icon, count, duration, expires, caster)
 				elseif UnitDebuff(value.UnitID, name) then
 					local name, _, icon, count, _, duration, expires, caster = UnitDebuff(value.UnitID, name)
-					if not (value.Caster and value.Caster ~= caster) or not (value.Stack and count and value.Stack > count) then
-						UpdateAuraFrame(KEY, name, icon, count, duration, expires)
-					end
+					UpdateAuraFrame(KEY, value, name, icon, count, duration, expires, caster)
 				end
 			end
 			if value.SpellID then
