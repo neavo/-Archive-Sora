@@ -12,12 +12,21 @@ function Module:OnEnable()
 		Button:SetParent(DB.ActionBar)
 		Button:SetAlpha(0.3)
 		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
-		if i == 1 then
-			Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", ActionBarDB.ButtonSize*8+3*8, 5)
-		elseif ActionBarDB.MainBarLayout == 2 and i > 7 then
-			Button:SetPoint("TOP", _G["PetActionButton"..i-1], "BOTTOM", 0, -5)
-		else
-			Button:SetPoint("LEFT", _G["PetActionButton"..i-1], "RIGHT", 3, 0)
+		if ActionBarDB.MainBarLayout == 1 then
+			if i == 1 then
+				Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", ActionBarDB.ButtonSize*8+3*8, 5)
+			else
+				Button:SetPoint("LEFT", _G["PetActionButton"..i-1], "RIGHT", 3, 0)
+			end
+		end
+		if ActionBarDB.MainBarLayout == 2 then
+			if i == 1 then
+				Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", ActionBarDB.ButtonSize*6+3*6, 5)
+			elseif i > 7 then
+				Button:SetPoint("TOP", _G["PetActionButton"..i-1], "BOTTOM", 0, -5)
+			else
+				Button:SetPoint("LEFT", _G["PetActionButton"..i-1], "RIGHT", 3, 0)
+			end
 		end
 		Button:HookScript("OnEnter", function(self) 
 			for i = 1, NUM_PET_ACTION_SLOTS do _G["PetActionButton"..i]:SetAlpha(1) end
