@@ -13,7 +13,7 @@ function Module:OnEnable()
 		Button:SetAlpha(0.3)
 		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 		if i == 1 then
-			Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", ActionBarDB.ButtonSize*6+3*6, 5)
+			Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", ActionBarDB.ButtonSize*8+3*8, 5)
 		elseif ActionBarDB.MainBarLayout == 2 and i > 7 then
 			Button:SetPoint("TOP", _G["PetActionButton"..i-1], "BOTTOM", 0, -5)
 		else

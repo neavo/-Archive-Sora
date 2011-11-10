@@ -145,7 +145,7 @@ local function BuildClassPowerBar(self)
 			end
 			SoulShards[i] = SoulShard
 		end
-		self.SoulShards = Override
+		self.SoulShards = SoulShards
 		self.SoulShards.Override = Override
 	end
 	if DB.MyClass == "DRUID" then
