@@ -3,7 +3,7 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("ToTFrame")
+local Module = Sora:NewModule("TargetTarget")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -57,7 +57,7 @@ local function BuildRaidIcon(self)
 	self.RaidIcon = RaidIcon
 end
 
-local function BuildToTFrame(self, ...)
+local function BuildTargetTarget(self, ...)
 	-- RegisterForClicks
 	self.menu = BuildMenu
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
@@ -79,9 +79,9 @@ local function BuildToTFrame(self, ...)
 end
 
 function Module:OnInitialize()
-	if not (UnitFrameDB.ShowTargetFrame and UnitFrameDB.ShowToT) then return end
-	oUF:RegisterStyle("Sora", BuildToTFrame)
-	oUF:SetActiveStyle("Sora")
-	DB.ToTFrame = oUF:Spawn("targettarget")
-	DB.ToTFrame:SetPoint("TOPRIGHT", DB.TargetFrame, "BOTTOMRIGHT", 0, -10)
+	if not (UnitFrameDB.ShowTargetFrame and UnitFrameDB.ShowTargetTarget) then return end
+	oUF:RegisterStyle("SoraTargetTarget", BuildTargetTarget)
+	oUF:SetActiveStyle("SoraTargetTarget")
+	DB.TargetTarget = oUF:Spawn("targettarget", "oUF_SoraTargetTarget")
+	DB.TargetTarget:SetPoint("TOPRIGHT", DB.TargetFrame, "BOTTOMRIGHT", 0, -10)
 end

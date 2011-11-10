@@ -2,8 +2,8 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("PlayerFrame")
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Player")
+local Parent = nil
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -18,77 +18,118 @@ local function BuildMenu(self)
 	end
 end
 
+function Module:UpdateWidth(value)
+	if Parent then Parent:SetWidth(value) end
+	if Parent.Power then Parent.Health:SetWidth(value) end
+	if Parent.Power then Parent.Power:SetWidth(value) end
+end
+function Module:UpdateHealthHeight(value)
+	Parent:SetHeight(value+UnitFrameDB["PlayerPowerHeight"]+4)
+	Parent.Health:SetHeight(value)
+end
+function Module:UpdatePowerHeight(value)
+	Parent:SetHeight(value+UnitFrameDB["PlayerHealthHeight"]+4)
+	Parent.Power:SetHeight(value)
+end
 local function BuildHealthBar(self)
-	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetHeight(UnitFrameDB.PlayerHeight-2-4)
-	Bar:SetWidth(self:GetWidth())
-	Bar:SetPoint("TOP")
-	Bar.Shadow = S.MakeShadow(Bar, 3)
-	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(DB.Statusbar)
-	Bar.BG:SetAllPoints()
-	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
-	Bar.BG.multiplier = 0.2
+	local Health = CreateFrame("StatusBar", nil, self)
+	Health:SetStatusBarTexture(DB.Statusbar)
+	Health:SetPoint("TOP")
+	Health.Shadow = S.MakeShadow(Health, 3)
+	Health.BG = Health:CreateTexture(nil, "BACKGROUND")
+	Health.BG:SetTexture(DB.Statusbar)
+	Health.BG:SetAllPoints()
+	Health.BG:SetVertexColor(0.1, 0.1, 0.1)
+	Health.BG.multiplier = 0.2
 	
-	Bar.frequentUpdates = true
-	Bar.colorSmooth = true
-	Bar.colorClass = true
-	Bar.Smooth = true
-		
-	self.Health = Bar
+	Health.frequentUpdates = true
+	Health.colorSmooth = true
+	Health.colorClass = true
+	Health.Smooth = true
+	
+	self.Health = Health
+	Module:UpdateWidth(UnitFrameDB["PlayerWidth"])
+	Module:UpdateHealthHeight(UnitFrameDB["PlayerHealthHeight"])
 end
-
 local function BuildPowerBar(self)
-	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetWidth(self:GetWidth())
-	Bar:SetHeight(2)
-	Bar:SetPoint("BOTTOM")
-	Bar.Shadow = S.MakeShadow(Bar, 3)
-	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(DB.Statusbar)
-	Bar.BG:SetAllPoints()
-	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
-	Bar.BG.multiplier = 0.2
+	local Power = CreateFrame("StatusBar", nil, self)
+	Power:SetStatusBarTexture(DB.Statusbar)
+	Power:SetPoint("BOTTOM")
+	Power.Shadow = S.MakeShadow(Power, 3)
+	Power.BG = Power:CreateTexture(nil, "BACKGROUND")
+	Power.BG:SetTexture(DB.Statusbar)
+	Power.BG:SetAllPoints()
+	Power.BG:SetVertexColor(0.1, 0.1, 0.1)
+	Power.BG.multiplier = 0.2
 	
-	Bar.frequentUpdates = true
-	Bar.Smooth = true
-	Bar.colorPower = true
-		
-	self.Power = Bar
+	Power.frequentUpdates = true
+	Power.Smooth = true
+	Power.colorPower = true
+	
+	self.Power = Power
+	Module:UpdateWidth(UnitFrameDB["PlayerWidth"])
+	Module:UpdatePowerHeight(UnitFrameDB["PlayerPowerHeight"])
 end
 
-local function Override(self, event, unit, powerType)
-	if self.unit ~= unit then return end
-	if self.HolyPower and (not powerType or powerType == "HOLY_POWER") then
-		local HolyPower = self.HolyPower
-		for i = 1, MAX_HOLY_POWER do
-			if i <= UnitPower(unit, SPELL_POWER_HOLY_POWER) then
-				HolyPower[i]:SetAlpha(1)
+function Module:UpdateClassPowerBar()
+	if Parent.Runes then
+		local Runes = Parent.Runes
+		for i = 1, 6 do
+			Runes[i]:SetSize((Parent:GetWidth()-15)/6, 3)
+			if i == 1 then
+				Runes[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
 			else
-				HolyPower[i]:SetAlpha(0.3)
+				Runes[i]:SetPoint("LEFT", Runes[i-1], "RIGHT", 3, 0)
 			end
 		end
 	end
-	if self.SoulShards and (not powerType or powerType == "SOUL_SHARDS" ) then
-		local SoulShards = self.SoulShards
-		for i = 1, SHARD_BAR_NUM_SHARDS do
-			if i <= UnitPower(unit, SPELL_POWER_SOUL_SHARDS) then
-				SoulShards[i]:SetAlpha(1)
+	if Parent.HolyPower then
+		local HolyPower = Parent.HolyPower
+		for i = 1, 3 do
+			HolyPower[i]:SetSize((Parent:GetWidth()-10)/3, 3)
+			if i == 1 then
+				HolyPower[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
 			else
-				SoulShards[i]:SetAlpha(0.3)
+				HolyPower[i]:SetPoint("LEFT", HolyPower[i-1], "RIGHT", 5, 0)
 			end
 		end
 	end
-end
-local function Totems_PostUpdate(self, slot, haveTotem, name, start, duration)
-	local Totem = self[slot]
-	Totem:SetMinMaxValues(0, duration)
-	if haveTotem then
-		Totem:SetScript("OnUpdate", function(self) Totem:SetValue(GetTotemTimeLeft(slot)) end)
-	else
-		Totem:SetScript("OnUpdate", nil)
+	if Parent.SoulShards then
+		local SoulShards = Parent.SoulShards
+		for i = 1, 3 do
+			SoulShards[i]:SetSize((Parent:GetWidth()-10)/3, 3)
+			if i == 1 then
+				SoulShards[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
+			else
+				SoulShards[i]:SetPoint("LEFT", SoulShards[i-1], "RIGHT", 5, 0)
+			end
+		end
+	end
+	if Parent.Totems then
+		local Totems = Parent.Totems
+		for i = 1, 4 do
+			Totems[i]:SetSize((Parent:GetWidth()-15)/4, 3)
+			if i == 1 then
+				Totems[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
+			else
+				Totems[i]:SetPoint("LEFT", Totems[i-1], "RIGHT", 5, 0)
+			end	
+		end
+	end
+	if Parent.CPoints then	
+		local CPoints = Parent.CPoints
+		for i = 1, 5 do
+			CPoints[i]:SetSize((Parent:GetWidth() / 5)-5, 3)
+			if i == 1 then
+				CPoints[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
+			else
+				CPoints[i]:SetPoint("LEFT", CPoints[i-1], "RIGHT", 6, 0)
+			end
+		end
+	end
+	if Parent.EclipseBar then
+		local EclipseBar = Parent.EclipseBar
+		EclipseBar:SetSize(Parent:GetWidth(), 3)
 	end
 end
 local function BuildClassPowerBar(self)
@@ -96,18 +137,12 @@ local function BuildClassPowerBar(self)
 		local Runes = CreateFrame("Frame")
 		for i = 1, 6 do
 			local Rune = CreateFrame("StatusBar", nil, self)
-			Rune:SetSize((self:GetWidth()-15)/6, 3)
 			Rune:SetStatusBarTexture(DB.Statusbar)					
 			Rune.Shadow = S.MakeShadow(Rune, 3)
 			Rune.BG = Rune:CreateTexture(nil, "BACKGROUND")
 			Rune.BG:SetAllPoints()
 			Rune.BG:SetTexture(DB.Statusbar)
 			Rune.BG:SetVertexColor(0.1, 0.1, 0.1)	
-			if i == 1 then
-				Rune:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
-			else
-				Rune:SetPoint("LEFT", Runes[i-1], "RIGHT", 3, 0)
-			end
 			Runes[i] = Rune
 		end
 		self.Runes = Runes
@@ -116,55 +151,57 @@ local function BuildClassPowerBar(self)
 		local HolyPower = CreateFrame("Frame")
 		for i = 1, 3 do
 			local HolyShard = CreateFrame("StatusBar", nil, self)
-			HolyShard:SetSize((self:GetWidth()-10)/3, 3)
 			HolyShard:SetStatusBarTexture(DB.Statusbar)
 			HolyShard:SetStatusBarColor(0.9, 0.95, 0.33)		
 			HolyShard.Shadow = S.MakeShadow(HolyShard, 3)
-			if i == 1 then
-				HolyShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
-			else
-				HolyShard:SetPoint("TOPLEFT", HolyPower[i-1], "TOPRIGHT", 5, 0)
-			end
 			HolyPower[i] = HolyShard
 		end
 		self.HolyPower = HolyPower
-		self.HolyPower.Override = Override
+		self.HolyPower.Override = function(self, event, unit, powerType)
+			if self.unit ~= unit or (powerType and powerType ~= "HOLY_POWER")then return end
+			for i = 1, MAX_HOLY_POWER do
+				if i <= UnitPower(unit, SPELL_POWER_HOLY_POWER) then
+					self.HolyPower[i]:SetAlpha(1)
+				else
+					self.HolyPower[i]:SetAlpha(0.3)
+				end
+			end
+		end
 	end
 	if DB.MyClass == "WARLOCK" then
 		local SoulShards = CreateFrame("Frame")
 		for i = 1, 3 do
 			local SoulShard = CreateFrame("StatusBar", nil, self)
-			SoulShard:SetSize((self:GetWidth()-10)/3, 3)
 			SoulShard:SetStatusBarTexture(DB.Statusbar)
 			SoulShard:SetStatusBarColor(0.86, 0.44, 1)	
 			SoulShard.Shadow = S.MakeShadow(SoulShard, 3)
-			if i == 1 then
-				SoulShard:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
-			else
-				SoulShard:SetPoint("TOPLEFT", SoulShards[i-1], "TOPRIGHT", 5, 0)
-			end
 			SoulShards[i] = SoulShard
 		end
 		self.SoulShards = SoulShards
-		self.SoulShards.Override = Override
+		self.SoulShards.Override = function(self, event, unit, powerType)
+			if self.unit ~= unit or (powerType and powerType ~= "SOUL_SHARDS") then return end
+			for i = 1, SHARD_BAR_NUM_SHARDS do
+				if i <= UnitPower(unit, SPELL_POWER_SOUL_SHARDS) then
+					self.SoulShards[i]:SetAlpha(1)
+				else
+					self.SoulShards[i]:SetAlpha(0.3)
+				end
+			end
+		end
 	end
 	if DB.MyClass == "DRUID" then
 		local EclipseBar = CreateFrame("Frame", nil, self)
-		EclipseBar:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
-		EclipseBar:SetHeight(3)
-		EclipseBar:SetWidth(self:GetWidth())
+		EclipseBar:SetPoint("BOTTOM", self, "TOP", 0, 4)
 		EclipseBar.Shadow = S.MakeShadow(EclipseBar, 3)
+		EclipseBar.BG = EclipseBar:CreateTexture(nil, "BACKGROUND")
+		EclipseBar.BG:SetTexture(DB.Statusbar)
+		EclipseBar.BG:SetVertexColor(1, 1, 0.13)
+		EclipseBar.BG:SetAllPoints()
 		EclipseBar.LunarBar = CreateFrame("StatusBar", nil, EclipseBar)
-		EclipseBar.LunarBar:SetPoint("LEFT", 0, 0)
-		EclipseBar.LunarBar:SetSize(EclipseBar:GetWidth(), EclipseBar:GetHeight())
 		EclipseBar.LunarBar:SetStatusBarTexture(DB.Statusbar)
 		EclipseBar.LunarBar:SetStatusBarColor(0, 0.1, 0.7)
-		EclipseBar.SolarBar = CreateFrame("StatusBar", nil, EclipseBar)
-		EclipseBar.SolarBar:SetPoint("LEFT", EclipseBar.LunarBar:GetStatusBarTexture(), "RIGHT", 0, 0)
-		EclipseBar.SolarBar:SetSize(EclipseBar:GetWidth(), EclipseBar:GetHeight())
-		EclipseBar.SolarBar:SetStatusBarTexture(DB.Statusbar)
-		EclipseBar.SolarBar:SetStatusBarColor(1, 1, 0.13)
-		EclipseBar.Text = S.MakeFontString(EclipseBar.SolarBar, 9)
+		EclipseBar.LunarBar:SetAllPoints()
+		EclipseBar.Text = S.MakeFontString(EclipseBar, 9)
 		EclipseBar.Text:SetPoint("LEFT", EclipseBar.LunarBar:GetStatusBarTexture(), "RIGHT", -1, 0)
 		self:Tag(EclipseBar.Text, "[pereclipse]")
 		self.EclipseBar = EclipseBar
@@ -173,7 +210,6 @@ local function BuildClassPowerBar(self)
 		local Totems = CreateFrame("Frame", nil, self)
 		for i = 1, 4 do
 			local Totem = CreateFrame("StatusBar", nil, self)
-			Totem:SetSize((self:GetWidth()-15)/4, 3)
 			Totem:SetStatusBarTexture(DB.Statusbar)
 			Totem:SetStatusBarColor(unpack(oUF.colors.totems[i]))
 			Totem.BG = Totem:CreateTexture(nil, "BACKGROUND")
@@ -181,45 +217,35 @@ local function BuildClassPowerBar(self)
 			Totem.BG:SetTexture(DB.Statusbar)
 			Totem.BG:SetVertexColor(0.1, 0.1, 0.1)	
 			Totem.Shadow = S.MakeShadow(Totem, 3)
-			if i == 1 then
-				Totem:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
-			else
-				Totem:SetPoint("LEFT", Totems[i-1], "RIGHT", 5, 0)
-			end	
 			Totems[i] = Totem
 		end
 		self.Totems = Totems
-		
-
-		self.Totems.PostUpdate = Totems_PostUpdate
+		self.Totems.PostUpdate = function(self, slot, haveTotem, name, start, duration)
+			local Totem = self[slot]
+			Totem:SetMinMaxValues(0, duration)
+			Totem:SetScript("OnUpdate", haveTotem and function(self) self:SetValue(GetTotemTimeLeft(slot)) end or nil)
+		end
 	end
 	if DB.MyClass == "ROGUE" or DB.MyClass == "DRUID" then	
 		local CPoints = CreateFrame("Frame", nil, self)	
 		for i = 1, MAX_COMBO_POINTS do
 			local CPoint = CreateFrame("StatusBar", nil, self)
-			CPoint:SetSize((self:GetWidth() / 5)-5, 3)
 			CPoint:SetStatusBarTexture(DB.Statusbar)
 			CPoint:SetStatusBarColor(1, 0.9, 0)				
 			CPoint.Shadow = S.MakeShadow(CPoint, 3)
-			if i == 1 then
-				CPoint:SetPoint("BOTTOMLEFT", self.Health, "TOPLEFT", 0, 4)
-			else
-				CPoint:SetPoint("TOPLEFT", CPoints[i-1], "TOPRIGHT", 6, 0)
-			end
 			CPoints[i] = CPoint
 		end
 		self.CPoints = CPoints
 		self.CPoints.unit = "player"
 	end
+	Module:UpdateClassPowerBar()
 end
 
 local function BuildPortrait(self)
 	local Portrait = CreateFrame("PlayerModel", nil, self.Health)
 	Portrait:SetAlpha(0.3) 
 	Portrait.PostUpdate = function(self) 
-		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then
-			self:SetCamera(1)
-		end	
+		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then self:SetCamera(1) end	
 	end
 	Portrait:SetAllPoints()
 	Portrait:SetFrameLevel(self.Health:GetFrameLevel()+1)
@@ -290,67 +316,6 @@ local function BuildTags(self)
 	end)
 end
 
-local function BuildCastbar(self)
-	local Castbar = CreateFrame("StatusBar", nil, self)
-	Castbar:SetStatusBarTexture(DB.Statusbar)
-	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	if UnitFrameDB.PlayerCastbarMode == "Large" then
-		Castbar:SetHeight(20)
-		Castbar:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", 2, 35)
-		Castbar:SetPoint("BOTTOMRIGHT", DB.ActionBar, "TOPRIGHT", -30, 35)			
-	elseif UnitFrameDB.PlayerCastbarMode == "Small" then
-		Castbar:SetHeight(10)
-		Castbar:SetWidth(self:GetWidth()-70)
-		Castbar:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -14)
-	end
-	
-	Castbar.Shadow = S.MakeShadow(Castbar, 3)
-	Castbar.Shadow:SetBackdrop({
-		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
-		edgeFile = DB.GlowTex, edgeSize = 3, 
-	})
-	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
-	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
-	
-	Castbar.CastingColor = {95/255, 182/255, 255/255}
-	Castbar.CompleteColor = {20/255, 208/255, 0/255}
-	Castbar.FailColor = {255/255, 12/255, 0/255}
-	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
-
-	Castbar.Text = S.MakeFontString(Castbar, 10)
-	Castbar.Text:SetPoint("LEFT", 2, 0)
-	
-	Castbar.Time = S.MakeFontString(Castbar, 10)
-	Castbar.Time:SetPoint("RIGHT", -2, 0)
-	
-	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
-	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	Castbar.Icon:SetSize(20, 20)
-	Castbar.Icon:SetPoint("BOTTOMLEFT", Castbar, "BOTTOMRIGHT", 8, 0)
-	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
-
-	--latency (only for player unit)
-	Castbar.SafeZone = Castbar:CreateTexture(nil, "OVERLAY")
-	Castbar.SafeZone:SetTexture(DB.Statusbar)
-	Castbar.SafeZone:SetVertexColor(1, 0.1, 0, .6)
-	Castbar.SafeZone:SetPoint("TOPRIGHT")
-	Castbar.SafeZone:SetPoint("BOTTOMRIGHT")
-	Castbar.Lag = S.MakeFontString(Castbar, 10)
-	Castbar.Lag:SetPoint("CENTER", -2, 17)
-	Castbar.Lag:Hide()
-	self:RegisterEvent("UNIT_SPELLCAST_SENT", S.OnCastSent)
-
-	Castbar.OnUpdate = S.OnCastbarUpdate
-	Castbar.PostCastStart = S.PostCastStart
-	Castbar.PostChannelStart = S.PostCastStart
-	Castbar.PostCastStop = S.PostCastStop
-	Castbar.PostChannelStop = S.PostChannelStop
-	Castbar.PostCastFailed = S.PostCastFailed
-	Castbar.PostCastInterrupted = S.PostCastFailed
-
-	self.Castbar = Castbar
-end
-
 local function BuildRaidIcon(self)
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)
@@ -359,10 +324,6 @@ local function BuildRaidIcon(self)
 end
 
 local function BuildCombatIcon(self)
-	local Resting = self.Health:CreateTexture(nil, "OVERLAY")
-	Resting:SetSize(24, 24)
-	Resting:SetPoint("RIGHT", self.Health, "LEFT", -3, 0)
-	self.Resting = Resting
 	local Leader = self.Health:CreateTexture(nil, "OVERLAY")
 	Leader:SetSize(16, 16)
 	Leader:SetPoint("TOPLEFT", self.Health, -7, 9)
@@ -377,45 +338,27 @@ local function BuildCombatIcon(self)
 end
 
 local function BuildPlayerFrame(self, ...)
+	Parent = self
+	
 	-- RegisterForClicks
 	self.menu = BuildMenu
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
 	self:RegisterForClicks("AnyUp")
-	
-	-- Set Size and Scale
-	self:SetSize(UnitFrameDB.PlayerWidth, UnitFrameDB.PlayerHeight)
-	
-	-- BuildHealthBar
-	BuildHealthBar(self)
-	
-	-- BuildPowerBar
-	BuildPowerBar(self)
-	
-	-- BuildClassPowerBar
-	BuildClassPowerBar(self)
-	
-	-- BuildPortrait
-	BuildPortrait(self)
-	
-	-- BuildTags
-	BuildTags(self)
-	
-	-- BuildCastbar
-	if UnitFrameDB.PlayerCastbarMode ~= "None" then BuildCastbar(self) end
-	
-	-- BuildRaidMark
-	BuildRaidIcon(self)
-	
-	-- BuildCombatIcon
-	BuildCombatIcon(self)
 
+	BuildHealthBar(self)
+	BuildPowerBar(self)
+	BuildClassPowerBar(self)
+	BuildPortrait(self)
+	BuildTags(self)
+	BuildRaidIcon(self)
+	BuildCombatIcon(self)
 end
 
 function Module:OnInitialize()
 	if not UnitFrameDB.ShowPlayerFrame then return end
-	oUF:RegisterStyle("SoraPlayer", BuildPlayerFrame)
-	oUF:SetActiveStyle("SoraPlayer")
-	DB.PlayerFrame = oUF:Spawn("player")
-	MoveHandle.PlayerFrame = S.MakeMoveHandle(DB.PlayerFrame, "玩家框体", "PlayerFrame")
+	oUF:RegisterStyle("Player", BuildPlayerFrame)
+	oUF:SetActiveStyle("Player")
+	DB.PlayerFrame = oUF:Spawn("player", "oUF_SoraPlayer")
+	MoveHandle.PlayerFrame = S.MakeMoveHandle(DB.PlayerFrame, "玩家框体", "Player")
 end

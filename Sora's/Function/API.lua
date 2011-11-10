@@ -216,8 +216,8 @@ function S.MakeMoveHandle(Frame, Text, key)
 	return MoveHandle
 end
 
-
-
-
-
-
+function S.UpdateSize(obj, width, height)
+	if not obj then return end
+	if width then obj:SetWidth(width) end
+	if height then obj:SetHeight(height) end
+end

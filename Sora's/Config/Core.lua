@@ -115,6 +115,7 @@ function Module:OnEnable()
 			text = "欢迎使用|cff70C0F5Sora's|r\n\n请点击确定按钮加载默认配置\n",
 			button1 = OKAY,
 			OnAccept = function()
+				for _, value in pairs(C) do value.ResetToDefault() end
 				SetDefault()
 				ReloadUI()
 			end,

@@ -4,13 +4,15 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Script file="Player.lua"/>	
+	<Script file="PlayerCastbar.lua"/>	
 	<Script file="Pet.lua"/>	
 	<Script file="Target.lua"/>	
-	<Script file="ToT.lua"/>	
+	<Script file="TargetCastbar.lua"/>	
+	<Script file="TargetTarget.lua"/>	
 	<Script file="Focus.lua"/>
 	<Script file="FocusTarget.lua"/>
-	<Script file="Raid.lua"/>
 	<Script file="Boss.lua"/>
 	<Script file="BossTarget.lua"/>
+	<Script file="Raid.lua"/>
 	
 </Ui>

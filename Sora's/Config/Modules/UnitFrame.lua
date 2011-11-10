@@ -1,5 +1,8 @@
 ﻿-- Engines
-local S, C, _, _ = unpack(select(2, ...))
+local _, ns = ...
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
+
 
 -- Init
 C.UnitFrame = {}
@@ -9,20 +12,25 @@ function C.UnitFrame.LoadSettings()
 	local Default = {
 		-- 玩家框体
 		["ShowPlayerFrame"] = true,
-			["PlayerWidth"] = 220,
-			["PlayerHeight"] = 30,
 			["ShowPet"] = true,
-			["PlayerCastbarMode"] = "Small",
+			["PlayerWidth"] = 220,
+			["PlayerHealthHeight"] = 24,
+			["PlayerPowerHeight"] = 2,
 			["PlayerTagMode"] = "Short",
+			["PlayerCastbarEnable"] = true,
+			["PlayerCastbarWidth"] = 515,
+			["PlayerCastbarHeight"] = 20,
 		-- 目标框体
 		["ShowTargetFrame"] = true,
+			["ShowTargetTarget"] = true,
 			["TargetWidth"] = 220,
 			["TargetHeight"] = 30,
-			["ShowToT"] = true,
-			["TargetCastbarMode"] = "Small",
 			["TargetTagMode"] = "Short",
 			["TargetBuffMode"] = "Full",
 			["TargetDebuffMode"] = "Full",
+			["TargetCastbarEnable"] = true,
+			["TargetCastbarWidth"] = 515,
+			["TargetCastbarHeight"] = 20,
 		-- 焦点框体
 		["ShowFocusFrame"] = true,
 			["ShowFocusTarget"] = true,
@@ -66,50 +74,98 @@ function C.UnitFrame.BuildGUI()
 					get = function() return UnitFrameDB.ShowPlayerFrame end,
 					set = function(_, value) UnitFrameDB.ShowPlayerFrame = value end,
 				},
-				Gruop = {
+				Gruop_1 = {
 					type = "group", order = 2,
 					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["ShowPlayerFrame"],	
 					args = {
-						PlayerWidth = {
-							type = "range", order = 1,
-							name = "玩家框体单位宽度：", desc = "请输入玩家框体宽度",
-							min = 150, max = 400, step = 1,
-							disabled = not UnitFrameDB.ShowPlayerFrame,
-							get = function() return UnitFrameDB.PlayerWidth end,
-							set = function(_, value) UnitFrameDB.PlayerWidth = value end,
-						},
-						PlayerHeight = {
-							type = "range", order = 2,
-							name = "玩家框体高度：", desc = "请输入玩家框体高度",
-							min = 20, max = 100, step = 1,
-							disabled = not UnitFrameDB.ShowPlayerFrame,
-							get = function() return UnitFrameDB.PlayerHeight end,
-							set = function(_, value) UnitFrameDB.PlayerHeight = value end,
-						},
 						ShowPet = {
-							type = "toggle", order = 3,
+							type = "toggle", order = 1,
 							name = "显示宠物框体",
-							disabled = not UnitFrameDB.ShowPlayerFrame,
 							get = function() return UnitFrameDB.ShowPet end,
 							set = function(_, value) UnitFrameDB.ShowPet = value end,
 						},
-						PlayerCastbarMode = {
-							type = "select", order = 4,
-							name = "施法条：", desc = "请选择施法条模式",
-							disabled = not UnitFrameDB.ShowPlayerFrame,
-							values = {["None"] = "无", ["Small"] = "依附模式", ["Large"] = "独立模式"},
-							get = function() return UnitFrameDB.PlayerCastbarMode end,
-							set = function(_, value) UnitFrameDB.PlayerCastbarMode = value end,
+					}
+				},
+				Gruop_2 = {
+					type = "group", order = 3,
+					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["ShowPlayerFrame"],	
+					args = {
+						PlayerWidth = {
+							type = "range", order = 1,
+							name = "玩家框体宽度：", desc = "请输入玩家框体宽度",
+							min = 100, max = 600, step = 10,
+							get = function() return UnitFrameDB["PlayerWidth"] end,
+							set = function(_, value)
+								Sora:GetModule("Player"):UpdateWidth(value)
+								Sora:GetModule("Player"):UpdateClassPowerBar()
+								UnitFrameDB["PlayerWidth"] = value
+							end,
+						},
+						PlayerHealthHeight = {
+							type = "range", order = 2,
+							name = "玩家框体生命值高度：", desc = "请输入玩家框体生命值高度",
+							min = 2, max = 100, step = 2,
+							get = function() return UnitFrameDB["PlayerHealthHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("Player"):UpdateHealthHeight(value)
+								UnitFrameDB["PlayerHealthHeight"] = value
+							end,
+						},
+						PlayerPowerHeight = {
+							type = "range", order = 3,
+							name = "玩家框体能量值高度：", desc = "请输入玩家框体能量值高度",
+							min = 2, max = 100, step = 2,
+							get = function() return UnitFrameDB["PlayerPowerHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("Player"):UpdatePowerHeight(value)
+								UnitFrameDB["PlayerPowerHeight"] = value
+							end,
 						},
 						PlayerTagMode = {
-							type = "select", order = 5,
+							type = "select", order = 4,
 							name = "状态数值：", desc = "请选择状态数值模式",
-							disabled = not UnitFrameDB.ShowPlayerFrame,
 							values = {["Short"] = "缩略", ["Full"] = "详细"},
 							get = function() return UnitFrameDB.PlayerTagMode end,
 							set = function(_, value) UnitFrameDB.PlayerTagMode = value end,
 						},
 					},
+				},
+				Gruop_3 = {
+					type = "group", order = 4,
+					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["ShowPlayerFrame"],	
+					args = {
+						PlayerCastbarEnable = {
+							type = "toggle", order = 1,
+							name = "启用施法条",						
+							get = function() return UnitFrameDB["PlayerCastbarEnable"] end,
+							set = function(_, value) UnitFrameDB["PlayerCastbarEnable"] = value end,
+						},
+						PlayerCastbarWidth = {
+							type = "range", order = 2,
+							name = "施法条宽度：", desc = "请输入施法条宽度",
+							min = 100, max = 1000, step = 20,
+							disabled = not UnitFrameDB["PlayerCastbarEnable"],
+							get = function() return UnitFrameDB["PlayerCastbarWidth"] end,
+							set = function(_, value)
+								Sora:GetModule("PlayerCastbar"):UpdateWidth(value)
+								UnitFrameDB["PlayerCastbarWidth"] = value
+							end,
+						},
+						PlayerCastbarHeight = {
+							type = "range", order = 2,
+							name = "施法条高度：", desc = "请输入施法条高度",
+							min = 10, max = 100, step = 5,
+							disabled = not UnitFrameDB["PlayerCastbarEnable"],
+							get = function() return UnitFrameDB["PlayerCastbarHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("PlayerCastbar"):UpdateHeight(value)
+								UnitFrameDB["PlayerCastbarHeight"] = value
+							end,
+						}
+					}
 				}
 			}
 		}
@@ -123,65 +179,94 @@ function C.UnitFrame.BuildGUI()
 					get = function() return UnitFrameDB.ShowTargetFrame end,
 					set = function(_, value) UnitFrameDB.ShowTargetFrame = value end,
 				},
-				Gruop = {
+				Gruop_1 = {
 					type = "group", order = 2,
 					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["ShowTargetFrame"],
+					args = {
+						ShowTargetTarget = {
+							type = "toggle", order = 1,
+							name = "显示宠物框体",
+							get = function() return UnitFrameDB["ShowTargetTarget"] end,
+							set = function(_, value) UnitFrameDB["ShowTargetTarget"] = value end,
+						},
+					}
+				},
+				Gruop_2 = {
+					type = "group", order = 3,
+					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["ShowTargetFrame"],
 					args = {
 						TargetWidth = {
 							type = "range", order = 1,
 							name = "目标框体单位宽度：", desc = "请输入目标框体宽度",
 							min = 150, max = 400, step = 1,
-							disabled = not UnitFrameDB.ShowTargetFrame,
-							get = function() return UnitFrameDB.TargetWidth end,
-							set = function(_, value) UnitFrameDB.TargetWidth = value end,
+							get = function() return UnitFrameDB["TargetWidth"] end,
+							set = function(_, value) UnitFrameDB["TargetWidth"] = value end,
 						},
 						TargetHeight = {
 							type = "range", order = 2,
 							name = "目标框体单位高度：", desc = "请输入目标框体高度",
 							min = 20, max = 100, step = 1,
-							disabled = not UnitFrameDB.ShowTargetFrame,
-							get = function() return UnitFrameDB.TargetHeight end,
-							set = function(_, value) UnitFrameDB.TargetHeight = value end,
-						},
-						ShowToT = {
-							type = "toggle", order = 3,
-							name = "显示目标的目标框体",
-							disabled = not UnitFrameDB.ShowTargetFrame,
-							get = function() return UnitFrameDB.ShowToT end,
-							set = function(_, value) UnitFrameDB.ShowToT = value end,
-						},
-						TargetCastbarMode = {
-							type = "select", order = 4,
-							name = "施法条：", desc = "请选择施法条模式",
-							disabled = not UnitFrameDB.ShowTargetFrame,
-							values = {["None"] = "无", ["Small"] = "依附模式", ["Large"] = "独立模式"},
-							get = function() return UnitFrameDB.TargetCastbarMode end,
-							set = function(_, value) UnitFrameDB.TargetCastbarMode = value end,
+							get = function() return UnitFrameDB["TargetHeight"] end,
+							set = function(_, value) UnitFrameDB["TargetHeight"] = value end,
 						},
 						TargetTagMode = {
-							type = "select", order = 5,
+							type = "select", order = 3,
 							name = "状态数值：", desc = "请选择状态数值模式",
-							disabled = not UnitFrameDB.ShowTargetFrame,
 							values = {["Short"] = "缩略", ["Full"] = "详细"},
-							get = function() return UnitFrameDB.TargetTagMode end,
-							set = function(_, value) UnitFrameDB.TargetTagMode = value end,
+							get = function() return UnitFrameDB["TargetTagMode"] end,
+							set = function(_, value) UnitFrameDB["TargetTagMode"] = value end,
 						},
 						TargetBuffMode = {
-							type = "select", order = 6,
+							type = "select", order = 4,
 							name = "增益效果：", desc = "请选择增益效果显示模式",
-							disabled = not UnitFrameDB.ShowTargetFrame,
 							values = {["Full"] = "全部", ["OnlyPlayer"] = "仅显示玩家施放的", ["None"] = "无"},
-							get = function() return UnitFrameDB.TargetBuffMode end,
-							set = function(_, value) UnitFrameDB.TargetBuffMode = value end,
+							get = function() return UnitFrameDB["TargetBuffMode"] end,
+							set = function(_, value) UnitFrameDB["TargetBuffMode"] = value end,
 						},
 						TargetDebuffMode = {
-							type = "select", order = 7,
+							type = "select", order = 5,
 							name = "减益效果：", desc = "请选择减益效果显示模式",
-							disabled = not UnitFrameDB.ShowTargetFrame,
 							values = {["Full"] = "全部", ["OnlyPlayer"] = "仅显示玩家施放的", ["None"] = "无"},
-							get = function() return UnitFrameDB.TargetDebuffMode end,
-							set = function(_, value) UnitFrameDB.TargetDebuffMode = value end,
+							get = function() return UnitFrameDB["TargetDebuffMode"] end,
+							set = function(_, value) UnitFrameDB["TargetDebuffMode"] = value end,
 						},
+					}
+				},
+				Gruop_3 = {
+					type = "group", order = 4,
+					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["ShowTargetFrame"],	
+					args = {
+						TargetCastbarEnable = {
+							type = "toggle", order = 1,
+							name = "启用施法条",						
+							get = function() return UnitFrameDB["TargetCastbarEnable"] end,
+							set = function(_, value) UnitFrameDB["TargetCastbarEnable"] = value end,
+						},
+						TargetCastbarWidth = {
+							type = "range", order = 2,
+							name = "施法条宽度：", desc = "请输入施法条宽度",
+							min = 100, max = 1000, step = 20,
+							disabled = not UnitFrameDB["TargetCastbarEnable"],
+							get = function() return UnitFrameDB["TargetCastbarWidth"] end,
+							set = function(_, value)
+								Sora:GetModule("TargetCastbar"):UpdateWidth(value)
+								UnitFrameDB["TargetCastbarWidth"] = value
+							end,
+						},
+						TargetCastbarHeight = {
+							type = "range", order = 2,
+							name = "施法条高度：", desc = "请输入施法条高度",
+							min = 10, max = 100, step = 5,
+							disabled = not UnitFrameDB["TargetCastbarEnable"],
+							get = function() return UnitFrameDB["TargetCastbarHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("TargetCastbar"):UpdateHeight(value)
+								UnitFrameDB["TargetCastbarHeight"] = value
+							end,
+						}
 					}
 				}
 			}

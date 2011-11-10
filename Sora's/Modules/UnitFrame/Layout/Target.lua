@@ -2,8 +2,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("TargetFrame")
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("TargetFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -21,7 +20,7 @@ end
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
 	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetHeight(UnitFrameDB.PlayerHeight-2-4)
+	Bar:SetHeight(UnitFrameDB.TargetHeight-2-4)
 	Bar:SetWidth(self:GetWidth())
 	Bar:SetPoint("TOP")
 	Bar.Shadow = S.MakeShadow(Bar, 3)
@@ -137,56 +136,6 @@ local function BuildTags(self)
 	end)
 end
 
-local function BuildCastbar(self)
-	local Castbar = CreateFrame("StatusBar", nil, self)
-	Castbar:SetStatusBarTexture(DB.Statusbar)
-	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
-	if UnitFrameDB.TargetCastbarMode == "Large" then
-		Castbar:SetHeight(14)
-		Castbar:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", 54, 60)
-		Castbar:SetPoint("BOTTOMRIGHT", DB.ActionBar, "TOPRIGHT", -40, 60)			
-	else
-		Castbar:SetHeight(10)
-		Castbar:SetWidth(self:GetWidth()-70)
-		Castbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -14)
-	end
-	
-	Castbar.Shadow = S.MakeShadow(Castbar, 3)
-	Castbar.Shadow:SetBackdrop({
-		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
-		edgeFile = DB.GlowTex, edgeSize = 3, 
-	})
-	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
-	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
-	
-	Castbar.CastingColor = {95/255, 182/255, 255/255}
-	Castbar.CompleteColor = {20/255, 208/255, 0/255}
-	Castbar.FailColor = {255/255, 12/255, 0/255}
-	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
-
-	Castbar.Text = S.MakeFontString(Castbar, 10)
-	Castbar.Text:SetPoint("LEFT", 2, 0)
-	
-	Castbar.Time = S.MakeFontString(Castbar, 10)
-	Castbar.Time:SetPoint("RIGHT", -2, 0)
-	
-	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
-	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	Castbar.Icon:SetSize(14, 14)
-	Castbar.Icon:SetPoint("BOTTOMRIGHT", Castbar, "BOTTOMLEFT", -8, 0)
-	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
-
-	Castbar.OnUpdate = S.OnCastbarUpdate
-	Castbar.PostCastStart = S.PostCastStart
-	Castbar.PostChannelStart = S.PostCastStart
-	Castbar.PostCastStop = S.PostCastStop
-	Castbar.PostChannelStop = S.PostChannelStop
-	Castbar.PostCastFailed = S.PostCastFailed
-	Castbar.PostCastInterrupted = S.PostCastFailed
-
-	self.Castbar = Castbar
-end
-
 local function PostCreateIcon(self, Button)
 	Button.Shadow = S.MakeShadow(Button, 3)	
 	Button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
@@ -284,9 +233,6 @@ local function BuildTargetFrame(self, ...)
 	
 	-- BuildTags
 	BuildTags(self)
-	
-	-- BuildCastbar
-	if UnitFrameDB.TargetCastbarMode ~= "None" then BuildCastbar(self) end
 	
 	-- BuildBuff
 	if UnitFrameDB.TargetBuffMode ~= "None" then BuildBuff(self) end

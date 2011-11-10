@@ -7,8 +7,10 @@ C.MoveHandle = {}
 -- LoadSettings
 function C.MoveHandle.LoadSettings()
 	local Default = {
-		["PlayerFrame"] = {"CENTER", "UIParent", "CENTER", -270, -100},
+		["Player"] = {"CENTER", "UIParent", "CENTER", -270, -100},
+		["PlayerCastbar"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 115},
 		["TargetFrame"] = {"CENTER", "UIParent", "CENTER", 270, -100},
+		["TargetCastbar"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 140},
 		["FocusFrame"] = {"TOP", "UIParent", "TOP", 0, -100},
 		["PartyFrame"] = {"TOPLEFT", "UIParent", "TOPLEFT", 10, -250},
 		["RaidFrame"] = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -5, 5},
