@@ -1,11 +1,13 @@
 ﻿-- Engines
-local S, C, _, _ = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.AuraWatch = {}
+DB["Modules"]["AuraWatch"] = {}
+local Module = DB["Modules"]["AuraWatch"]
 
 -- LoadSettings
-function C.AuraWatch.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		-- 德鲁伊
 		["DRUID"] = {
@@ -95,6 +97,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -280,6 +284,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -464,6 +470,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -658,6 +666,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -859,6 +869,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -1028,6 +1040,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -1227,6 +1241,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -1424,6 +1440,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -1613,6 +1631,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -1805,6 +1825,8 @@ function C.AuraWatch.LoadSettings()
 					{AuraID = 64205, UnitID = "player"},
 					-- 能量洪流
 					{AuraID = 74241, UnitID = "player"},
+					-- 风行
+					{AuraID = 74243, UnitID = "player"},
 					-- 山崩
 					{AuraID = 74245, UnitID = "player"},
 					-- 亮纹
@@ -1907,7 +1929,7 @@ function C.AuraWatch.LoadSettings()
 end
 
 -- ResetToDefault
-function C.AuraWatch.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(AuraWatchDB)
 end
 
@@ -2108,11 +2130,11 @@ local function UpdateGruopValue()
 		}, 		
 	}
 end
-function C.AuraWatch.BuildGUI()
+function Module.BuildGUI()
 	UpdateGruopValue()
 	UpdateAuraList()
-	if Modules then
-		Modules["AuraWatch"] =  {
+	if DB["Config"] then
+		DB["Config"]["AuraWatch"] =  {
 			type = "group", order = 6,
 			name = "技能监视", 
 			args = {

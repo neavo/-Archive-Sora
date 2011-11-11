@@ -1,11 +1,13 @@
 ﻿-- Engines
-local S, C, _, _ = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.Reminder = {}
+DB["Modules"]["Reminder"] = {}
+local Module = DB["Modules"]["Reminder"]
 
 -- LoadSettings
-function C.Reminder.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		["ShowRaidBuff"] = true,
 		["ShowOnlyInParty"] = true,
@@ -24,14 +26,14 @@ function C.Reminder.LoadSettings()
 end
 
 -- ResetToDefault
-function C.Reminder.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(ReminderDB)
 end
 
 -- BuildGUI
-function C.Reminder.BuildGUI()
-	if Modules then
-		Modules["Reminder"] =  {
+function Module.BuildGUI()
+	if DB["Config"] then
+		DB["Config"]["Reminder"] =  {
 			type = "group", order = 7,
 			name = "缺失提醒",
 			args = {

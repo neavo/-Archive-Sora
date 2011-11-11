@@ -1,11 +1,13 @@
 ﻿-- Engines
-local S, C, _, _ = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.Nameplate = {}
+DB["Modules"]["Nameplate"] = {}
+local Module = DB["Modules"]["Nameplate"]
 
 -- LoadSettings
-function C.Nameplate.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		["Fontsize"] = 10,						-- 姓名板字体大小
 		["HPHeight"] = 5,						-- 姓名板血条高度
@@ -23,14 +25,14 @@ function C.Nameplate.LoadSettings()
 end
 
 -- ResetToDefault
-function C.Nameplate.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(NameplateDB)
 end
 
 -- BuildGUI
-function C.Nameplate.BuildGUI()
-	if Modules then
-		Modules["Nameplate"] =  {
+function Module.BuildGUI()
+	if DB["Config"] then
+		DB["Config"]["Nameplate"] =  {
 			type = "group", order = 2,
 			name = "姓名板",
 			args = {

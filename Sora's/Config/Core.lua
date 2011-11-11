@@ -2,10 +2,9 @@
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("Congig", "AceConsole-3.0")
-local Version = 1110
+local Version, SoraAutoWipe = 1110, false
 
--- SetDefault
-local function SetDefault()
+function Module:SetDefault()
 	SlashCmdList.AutoSet()
 	SoraVersion = Version
 	-- 聊天频道职业染色
@@ -35,14 +34,15 @@ local function SetDefault()
 end
 
 MoveHandle = {}
-Modules = {
+DB["Modules"] = {}
+DB["Config"] = {
 	ResetToDefault = {
 		type = "execute",
 		name = "恢复默认设置",
 		order = 1,
 		func = function()
-			for _, value in pairs(C) do value.ResetToDefault() end
-			SetDefault()
+			for _, value in pairs(DB["Modules"]) do value.ResetToDefault() end
+			Module:SetDefault()
 			ReloadUI()
 		end
 	},
@@ -74,12 +74,12 @@ Modules = {
 	},
 }
 
-local function ShowConfig()
+function Module:ShowConfig()
 	LibStub("AceConfigDialog-3.0"):SetDefaultSize("Sora's Config", 780, 550)
 	LibStub("AceConfigDialog-3.0"):Open("Sora's Config")
 end
 
-local function BuildGameMenuButton()
+function Module:BuildGameMenuButton()
 	local Button = CreateFrame("Button", "SoraGameMenuButton", GameMenuFrame, "GameMenuButtonTemplate")
 	S.Reskin(Button)
 	Button:SetSize(GameMenuButtonHelp:GetWidth(), GameMenuButtonHelp:GetHeight())
@@ -87,36 +87,34 @@ local function BuildGameMenuButton()
 	Button:SetPoint(GameMenuButtonHelp:GetPoint())
 	Button:SetScript("OnClick", function()
 		HideUIPanel(GameMenuFrame)
-		ShowConfig()
+		Module:ShowConfig()
 	end)
 	GameMenuButtonHelp:SetPoint("TOP", Button, "BOTTOM", 0, -1)
 	GameMenuFrame:SetHeight(GameMenuFrame:GetHeight()+Button:GetHeight())	
 end
 
--- OnInitialize
 function Module:OnInitialize()
-	for _, value in pairs(C) do
+	for _, value in pairs(DB["Modules"]) do
 		value.LoadSettings()
 		value.BuildGUI()
 	end
 	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("Sora's Config", {
 		type = "group",
 		name = "|cff70C0F5Sora's|r",
-		args = Modules,
+		args = DB["Config"],
 	})
-	Module:RegisterChatCommand("Sora", ShowConfig)
+	Module:RegisterChatCommand("Sora", "ShowConfig")
 end
 
--- OnEnable
 function Module:OnEnable()
-	BuildGameMenuButton()
-	if not SoraVersion or SoraVersion < Version then
+	Module:BuildGameMenuButton()
+	if not SoraVersion or (SoraVersion < Version and SoraAutoWipe) then
 		StaticPopupDialogs["Sora's"] = {
 			text = "欢迎使用|cff70C0F5Sora's|r\n\n请点击确定按钮加载默认配置\n",
 			button1 = OKAY,
 			OnAccept = function()
-				for _, value in pairs(C) do value.ResetToDefault() end
-				SetDefault()
+				for _, value in pairs(DB["Modules"]) do value.ResetToDefault() end
+				Module:SetDefault()
 				ReloadUI()
 			end,
 			timeout = 0,

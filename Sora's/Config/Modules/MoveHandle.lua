@@ -1,15 +1,17 @@
 ﻿-- Engines
-local S, C, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.MoveHandle = {}
+DB["Modules"]["MoveHandle"] = {}
+local Module = DB["Modules"]["MoveHandle"]
 
 -- LoadSettings
-function C.MoveHandle.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		["Player"] = {"CENTER", "UIParent", "CENTER", -270, -100},
 		["PlayerCastbar"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 115},
-		["TargetFrame"] = {"CENTER", "UIParent", "CENTER", 270, -100},
+		["Target"] = {"CENTER", "UIParent", "CENTER", 270, -100},
 		["TargetCastbar"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 140},
 		["FocusFrame"] = {"TOP", "UIParent", "TOP", 0, -100},
 		["PartyFrame"] = {"TOPLEFT", "UIParent", "TOPLEFT", 10, -250},
@@ -32,9 +34,9 @@ function C.MoveHandle.LoadSettings()
 end
 
 -- ResetToDefault
-function C.MoveHandle.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(MoveHandleDB)
 end
 
 -- BuildGUI
-function C.MoveHandle.BuildGUI() end
+function Module.BuildGUI() end

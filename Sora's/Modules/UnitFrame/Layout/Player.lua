@@ -5,19 +5,6 @@ local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Player")
 local Parent = nil
 
-local function BuildMenu(self)
-	local unit = self.unit:sub(1, -2)
-	local cunit = self.unit:gsub("^%l", string.upper)
-
-	if cunit == "Vehicle" then cunit = "Pet" end
-
-	if unit == "party" or unit == "partypet" then
-		ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-	elseif _G[cunit.."FrameDropDown"] then
-		ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-	end
-end
-
 function Module:UpdateWidth(value)
 	if Parent then Parent:SetWidth(value) end
 	if Parent.Power then Parent.Health:SetWidth(value) end
@@ -31,7 +18,7 @@ function Module:UpdatePowerHeight(value)
 	Parent:SetHeight(value+UnitFrameDB["PlayerHealthHeight"]+4)
 	Parent.Power:SetHeight(value)
 end
-local function BuildHealthBar(self)
+function Module:BuildHealthBar(self)
 	local Health = CreateFrame("StatusBar", nil, self)
 	Health:SetStatusBarTexture(DB.Statusbar)
 	Health:SetPoint("TOP")
@@ -51,7 +38,7 @@ local function BuildHealthBar(self)
 	Module:UpdateWidth(UnitFrameDB["PlayerWidth"])
 	Module:UpdateHealthHeight(UnitFrameDB["PlayerHealthHeight"])
 end
-local function BuildPowerBar(self)
+function Module:BuildPowerBar(self)
 	local Power = CreateFrame("StatusBar", nil, self)
 	Power:SetStatusBarTexture(DB.Statusbar)
 	Power:SetPoint("BOTTOM")
@@ -70,7 +57,6 @@ local function BuildPowerBar(self)
 	Module:UpdateWidth(UnitFrameDB["PlayerWidth"])
 	Module:UpdatePowerHeight(UnitFrameDB["PlayerPowerHeight"])
 end
-
 function Module:UpdateClassPowerBar()
 	if Parent.Runes then
 		local Runes = Parent.Runes
@@ -132,7 +118,7 @@ function Module:UpdateClassPowerBar()
 		EclipseBar:SetSize(Parent:GetWidth(), 3)
 	end
 end
-local function BuildClassPowerBar(self)
+function Module:BuildClassPowerBar(self)
 	if DB.MyClass == "DEATHKNIGHT" then
 		local Runes = CreateFrame("Frame")
 		for i = 1, 6 do
@@ -240,8 +226,7 @@ local function BuildClassPowerBar(self)
 	end
 	Module:UpdateClassPowerBar()
 end
-
-local function BuildPortrait(self)
+function Module:BuildPortrait(self)
 	local Portrait = CreateFrame("PlayerModel", nil, self.Health)
 	Portrait:SetAlpha(0.3) 
 	Portrait.PostUpdate = function(self) 
@@ -261,9 +246,7 @@ local function BuildPortrait(self)
 	
 	self.Portrait = Portrait
 end
-
-
-local function BuildTags(self)
+function Module:BuildTags(self)
 	local Name = S.MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
 	self:Tag(Name, "[Sora:color][name]")
@@ -306,21 +289,16 @@ local function BuildTags(self)
 		end
 	end)
 
-	function Module:UpdateTags(value)
-		Parent:Tag(HPTag, value == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
-		Parent:Tag(PPTag, value == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")
-	end
-	Module:UpdateTags(UnitFrameDB["PlayerTagMode"])	
+	self:Tag(HPTag, UnitFrameDB["PlayerTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
+	self:Tag(PPTag, UnitFrameDB["PlayerTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")
 end
-
-local function BuildRaidIcon(self)
+function Module:BuildRaidIcon(self)
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)
 	RaidIcon:SetPoint("CENTER", self.Health, "TOP", 0, 2)
 	self.RaidIcon = RaidIcon
 end
-
-local function BuildCombatIcon(self)
+function Module:BuildCombatIcon(self)
 	local Leader = self.Health:CreateTexture(nil, "OVERLAY")
 	Leader:SetSize(16, 16)
 	Leader:SetPoint("TOPLEFT", self.Health, -7, 9)
@@ -334,28 +312,39 @@ local function BuildCombatIcon(self)
 	self.MasterLooter = MasterLooter
 end
 
-local function BuildPlayerFrame(self, ...)
+local function BuildPlayer(self, ...)
 	Parent = self
 	
 	-- RegisterForClicks
-	self.menu = BuildMenu
+	self.menu = function(self)
+		local unit = self.unit:sub(1, -2)
+		local cunit = self.unit:gsub("^%l", string.upper)
+
+		if cunit == "Vehicle" then cunit = "Pet" end
+
+		if unit == "party" or unit == "partypet" then
+			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+		elseif _G[cunit.."FrameDropDown"] then
+			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+		end
+	end
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
 	self:RegisterForClicks("AnyUp")
 
-	BuildHealthBar(self)
-	BuildPowerBar(self)
-	BuildClassPowerBar(self)
-	BuildPortrait(self)
-	BuildTags(self)
-	BuildRaidIcon(self)
-	BuildCombatIcon(self)
+	Module:BuildHealthBar(self)
+	Module:BuildPowerBar(self)
+	Module:BuildClassPowerBar(self)
+	Module:BuildPortrait(self)
+	Module:BuildTags(self)
+	Module:BuildRaidIcon(self)
+	Module:BuildCombatIcon(self)
 end
 
 function Module:OnInitialize()
-	if not UnitFrameDB.ShowPlayerFrame then return end
-	oUF:RegisterStyle("Player", BuildPlayerFrame)
+	if not UnitFrameDB["PlayerEnable"] then return end
+	oUF:RegisterStyle("Player", BuildPlayer)
 	oUF:SetActiveStyle("Player")
-	DB.PlayerFrame = oUF:Spawn("player", "oUF_SoraPlayer")
-	MoveHandle.PlayerFrame = S.MakeMoveHandle(DB.PlayerFrame, "玩家框体", "Player")
+	DB.Player = oUF:Spawn("player", "oUF_SoraPlayer")
+	MoveHandle.Player = S.MakeMoveHandle(DB.Player, "玩家框体", "Player")
 end

@@ -1,11 +1,13 @@
 ﻿-- Engines
-local _, C, _, _ = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.Buff = {}
+DB["Modules"]["Buff"] = {}
+local Module = DB["Modules"]["Buff"]
 
 -- LoadSettings
-function C.Buff.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		["IconSize"] = 24,
 		["Spacing"] = 8,
@@ -22,14 +24,14 @@ function C.Buff.LoadSettings()
 end
 
 -- ResetToDefault
-function C.Buff.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(BuffDB)
 end
 
 -- BuildGUI
-function C.Buff.BuildGUI()
-	if Modules then
-		Modules["Buff"] =  {
+function Module.BuildGUI()
+	if DB["Config"] then
+		DB["Config"]["Buff"] =  {
 			type = "group", order = 4,
 			name = "增益效果",
 			args = {

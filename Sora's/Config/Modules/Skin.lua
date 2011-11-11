@@ -1,11 +1,13 @@
 ﻿-- Engines
-local _, C, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.Skin = {}
+DB["Modules"]["Skin"] = {}
+local Module = DB["Modules"]["Skin"]
 
 -- LoadSettings
-function C.Skin.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		["EnableDBMSkin"] = true,		-- 启用DBM皮肤
 	}
@@ -17,14 +19,14 @@ function C.Skin.LoadSettings()
 end
 
 -- ResetToDefault
-function C.Skin.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(SkinDB)
 end
 
 -- BuildGUI
-function C.Skin.BuildGUI()
-	if Modules then
-		Modules["Skin"] =  {
+function Module.BuildGUI()
+	if DB["Config"] then
+		DB["Config"]["Skin"] =  {
 			type = "group", order = 8,
 			name = "界面皮肤",
 			args = {

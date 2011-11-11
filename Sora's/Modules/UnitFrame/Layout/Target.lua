@@ -2,65 +2,64 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
-local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("TargetFrame")
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Target")
+local Parent = nil
 
-local function BuildMenu(self)
-	local unit = self.unit:sub(1, -2)
-	local cunit = self.unit:gsub("^%l", string.upper)
-
-	if cunit == "Vehicle" then cunit = "Pet" end
-
-	if unit == "party" or unit == "partypet" then
-		ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-	elseif _G[cunit.."FrameDropDown"] then
-		ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-	end
+function Module:UpdateWidth(value)
+	if Parent then Parent:SetWidth(value) end
+	if Parent.Power then Parent.Health:SetWidth(value) end
+	if Parent.Power then Parent.Power:SetWidth(value) end
 end
+function Module:UpdateHealthHeight(value)
+	Parent:SetHeight(value+UnitFrameDB["TargetPowerHeight"]+4)
+	Parent.Health:SetHeight(value)
+end
+function Module:UpdatePowerHeight(value)
+	Parent:SetHeight(value+UnitFrameDB["TargetHealthHeight"]+4)
+	Parent.Power:SetHeight(value)
+end
+function Module:BuildHealthBar(self)
+	local Health = CreateFrame("StatusBar", nil, self)
+	Health:SetStatusBarTexture(DB.Statusbar)
+	Health:SetPoint("TOP")
+	Health.Shadow = S.MakeShadow(Health, 3)
+	Health.BG = Health:CreateTexture(nil, "BACKGROUND")
+	Health.BG:SetTexture(DB.Statusbar)
+	Health.BG:SetAllPoints()
+	Health.BG:SetVertexColor(0.1, 0.1, 0.1)
+	Health.BG.multiplier = 0.2
 
-local function BuildHealthBar(self)
-	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetHeight(UnitFrameDB.TargetHeight-2-4)
-	Bar:SetWidth(self:GetWidth())
-	Bar:SetPoint("TOP")
-	Bar.Shadow = S.MakeShadow(Bar, 3)
-	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(DB.Statusbar)
-	Bar.BG:SetAllPoints()
-	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
-	Bar.BG.multiplier = 0.2
+	Health.frequentUpdates = true
+	Health.colorSmooth = true
+	Health.colorClass = true
+	Health.colorReaction = true
+	Health.Smooth = true
+	Health.colorTapping = true
 	
-	Bar.frequentUpdates = true
-	Bar.colorSmooth = true
-	Bar.colorClass = true
-	Bar.colorReaction = true
-	Bar.Smooth = true
-	Bar.colorTapping = true
-		
-	self.Health = Bar
+	self.Health = Health
+	Module:UpdateWidth(UnitFrameDB["TargetWidth"])
+	Module:UpdateHealthHeight(UnitFrameDB["TargetHealthHeight"])
 end
-
-local function BuildPowerBar(self)
-	local Bar = CreateFrame("StatusBar", nil, self)
-	Bar:SetStatusBarTexture(DB.Statusbar)
-	Bar:SetWidth(self:GetWidth())
-	Bar:SetHeight(2)
-	Bar:SetPoint("BOTTOM")
-	Bar.Shadow = S.MakeShadow(Bar, 3)
-	Bar.BG = Bar:CreateTexture(nil, "BACKGROUND")
-	Bar.BG:SetTexture(DB.Statusbar)
-	Bar.BG:SetAllPoints()
-	Bar.BG:SetVertexColor(0.1, 0.1, 0.1)
-	Bar.BG.multiplier = 0.2
+function Module:BuildPowerBar(self)
+	local Power = CreateFrame("StatusBar", nil, self)
+	Power:SetStatusBarTexture(DB.Statusbar)
+	Power:SetPoint("BOTTOM")
+	Power.Shadow = S.MakeShadow(Power, 3)
+	Power.BG = Power:CreateTexture(nil, "BACKGROUND")
+	Power.BG:SetTexture(DB.Statusbar)
+	Power.BG:SetAllPoints()
+	Power.BG:SetVertexColor(0.1, 0.1, 0.1)
+	Power.BG.multiplier = 0.2
 	
-	Bar.frequentUpdates = true
-	Bar.Smooth = true
-	Bar.colorPower = true
-		
-	self.Power = Bar
+	Power.frequentUpdates = true
+	Power.Smooth = true
+	Power.colorPower = true
+	
+	self.Power = Power
+	Module:UpdateWidth(UnitFrameDB["TargetWidth"])
+	Module:UpdatePowerHeight(UnitFrameDB["TargetPowerHeight"])
 end
-
-local function BuildPortrait(self)
+function Module:BuildPortrait(self)
 	local Portrait = CreateFrame("PlayerModel", nil, self.Health)
 	Portrait:SetAlpha(0.3) 
 	Portrait.PostUpdate = function(self) 
@@ -81,27 +80,16 @@ local function BuildPortrait(self)
 	end)
 	self.Portrait = Portrait
 end
-
-local function BuildTags(self)
+function Module:BuildTags(self)
 	local Name = S.MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
 	self:Tag(Name, "[Sora:level] [Sora:color][name]")
 	Name:SetAlpha(0)
 	local HPTag = S.MakeFontString(self.Health, 11)
 	HPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.TargetTagMode == "Short" then
-		self:Tag(HPTag, "[Sora:color][Sora:hp]")
-	else
-		self:Tag(HPTag, "[Sora:color][curhp] | [perhp]%")		
-	end
 	HPTag:SetAlpha(0)
 	local PPTag = S.MakeFontString(self.Power, 9)
 	PPTag:SetPoint("RIGHT", 0, 0)
-	if UnitFrameDB.TargetTagMode == "Short" then
-		self:Tag(PPTag, "[Sora:pp]")
-	else
-		self:Tag(PPTag, "[curpp] | [perpp]%")
-	end
 	PPTag:SetAlpha(0)
 
 	local Event = CreateFrame("Frame")
@@ -134,30 +122,12 @@ local function BuildTags(self)
 			UIFrameFadeOut(PPTag, 0.5, 1, 0)
 		end
 	end)
-end
 
-local function PostCreateIcon(self, Button)
-	Button.Shadow = S.MakeShadow(Button, 3)	
-	Button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	Button.icon:SetAllPoints()	
-	Button.count = S.MakeFontString(Button, 9)
-	Button.count:SetPoint("TOPRIGHT", Button, 3, 0)
+	self:Tag(HPTag, UnitFrameDB["TargetTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
+	self:Tag(PPTag, UnitFrameDB["TargetTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
 end
-  
-local function PostUpdateIcon(self, unit, Button, index, offset, filter, isDebuff)
-	local Caster = select(8, UnitAura(unit, index, Button.filter))
-	if Button.debuff then
-		if Caster == "player" or Caster == "vehicle" then
-			Button.icon:SetDesaturated(false)                 
-		elseif not UnitPlayerControlled(unit) then -- If Unit is Player Controlled dont desaturate debuffs
-			Button:SetBackdropColor(0, 0, 0)
-			Button.overlay:SetVertexColor(0.3, 0.3, 0.3)      
-			Button.icon:SetDesaturated(true)  
-		end
-	end
-end
-
-local function BuildBuff(self)
+function Module:BuildBuff(self)
+	if UnitFrameDB["TargetBuffMode"] == "None" then return end
 	local Buffs = CreateFrame("Frame", nil, self)
 	Buffs.onlyShowPlayer = (UnitFrameDB.TargetBuffMode == "OnlyPlayer")
 	Buffs:SetPoint("TOPLEFT", self, "TOPRIGHT", 8, 0)
@@ -169,12 +139,29 @@ local function BuildBuff(self)
 	Buffs.spacing = 5
 	Buffs:SetWidth(Buffs.size*6+Buffs.spacing*5)
 	Buffs:SetHeight(Buffs.size*3+Buffs.spacing*2)
-	Buffs.PostCreateIcon = PostCreateIcon
-	Buffs.PostUpdateIcon = PostUpdateIcon
+	Buffs.PostCreateIcon = function(self, Button)
+		Button.Shadow = S.MakeShadow(Button, 3)	
+		Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+		Button.icon:SetAllPoints()	
+		Button.count = S.MakeFontString(Button, 9)
+		Button.count:SetPoint("TOPRIGHT", 3, 0)
+	end
+	Buffs.PostUpdateIcon = function(self, unit, Button, index, offset, filter, isDebuff)
+		local Caster = select(8, UnitAura(unit, index, Button.filter))
+		if Button.debuff then
+			if Caster == "player" or Caster == "vehicle" then
+				Button.icon:SetDesaturated(false)                 
+			elseif not UnitPlayerControlled(unit) then -- If Unit is Player Controlled dont desaturate debuffs
+				Button:SetBackdropColor(0, 0, 0)
+				Button.overlay:SetVertexColor(0.3, 0.3, 0.3)      
+				Button.icon:SetDesaturated(true)  
+			end
+		end
+	end
 	self.Buffs = Buffs
 end
-
-local function BuildDebuff(self)
+function Module:BuildDebuff(self)
+	if UnitFrameDB["TargetDebuffMode"] == "None" then return end
 	local Debuffs = CreateFrame("Frame", nil, self)
 	Debuffs.size = 20
 	Debuffs.num = 27
@@ -186,19 +173,34 @@ local function BuildDebuff(self)
 	Debuffs.initialAnchor = "TOPLEFT"
 	Debuffs["growth-x"] = "RIGHT"
 	Debuffs["growth-y"] = "DOWN"
-	Debuffs.PostCreateIcon = PostCreateIcon
-	Debuffs.PostUpdateIcon = PostUpdateIcon
+	Debuffs.PostCreateIcon = function(self, Button)
+		Button.Shadow = S.MakeShadow(Button, 3)	
+		Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+		Button.icon:SetAllPoints()	
+		Button.count = S.MakeFontString(Button, 9)
+		Button.count:SetPoint("TOPRIGHT", 3, 0)
+	end
+	Debuffs.PostUpdateIcon = function(self, unit, Button, index, offset, filter, isDebuff)
+		local Caster = select(8, UnitAura(unit, index, Button.filter))
+		if Button.debuff then
+			if Caster == "player" or Caster == "vehicle" then
+				Button.icon:SetDesaturated(false)                 
+			elseif not UnitPlayerControlled(unit) then -- If Unit is Player Controlled dont desaturate debuffs
+				Button:SetBackdropColor(0, 0, 0)
+				Button.overlay:SetVertexColor(0.3, 0.3, 0.3)      
+				Button.icon:SetDesaturated(true)  
+			end
+		end
+	end
 	self.Debuffs = Debuffs
 end
-
-local function BuildRaidIcon(self)
+function Module:BuildRaidIcon(self)
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)
 	RaidIcon:SetPoint("CENTER", self.Health, "TOP", 0, 2)
 	self.RaidIcon = RaidIcon
 end
-
-local function BuildCombatIcon(self)
+function Module:BuildCombatIcon(self)
 	local Leader = self.Health:CreateTexture(nil, "OVERLAY")
 	Leader:SetSize(16, 16)
 	Leader:SetPoint("TOPLEFT", self.Health, -7, 9)
@@ -212,45 +214,40 @@ local function BuildCombatIcon(self)
 	self.MasterLooter = MasterLooter
 end
 
-local function BuildTargetFrame(self, ...)
+local function BuildTarget(self, ...)
+	Parent = self
+
 	-- RegisterForClicks
-	self.menu = BuildMenu
+	self.menu = function(self)
+		local unit = self.unit:sub(1, -2)
+		local cunit = self.unit:gsub("^%l", string.upper)
+
+		if cunit == "Vehicle" then cunit = "Pet" end
+
+		if unit == "party" or unit == "partypet" then
+			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+		elseif _G[cunit.."FrameDropDown"] then
+			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+		end
+	end
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
 	self:RegisterForClicks("AnyUp")
 	
-	-- Set Size and Scale
-	self:SetSize(UnitFrameDB.TargetWidth, UnitFrameDB.TargetHeight)
-	
-	-- BuildHealthBar
-	BuildHealthBar(self)
-	
-	-- BuildPowerBar
-	BuildPowerBar(self)
-	
-	-- BuildPortrait
-	BuildPortrait(self)
-	
-	-- BuildTags
-	BuildTags(self)
-	
-	-- BuildBuff
-	if UnitFrameDB.TargetBuffMode ~= "None" then BuildBuff(self) end
-	
-	-- BuildDebuff
-	if UnitFrameDB.TargetDebuffMode ~= "None" then BuildDebuff(self) end
-	
-	-- BuildRaidMark
-	BuildRaidIcon(self)
-	
-	-- BuildCombatIcon
-	BuildCombatIcon(self)
+	Module:BuildHealthBar(self)
+	Module:BuildPowerBar(self)
+	Module:BuildPortrait(self)
+	Module:BuildTags(self)
+	Module:BuildBuff(self)
+	Module:BuildDebuff(self)
+	Module:BuildRaidIcon(self)
+	Module:BuildCombatIcon(self)
 end
 
 function Module:OnInitialize()
-	if not UnitFrameDB.ShowTargetFrame then return end
-	oUF:RegisterStyle("SoraTarget", BuildTargetFrame)
-	oUF:SetActiveStyle("SoraTarget")
-	DB.TargetFrame = oUF:Spawn("target")
-	MoveHandle.TargetFrame = S.MakeMoveHandle(DB.TargetFrame, "目标框体", "TargetFrame")
+	if not UnitFrameDB["TargetEnable"] then return end
+	oUF:RegisterStyle("Target", BuildTarget)
+	oUF:SetActiveStyle("Target")
+	DB.Target = oUF:Spawn("target", "oUF_SoraTarget")
+	MoveHandle.Target = S.MakeMoveHandle(DB.Target, "目标框体", "Target")
 end

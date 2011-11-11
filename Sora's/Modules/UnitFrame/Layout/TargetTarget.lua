@@ -2,8 +2,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("TargetTarget")
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("TargetTarget")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -79,9 +78,9 @@ local function BuildTargetTarget(self, ...)
 end
 
 function Module:OnInitialize()
-	if not (UnitFrameDB.ShowTargetFrame and UnitFrameDB.ShowTargetTarget) then return end
-	oUF:RegisterStyle("SoraTargetTarget", BuildTargetTarget)
-	oUF:SetActiveStyle("SoraTargetTarget")
+	if not (UnitFrameDB["TargetTargetEnable"] and UnitFrameDB["TargetEnable"]) then return end
+	oUF:RegisterStyle("TargetTarget", BuildTargetTarget)
+	oUF:SetActiveStyle("TargetTarget")
 	DB.TargetTarget = oUF:Spawn("targettarget", "oUF_SoraTargetTarget")
-	DB.TargetTarget:SetPoint("TOPRIGHT", DB.TargetFrame, "BOTTOMRIGHT", 0, -10)
+	DB.TargetTarget:SetPoint("TOPRIGHT", DB.Target, "BOTTOMRIGHT", 0, -10)
 end

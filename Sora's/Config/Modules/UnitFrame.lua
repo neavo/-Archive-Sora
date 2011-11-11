@@ -1,18 +1,17 @@
 ﻿-- Engines
-local _, ns = ...
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
-
 -- Init
-C.UnitFrame = {}
+DB["Modules"]["UnitFrame"] = {}
+local Module = DB["Modules"]["UnitFrame"]
 
 -- LoadSettings
-function C.UnitFrame.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		-- 玩家框体
-		["ShowPlayerFrame"] = true,
-			["ShowPet"] = true,
+		["PlayerEnable"] = true,
+			["PetEnable"] = true,
 			["PlayerWidth"] = 220,
 			["PlayerHealthHeight"] = 24,
 			["PlayerPowerHeight"] = 2,
@@ -21,10 +20,11 @@ function C.UnitFrame.LoadSettings()
 			["PlayerCastbarWidth"] = 515,
 			["PlayerCastbarHeight"] = 20,
 		-- 目标框体
-		["ShowTargetFrame"] = true,
-			["ShowTargetTarget"] = true,
+		["TargetEnable"] = true,
+			["TargetTargetEnable"] = true,
 			["TargetWidth"] = 220,
-			["TargetHeight"] = 30,
+			["TargetHealthHeight"] = 24,
+			["TargetPowerHeight"] = 2,
 			["TargetTagMode"] = "Short",
 			["TargetBuffMode"] = "Full",
 			["TargetDebuffMode"] = "Full",
@@ -54,17 +54,18 @@ function C.UnitFrame.LoadSettings()
 	for key, value in pairs(Default) do
 		if UnitFrameDB[key] == nil then UnitFrameDB[key] = value end
 	end
+	wipe(Default)
 end
 
 -- ResetToDefault
-function C.UnitFrame.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(UnitFrameDB)
 end
 
 -- BuildGUI
-function C.UnitFrame.BuildGUI()
-	if Modules then
-		Modules["PlayerFrame"] =  {
+function Module.BuildGUI()
+	if DB["Config"] then
+		DB["Config"]["PlayerFrame"] =  {
 			type = "group", order = 9,
 			name = "玩家框体",
 			args = {
@@ -72,31 +73,31 @@ function C.UnitFrame.BuildGUI()
 					type = "group", order = 1,
 					name = " ", guiInline = true,
 					args = {
-						ShowPlayerFrame = {
+						PlayerEnable = {
 							type = "toggle", order = 1,
 							name = "启用玩家框体",		
-							get = function() return UnitFrameDB.ShowPlayerFrame end,
-							set = function(_, value) UnitFrameDB.ShowPlayerFrame = value end,
+							get = function() return UnitFrameDB["PlayerEnable"] end,
+							set = function(_, value) UnitFrameDB["PlayerEnable"] = value end,
 						},
 					}
 				},
 				Gruop_2 = {
 					type = "group", order = 2,
 					name = " ", guiInline = true,
-					disabled = not UnitFrameDB["ShowPlayerFrame"],	
+					disabled = not UnitFrameDB["PlayerEnable"],	
 					args = {
-						ShowPet = {
+						PetEnable = {
 							type = "toggle", order = 1,
-							name = "显示宠物框体",
-							get = function() return UnitFrameDB.ShowPet end,
-							set = function(_, value) UnitFrameDB.ShowPet = value end,
+							name = "启用宠物框体",
+							get = function() return UnitFrameDB["PetEnable"] end,
+							set = function(_, value) UnitFrameDB["PetEnable"]= value end,
 						},
 					}
 				},
 				Gruop_3 = {
 					type = "group", order = 3,
 					name = " ", guiInline = true,
-					disabled = not UnitFrameDB["ShowPlayerFrame"],	
+					disabled = not UnitFrameDB["PlayerEnable"],	
 					args = {
 						PlayerWidth = {
 							type = "range", order = 1,
@@ -134,16 +135,14 @@ function C.UnitFrame.BuildGUI()
 							name = "状态数值：", desc = "请选择状态数值模式",
 							values = {["Short"] = "缩略", ["Full"] = "详细"},
 							get = function() return UnitFrameDB["PlayerTagMode"] end,
-							set = function(_, value)
-								UnitFrameDB["PlayerTagMode"] = value
-							end,
+							set = function(_, value) UnitFrameDB["PlayerTagMode"] = value end,
 						},
 					},
 				},
 				Gruop_4 = {
 					type = "group", order = 4,
 					name = " ", guiInline = true,
-					disabled = not UnitFrameDB["ShowPlayerFrame"],	
+					disabled = not UnitFrameDB["PlayerEnable"],	
 					args = {
 						PlayerCastbarEnable = {
 							type = "toggle", order = 1,
@@ -177,64 +176,86 @@ function C.UnitFrame.BuildGUI()
 				}
 			}
 		}
-		Modules["TargetFrame"] =  {
+		DB["Config"]["TargetFrame"] =  {
 			type = "group", order = 10,
 			name = "目标框体",
 			args = {
-				ShowTargetFrame = {
-					type = "toggle", order = 1,
-					name = "启用目标框体",		
-					get = function() return UnitFrameDB.ShowTargetFrame end,
-					set = function(_, value) UnitFrameDB.ShowTargetFrame = value end,
-				},
 				Gruop_1 = {
-					type = "group", order = 2,
+					type = "group", order = 1,
 					name = " ", guiInline = true,
-					disabled = not UnitFrameDB["ShowTargetFrame"],
 					args = {
-						ShowTargetTarget = {
+						TargetEnable = {
 							type = "toggle", order = 1,
-							name = "显示宠物框体",
-							get = function() return UnitFrameDB["ShowTargetTarget"] end,
-							set = function(_, value) UnitFrameDB["ShowTargetTarget"] = value end,
+							name = "启用目标框体",		
+							get = function() return UnitFrameDB["TargetEnable"] end,
+							set = function(_, value) UnitFrameDB["TargetEnable"] = value end,
 						},
 					}
 				},
 				Gruop_2 = {
+					type = "group", order = 2,
+					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["TargetEnable"],
+					args = {
+						TargetTargetEnable = {
+							type = "toggle", order = 1,
+							name = "启用目标的目标框体",
+							get = function() return UnitFrameDB["TargetTargetEnable"] end,
+							set = function(_, value) UnitFrameDB["TargetTargetEnable"] = value end,
+						},
+					}
+				},
+				Gruop_3 = {
 					type = "group", order = 3,
 					name = " ", guiInline = true,
-					disabled = not UnitFrameDB["ShowTargetFrame"],
+					disabled = not UnitFrameDB["TargetEnable"],
 					args = {
 						TargetWidth = {
 							type = "range", order = 1,
-							name = "目标框体单位宽度：", desc = "请输入目标框体宽度",
-							min = 150, max = 400, step = 1,
+							name = "目标框体宽度：", desc = "请输入目标框体宽度",
+							min = 100, max = 600, step = 10,
 							get = function() return UnitFrameDB["TargetWidth"] end,
-							set = function(_, value) UnitFrameDB["TargetWidth"] = value end,
+							set = function(_, value)
+								Sora:GetModule("Target"):UpdateWidth(value)
+								UnitFrameDB["TargetWidth"] = value
+							end,
 						},
-						TargetHeight = {
+						TargetHealthHeight = {
 							type = "range", order = 2,
-							name = "目标框体单位高度：", desc = "请输入目标框体高度",
-							min = 20, max = 100, step = 1,
-							get = function() return UnitFrameDB["TargetHeight"] end,
-							set = function(_, value) UnitFrameDB["TargetHeight"] = value end,
+							name = "目标框体生命值高度：", desc = "请输入目标框体生命值高度",
+							min = 2, max = 100, step = 2,
+							get = function() return UnitFrameDB["TargetHealthHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("Target"):UpdateHealthHeight(value)
+								UnitFrameDB["TargetHealthHeight"] = value
+							end,
+						},
+						TargetPowerHeight = {
+							type = "range", order = 3,
+							name = "目标框体能量值高度：", desc = "请输入目标框体能量值高度",
+							min = 2, max = 100, step = 2,
+							get = function() return UnitFrameDB["TargetPowerHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("Target"):UpdatePowerHeight(value)
+								UnitFrameDB["TargetPowerHeight"] = value
+							end,
 						},
 						TargetTagMode = {
-							type = "select", order = 3,
+							type = "select", order = 4,
 							name = "状态数值：", desc = "请选择状态数值模式",
 							values = {["Short"] = "缩略", ["Full"] = "详细"},
 							get = function() return UnitFrameDB["TargetTagMode"] end,
 							set = function(_, value) UnitFrameDB["TargetTagMode"] = value end,
 						},
 						TargetBuffMode = {
-							type = "select", order = 4,
+							type = "select", order = 5,
 							name = "增益效果：", desc = "请选择增益效果显示模式",
 							values = {["Full"] = "全部", ["OnlyPlayer"] = "仅显示玩家施放的", ["None"] = "无"},
 							get = function() return UnitFrameDB["TargetBuffMode"] end,
 							set = function(_, value) UnitFrameDB["TargetBuffMode"] = value end,
 						},
 						TargetDebuffMode = {
-							type = "select", order = 5,
+							type = "select", order = 6,
 							name = "减益效果：", desc = "请选择减益效果显示模式",
 							values = {["Full"] = "全部", ["OnlyPlayer"] = "仅显示玩家施放的", ["None"] = "无"},
 							get = function() return UnitFrameDB["TargetDebuffMode"] end,
@@ -242,10 +263,10 @@ function C.UnitFrame.BuildGUI()
 						},
 					}
 				},
-				Gruop_3 = {
+				Gruop_4 = {
 					type = "group", order = 4,
 					name = " ", guiInline = true,
-					disabled = not UnitFrameDB["ShowTargetFrame"],	
+					disabled = not UnitFrameDB["TargetEnable"],	
 					args = {
 						TargetCastbarEnable = {
 							type = "toggle", order = 1,
@@ -279,7 +300,7 @@ function C.UnitFrame.BuildGUI()
 				}
 			}
 		}
-		Modules["FocusFrame"] =  {
+		DB["Config"]["FocusFrame"] =  {
 			type = "group", order = 11,
 			name = "焦点框体",
 			args = {
@@ -327,7 +348,7 @@ function C.UnitFrame.BuildGUI()
 				}
 			}
 		}
-		Modules["BossFrame"] =  {
+		DB["Config"]["BossFrame"] =  {
 			type = "group", order = 12,
 			name = "首领框体",
 			args = {
@@ -373,7 +394,7 @@ function C.UnitFrame.BuildGUI()
 				}
 			}
 		}
-		Modules["RaidFrame"] =  {
+		DB["Config"]["RaidFrame"] =  {
 			type = "group", order = 13,
 			name = "团队框体",
 			args = {	

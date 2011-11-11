@@ -2,8 +2,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("PetFrame")
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("PetFrame")
 
 local function BuildMenu(self)
 	local unit = self.unit:sub(1, -2)
@@ -59,7 +58,7 @@ local function BuildRaidIcon(self)
 	self.RaidIcon = RaidIcon
 end
 
-local function BuildPetFrame(self, ...)
+local function BuildPet(self, ...)
 	-- RegisterForClicks
 	self.menu = BuildMenu
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
@@ -81,9 +80,9 @@ local function BuildPetFrame(self, ...)
 end
 
 function Module:OnInitialize()
-	if not (UnitFrameDB.ShowPet and UnitFrameDB.ShowPlayerFrame)then return end
-	oUF:RegisterStyle("SoraPet", BuildPetFrame)
+	if not (UnitFrameDB["PetEnable"] and UnitFrameDB["PlayerEnable"])then return end
+	oUF:RegisterStyle("SoraPet", BuildPet)
 	oUF:SetActiveStyle("SoraPet")
 	DB.PetFrame = oUF:Spawn("pet")
-	DB.PetFrame:SetPoint("TOPLEFT", DB.PlayerFrame, "BOTTOMLEFT", 0, -10)
+	DB.PetFrame:SetPoint("TOPLEFT", DB.Player, "BOTTOMLEFT", 0, -10)
 end

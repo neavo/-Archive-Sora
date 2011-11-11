@@ -1,11 +1,13 @@
 ﻿-- Engines
-local S, C, _, _ = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.Tooltip = {}
+DB["Modules"]["Tooltip"] = {}
+local Module = DB["Modules"]["Tooltip"]
 
 -- LoadSettings
-function C.Tooltip.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		["Cursor"] = true,
 		["HideInCombat"] = true,
@@ -18,14 +20,14 @@ function C.Tooltip.LoadSettings()
 end
 
 -- ResetToDefault
-function C.Tooltip.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(TooltipDB)
 end
 
 -- BuildGUI
-function C.Tooltip.BuildGUI()
-	if Modules then
-		Modules["Tooltip"] =  {
+function Module.BuildGUI()
+	if DB["Config"] then
+		DB["Config"]["Tooltip"] =  {
 			type = "group", order = 3,
 			name = "鼠标提示",
 			args = {

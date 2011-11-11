@@ -1,11 +1,13 @@
 ﻿-- Engines
-local _, C, _, DB = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.Threat = {}
+DB["Modules"]["Threat"] = {}
+local Module = DB["Modules"]["Threat"]
 
 -- LoadSettings
-function C.Threat.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		["ThreatBarWidth"] = 220,								-- 仇恨条宽度
 		["NameTextL"] = 3,										-- 姓名长度(单位:字)
@@ -20,14 +22,14 @@ function C.Threat.LoadSettings()
 end
 
 -- ResetToDefault
-function C.Threat.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(ThreatDB)
 end
 
 -- BuildGUI
-function C.Threat.BuildGUI()
-	if Modules then
-		Modules["Threat"] =  {
+function Module.BuildGUI()
+	if DB["Config"] then
+		DB["Config"]["Threat"] =  {
 			type = "group", order = 5,
 			name = "仇恨监视",
 			args = {

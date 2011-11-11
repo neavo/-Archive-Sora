@@ -1,11 +1,13 @@
 ﻿-- Engines
-local S, C, _, _ = unpack(select(2, ...))
+local S, C, L, DB = unpack(select(2, ...))
+local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 
 -- Init
-C.ActionBar = {}
+DB["Modules"]["ActionBar"] = {}
+local Module = DB["Modules"]["ActionBar"]
 
 -- LoadSettings
-function C.ActionBar.LoadSettings()
+function Module.LoadSettings()
 	local Default = {
 		["HideHotKey"] = false,
 		["HideMacroName"] = true,
@@ -22,14 +24,14 @@ function C.ActionBar.LoadSettings()
 end
 
 -- ResetToDefault
-function C.ActionBar.ResetToDefault()
+function Module.ResetToDefault()
 	wipe(ActionBarDB)
 end
 
 -- BuildGUI
-function C.ActionBar.BuildGUI()
-	if Modules then
-		Modules["ActionBar"] =  {
+function Module.BuildGUI()
+	if DB["Config"] then
+		DB["Config"]["ActionBar"] =  {
 			type = "group", order = 1,
 			name = "动作条",
 			args = {
