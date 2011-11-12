@@ -10,10 +10,12 @@ local Module = DB["Modules"]["MoveHandle"]
 function Module.LoadSettings()
 	local Default = {
 		["Player"] = {"CENTER", "UIParent", "CENTER", -270, -100},
+		["Pet"] = {"CENTER", "UIParent", "CENTER", -420, -130},
 		["PlayerCastbar"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 115},
 		["Target"] = {"CENTER", "UIParent", "CENTER", 270, -100},
+		["TargetTarget"] = {"CENTER", "UIParent", "CENTER", 420, -130},
 		["TargetCastbar"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 140},
-		["FocusFrame"] = {"TOP", "UIParent", "TOP", 0, -100},
+		["Focus"] = {"TOP", "UIParent", "TOP", 0, -100},
 		["PartyFrame"] = {"TOPLEFT", "UIParent", "TOPLEFT", 10, -250},
 		["RaidFrame"] = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -5, 5},
 		["BossFrame"] = {"TOPRIGHT", "UIParent", "TOPRIGHT", -50, -200},

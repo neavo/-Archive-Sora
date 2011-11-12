@@ -170,8 +170,8 @@ function Module.LoadSettings()
 			{
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
-				Mode = "BAR", IconSize = 20, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				Mode = "BAR", IconSize = 20, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {	
 					-- 挫志咆哮(熊)
 					{AuraID =    99, UnitID = "target", Caster = "player"}, 
@@ -368,8 +368,8 @@ function Module.LoadSettings()
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", 
-				IconSize = 20, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				IconSize = 20, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {
 					-- 猎人印记
 					{AuraID =  1130 , UnitID = "target", Caster = "player"}, 
@@ -560,8 +560,8 @@ function Module.LoadSettings()
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
 				Mode = "BAR", 
-				IconSize = 20, BarWidth = 175 , 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				IconSize = 20, BarWidth = 200 , 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {		
 					-- 点燃
 					{AuraID = 12654 ,UnitID = "target", Caster = "player"},
@@ -771,8 +771,8 @@ function Module.LoadSettings()
 			{
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
-				Mode = "BAR", IconSize = 20, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				Mode = "BAR", IconSize = 20, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {
 					-- 破甲
 					{AuraID = 58567, UnitID = "target", Caster = "player"}, 
@@ -936,8 +936,8 @@ function Module.LoadSettings()
 			{
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
-				Mode = "BAR", IconSize = 20, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				Mode = "BAR", IconSize = 20, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {
 					-- 大地震击
 					{AuraID =  8042, UnitID = "target", Caster = "player"}, 
@@ -1133,8 +1133,8 @@ function Module.LoadSettings()
 			{
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
-				Mode = "BAR", IconSize = 20, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				Mode = "BAR", IconSize = 20, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {
 					-- 制裁之锤
 					{AuraID =   853, UnitID = "target", Caster = "player"}, 
@@ -1332,8 +1332,8 @@ function Module.LoadSettings()
 			{
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
-				Mode = "BAR", IconSize = 20, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				Mode = "BAR", IconSize = 20, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {
 					-- 暗言术:痛
 					{AuraID =   589, UnitID = "target", Caster = "player"}, 
@@ -1511,8 +1511,8 @@ function Module.LoadSettings()
 			{
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
-				Mode = "BAR", IconSize = 20, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				Mode = "BAR", IconSize = 20, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {
 					-- 腐蚀术
 					{AuraID =   172, UnitID = "target", Caster = "player"}, 
@@ -1714,8 +1714,8 @@ function Module.LoadSettings()
 			{
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
-				Mode = "BAR", IconSize = 20, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				Mode = "BAR", IconSize = 20, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {
 					-- 肾击
 					{AuraID =   408, UnitID = "target", Caster = "player"}, 
@@ -1908,8 +1908,8 @@ function Module.LoadSettings()
 			{
 				Name = "目标减益", 
 				Direction = "UP", Interval = 4, 
-				Mode = "BAR", IconSize = 16, BarWidth = 175, 
-				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 12, 5}, 
+				Mode = "BAR", IconSize = 16, BarWidth = 200, 
+				Pos = {"BOTTOM", "oUF_SoraTarget", "TOP", 0, 5}, 
 				List = {
 					-- 血之疫病
 					{AuraID = 55078, UnitID = "target", Caster = "player"}, 
@@ -2097,7 +2097,7 @@ local function UpdateGruopValue()
 			get = function() return AuraWatchDB[GroupSelectValue]["Mode"] end, 
 			set = function(_, value)
 				AuraWatchDB[GroupSelectValue]["Mode"] = value
-				if not AuraWatchDB[GroupSelectValue]["BarWidth"] then AuraWatchDB[GroupSelectValue]["BarWidth"] = 175 end
+				if not AuraWatchDB[GroupSelectValue]["BarWidth"] then AuraWatchDB[GroupSelectValue]["BarWidth"] = 200 end
 			end, 
 		}, 
 		Direction = {

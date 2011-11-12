@@ -12,7 +12,7 @@ function Module.LoadSettings()
 		["ThreatBarWidth"] = 220,								-- 仇恨条宽度
 		["NameTextL"] = 3,										-- 姓名长度(单位:字)
 		["ThreatLimited"] = 2,									-- 显示仇恨人数(不包括Tank)
-		["yOffset"] = -60,										-- 纵向偏移量
+		["yOffset"] = -80,										-- 纵向偏移量
 	}
 	if not ThreatDB then ThreatDB = {} end
 	for key, value in pairs(Default) do

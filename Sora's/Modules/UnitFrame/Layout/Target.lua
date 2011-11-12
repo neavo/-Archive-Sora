@@ -129,47 +129,33 @@ end
 function Module:BuildBuff(self)
 	if UnitFrameDB["TargetBuffMode"] == "None" then return end
 	local Buffs = CreateFrame("Frame", nil, self)
-	Buffs.onlyShowPlayer = (UnitFrameDB.TargetBuffMode == "OnlyPlayer")
-	Buffs:SetPoint("TOPLEFT", self, "TOPRIGHT", 8, 0)
+	Buffs.onlyShowPlayer = (UnitFrameDB["TargetBuffMode"] == "OnlyPlayer")
+	Buffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
 	Buffs.initialAnchor = "TOPLEFT"
 	Buffs["growth-x"] = "RIGHT"
 	Buffs["growth-y"] = "DOWN"
 	Buffs.size = 20
-	Buffs.num = 18
 	Buffs.spacing = 5
-	Buffs:SetWidth(Buffs.size*6+Buffs.spacing*5)
-	Buffs:SetHeight(Buffs.size*3+Buffs.spacing*2)
+	Buffs.num = floor((self:GetWidth()+Buffs.spacing)/(Buffs.size+Buffs.spacing))
+	Buffs:SetSize(self:GetWidth(), Buffs.size)
 	Buffs.PostCreateIcon = function(self, Button)
 		Button.Shadow = S.MakeShadow(Button, 3)	
 		Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-		Button.icon:SetAllPoints()	
+		Button.icon:SetAllPoints()
 		Button.count = S.MakeFontString(Button, 9)
 		Button.count:SetPoint("TOPRIGHT", 3, 0)
-	end
-	Buffs.PostUpdateIcon = function(self, unit, Button, index, offset, filter, isDebuff)
-		local Caster = select(8, UnitAura(unit, index, Button.filter))
-		if Button.debuff then
-			if Caster == "player" or Caster == "vehicle" then
-				Button.icon:SetDesaturated(false)                 
-			elseif not UnitPlayerControlled(unit) then -- If Unit is Player Controlled dont desaturate debuffs
-				Button:SetBackdropColor(0, 0, 0)
-				Button.overlay:SetVertexColor(0.3, 0.3, 0.3)      
-				Button.icon:SetDesaturated(true)  
-			end
-		end
 	end
 	self.Buffs = Buffs
 end
 function Module:BuildDebuff(self)
 	if UnitFrameDB["TargetDebuffMode"] == "None" then return end
 	local Debuffs = CreateFrame("Frame", nil, self)
+	Debuffs.onlyShowPlayer = (UnitFrameDB["TargetDebuffMode"] == "OnlyPlayer")
 	Debuffs.size = 20
-	Debuffs.num = 27
-	Debuffs.onlyShowPlayer = (UnitFrameDB.TargetDebuffMode == "OnlyPlayer")
 	Debuffs.spacing = 5
-	Debuffs:SetHeight(Debuffs.size*3+Debuffs.spacing*2)
-	Debuffs:SetWidth(self:GetWidth())
-	Debuffs:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -30)
+	Debuffs.num = floor((self:GetWidth()+Debuffs.spacing)/(Debuffs.size+Debuffs.spacing))*2
+	Debuffs:SetSize(self:GetWidth(), Debuffs.size*2+Debuffs.spacing)
+	Debuffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -30)
 	Debuffs.initialAnchor = "TOPLEFT"
 	Debuffs["growth-x"] = "RIGHT"
 	Debuffs["growth-y"] = "DOWN"

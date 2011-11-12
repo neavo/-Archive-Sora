@@ -2,23 +2,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("FocusTargetFrame")
-
-local function BuildMenu(self)
-	local unit = self.unit:sub(1, -2)
-	local cunit = self.unit:gsub("^%l", string.upper)
-
-	if cunit == "Vehicle" then
-		cunit = "Pet"
-	end
-
-	if unit == "party" or unit == "partypet" then
-		ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-	elseif _G[cunit.."FrameDropDown"] then
-		ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-	end
-end
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("FocusTarget")
 
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
@@ -59,9 +43,20 @@ local function BuildRaidIcon(self)
 	self.RaidIcon = RaidIcon
 end
 
-local function BuildFocusTargetFrame(self, ...)
+local function BuildFocusTarget(self, ...)
 	-- RegisterForClicks
-	self.menu = BuildMenu
+	self.menu = function(self)
+		local unit = self.unit:sub(1, -2)
+		local cunit = self.unit:gsub("^%l", string.upper)
+
+		if cunit == "Vehicle" then cunit = "Pet" end
+
+		if unit == "party" or unit == "partypet" then
+			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+		elseif _G[cunit.."FrameDropDown"] then
+			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+		end
+	end
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
 	self:RegisterForClicks("AnyUp")
@@ -81,9 +76,9 @@ local function BuildFocusTargetFrame(self, ...)
 end
 
 function Module:OnInitialize()
-	if not (UnitFrameDB.ShowFocusFrame and UnitFrameDB.ShowFocusTarget) then return end
-	oUF:RegisterStyle("SoraFocusTarget", BuildFocusTargetFrame)
-	oUF:SetActiveStyle("SoraFocusTarget")
-	DB.FocusTargetFrame = oUF:Spawn("focustarget")
-	DB.FocusTargetFrame:SetPoint("BOTTOMLEFT", DB.FocusFrame, "TOPLEFT", 0, 10)
+	if not UnitFrameDB["FocusEnable"] then return end
+	oUF:RegisterStyle("FocusTarget", BuildFocusTarget)
+	oUF:SetActiveStyle("FocusTarget")
+	DB.FocusTarget = oUF:Spawn("focustarget", "oUF_SoraFocusTarget")
+	DB.FocusTarget:SetPoint("BOTTOMLEFT", DB.Focus, "TOPLEFT", 0, 10)
 end

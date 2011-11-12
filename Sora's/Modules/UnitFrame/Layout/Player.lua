@@ -30,7 +30,6 @@ function Module:BuildHealthBar(self)
 	Health.BG.multiplier = 0.2
 	
 	Health.frequentUpdates = true
-	Health.colorSmooth = true
 	Health.colorClass = true
 	Health.Smooth = true
 	
@@ -292,6 +291,46 @@ function Module:BuildTags(self)
 	self:Tag(HPTag, UnitFrameDB["PlayerTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
 	self:Tag(PPTag, UnitFrameDB["PlayerTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")
 end
+function Module:BuildBuff(self)
+	if UnitFrameDB["PlayerBuffMode"] == "None" then return end
+	local Buffs = CreateFrame("Frame", nil, self)
+	Buffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
+	Buffs.initialAnchor = "TOPLEFT"
+	Buffs["growth-x"] = "RIGHT"
+	Buffs["growth-y"] = "DOWN"
+	Buffs.size = 20
+	Buffs.spacing = 5
+	Buffs.num = floor((self:GetWidth()+Buffs.spacing)/(Buffs.size+Buffs.spacing))
+	Buffs:SetSize(self:GetWidth(), Buffs.size)
+	Buffs.PostCreateIcon = function(self, Button)
+		Button.Shadow = S.MakeShadow(Button, 3)	
+		Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+		Button.icon:SetAllPoints()
+		Button.count = S.MakeFontString(Button, 9)
+		Button.count:SetPoint("TOPRIGHT", 3, 0)
+	end
+	self.Buffs = Buffs
+end
+function Module:BuildDebuff(self)
+	if UnitFrameDB["PlayerDebuffMode"] == "None" then return end
+	local Debuffs = CreateFrame("Frame", nil, self)
+	Debuffs.size = 20
+	Debuffs.spacing = 5
+	Debuffs.num = floor((self:GetWidth()+Debuffs.spacing)/(Debuffs.size+Debuffs.spacing))*2
+	Debuffs:SetSize(self:GetWidth(), Debuffs.size*2+Debuffs.spacing)
+	Debuffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -30)
+	Debuffs.initialAnchor = "TOPLEFT"
+	Debuffs["growth-x"] = "RIGHT"
+	Debuffs["growth-y"] = "DOWN"
+	Debuffs.PostCreateIcon = function(self, Button)
+		Button.Shadow = S.MakeShadow(Button, 3)	
+		Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+		Button.icon:SetAllPoints()	
+		Button.count = S.MakeFontString(Button, 9)
+		Button.count:SetPoint("TOPRIGHT", 3, 0)
+	end
+	self.Debuffs = Debuffs
+end
 function Module:BuildRaidIcon(self)
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)
@@ -337,12 +376,13 @@ local function BuildPlayer(self, ...)
 	Module:BuildClassPowerBar(self)
 	Module:BuildPortrait(self)
 	Module:BuildTags(self)
+	Module:BuildBuff(self)
+	Module:BuildDebuff(self)
 	Module:BuildRaidIcon(self)
 	Module:BuildCombatIcon(self)
 end
 
 function Module:OnInitialize()
-	if not UnitFrameDB["PlayerEnable"] then return end
 	oUF:RegisterStyle("Player", BuildPlayer)
 	oUF:SetActiveStyle("Player")
 	DB.Player = oUF:Spawn("player", "oUF_SoraPlayer")

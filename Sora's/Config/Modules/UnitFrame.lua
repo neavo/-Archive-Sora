@@ -11,17 +11,20 @@ function Module.LoadSettings()
 	local Default = {
 		-- 玩家框体
 		["PlayerEnable"] = true,
-			["PetEnable"] = true,
 			["PlayerWidth"] = 220,
 			["PlayerHealthHeight"] = 24,
 			["PlayerPowerHeight"] = 2,
 			["PlayerTagMode"] = "Short",
+			["PlayerBuffMode"] = "Full",
+			["PlayerDebuffMode"] = "Full",
 			["PlayerCastbarEnable"] = true,
-			["PlayerCastbarWidth"] = 515,
-			["PlayerCastbarHeight"] = 20,
+				["PlayerCastbarWidth"] = 515,
+				["PlayerCastbarHeight"] = 20,
+			["PetWidth"] = 60,
+			["PetHealthHeight"] = 15,
+			["PetPowerHeight"] = 1,
 		-- 目标框体
 		["TargetEnable"] = true,
-			["TargetTargetEnable"] = true,
 			["TargetWidth"] = 220,
 			["TargetHealthHeight"] = 24,
 			["TargetPowerHeight"] = 2,
@@ -29,15 +32,19 @@ function Module.LoadSettings()
 			["TargetBuffMode"] = "Full",
 			["TargetDebuffMode"] = "Full",
 			["TargetCastbarEnable"] = true,
-			["TargetCastbarWidth"] = 515,
-			["TargetCastbarHeight"] = 20,
+				["TargetCastbarWidth"] = 515,
+				["TargetCastbarHeight"] = 20,
+			["TargetTargetWidth"] = 60,
+			["TargetTargetHealthHeight"] = 15,
+			["TargetTargetPowerHeight"] = 1,
 		-- 焦点框体
-		["ShowFocusFrame"] = true,
-			["ShowFocusTarget"] = true,
-			["ShowFocusCastbar"] = true,
-			["ShortFocusTags"] = true,
-			["ShowFocusDebuff"] = true,
-			["ShowFocusBuff"] = true,
+		["FocusEnable"] = true,
+			["FocusWidth"] = 220,
+			["FocusHealthHeight"] = 24,
+			["FocusPowerHeight"] = 2,
+		["FocusTagMode"] = "Short",
+		["FocusBuffMode"] = "Full",
+		["FocusDebuffMode"] = "Full",
 		-- Boss框体
 		["ShowBoss"] = false,
 			["ShowBossTarget"] = true,
@@ -65,7 +72,7 @@ end
 -- BuildGUI
 function Module.BuildGUI()
 	if DB["Config"] then
-		DB["Config"]["PlayerFrame"] =  {
+		DB["Config"]["Player"] =  {
 			type = "group", order = 9,
 			name = "玩家框体",
 			args = {
@@ -83,19 +90,6 @@ function Module.BuildGUI()
 				},
 				Gruop_2 = {
 					type = "group", order = 2,
-					name = " ", guiInline = true,
-					disabled = not UnitFrameDB["PlayerEnable"],	
-					args = {
-						PetEnable = {
-							type = "toggle", order = 1,
-							name = "启用宠物框体",
-							get = function() return UnitFrameDB["PetEnable"] end,
-							set = function(_, value) UnitFrameDB["PetEnable"]= value end,
-						},
-					}
-				},
-				Gruop_3 = {
-					type = "group", order = 3,
 					name = " ", guiInline = true,
 					disabled = not UnitFrameDB["PlayerEnable"],	
 					args = {
@@ -137,10 +131,24 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["PlayerTagMode"] end,
 							set = function(_, value) UnitFrameDB["PlayerTagMode"] = value end,
 						},
+						PlayerBuffMode = {
+							type = "select", order = 5,
+							name = "增益效果：", desc = "请选择增益效果显示模式",
+							values = {["Full"] = "全部", ["None"] = "无"},
+							get = function() return UnitFrameDB["PlayerBuffMode"] end,
+							set = function(_, value) UnitFrameDB["PlayerBuffMode"] = value end,
+						},
+						PlayerDebuffMode = {
+							type = "select", order = 6,
+							name = "减益效果：", desc = "请选择减益效果显示模式",
+							values = {["Full"] = "全部", ["None"] = "无"},
+							get = function() return UnitFrameDB["PlayerDebuffMode"] end,
+							set = function(_, value) UnitFrameDB["PlayerDebuffMode"] = value end,
+						},
 					},
 				},
-				Gruop_4 = {
-					type = "group", order = 4,
+				Gruop_3 = {
+					type = "group", order = 3,
 					name = " ", guiInline = true,
 					disabled = not UnitFrameDB["PlayerEnable"],	
 					args = {
@@ -154,7 +162,7 @@ function Module.BuildGUI()
 							type = "range", order = 2,
 							name = "施法条宽度：", desc = "请输入施法条宽度",
 							min = 100, max = 1000, step = 20,
-							disabled = not UnitFrameDB["PlayerCastbarEnable"],
+							disabled = not UnitFrameDB["PlayerCastbarEnable"] or not UnitFrameDB["PlayerEnable"],
 							get = function() return UnitFrameDB["PlayerCastbarWidth"] end,
 							set = function(_, value)
 								Sora:GetModule("PlayerCastbar"):UpdateWidth(value)
@@ -165,7 +173,7 @@ function Module.BuildGUI()
 							type = "range", order = 2,
 							name = "施法条高度：", desc = "请输入施法条高度",
 							min = 10, max = 100, step = 5,
-							disabled = not UnitFrameDB["PlayerCastbarEnable"],
+							disabled = not UnitFrameDB["PlayerCastbarEnable"] or not UnitFrameDB["PlayerEnable"],
 							get = function() return UnitFrameDB["PlayerCastbarHeight"] end,
 							set = function(_, value)
 								Sora:GetModule("PlayerCastbar"):UpdateHeight(value)
@@ -173,10 +181,47 @@ function Module.BuildGUI()
 							end,
 						}
 					}
+				},
+				Gruop_4 = {
+					type = "group", order = 4,
+					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["PlayerEnable"],	
+					args = {
+						PetWidth = {
+							type = "range", order = 1,
+							name = "宠物框体宽度：", desc = "请输入宠物框体宽度",
+							min = 20, max = 200, step = 10,
+							get = function() return UnitFrameDB["PetWidth"] end,
+							set = function(_, value)
+								Sora:GetModule("Pet"):UpdateWidth(value)
+								UnitFrameDB["PetWidth"] = value
+							end,
+						},
+						PetHealthHeight = {
+							type = "range", order = 2,
+							name = "宠物框体生命值高度：", desc = "请输入宠物框体生命值高度",
+							min = 1, max = 50, step = 2,
+							get = function() return UnitFrameDB["PetHealthHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("Pet"):UpdateHealthHeight(value)
+								UnitFrameDB["PetHealthHeight"] = value
+							end,
+						},
+						PetPowerHeight = {
+							type = "range", order = 3,
+							name = "宠物框体能量值高度：", desc = "请输入宠物框体能量值高度",
+							min = 1, max = 50, step = 2,
+							get = function() return UnitFrameDB["PetPowerHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("Pet"):UpdatePowerHeight(value)
+								UnitFrameDB["PetPowerHeight"] = value
+							end,
+						},
+					}
 				}
 			}
 		}
-		DB["Config"]["TargetFrame"] =  {
+		DB["Config"]["Target"] =  {
 			type = "group", order = 10,
 			name = "目标框体",
 			args = {
@@ -194,19 +239,6 @@ function Module.BuildGUI()
 				},
 				Gruop_2 = {
 					type = "group", order = 2,
-					name = " ", guiInline = true,
-					disabled = not UnitFrameDB["TargetEnable"],
-					args = {
-						TargetTargetEnable = {
-							type = "toggle", order = 1,
-							name = "启用目标的目标框体",
-							get = function() return UnitFrameDB["TargetTargetEnable"] end,
-							set = function(_, value) UnitFrameDB["TargetTargetEnable"] = value end,
-						},
-					}
-				},
-				Gruop_3 = {
-					type = "group", order = 3,
 					name = " ", guiInline = true,
 					disabled = not UnitFrameDB["TargetEnable"],
 					args = {
@@ -263,8 +295,8 @@ function Module.BuildGUI()
 						},
 					}
 				},
-				Gruop_4 = {
-					type = "group", order = 4,
+				Gruop_3 = {
+					type = "group", order = 3,
 					name = " ", guiInline = true,
 					disabled = not UnitFrameDB["TargetEnable"],	
 					args = {
@@ -297,52 +329,117 @@ function Module.BuildGUI()
 							end,
 						}
 					}
+				},
+				Gruop_4 = {
+					type = "group", order = 4,
+					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["TargetEnable"],	
+					args = {
+						TargetTargetWidth = {
+							type = "range", order = 1,
+							name = "目标的目标宽度：", desc = "请输入目标的目标宽度",
+							min = 20, max = 200, step = 10,	
+							get = function() return UnitFrameDB["TargetTargetWidth"] end,
+							set = function(_, value)
+								Sora:GetModule("TargetTarget"):UpdateWidth(value)
+								UnitFrameDB["TargetTargetWidth"] = value
+							end,
+						},
+						TargetTargetHealthHeight = {
+							type = "range", order = 2,
+							name = "目标的目标生命值高度：", desc = "请输入目标的目标生命值高度",
+							min = 1, max = 50, step = 2,
+							get = function() return UnitFrameDB["TargetTargetHealthHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("TargetTarget"):UpdateHealthHeight(value)
+								UnitFrameDB["TargetTargetHealthHeight"] = value
+							end,
+						},
+						TargetTargetPowerHeight = {
+							type = "range", order = 3,
+							name = "目标的目标能量值高度：", desc = "请输入目标的目标能量值高度",
+							min = 1, max = 50, step = 2,	
+							get = function() return UnitFrameDB["TargetTargetPowerHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("TargetTarget"):UpdatePowerHeight(value)
+								UnitFrameDB["TargetTargetPowerHeight"] = value
+							end,
+						},
+					}
 				}
 			}
 		}
-		DB["Config"]["FocusFrame"] =  {
+		DB["Config"]["Focus"] =  {
 			type = "group", order = 11,
 			name = "焦点框体",
 			args = {
-				ShowFocusFrame = {
-					type = "toggle", order = 1,
-					name = "显示焦点框体",
-					get = function() return UnitFrameDB.ShowFocusFrame end,
-					set = function(_, value) UnitFrameDB.ShowFocusFrame = value end,
-				},
-				Gruop = {
-					type = "group", order = 2,
+				Gruop_1 = {
+					type = "group", order = 1,
 					name = " ", guiInline = true,
 					args = {
-						ShowFocusTarget = {
+						FocusEnable = {
 							type = "toggle", order = 1,
-							name = "显示焦点目标框体",
-							get = function() return UnitFrameDB.ShowFocusTarget end,
-							set = function(_, value) UnitFrameDB.ShowFocusTarget = value end,
+							name = "显示焦点框体",
+							get = function() return UnitFrameDB["FocusEnable"] end,
+							set = function(_, value) UnitFrameDB["FocusEnable"] = value end,
+						}
+					}
+				},
+				Gruop_2 = {
+					type = "group", order = 2,
+					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["FocusEnable"],
+					args = {
+						FocusWidth = {
+							type = "range", order = 1,
+							name = "焦点框体宽度：", desc = "请输入焦点框体宽度",
+							min = 100, max = 600, step = 10,
+							get = function() return UnitFrameDB["FocusWidth"] end,
+							set = function(_, value)
+								Sora:GetModule("Focus"):UpdateWidth(value)
+								UnitFrameDB["FocusWidth"] = value
+							end,
 						},
-						ShowFocusCastbar = {
-							type = "toggle", order = 2,
-							name = "显示施法条",		
-							get = function() return UnitFrameDB.ShowFocusCastbar end,
-							set = function(_, value) UnitFrameDB.ShowFocusCastbar = value end,
+						FocusHealthHeight = {
+							type = "range", order = 2,
+							name = "焦点框体生命值高度：", desc = "请输入焦点框体生命值高度",
+							min = 2, max = 100, step = 2,
+							get = function() return UnitFrameDB["FocusHealthHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("Focus"):UpdateHealthHeight(value)
+								UnitFrameDB["FocusHealthHeight"] = value
+							end,
 						},
-						ShortFocusTags = {
-							type = "toggle", order = 3,
-							name = "缩写状态数值",		
-							get = function() return UnitFrameDB.ShortFocusTags end,
-							set = function(_, value) UnitFrameDB.ShortFocusTags = value end,
+						FocusPowerHeight = {
+							type = "range", order = 3,
+							name = "焦点框体能量值高度：", desc = "请输入焦点框体能量值高度",
+							min = 2, max = 100, step = 2,
+							get = function() return UnitFrameDB["FocusPowerHeight"] end,
+							set = function(_, value)
+								Sora:GetModule("Focus"):UpdatePowerHeight(value)
+								UnitFrameDB["FocusPowerHeight"] = value
+							end,
 						},
-						ShowFocusBuff = {
-							type = "toggle", order = 4,
-							name = "显示焦点框体Buff",
-							get = function() return UnitFrameDB.ShowFocusBuff end,
-							set = function(_, value) UnitFrameDB.ShowFocusBuff = value end,
+						FocusTagMode = {
+							type = "select", order = 4,
+							name = "状态数值：", desc = "请选择状态数值模式",
+							values = {["Short"] = "缩略", ["Full"] = "详细"},
+							get = function() return UnitFrameDB["FocusTagMode"] end,
+							set = function(_, value) UnitFrameDB["FocusTagMode"] = value end,
 						},
-						ShowFocusDebuff = {
-							type = "toggle", order = 5,
-							name = "显示焦点框体Debuff",		
-							get = function() return UnitFrameDB.ShowFocusDebuff end,
-							set = function(_, value) UnitFrameDB.ShowFocusDebuff = value end,
+						FocusBuffMode = {
+							type = "select", order = 5,
+							name = "增益效果：", desc = "请选择增益效果显示模式",
+							values = {["Full"] = "全部", ["OnlyPlayer"] = "仅显示玩家施放的", ["None"] = "无"},
+							get = function() return UnitFrameDB["FocusBuffMode"] end,
+							set = function(_, value) UnitFrameDB["FocusBuffMode"] = value end,
+						},
+						FocusDebuffMode = {
+							type = "select", order = 6,
+							name = "减益效果：", desc = "请选择减益效果显示模式",
+							values = {["Full"] = "全部", ["OnlyPlayer"] = "仅显示玩家施放的", ["None"] = "无"},
+							get = function() return UnitFrameDB["FocusDebuffMode"] end,
+							set = function(_, value) UnitFrameDB["FocusDebuffMode"] = value end,
 						},
 					}
 				}
