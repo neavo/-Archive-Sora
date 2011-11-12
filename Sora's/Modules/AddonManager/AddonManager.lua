@@ -11,7 +11,9 @@ local function UpdateAddonList()
 		local name, title, notes, enabled = GetAddOnInfo(i)
 		local mem = GetAddOnMemoryUsage(i)
 		local usage = GetAddOnCPUUsage(i)
-		tinsert(AddonList, {Name = name, Title = title, Notes = notes, Enabled = enabled, Mem = mem, Usage = usage})
+		local version = GetAddOnMetadata(i, "version") and GetAddOnMetadata(i, "version") or "" 
+		local dependencies = GetAddOnDependencies(i) and GetAddOnDependencies(i) or "无"
+		tinsert(AddonList, {Name = name, Version = version, Title = title, Notes = notes, Enabled = enabled, Mem = mem, Usage = usage, Dependencies = dependencies})
 	end
 	MaxPage = floor(#AddonList/12)+1
 end
@@ -30,9 +32,10 @@ local function UpdateAddonButton(MainFrame)
 		Button:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
 			GameTooltip:ClearLines()
-			GameTooltip:AddLine(AddonList[i]["Title"], 112/255, 192/255, 245/255)
+			GameTooltip:AddDoubleLine(AddonList[i]["Title"], AddonList[i]["Version"], 112/255, 192/255, 245/255, 1, 1, 1)
 			GameTooltip:AddLine(AddonList[i]["Notes"], 1, 1, 1)
 			GameTooltip:AddLine(" ")
+			GameTooltip:AddDoubleLine("依赖于：", AddonList[i]["Dependencies"], 112/255, 192/255, 245/255, 1, 1, 1)
 			GameTooltip:AddDoubleLine("内存占用：", S.FormatMemory(AddonList[i]["Mem"]), 112/255, 192/255, 245/255, 1, 1, 1)
 			GameTooltip:AddDoubleLine("处理器占用：", AddonList[i]["Usage"].."%", 112/255, 192/255, 245/255, 1, 1, 1)
 			GameTooltip:Show()
