@@ -2,7 +2,7 @@
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("Congig", "AceConsole-3.0")
-local Version, SoraAutoWipe = 1110, false
+local Version, SoraAutoWipe = 1112, true
 
 function Module:SetDefault()
 	SlashCmdList.AutoSet()
