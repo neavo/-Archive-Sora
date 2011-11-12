@@ -7,16 +7,19 @@ local Parent = nil
 
 function Module:UpdateWidth(value)
 	if Parent then Parent:SetWidth(value) end
-	if Parent.Power then Parent.Health:SetWidth(value) end
+	if Parent.Health then Parent.Health:SetWidth(value) end
 	if Parent.Power then Parent.Power:SetWidth(value) end
+	if MoveHandle.Player then MoveHandle.Player:SetWidth(value) end
 end
 function Module:UpdateHealthHeight(value)
-	Parent:SetHeight(value+UnitFrameDB["PlayerPowerHeight"]+4)
-	Parent.Health:SetHeight(value)
+	if Parent then Parent:SetHeight(value+UnitFrameDB["PlayerPowerHeight"]+4) end
+	if Parent.Health then Parent.Health:SetHeight(value) end
+	if MoveHandle.Player then MoveHandle.Player:SetHeight(value+UnitFrameDB["PlayerPowerHeight"]+4) end
 end
 function Module:UpdatePowerHeight(value)
-	Parent:SetHeight(value+UnitFrameDB["PlayerHealthHeight"]+4)
-	Parent.Power:SetHeight(value)
+	if Parent then Parent:SetHeight(value+UnitFrameDB["PlayerHealthHeight"]+4) end
+	if Parent.Power then Parent.Power:SetHeight(value) end
+	if MoveHandle.Player then MoveHandle.Player:SetHeight(value+UnitFrameDB["PlayerHealthHeight"]+4) end
 end
 function Module:BuildHealthBar(self)
 	local Health = CreateFrame("StatusBar", nil, self)

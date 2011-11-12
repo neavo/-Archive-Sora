@@ -7,16 +7,19 @@ local Parent = nil
 
 function Module:UpdateWidth(value)
 	if Parent then Parent:SetWidth(value) end
-	if Parent.Power then Parent.Health:SetWidth(value) end
+	if Parent.Health then Parent.Health:SetWidth(value) end
 	if Parent.Power then Parent.Power:SetWidth(value) end
+	if MoveHandle.Focus then MoveHandle.Focus:SetWidth(value) end
 end
 function Module:UpdateHealthHeight(value)
-	Parent:SetHeight(value+UnitFrameDB["FocusPowerHeight"]+4)
-	Parent.Health:SetHeight(value)
+	if Parent then Parent:SetHeight(value+UnitFrameDB["FocusPowerHeight"]+4) end
+	if Parent.Health then Parent.Health:SetHeight(value) end
+	if MoveHandle.Focus then MoveHandle.Focus:SetHeight(value+UnitFrameDB["FocusPowerHeight"]+4) end
 end
 function Module:UpdatePowerHeight(value)
-	Parent:SetHeight(value+UnitFrameDB["FocusHealthHeight"]+4)
-	Parent.Power:SetHeight(value)
+	if Parent then Parent:SetHeight(value+UnitFrameDB["FocusHealthHeight"]+4) end
+	if Parent.Power then Parent.Power:SetHeight(value) end
+	if MoveHandle.Focus then MoveHandle.Focus:SetHeight(value+UnitFrameDB["FocusHealthHeight"]+4) end
 end
 function Module:BuildHealthBar(self)
 	local Health = CreateFrame("StatusBar", nil, self)
@@ -126,6 +129,49 @@ function Module:BuildTags(self)
 	self:Tag(HPTag, UnitFrameDB["FocusTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
 	self:Tag(PPTag, UnitFrameDB["FocusTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
 end
+function Module:BuildCastbar(self)
+	local Castbar = CreateFrame("StatusBar", nil, self)
+	Castbar:SetHeight(10)
+	Castbar:SetWidth(self:GetWidth()-70)
+	Castbar:SetStatusBarTexture(DB.Statusbar)
+	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
+	Castbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 14)
+	
+	Castbar.Shadow = S.MakeShadow(Castbar, 3)
+	Castbar.Shadow:SetBackdrop({
+		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
+		edgeFile = DB.GlowTex, edgeSize = 3, 
+	})
+	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
+	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+	
+	Castbar.CastingColor = {95/255, 182/255, 255/255}
+	Castbar.CompleteColor = {20/255, 208/255, 0/255}
+	Castbar.FailColor = {255/255, 12/255, 0/255}
+	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
+
+	Castbar.Text = S.MakeFontString(Castbar, 10)
+	Castbar.Text:SetPoint("LEFT", 2, 0)
+	
+	Castbar.Time = S.MakeFontString(Castbar, 10)
+	Castbar.Time:SetPoint("RIGHT", -2, 0)
+	
+	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
+	Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	Castbar.Icon:SetSize(20, 20)
+	Castbar.Icon:SetPoint("TOPLEFT", Castbar, "TOPRIGHT", 8, 0)
+	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
+
+	Castbar.OnUpdate = S.OnCastbarUpdate
+	Castbar.PostCastStart = S.PostCastStart
+	Castbar.PostChannelStart = S.PostCastStart
+	Castbar.PostCastStop = S.PostCastStop
+	Castbar.PostChannelStop = S.PostChannelStop
+	Castbar.PostCastFailed = S.PostCastFailed
+	Castbar.PostCastInterrupted = S.PostCastFailed
+
+	self.Castbar = Castbar
+end
 function Module:BuildBuff(self)
 	if UnitFrameDB["FocusBuffMode"] == "None" then return end
 	local Buffs = CreateFrame("Frame", nil, self)
@@ -224,6 +270,7 @@ local function BuildFocus(self, ...)
 	Module:BuildPowerBar(self)
 	Module:BuildPortrait(self)
 	Module:BuildTags(self)
+	Module:BuildCastbar(self)
 	Module:BuildBuff(self)
 	Module:BuildDebuff(self)
 	Module:BuildRaidIcon(self)

@@ -6,16 +6,19 @@ local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("PlayerCastbar
 local Parent = nil
 
 function Module:UpdateWidth(value)
-	Parent:SetWidth(value)
-	Parent.Castbar:SetWidth(value-UnitFrameDB["PlayerCastbarHeight"]-5)
+	if Parent then Parent:SetWidth(value) end
+	if Parent.Castbar then Parent.Castbar:SetWidth(value-UnitFrameDB["PlayerCastbarHeight"]-5) end
+	if MoveHandle.PlayerCastbar then MoveHandle.PlayerCastbar:SetWidth(value) end
 end
 function Module:UpdateHeight(value)
-	Parent:SetHeight(value)
-	Parent.Castbar:SetHeight(value)
-	Parent.Castbar.Icon:SetSize(value, value)
+	if Parent then Parent:SetHeight(value) end
+	if Parent.Castbar then Parent.Castbar:SetSize(UnitFrameDB["PlayerCastbarWidth"]-value-5, value) end
+	if Parent.Castbar.Icon then Parent.Castbar.Icon:SetSize(value, value) end
+	if MoveHandle.PlayerCastbar then MoveHandle.PlayerCastbar:SetHeight(value) end
 end
-
 local function BuildPlayerCastbar(self, ...)
+	Parent = self
+
 	local Castbar = CreateFrame("StatusBar", nil, self)
 	Castbar:SetStatusBarTexture(DB.Statusbar)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255)
@@ -61,8 +64,7 @@ local function BuildPlayerCastbar(self, ...)
 	Castbar.PostChannelStop = S.PostChannelStop
 	Castbar.PostCastFailed = S.PostCastFailed
 	Castbar.PostCastInterrupted = S.PostCastFailed
-
-	Parent = self
+	
 	self.Castbar = Castbar
 	Module:UpdateWidth(UnitFrameDB["PlayerCastbarWidth"])
 	Module:UpdateHeight(UnitFrameDB["PlayerCastbarHeight"])

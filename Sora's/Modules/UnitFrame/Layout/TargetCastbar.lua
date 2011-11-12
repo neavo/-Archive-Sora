@@ -6,16 +6,19 @@ local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("TargetCastbar
 local Parent = nil
 
 function Module:UpdateWidth(value)
-	Parent:SetWidth(value)
-	Parent.Castbar:SetWidth(value-UnitFrameDB["TargetCastbarHeight"]-5)
+	if Parent then Parent:SetWidth(value) end
+	if Parent.Castbar then Parent.Castbar:SetWidth(value-UnitFrameDB["TargetCastbarHeight"]-5) end
+	if MoveHandle.TargetCastbar then MoveHandle.TargetCastbar:SetWidth(value) end
 end
 function Module:UpdateHeight(value)
-	Parent:SetHeight(value)
-	Parent.Castbar:SetHeight(value)
-	Parent.Castbar.Icon:SetSize(value, value)
+	if Parent then Parent:SetHeight(value) end
+	if Parent.Castbar then Parent.Castbar:SetSize(UnitFrameDB["TargetCastbarWidth"]-value-5, value) end
+	if Parent.Castbar.Icon then Parent.Castbar.Icon:SetSize(value, value) end
+	if MoveHandle.TargetCastbar then MoveHandle.TargetCastbar:SetHeight(value) end
 end
-
 local function BuildTargetCastbar(self, ...)
+	Parent = self
+
 	local Castbar = CreateFrame("StatusBar", nil, self)
 	Castbar:SetStatusBarTexture(DB.Statusbar)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
@@ -42,7 +45,7 @@ local function BuildTargetCastbar(self, ...)
 	
 	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
 	Castbar.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-	Castbar.Icon:SetPoint("BOTTOMRIGHT", Castbar, "BOTTOMLEFT", -5, 0)
+	Castbar.Icon:SetPoint("RIGHT", Castbar, "LEFT", -5, 0)
 	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
 
 	Castbar.OnUpdate = S.OnCastbarUpdate
@@ -53,11 +56,9 @@ local function BuildTargetCastbar(self, ...)
 	Castbar.PostCastFailed = S.PostCastFailed
 	Castbar.PostCastInterrupted = S.PostCastFailed
 	
-	Parent = self
 	self.Castbar = Castbar
 	Module:UpdateWidth(UnitFrameDB["TargetCastbarWidth"])
 	Module:UpdateHeight(UnitFrameDB["TargetCastbarHeight"])
-	
 end
 
 function Module:OnInitialize()
