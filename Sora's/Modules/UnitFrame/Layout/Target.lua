@@ -130,9 +130,9 @@ function Module:BuildTags(self)
 	self:Tag(PPTag, UnitFrameDB["TargetTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
 end
 function Module:BuildAura(self)
-	if UnitFrameDB["TargetBuffMode"] == "None" then return end
+	if UnitFrameDB["TargetAuraMode"] == "None" then return end
 	local Auras = CreateFrame("Frame", nil, self)
-	Auras.onlyShowPlayer = (UnitFrameDB["TargetBuffMode"] == "OnlyPlayer")
+	Auras.onlyShowPlayer = (UnitFrameDB["TargetAuraMode"] == "OnlyPlayer")
 	Auras.initialAnchor = "TOPLEFT"
 	Auras["growth-x"] = "RIGHT"
 	Auras["growth-y"] = "DOWN"
