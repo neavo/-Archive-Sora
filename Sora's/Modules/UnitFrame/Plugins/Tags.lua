@@ -26,10 +26,8 @@ oUF.TagEvents["Sora:color"] = "UNIT_REACTION UNIT_HEALTH UNIT_HAPPINESS"
 oUF.Tags["Sora:hp"]  = function(u) 
 	local per = oUF.Tags["perhp"](u).."%" or 0
 	local min, max = UnitHealth(u), UnitHealthMax(u)
-	if u == "target" or u == "focus" then
+	if u == "target" or u == "focus" or u == "player" then
 		return S.SVal(min) .." | ".. per
-	elseif u == "player" then
-		return S.SVal(min)
 	else
 		return per
 	end
@@ -42,7 +40,7 @@ oUF.Tags["Sora:pp"] = function(u)
 	local powerMax = UnitPowerMax(u)
 	if str and power > 0 then
 		if powerMax > 132 then
-			return math.floor(power/powerMax*100+.5).."%".." | "..S.SVal(power)
+			return S.SVal(power).."%".." | "..floor(power/powerMax*100+.5)
 		else
 			return S.SVal(power)
 		end
