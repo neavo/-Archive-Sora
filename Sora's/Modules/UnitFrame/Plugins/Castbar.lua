@@ -10,7 +10,7 @@ local Ticks = {
 	[GetSpellInfo(1120)] = 5, -- drain soul
 	[GetSpellInfo(689)] = 5, -- drain life
 	[GetSpellInfo(5740)] = 4, -- rain of fire
-	[GetSpellInfo(79268)] = 4, -- soul harvest
+	[GetSpellInfo(79268)] = 3, -- soul harvest
 	-- druid
 	[GetSpellInfo(740)] = 4, -- Tranquility
 	[GetSpellInfo(16914)] = 10, -- Hurricane

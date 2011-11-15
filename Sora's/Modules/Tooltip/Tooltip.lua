@@ -105,14 +105,13 @@ GameTooltipStatusBar:SetScript("OnValueChanged", function(self, value)
     local _, unit = GameTooltip:GetUnit()
     if unit then
         min, max = UnitHealth(unit), UnitHealthMax(unit)
-        if not self.text then
-            self.text = self:CreateFontString(nil, "OVERLAY")
-            self.text:SetPoint("CENTER", GameTooltipStatusBar)
-            self.text:SetFont(DB.Font, 12, "THINOUTLINE")
+        if not self.Text then
+            self.Text = S.MakeFontString(self, 12)
+            self.Text:SetPoint("BOTTOM", GameTooltipStatusBar, "TOP", 0, -4)
         end
-        self.text:Show()
+        self.Text:Show()
         local hp = S.SVal(min).." / "..S.SVal(max)
-        self.text:SetText(hp)
+        self.Text:SetText(hp)
     end
 end)
 
