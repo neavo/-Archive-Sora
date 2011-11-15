@@ -2,23 +2,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("RaidFrame")
-
-local function BuildMenu(self)
-	local unit = self.unit:sub(1, -2)
-	local cunit = self.unit:gsub("^%l", string.upper)
-
-	if cunit == "Vehicle" then
-		cunit = "Pet"
-	end
-
-	if unit == "party" or unit == "partypet" then
-		ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-	elseif _G[cunit.."FrameDropDown"] then
-		ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-	end
-end
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("RaidFrame")
 
 local function BuildHealthBar(self)
 	local Bar = CreateFrame("StatusBar", nil, self)
@@ -64,10 +48,12 @@ local function BuildPowerBar(self)
 end
 
 local function BuildTags(self)
-	local Name = S.MakeFontString(self.Health, 9)
+	local Name = self.Health:CreateFontString(nil, "ARTWORK")
+	Name:SetFont(DB.Font, 9, "THINOUTLINE")
 	Name:SetPoint("CENTER", 0, 0)
 	self:Tag(Name, "[Sora:color][name]")
-	local DeadInfo = S.MakeFontString(self.Health, 7)
+	local DeadInfo = self.Health:CreateFontString(nil, "ARTWORK")
+	DeadInfo:SetFont(DB.Font, 7, "THINOUTLINE")
 	DeadInfo:SetPoint("CENTER", 0, -10)
 	self:Tag(DeadInfo, "[Sora:info]")
 end
@@ -82,7 +68,7 @@ end
 local function BuildCombatIcon(self)
 	local Leader = self.Health:CreateTexture(nil, "OVERLAY")
 	Leader:SetSize(16, 16)
-	Leader:SetPoint("TOPLEFT", self.Health, -7, 9)
+	Leader:SetPoint("TOPLEFT", -7, 9)
 	self.Leader = Leader
 	local Assistant = self.Health:CreateTexture(nil, "OVERLAY")
 	Assistant:SetAllPoints(Leader)
@@ -96,7 +82,7 @@ end
 local function BuildLFDRoleIcon(self)
 	local LFDRoleIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	LFDRoleIcon:SetSize(16, 16)
-	LFDRoleIcon:SetPoint("TOPRIGHT", self.Health, 7, 9)
+	LFDRoleIcon:SetPoint("TOPRIGHT", 7, 9)
 	self.LFDRole = LFDRoleIcon
 end
 
@@ -179,31 +165,20 @@ local function BuildIndicator(self)
 	self.Indicator = Indicator
 end
 
-local function PostUpdateRaidFrame(Health, unit, min, max)
-	local disconnnected = not UnitIsConnected(unit)
-	local dead = UnitIsDead(unit)
-	local ghost = UnitIsGhost(unit)
-
-	if disconnnected or dead or ghost then
-		Health:SetValue(max)	
-		if disconnnectedthen then
-			Health:SetStatusBarColor(0, 0, 0, 0.7)
-		elseif ghost then
-			Health:SetStatusBarColor(0, 0, 0, 0.7)
-		elseif dead then
-			Health:SetStatusBarColor(0, 0, 0, 0.7)
-		end
-	else
-		Health:SetValue(min)
-		if unit == "vehicle" then
-			Health:SetStatusBarColor(22/255, 106/255, 44/255)
-		end
-	end
-end
-
 local function BuildRaidFrame(self, ...)
 	-- RegisterForClicks
-	self.menu = BuildMenu
+	self.menu = function(self)
+		local unit = self.unit:sub(1, -2)
+		local cunit = self.unit:gsub("^%l", string.upper)
+
+		if cunit == "Vehicle" then cunit = "Pet" end
+
+		if unit == "party" or unit == "partypet" then
+			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+		elseif _G[cunit.."FrameDropDown"] then
+			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+		end
+	end
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
 	self:RegisterForClicks("AnyUp")
@@ -240,7 +215,19 @@ local function BuildRaidFrame(self, ...)
 	-- BuildIndicator
 	BuildIndicator(self)
 	
-	self.Health.PostUpdate = PostUpdateRaidFrame
+	self.Health.PostUpdate = function(Health, unit, min, max)
+		local disconnnected = not UnitIsConnected(unit)
+		local dead = UnitIsDead(unit)
+		local ghost = UnitIsGhost(unit)
+
+		if disconnnected or dead or ghost then
+			Health:SetValue(max)	
+			Health:SetStatusBarColor(0, 0, 0)
+		else
+			Health:SetValue(min)
+			if unit == "vehicle" then Health:SetStatusBarColor(22/255, 106/255, 44/255) end
+		end
+	end
 end
 
 function Module:OnInitialize()
