@@ -5,22 +5,25 @@ local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Pet")
 local Parent = nil
 
-function Module:UpdateWidth(value)
-	if Parent then Parent:SetWidth(value) end
-	if Parent.Health then Parent.Health:SetWidth(value) end
-	if Parent.Power then Parent.Power:SetWidth(value) end
-	if MoveHandle.Pet then MoveHandle.Pet:SetWidth(value) end
+function Module:UpdateWidth()
+	if Parent then Parent:SetWidth(UnitFrameDB["PetWidth"]) end
+	if Parent.Health then Parent.Health:SetWidth(UnitFrameDB["PetWidth"]) end
+	if Parent.Power then Parent.Power:SetWidth(UnitFrameDB["PetWidth"]) end
+	if MoveHandle.Pet then MoveHandle.Pet:SetWidth(UnitFrameDB["PetWidth"]) end
 end
-function Module:UpdateHealthHeight(value)
-	if Parent then Parent:SetHeight(value+UnitFrameDB["PetPowerHeight"]+4) end
-	if Parent.Health then Parent.Health:SetHeight(value) end
-	if MoveHandle.Pet then MoveHandle.Pet:SetHeight(value+UnitFrameDB["PetPowerHeight"]+4) end
+
+function Module:UpdateHealthHeight()
+	if Parent then Parent:SetHeight(UnitFrameDB["PetHealthHeight"]+UnitFrameDB["PetPowerHeight"]+4) end
+	if Parent.Health then Parent.Health:SetHeight(UnitFrameDB["PetHealthHeight"]) end
+	if MoveHandle.Pet then MoveHandle.Pet:SetHeight(UnitFrameDB["PetHealthHeight"]+UnitFrameDB["PetPowerHeight"]+4) end
 end
-function Module:UpdatePowerHeight(value)
-	if Parent then Parent:SetHeight(value+UnitFrameDB["PetHealthHeight"]+4) end
-	if Parent.Power then Parent.Power:SetHeight(value) end
-	if MoveHandle.Pet then MoveHandle.Pet:SetHeight(value+UnitFrameDB["PetHealthHeight"]+4) end
+
+function Module:UpdatePowerHeight()
+	if Parent then Parent:SetHeight(UnitFrameDB["PetPowerHeight"]+UnitFrameDB["PetHealthHeight"]+4) end
+	if Parent.Power then Parent.Power:SetHeight(UnitFrameDB["PetPowerHeight"]) end
+	if MoveHandle.Pet then MoveHandle.Pet:SetHeight(UnitFrameDB["PetPowerHeight"]+UnitFrameDB["PetHealthHeight"]+4) end
 end
+
 function Module:BuildHealthBar(self)
 	local Health = CreateFrame("StatusBar", nil, self)
 	Health:SetStatusBarTexture(DB.Statusbar)
@@ -38,9 +41,10 @@ function Module:BuildHealthBar(self)
 	Health.Smooth = true
 	
 	self.Health = Health
-	Module:UpdateWidth(UnitFrameDB["PetWidth"])
-	Module:UpdateHealthHeight(UnitFrameDB["PetHealthHeight"])
+	Module:UpdateWidth()
+	Module:UpdateHealthHeight()
 end
+
 function Module:BuildPowerBar(self)
 	local Power = CreateFrame("StatusBar", nil, self)
 	Power:SetStatusBarTexture(DB.Statusbar)
@@ -57,9 +61,10 @@ function Module:BuildPowerBar(self)
 	Power.colorPower = true
 	
 	self.Power = Power
-	Module:UpdateWidth(UnitFrameDB["PetWidth"])
-	Module:UpdatePowerHeight(UnitFrameDB["PetPowerHeight"])
+	Module:UpdateWidth()
+	Module:UpdatePowerHeight()
 end
+
 function Module:BuildTags(self)
 	local Name = S.MakeFontString(self.Health, 9)
 	Name:SetPoint("LEFT", 0, 5)
@@ -68,6 +73,7 @@ function Module:BuildTags(self)
 	HPTag:SetPoint("RIGHT", self.Health, 7, -5)
 	self:Tag(HPTag, "[Sora:hp]")
 end
+
 function Module:BuildRaidIcon(self)
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)

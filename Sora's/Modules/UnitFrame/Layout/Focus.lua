@@ -5,22 +5,25 @@ local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Focus")
 local Parent = nil
 
-function Module:UpdateWidth(value)
-	if Parent then Parent:SetWidth(value) end
-	if Parent.Health then Parent.Health:SetWidth(value) end
-	if Parent.Power then Parent.Power:SetWidth(value) end
-	if MoveHandle.Focus then MoveHandle.Focus:SetWidth(value) end
+function Module:UpdateWidth()
+	if Parent then Parent:SetWidth(UnitFrameDB["FocusWidth"]) end
+	if Parent.Health then Parent.Health:SetWidth(UnitFrameDB["FocusWidth"]) end
+	if Parent.Power then Parent.Power:SetWidth(UnitFrameDB["FocusWidth"]) end
+	if MoveHandle.Focus then MoveHandle.Focus:SetWidth(UnitFrameDB["FocusWidth"]) end
 end
-function Module:UpdateHealthHeight(value)
-	if Parent then Parent:SetHeight(value+UnitFrameDB["FocusPowerHeight"]+4) end
-	if Parent.Health then Parent.Health:SetHeight(value) end
-	if MoveHandle.Focus then MoveHandle.Focus:SetHeight(value+UnitFrameDB["FocusPowerHeight"]+4) end
+
+function Module:UpdateHealthHeight()
+	if Parent then Parent:SetHeight(UnitFrameDB["FocusHealthHeight"]+UnitFrameDB["FocusPowerHeight"]+4) end
+	if Parent.Health then Parent.Health:SetHeight(UnitFrameDB["FocusHealthHeight"]) end
+	if MoveHandle.Focus then MoveHandle.Focus:SetHeight(UnitFrameDB["FocusHealthHeight"]+UnitFrameDB["FocusPowerHeight"]+4) end
 end
-function Module:UpdatePowerHeight(value)
-	if Parent then Parent:SetHeight(value+UnitFrameDB["FocusHealthHeight"]+4) end
-	if Parent.Power then Parent.Power:SetHeight(value) end
-	if MoveHandle.Focus then MoveHandle.Focus:SetHeight(value+UnitFrameDB["FocusHealthHeight"]+4) end
+
+function Module:UpdatePowerHeight()
+	if Parent then Parent:SetHeight(UnitFrameDB["FocusPowerHeight"]+UnitFrameDB["FocusHealthHeight"]+4) end
+	if Parent.Power then Parent.Power:SetHeight(UnitFrameDB["FocusPowerHeight"]) end
+	if MoveHandle.Focus then MoveHandle.Focus:SetHeight(UnitFrameDB["FocusPowerHeight"]+UnitFrameDB["FocusHealthHeight"]+4) end
 end
+
 function Module:BuildHealthBar(self)
 	local Health = CreateFrame("StatusBar", nil, self)
 	Health:SetStatusBarTexture(DB.Statusbar)
@@ -40,9 +43,10 @@ function Module:BuildHealthBar(self)
 	Health.colorTapping = true
 	
 	self.Health = Health
-	Module:UpdateWidth(UnitFrameDB["FocusWidth"])
-	Module:UpdateHealthHeight(UnitFrameDB["FocusHealthHeight"])
+	Module:UpdateWidth()
+	Module:UpdateHealthHeight()
 end
+
 function Module:BuildPowerBar(self)
 	local Power = CreateFrame("StatusBar", nil, self)
 	Power:SetStatusBarTexture(DB.Statusbar)
@@ -59,16 +63,15 @@ function Module:BuildPowerBar(self)
 	Power.colorPower = true
 	
 	self.Power = Power
-	Module:UpdateWidth(UnitFrameDB["FocusWidth"])
-	Module:UpdatePowerHeight(UnitFrameDB["FocusPowerHeight"])
+	Module:UpdateWidth()
+	Module:UpdatePowerHeight()
 end
+
 function Module:BuildPortrait(self)
 	local Portrait = CreateFrame("PlayerModel", nil, self.Health)
 	Portrait:SetAlpha(0.3) 
 	Portrait.PostUpdate = function(self) 
-		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then
-			self:SetCamera(1)
-		end	
+		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then self:SetCamera(1) end	
 	end
 	Portrait:SetAllPoints()
 	Portrait:SetFrameLevel(self.Health:GetFrameLevel()+1)
@@ -83,6 +86,7 @@ function Module:BuildPortrait(self)
 	end)
 	self.Portrait = Portrait
 end
+
 function Module:BuildTags(self)
 	local Name = S.MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
@@ -129,6 +133,7 @@ function Module:BuildTags(self)
 	self:Tag(HPTag, UnitFrameDB["FocusTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
 	self:Tag(PPTag, UnitFrameDB["FocusTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
 end
+
 function Module:BuildCastbar(self)
 	local Castbar = CreateFrame("StatusBar", nil, self)
 	Castbar:SetHeight(10)
@@ -172,47 +177,29 @@ function Module:BuildCastbar(self)
 
 	self.Castbar = Castbar
 end
-function Module:BuildBuff(self)
-	if UnitFrameDB["FocusBuffMode"] == "None" then return end
-	local Buffs = CreateFrame("Frame", nil, self)
-	Buffs.onlyShowPlayer = (UnitFrameDB["FocusBuffMode"] == "OnlyPlayer")
-	Buffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
-	Buffs.initialAnchor = "TOPLEFT"
-	Buffs["growth-x"] = "RIGHT"
-	Buffs["growth-y"] = "DOWN"
-	Buffs.size = 20
-	Buffs.spacing = 5
-	Buffs.num = floor((self:GetWidth()+Buffs.spacing)/(Buffs.size+Buffs.spacing))
-	Buffs:SetSize(self:GetWidth(), Buffs.size)
-	Buffs.PostCreateIcon = function(self, Button)
+
+function Module:BuildAura(self)
+	if UnitFrameDB["FocusAuraMode"] == "None" then return end
+	local Auras = CreateFrame("Frame", nil, self)
+	Auras.onlyShowPlayer = (UnitFrameDB["FocusAuraMode"] == "OnlyPlayer")
+	Auras.initialAnchor = "TOPLEFT"
+	Auras["growth-x"] = "RIGHT"
+	Auras["growth-y"] = "DOWN"
+	Auras.size = 20
+	Auras.spacing = 5
+	Auras.numBuffs = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))
+	Auras.gap = true
+	Auras.num = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))*3
+	Auras:SetSize(self:GetWidth(), Auras.size*3+Auras.spacing*2)
+	Auras:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
+	Auras.PostCreateIcon = function(self, Button)
 		Button.Shadow = S.MakeShadow(Button, 3)	
 		Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 		Button.icon:SetAllPoints()
 		Button.count = S.MakeFontString(Button, 9)
 		Button.count:SetPoint("TOPRIGHT", 3, 0)
 	end
-	self.Buffs = Buffs
-end
-function Module:BuildDebuff(self)
-	if UnitFrameDB["FocusDebuffMode"] == "None" then return end
-	local Debuffs = CreateFrame("Frame", nil, self)
-	Debuffs.onlyShowPlayer = (UnitFrameDB["FocusDebuffMode"] == "OnlyPlayer")
-	Debuffs.size = 20
-	Debuffs.spacing = 5
-	Debuffs.num = floor((self:GetWidth()+Debuffs.spacing)/(Debuffs.size+Debuffs.spacing))*2
-	Debuffs:SetSize(self:GetWidth(), Debuffs.size*2+Debuffs.spacing)
-	Debuffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -30)
-	Debuffs.initialAnchor = "TOPLEFT"
-	Debuffs["growth-x"] = "RIGHT"
-	Debuffs["growth-y"] = "DOWN"
-	Debuffs.PostCreateIcon = function(self, Button)
-		Button.Shadow = S.MakeShadow(Button, 3)	
-		Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-		Button.icon:SetAllPoints()	
-		Button.count = S.MakeFontString(Button, 9)
-		Button.count:SetPoint("TOPRIGHT", 3, 0)
-	end
-	Debuffs.PostUpdateIcon = function(self, unit, Button, index, offset, filter, isDebuff)
+	Auras.PostUpdateIcon = function(self, unit, Button, index, offset, filter, isDebuff)
 		local Caster = select(8, UnitAura(unit, index, Button.filter))
 		if Button.debuff then
 			if Caster == "player" or Caster == "vehicle" then
@@ -224,14 +211,16 @@ function Module:BuildDebuff(self)
 			end
 		end
 	end
-	self.Debuffs = Debuffs
+	self.Auras = Auras
 end
+
 function Module:BuildRaidIcon(self)
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)
 	RaidIcon:SetPoint("CENTER", self.Health, "TOP", 0, 2)
 	self.RaidIcon = RaidIcon
 end
+
 function Module:BuildCombatIcon(self)
 	local Leader = self.Health:CreateTexture(nil, "OVERLAY")
 	Leader:SetSize(16, 16)
@@ -271,8 +260,7 @@ local function BuildFocus(self, ...)
 	Module:BuildPortrait(self)
 	Module:BuildTags(self)
 	Module:BuildCastbar(self)
-	Module:BuildBuff(self)
-	Module:BuildDebuff(self)
+	Module:BuildAura(self)
 	Module:BuildRaidIcon(self)
 	Module:BuildCombatIcon(self)
 end

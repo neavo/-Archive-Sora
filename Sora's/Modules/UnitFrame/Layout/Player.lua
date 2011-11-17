@@ -5,22 +5,25 @@ local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Player")
 local Parent = nil
 
-function Module:UpdateWidth(value)
-	if Parent then Parent:SetWidth(value) end
-	if Parent.Health then Parent.Health:SetWidth(value) end
-	if Parent.Power then Parent.Power:SetWidth(value) end
-	if MoveHandle.Player then MoveHandle.Player:SetWidth(value) end
+function Module:UpdateWidth()
+	if Parent then Parent:SetWidth(UnitFrameDB["PlayerWidth"]) end
+	if Parent.Health then Parent.Health:SetWidth(UnitFrameDB["PlayerWidth"]) end
+	if Parent.Power then Parent.Power:SetWidth(UnitFrameDB["PlayerWidth"]) end
+	if MoveHandle.Player then MoveHandle.Player:SetWidth(UnitFrameDB["PlayerWidth"]) end
 end
-function Module:UpdateHealthHeight(value)
-	if Parent then Parent:SetHeight(value+UnitFrameDB["PlayerPowerHeight"]+4) end
-	if Parent.Health then Parent.Health:SetHeight(value) end
-	if MoveHandle.Player then MoveHandle.Player:SetHeight(value+UnitFrameDB["PlayerPowerHeight"]+4) end
+
+function Module:UpdateHealthHeight()
+	if Parent then Parent:SetHeight(UnitFrameDB["PlayerHealthHeight"]+UnitFrameDB["PlayerPowerHeight"]+4) end
+	if Parent.Health then Parent.Health:SetHeight(UnitFrameDB["PlayerHealthHeight"]) end
+	if MoveHandle.Player then MoveHandle.Player:SetHeight(UnitFrameDB["PlayerHealthHeight"]+UnitFrameDB["PlayerPowerHeight"]+4) end
 end
-function Module:UpdatePowerHeight(value)
-	if Parent then Parent:SetHeight(value+UnitFrameDB["PlayerHealthHeight"]+4) end
-	if Parent.Power then Parent.Power:SetHeight(value) end
-	if MoveHandle.Player then MoveHandle.Player:SetHeight(value+UnitFrameDB["PlayerHealthHeight"]+4) end
+
+function Module:UpdatePowerHeight()
+	if Parent then Parent:SetHeight(UnitFrameDB["PlayerPowerHeight"]+UnitFrameDB["PlayerHealthHeight"]+4) end
+	if Parent.Power then Parent.Power:SetHeight(UnitFrameDB["PlayerPowerHeight"]) end
+	if MoveHandle.Player then MoveHandle.Player:SetHeight(UnitFrameDB["PlayerPowerHeight"]+UnitFrameDB["PlayerHealthHeight"]+4) end
 end
+
 function Module:BuildHealthBar(self)
 	local Health = CreateFrame("StatusBar", nil, self)
 	Health:SetStatusBarTexture(DB.Statusbar)
@@ -37,9 +40,10 @@ function Module:BuildHealthBar(self)
 	Health.Smooth = true
 	
 	self.Health = Health
-	Module:UpdateWidth(UnitFrameDB["PlayerWidth"])
-	Module:UpdateHealthHeight(UnitFrameDB["PlayerHealthHeight"])
+	Module:UpdateWidth()
+	Module:UpdateHealthHeight()
 end
+
 function Module:BuildPowerBar(self)
 	local Power = CreateFrame("StatusBar", nil, self)
 	Power:SetStatusBarTexture(DB.Statusbar)
@@ -56,9 +60,10 @@ function Module:BuildPowerBar(self)
 	Power.colorPower = true
 	
 	self.Power = Power
-	Module:UpdateWidth(UnitFrameDB["PlayerWidth"])
-	Module:UpdatePowerHeight(UnitFrameDB["PlayerPowerHeight"])
+	Module:UpdateWidth()
+	Module:UpdatePowerHeight()
 end
+
 function Module:UpdateClassPowerBar()
 	if Parent.Runes then
 		local Runes = Parent.Runes
@@ -120,6 +125,7 @@ function Module:UpdateClassPowerBar()
 		EclipseBar:SetSize(Parent:GetWidth(), 3)
 	end
 end
+
 function Module:BuildClassPowerBar(self)
 	if DB.MyClass == "DEATHKNIGHT" then
 		local Runes = CreateFrame("Frame")
@@ -228,6 +234,7 @@ function Module:BuildClassPowerBar(self)
 	end
 	Module:UpdateClassPowerBar()
 end
+
 function Module:BuildPortrait(self)
 	local Portrait = CreateFrame("PlayerModel", nil, self.Health)
 	Portrait:SetAlpha(0.3) 
@@ -248,6 +255,7 @@ function Module:BuildPortrait(self)
 	
 	self.Portrait = Portrait
 end
+
 function Module:BuildTags(self)
 	local Name = S.MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
@@ -294,6 +302,76 @@ function Module:BuildTags(self)
 	self:Tag(HPTag, UnitFrameDB["PlayerTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
 	self:Tag(PPTag, UnitFrameDB["PlayerTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")
 end
+
+function Module:UpdateCastbarWidth()
+	if Parent.CastbarPos then Parent.CastbarPos:SetWidth(UnitFrameDB["PlayerCastbarWidth"]) end
+	if Parent.Castbar then Parent.Castbar:SetWidth(UnitFrameDB["PlayerCastbarWidth"]-UnitFrameDB["PlayerCastbarHeight"]-5) end
+	if MoveHandle.PlayerCastbar then MoveHandle.PlayerCastbar:SetWidth(UnitFrameDB["PlayerCastbarWidth"]) end
+end
+
+function Module:UpdateCastbarHeight()
+	if Parent.CastbarPos then Parent.CastbarPos:SetHeight(UnitFrameDB["PlayerCastbarHeight"]) end
+	if Parent.Castbar then Parent.Castbar:SetSize(UnitFrameDB["PlayerCastbarWidth"]-UnitFrameDB["PlayerCastbarHeight"]-5, UnitFrameDB["PlayerCastbarHeight"]) end
+	if Parent.Castbar.Icon then Parent.Castbar.Icon:SetSize(UnitFrameDB["PlayerCastbarHeight"], UnitFrameDB["PlayerCastbarHeight"]) end
+	if MoveHandle.PlayerCastbar then MoveHandle.PlayerCastbar:SetHeight(UnitFrameDB["PlayerCastbarHeight"]) end
+end
+
+function Module:BuildCastbar(self)
+	if not UnitFrameDB["PlayerCastbarEnable"] then return end
+	local CastbarPos = CreateFrame("Frame", nil, self)
+	local Castbar = CreateFrame("StatusBar", nil, CastbarPos)
+	Castbar:SetStatusBarTexture(DB.Statusbar)
+	Castbar:SetStatusBarColor(95/255, 182/255, 255/255)
+	Castbar:SetPoint("LEFT")
+	
+	Castbar.Shadow = S.MakeShadow(Castbar, 3)
+	Castbar.Shadow:SetBackdrop({
+		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
+		edgeFile = DB.GlowTex, edgeSize = 3, 
+	})
+	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
+	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+	
+	Castbar.CastingColor = {95/255, 182/255, 255/255}
+	Castbar.CompleteColor = {20/255, 208/255, 0/255}
+	Castbar.FailColor = {255/255, 12/255, 0/255}
+	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
+
+	Castbar.Text = S.MakeFontString(Castbar, 10)
+	Castbar.Text:SetPoint("LEFT", 2, 0)
+	
+	Castbar.Time = S.MakeFontString(Castbar, 10)
+	Castbar.Time:SetPoint("RIGHT", -2, 0)
+	
+	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
+	Castbar.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	Castbar.Icon:SetPoint("BOTTOMLEFT", Castbar, "BOTTOMRIGHT", 5, 0)
+	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
+
+	Castbar.SafeZone = Castbar:CreateTexture(nil, "OVERLAY")
+	Castbar.SafeZone:SetTexture(DB.Statusbar)
+	Castbar.SafeZone:SetVertexColor(1, 0.1, 0, 0.6)
+	Castbar.SafeZone:SetAllPoints()
+	Castbar.Lag = S.MakeFontString(Castbar, 10)
+	Castbar.Lag:SetPoint("CENTER", -2, 17)
+	Castbar.Lag:Hide()
+	self:RegisterEvent("UNIT_SPELLCAST_SENT", S.OnCastSent)
+
+	Castbar.OnUpdate = S.OnCastbarUpdate
+	Castbar.PostCastStart = S.PostCastStart
+	Castbar.PostChannelStart = S.PostCastStart
+	Castbar.PostCastStop = S.PostCastStop
+	Castbar.PostChannelStop = S.PostChannelStop
+	Castbar.PostCastFailed = S.PostCastFailed
+	Castbar.PostCastInterrupted = S.PostCastFailed
+	
+	self.Castbar = Castbar
+	self.CastbarPos = CastbarPos
+	Module:UpdateCastbarWidth()
+	Module:UpdateCastbarHeight()
+	MoveHandle.PlayerCastbar = S.MakeMoveHandle(CastbarPos, "玩家施法条", "PlayerCastbar")
+end
+
 function Module:BuildDebuff(self)
 	if UnitFrameDB["PlayerDebuffMode"] == "None" then return end
 	local Debuffs = CreateFrame("Frame", nil, self)
@@ -314,12 +392,14 @@ function Module:BuildDebuff(self)
 	end
 	self.Debuffs = Debuffs
 end
+
 function Module:BuildRaidIcon(self)
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)
 	RaidIcon:SetPoint("CENTER", self.Health, "TOP", 0, 2)
 	self.RaidIcon = RaidIcon
 end
+
 function Module:BuildCombatIcon(self)
 	local Leader = self.Health:CreateTexture(nil, "OVERLAY")
 	Leader:SetSize(16, 16)
@@ -359,6 +439,7 @@ local function BuildPlayer(self, ...)
 	Module:BuildClassPowerBar(self)
 	Module:BuildPortrait(self)
 	Module:BuildTags(self)
+	Module:BuildCastbar(self)
 	Module:BuildDebuff(self)
 	Module:BuildRaidIcon(self)
 	Module:BuildCombatIcon(self)

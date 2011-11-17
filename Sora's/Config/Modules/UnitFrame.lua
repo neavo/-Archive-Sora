@@ -41,8 +41,7 @@ function Module.LoadSettings()
 			["FocusHealthHeight"] = 24,
 			["FocusPowerHeight"] = 2,
 		["FocusTagMode"] = "Short",
-		["FocusBuffMode"] = "Full",
-		["FocusDebuffMode"] = "Full",
+		["FocusAuraMode"] = "Full",
 		-- Boss框体
 		["ShowBoss"] = false,
 			["ShowBossTarget"] = true,
@@ -97,9 +96,9 @@ function Module.BuildGUI()
 							min = 100, max = 600, step = 10,
 							get = function() return UnitFrameDB["PlayerWidth"] end,
 							set = function(_, value)
-								Sora:GetModule("Player"):UpdateWidth(value)
-								Sora:GetModule("Player"):UpdateClassPowerBar()
 								UnitFrameDB["PlayerWidth"] = value
+								Sora:GetModule("Player"):UpdateWidth()
+								Sora:GetModule("Player"):UpdateClassPowerBar()
 							end,
 						},
 						PlayerHealthHeight = {
@@ -108,8 +107,8 @@ function Module.BuildGUI()
 							min = 2, max = 100, step = 2,
 							get = function() return UnitFrameDB["PlayerHealthHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("Player"):UpdateHealthHeight(value)
 								UnitFrameDB["PlayerHealthHeight"] = value
+								Sora:GetModule("Player"):UpdateHealthHeight()
 							end,
 						},
 						PlayerPowerHeight = {
@@ -118,8 +117,8 @@ function Module.BuildGUI()
 							min = 2, max = 100, step = 2,
 							get = function() return UnitFrameDB["PlayerPowerHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("Player"):UpdatePowerHeight(value)
 								UnitFrameDB["PlayerPowerHeight"] = value
+								Sora:GetModule("Player"):UpdatePowerHeight()
 							end,
 						},
 						PlayerTagMode = {
@@ -156,8 +155,8 @@ function Module.BuildGUI()
 							disabled = not UnitFrameDB["PlayerCastbarEnable"] or not UnitFrameDB["PlayerEnable"],
 							get = function() return UnitFrameDB["PlayerCastbarWidth"] end,
 							set = function(_, value)
-								Sora:GetModule("PlayerCastbar"):UpdateWidth(value)
 								UnitFrameDB["PlayerCastbarWidth"] = value
+								Sora:GetModule("Player"):UpdateCastbarWidth()
 							end,
 						},
 						PlayerCastbarHeight = {
@@ -167,8 +166,8 @@ function Module.BuildGUI()
 							disabled = not UnitFrameDB["PlayerCastbarEnable"] or not UnitFrameDB["PlayerEnable"],
 							get = function() return UnitFrameDB["PlayerCastbarHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("PlayerCastbar"):UpdateHeight(value)
 								UnitFrameDB["PlayerCastbarHeight"] = value
+								Sora:GetModule("Player"):UpdateCastbarHeight()
 							end,
 						}
 					}
@@ -184,8 +183,8 @@ function Module.BuildGUI()
 							min = 20, max = 200, step = 10,
 							get = function() return UnitFrameDB["PetWidth"] end,
 							set = function(_, value)
-								Sora:GetModule("Pet"):UpdateWidth(value)
 								UnitFrameDB["PetWidth"] = value
+								Sora:GetModule("Pet"):UpdateWidth()							
 							end,
 						},
 						PetHealthHeight = {
@@ -194,8 +193,8 @@ function Module.BuildGUI()
 							min = 1, max = 50, step = 2,
 							get = function() return UnitFrameDB["PetHealthHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("Pet"):UpdateHealthHeight(value)
 								UnitFrameDB["PetHealthHeight"] = value
+								Sora:GetModule("Pet"):UpdateHealthHeight()							
 							end,
 						},
 						PetPowerHeight = {
@@ -204,8 +203,8 @@ function Module.BuildGUI()
 							min = 1, max = 50, step = 2,
 							get = function() return UnitFrameDB["PetPowerHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("Pet"):UpdatePowerHeight(value)
 								UnitFrameDB["PetPowerHeight"] = value
+								Sora:GetModule("Pet"):UpdatePowerHeight()							
 							end,
 						},
 					}
@@ -239,8 +238,8 @@ function Module.BuildGUI()
 							min = 100, max = 600, step = 10,
 							get = function() return UnitFrameDB["TargetWidth"] end,
 							set = function(_, value)
-								Sora:GetModule("Target"):UpdateWidth(value)
 								UnitFrameDB["TargetWidth"] = value
+								Sora:GetModule("Target"):UpdateWidth()				
 							end,
 						},
 						TargetHealthHeight = {
@@ -249,8 +248,8 @@ function Module.BuildGUI()
 							min = 2, max = 100, step = 2,
 							get = function() return UnitFrameDB["TargetHealthHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("Target"):UpdateHealthHeight(value)
 								UnitFrameDB["TargetHealthHeight"] = value
+								Sora:GetModule("Target"):UpdateHealthHeight()				
 							end,
 						},
 						TargetPowerHeight = {
@@ -259,8 +258,8 @@ function Module.BuildGUI()
 							min = 2, max = 100, step = 2,
 							get = function() return UnitFrameDB["TargetPowerHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("Target"):UpdatePowerHeight(value)
 								UnitFrameDB["TargetPowerHeight"] = value
+								Sora:GetModule("Target"):UpdatePowerHeight()		
 							end,
 						},
 						TargetTagMode = {
@@ -297,8 +296,8 @@ function Module.BuildGUI()
 							disabled = not UnitFrameDB["TargetCastbarEnable"],
 							get = function() return UnitFrameDB["TargetCastbarWidth"] end,
 							set = function(_, value)
-								Sora:GetModule("TargetCastbar"):UpdateWidth(value)
 								UnitFrameDB["TargetCastbarWidth"] = value
+								Sora:GetModule("Target"):UpdateCastbarWidth()
 							end,
 						},
 						TargetCastbarHeight = {
@@ -308,8 +307,8 @@ function Module.BuildGUI()
 							disabled = not UnitFrameDB["TargetCastbarEnable"],
 							get = function() return UnitFrameDB["TargetCastbarHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("TargetCastbar"):UpdateHeight(value)
 								UnitFrameDB["TargetCastbarHeight"] = value
+								Sora:GetModule("Target"):UpdateCastbarHeight()							
 							end,
 						}
 					}
@@ -325,8 +324,8 @@ function Module.BuildGUI()
 							min = 20, max = 200, step = 10,	
 							get = function() return UnitFrameDB["TargetTargetWidth"] end,
 							set = function(_, value)
-								Sora:GetModule("TargetTarget"):UpdateWidth(value)
 								UnitFrameDB["TargetTargetWidth"] = value
+								Sora:GetModule("TargetTarget"):UpdateWidth()
 							end,
 						},
 						TargetTargetHealthHeight = {
@@ -335,8 +334,8 @@ function Module.BuildGUI()
 							min = 1, max = 50, step = 2,
 							get = function() return UnitFrameDB["TargetTargetHealthHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("TargetTarget"):UpdateHealthHeight(value)
 								UnitFrameDB["TargetTargetHealthHeight"] = value
+								Sora:GetModule("TargetTarget"):UpdateHealthHeight()	
 							end,
 						},
 						TargetTargetPowerHeight = {
@@ -345,8 +344,8 @@ function Module.BuildGUI()
 							min = 1, max = 50, step = 2,	
 							get = function() return UnitFrameDB["TargetTargetPowerHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("TargetTarget"):UpdatePowerHeight(value)
 								UnitFrameDB["TargetTargetPowerHeight"] = value
+								Sora:GetModule("TargetTarget"):UpdatePowerHeight()		
 							end,
 						},
 					}
@@ -380,8 +379,8 @@ function Module.BuildGUI()
 							min = 100, max = 600, step = 10,
 							get = function() return UnitFrameDB["FocusWidth"] end,
 							set = function(_, value)
-								Sora:GetModule("Focus"):UpdateWidth(value)
 								UnitFrameDB["FocusWidth"] = value
+								Sora:GetModule("Focus"):UpdateWidth()		
 							end,
 						},
 						FocusHealthHeight = {
@@ -390,8 +389,8 @@ function Module.BuildGUI()
 							min = 2, max = 100, step = 2,
 							get = function() return UnitFrameDB["FocusHealthHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("Focus"):UpdateHealthHeight(value)
 								UnitFrameDB["FocusHealthHeight"] = value
+								Sora:GetModule("Focus"):UpdateHealthHeight()					
 							end,
 						},
 						FocusPowerHeight = {
@@ -400,8 +399,8 @@ function Module.BuildGUI()
 							min = 2, max = 100, step = 2,
 							get = function() return UnitFrameDB["FocusPowerHeight"] end,
 							set = function(_, value)
-								Sora:GetModule("Focus"):UpdatePowerHeight(value)
 								UnitFrameDB["FocusPowerHeight"] = value
+								Sora:GetModule("Focus"):UpdatePowerHeight()
 							end,
 						},
 						FocusTagMode = {
@@ -411,19 +410,12 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["FocusTagMode"] end,
 							set = function(_, value) UnitFrameDB["FocusTagMode"] = value end,
 						},
-						FocusBuffMode = {
+						FocusAuraMode = {
 							type = "select", order = 5,
-							name = "增益效果：", desc = "请选择增益效果显示模式",
+							name = "增益/减益效果：", desc = "请选择增益/减益效果显示模式",
 							values = {["Full"] = "全部", ["OnlyPlayer"] = "仅显示玩家施放的", ["None"] = "无"},
-							get = function() return UnitFrameDB["FocusBuffMode"] end,
-							set = function(_, value) UnitFrameDB["FocusBuffMode"] = value end,
-						},
-						FocusDebuffMode = {
-							type = "select", order = 6,
-							name = "减益效果：", desc = "请选择减益效果显示模式",
-							values = {["Full"] = "全部", ["OnlyPlayer"] = "仅显示玩家施放的", ["None"] = "无"},
-							get = function() return UnitFrameDB["FocusDebuffMode"] end,
-							set = function(_, value) UnitFrameDB["FocusDebuffMode"] = value end,
+							get = function() return UnitFrameDB["FocusAuraMode"] end,
+							set = function(_, value) UnitFrameDB["FocusAuraMode"] = value end,
 						},
 					}
 				}

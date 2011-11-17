@@ -5,22 +5,25 @@ local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Target")
 local Parent = nil
 
-function Module:UpdateWidth(value)
-	if Parent then Parent:SetWidth(value) end
-	if Parent.Health then Parent.Health:SetWidth(value) end
-	if Parent.Power then Parent.Power:SetWidth(value) end
-	if MoveHandle.Target then MoveHandle.Target:SetWidth(value) end
+function Module:UpdateWidth()
+	if Parent then Parent:SetWidth(UnitFrameDB["TargetWidth"]) end
+	if Parent.Health then Parent.Health:SetWidth(UnitFrameDB["TargetWidth"]) end
+	if Parent.Power then Parent.Power:SetWidth(UnitFrameDB["TargetWidth"]) end
+	if MoveHandle.Target then MoveHandle.Target:SetWidth(UnitFrameDB["TargetWidth"]) end
 end
-function Module:UpdateHealthHeight(value)
-	if Parent then Parent:SetHeight(value+UnitFrameDB["TargetPowerHeight"]+4) end
-	if Parent.Health then Parent.Health:SetHeight(value) end
-	if MoveHandle.Target then MoveHandle.Target:SetHeight(value+UnitFrameDB["TargetPowerHeight"]+4) end
+
+function Module:UpdateHealthHeight()
+	if Parent then Parent:SetHeight(UnitFrameDB["TargetHealthHeight"]+UnitFrameDB["TargetPowerHeight"]+4) end
+	if Parent.Health then Parent.Health:SetHeight(UnitFrameDB["TargetHealthHeight"]) end
+	if MoveHandle.Target then MoveHandle.Target:SetHeight(UnitFrameDB["TargetHealthHeight"]+UnitFrameDB["TargetPowerHeight"]+4) end
 end
-function Module:UpdatePowerHeight(value)
-	if Parent then Parent:SetHeight(value+UnitFrameDB["TargetHealthHeight"]+4) end
-	if Parent.Power then Parent.Power:SetHeight(value) end
-	if MoveHandle.Target then MoveHandle.Target:SetHeight(value+UnitFrameDB["TargetHealthHeight"]+4) end
+
+function Module:UpdatePowerHeight()
+	if Parent then Parent:SetHeight(UnitFrameDB["TargetPowerHeight"]+UnitFrameDB["TargetHealthHeight"]+4) end
+	if Parent.Power then Parent.Power:SetHeight(UnitFrameDB["TargetPowerHeight"]) end
+	if MoveHandle.Target then MoveHandle.Target:SetHeight(UnitFrameDB["TargetPowerHeight"]+UnitFrameDB["TargetHealthHeight"]+4) end
 end
+
 function Module:BuildHealthBar(self)
 	local Health = CreateFrame("StatusBar", nil, self)
 	Health:SetStatusBarTexture(DB.Statusbar)
@@ -40,9 +43,10 @@ function Module:BuildHealthBar(self)
 	Health.colorTapping = true
 	
 	self.Health = Health
-	Module:UpdateWidth(UnitFrameDB["TargetWidth"])
-	Module:UpdateHealthHeight(UnitFrameDB["TargetHealthHeight"])
+	Module:UpdateWidth()
+	Module:UpdateHealthHeight()
 end
+
 function Module:BuildPowerBar(self)
 	local Power = CreateFrame("StatusBar", nil, self)
 	Power:SetStatusBarTexture(DB.Statusbar)
@@ -59,9 +63,10 @@ function Module:BuildPowerBar(self)
 	Power.colorPower = true
 	
 	self.Power = Power
-	Module:UpdateWidth(UnitFrameDB["TargetWidth"])
-	Module:UpdatePowerHeight(UnitFrameDB["TargetPowerHeight"])
+	Module:UpdateWidth()
+	Module:UpdatePowerHeight()
 end
+
 function Module:BuildPortrait(self)
 	local Portrait = CreateFrame("PlayerModel", nil, self.Health)
 	Portrait:SetAlpha(0.3) 
@@ -83,6 +88,7 @@ function Module:BuildPortrait(self)
 	end)
 	self.Portrait = Portrait
 end
+
 function Module:BuildTags(self)
 	local Name = S.MakeFontString(self.Health, 11)
 	Name:SetPoint("LEFT", 5, 0)
@@ -129,6 +135,67 @@ function Module:BuildTags(self)
 	self:Tag(HPTag, UnitFrameDB["TargetTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
 	self:Tag(PPTag, UnitFrameDB["TargetTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
 end
+
+function Module:UpdateCastbarWidth()
+	if Parent.CastbarPos then Parent.CastbarPos:SetWidth(UnitFrameDB["TargetCastbarWidth"]) end
+	if Parent.Castbar then Parent.Castbar:SetWidth(UnitFrameDB["TargetCastbarWidth"]-UnitFrameDB["TargetCastbarHeight"]-5) end
+	if MoveHandle.TargetCastbar then MoveHandle.TargetCastbar:SetWidth(UnitFrameDB["TargetCastbarWidth"]) end
+end
+
+function Module:UpdateCastbarHeight()
+	if Parent.CastbarPos then Parent.CastbarPos:SetHeight(UnitFrameDB["TargetCastbarHeight"]) end
+	if Parent.Castbar then Parent.Castbar:SetSize(UnitFrameDB["TargetCastbarWidth"]-UnitFrameDB["TargetCastbarHeight"]-5, UnitFrameDB["TargetCastbarHeight"]) end
+	if Parent.Castbar.Icon then Parent.Castbar.Icon:SetSize(UnitFrameDB["TargetCastbarHeight"], UnitFrameDB["TargetCastbarHeight"]) end
+	if MoveHandle.TargetCastbar then MoveHandle.TargetCastbar:SetHeight(UnitFrameDB["TargetCastbarHeight"]) end
+end
+
+function Module:BuildCastbar(self)
+	if not UnitFrameDB["TargetCastbarEnable"] then return end
+	local CastbarPos = CreateFrame("Frame", nil, self)
+	local Castbar = CreateFrame("StatusBar", nil, CastbarPos)
+	Castbar:SetStatusBarTexture(DB.Statusbar)
+	Castbar:SetStatusBarColor(95/255, 182/255, 255/255)
+	Castbar:SetPoint("RIGHT")
+	
+	Castbar.Shadow = S.MakeShadow(Castbar, 3)
+	Castbar.Shadow:SetBackdrop({
+		bgFile = DB.Statusbar,insets = {left = 3, right = 3, top = 3, bottom = 3}, 
+		edgeFile = DB.GlowTex, edgeSize = 3, 
+	})
+	Castbar.Shadow:SetBackdropColor(0, 0, 0, 0.5)
+	Castbar.Shadow:SetBackdropBorderColor(0, 0, 0, 1)
+	
+	Castbar.CastingColor = {95/255, 182/255, 255/255}
+	Castbar.CompleteColor = {20/255, 208/255, 0/255}
+	Castbar.FailColor = {255/255, 12/255, 0/255}
+	Castbar.ChannelingColor = {95/255, 182/255, 255/255}
+
+	Castbar.Text = S.MakeFontString(Castbar, 10)
+	Castbar.Text:SetPoint("LEFT", 2, 0)
+	
+	Castbar.Time = S.MakeFontString(Castbar, 10)
+	Castbar.Time:SetPoint("RIGHT", -2, 0)
+	
+	Castbar.Icon = Castbar:CreateTexture(nil, "ARTWORK")
+	Castbar.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	Castbar.Icon:SetPoint("BOTTOMRIGHT", Castbar, "BOTTOMLEFT", -5, 0)
+	Castbar.Icon.Shadow = S.MakeTexShadow(Castbar, Castbar.Icon, 3)
+
+	Castbar.OnUpdate = S.OnCastbarUpdate
+	Castbar.PostCastStart = S.PostCastStart
+	Castbar.PostChannelStart = S.PostCastStart
+	Castbar.PostCastStop = S.PostCastStop
+	Castbar.PostChannelStop = S.PostChannelStop
+	Castbar.PostCastFailed = S.PostCastFailed
+	Castbar.PostCastInterrupted = S.PostCastFailed
+	
+	self.Castbar = Castbar
+	self.CastbarPos = CastbarPos
+	Module:UpdateCastbarWidth()
+	Module:UpdateCastbarHeight()
+	MoveHandle.TargetCastbar = S.MakeMoveHandle(CastbarPos, "目标施法条", "TargetCastbar")
+end
+
 function Module:BuildAura(self)
 	if UnitFrameDB["TargetAuraMode"] == "None" then return end
 	local Auras = CreateFrame("Frame", nil, self)
@@ -164,12 +231,14 @@ function Module:BuildAura(self)
 	end
 	self.Auras = Auras
 end
+
 function Module:BuildRaidIcon(self)
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)
 	RaidIcon:SetPoint("CENTER", self.Health, "TOP", 0, 2)
 	self.RaidIcon = RaidIcon
 end
+
 function Module:BuildCombatIcon(self)
 	local Leader = self.Health:CreateTexture(nil, "OVERLAY")
 	Leader:SetSize(16, 16)
@@ -208,6 +277,7 @@ local function BuildTarget(self, ...)
 	Module:BuildPowerBar(self)
 	Module:BuildPortrait(self)
 	Module:BuildTags(self)
+	Module:BuildCastbar(self)
 	Module:BuildAura(self)
 	Module:BuildRaidIcon(self)
 	Module:BuildCombatIcon(self)
