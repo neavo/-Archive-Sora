@@ -299,7 +299,7 @@ local RaidDebuffList = {
 		-- Paladin
 		{853, 1}, -- Hammer of Justice
 		{642, 1}, -- Divine Shield
-		{10278, 1}, -- Hand of Protection
+		{1022, 1}, -- Hand of Protection
 		{1044, 1}, -- Hand of Freedom
 		{6940, 1}, -- Hand of Sacrifice	
 		{20066, 1}, -- Repentance
@@ -342,11 +342,6 @@ local RaidDebuffList = {
 		{55021, 1}, -- Silenced - Improved Counterspell - Rank2
 		{2139, 1}, -- Counterspell
 		{118, 1}, -- Polymorph
-		{61305, 1}, -- Polymorph Black Cat
-		{28272, 1}, -- Polymorph Pig
-		{61721, 1}, -- Polymorph Rabbit
-		{61780, 1}, -- Polymorph Turkey
-		{28271, 1}, -- Polymorph Turtle
 		{44572, 1}, -- Deep Freeze
 		{45438, 1}, -- Ice Block	
 		{122, 1}, -- Frost Nova
@@ -393,51 +388,62 @@ Event:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_ENTERING_WORLD" then self:UnregisterEvent("PLAYER_ENTERING_WORLD") end
 end)
 
-local function ShouldBeShown(name)
-	for key, value in pairs(ZoneList) do
-		local Name = GetSpellInfo(value[1])
-		if Name == name and value[2] >= PrePriority then
-			PrePriority = value[2]
-			return true
-		end
+local function UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
+	if RaidDebuff then
+		RaidDebuff:Show()
+		RaidDebuff.Timer = expires-duration
+		RaidDebuff:SetScript("OnUpdate", function(self, elapsed)
+			self.Timer = self.Timer + elapsed
+			if self.Timer > expires then
+				self:Hide()
+				self:SetScript("OnUpdate", nil)
+				PrePriority = 0
+			end
+		end)
 	end
-	return false
+	if RaidDebuff.Icon then RaidDebuff.Icon:SetTexture(icon) end
+	if RaidDebuff.Count then RaidDebuff.Count:SetText(count > 1 and count or nil) end
+	if RaidDebuff.Cooldown then CooldownFrame_SetTimer(RaidDebuff.Cooldown, expires-duration, duration, 1) end
 end
 
 local function Update(self, event, unit)
     if self.unit ~= unit then return end
 	local RaidDebuff = self.RaidDebuff
 	local Flag = true
-	local index = 1
-    while true do
-		local name, _, icon, count, _, duration, expires  = UnitBuff(unit, index)
-		if not name then break end
-		if ShouldBeShown(name) then
-			if RaidDebuff.Icon then RaidDebuff.Icon:SetTexture(icon) end
-			if RaidDebuff.Count then RaidDebuff.Count:SetText(count > 1 and count or nil) end
-			if RaidDebuff.Cooldown then RaidDebuff.Cooldown:SetCooldown(expires-duration, duration) end
-			RaidDebuff:Show()
+	for _, value in pairs(ZoneList) do
+		local name = GetSpellInfo(value[1])
+		if UnitBuff(unit, name) and value[2] >= PrePriority then
+			local name, _, icon, count, _, duration, expires = UnitBuff(unit, name)
+			UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
+			PrePriority = value[2]
 			Flag = false
 		end
-		index = index + 1
-	end
-	local index = 1
-    while true do
-		local name, _, icon, count, _, duration, expires  = UnitDebuff(unit, index)
-		if not name then break end
-		if ShouldBeShown(name) then
-			if RaidDebuff.Icon then RaidDebuff.Icon:SetTexture(icon) end
-			if RaidDebuff.Count then RaidDebuff.Count:SetText(count > 1 and count or nil) end
-			if RaidDebuff.Cooldown then RaidDebuff.Cooldown:SetCooldown(expires-duration, duration) end
-			RaidDebuff:Show()
+		if UnitDebuff(unit, name) and value[2] >= PrePriority then
+			local name, _, icon, count, _, duration, expires = UnitDebuff(unit, name)
+			UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
+			PrePriority = value[2]
 			Flag = false
 		end
-		index = index + 1
 	end
-	if Flag and RaidDebuff:IsShown() then
+	if Flag then
 		RaidDebuff:Hide()
+		RaidDebuff:SetScript("OnUpdate", nil)
 		PrePriority = 0
-		Update(self, event, unit)
+		for _, value in pairs(ZoneList) do
+			local name = GetSpellInfo(value[1])
+			if UnitBuff(unit, name) and value[2] >= PrePriority then
+				local name, _, icon, count, _, duration, expires = UnitBuff(unit, name)
+				UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
+				PrePriority = value[2]
+				Flag = false
+			end
+			if UnitDebuff(unit, name) and value[2] >= PrePriority then
+				local name, _, icon, count, _, duration, expires = UnitDebuff(unit, name)
+				UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
+				PrePriority = value[2]
+				Flag = false
+			end
+		end
 	end
 end
 

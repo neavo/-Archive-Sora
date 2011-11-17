@@ -365,6 +365,7 @@ local function BuildPlayer(self, ...)
 end
 
 function Module:OnInitialize()
+	if not UnitFrameDB["PlayerEnable"] then return end
 	oUF:RegisterStyle("Player", BuildPlayer)
 	oUF:SetActiveStyle("Player")
 	DB.Player = oUF:Spawn("player", "oUF_SoraPlayer")

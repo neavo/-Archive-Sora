@@ -45,7 +45,10 @@ local ClassList = {
 	}
 }
 local IndicatorList = ClassList[DB.MyClass]
-wipe(ClassList)
+
+do
+	wipe(ClassList)
+end
 
 local function OnUpdate(self, elapsed)
 	self.Timer = self.expires-GetTime()
