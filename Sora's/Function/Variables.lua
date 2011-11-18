@@ -4,7 +4,7 @@ local Media = "InterFace\\AddOns\\Sora's\\Media\\"
 
 DB.MyClass = select(2, UnitClass("player"))
 DB.MyClassColor = RAID_CLASS_COLORS[DB.MyClass]
-DB.Font = GetLocale() == "zhCN" and "Fonts\\ZYKai_T.ttf" or "Fonts\\bLEI00D.ttf"
+DB.Font = ChatFrame1:GetFont()
 DB.bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"
 DB.Icon = "Interface\\Addons\\Sora's\\Modules\\Chat\\Icon\\"
 DB.GlowTex = Media.."GlowTex"

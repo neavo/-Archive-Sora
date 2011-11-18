@@ -33,8 +33,7 @@ function S.BuildICON(IconSize)
 	Frame.Statusbar.BG:SetAllPoints() 
 	Frame.Statusbar.BG:SetTexture(DB.Statusbar)
 	Frame.Statusbar.BG:SetVertexColor(0.1, 0.1, 0.1, 0.6)
-		
-	Frame:Hide()
+
 	return Frame
 end
 
@@ -71,6 +70,5 @@ function S.BuildBAR(BarWidth, IconSize)
 	Frame.Spellname = S.MakeFontString(Frame.Statusbar, 11)
 	Frame.Spellname:SetPoint("CENTER", -10, 5)
 	
-	Frame:Hide()
 	return Frame
 end

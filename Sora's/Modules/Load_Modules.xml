@@ -6,6 +6,7 @@
 	<Include file = "Bags\Load_Bags.xml"/>
 	<Include file = "Buff\Load_Buff.xml"/>
 	<Include file = "Chat\Load_Chat.xml"/>
+	<Include file = "ClassTimer\Load_ClassTimer.xml"/>
 	<Include file = "InfoPanel\Load_InfoPanel.xml"/>
 	<Include file = "Map\Load_Map.xml"/>
 	<Include file = "Nameplate\Load_Nameplate.xml"/>

@@ -1,7 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-	<Script file = "Style.lua"/>
 	<Script file = "AuraWatch.lua"/>
+	<Script file = "Style.lua"/>
 	<!--Script file = "InternalCD.lua"/-->
 	
 </Ui>
