@@ -40,7 +40,7 @@ oUF.Tags["Sora:pp"] = function(u)
 	local powerMax = UnitPowerMax(u)
 	if str and power > 0 then
 		if powerMax > 132 then
-			return S.SVal(power).."%".." | "..floor(power/powerMax*100+.5)
+			return S.SVal(power).." | "..floor(power/powerMax*100+.5).."%"
 		else
 			return S.SVal(power)
 		end
