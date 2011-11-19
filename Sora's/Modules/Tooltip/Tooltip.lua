@@ -91,9 +91,11 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
     if GameTooltipStatusBar:IsShown() then
         GameTooltipStatusBar:ClearAllPoints()
 		GameTooltipStatusBar:SetHeight(6)
-		GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltipStatusBar:GetParent(), "TOPLEFT", 1, 8)
-		GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar:GetParent(), "TOPRIGHT", -1, 8)
-		if not GameTooltipStatusBar.Shadow then GameTooltipStatusBar.Shadow = S.MakeShadow(GameTooltipStatusBar, 3) end
+		GameTooltipStatusBar:SetPoint("BOTTOMLEFT", GameTooltipStatusBar:GetParent(), "TOPLEFT", 0, 4)
+		GameTooltipStatusBar:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar:GetParent(), "TOPRIGHT", 0, 4)
+		if not GameTooltipStatusBar.Shadow then
+			GameTooltipStatusBar.Shadow = S.MakeBorder(GameTooltipStatusBar, 1)
+		end
     end
 end)
 
@@ -147,15 +149,15 @@ end)
 
 local function setBakdrop(frame)
 	frame:SetBackdrop({
-		bgFile = "Interface\\Buttons\\WHITE8x8", insets = {left = 3, right = 3, top = 3, bottom = 3},
-		edgeFile = DB.GlowTex, edgeSize = 3,
+		bgFile = "Interface\\Buttons\\WHITE8x8", insets = {left = 1, right = 1, top = 1, bottom = 1},
+		edgeFile = DB.Solid, edgeSize = 1,
 	})
     frame.freebBak = true
 end
 
 local function style(frame)
     if not frame.freebBak then setBakdrop(frame) end
-    frame:SetBackdropColor(0.05, 0.05, 0.05, 0.4)
+    frame:SetBackdropColor(0.05, 0.05, 0.05, 0.6)
     frame:SetBackdropBorderColor(0, 0, 0, 1)
 
     if frame.GetItem then

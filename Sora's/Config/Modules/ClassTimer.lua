@@ -13,8 +13,8 @@ function Module.LoadSettings()
 			["PlayerLimit"] = 60,
 		["TargetMode"] = "Bar",
 			["TargetLimit"] = 60,
-		["BlackListEnable"] = false,
-			["BlackList"] = {},
+		["BlackList"] = {},
+		["WhiteList"] = {},
 	}
 	if not ClassTimerDB then ClassTimerDB = {} end
 	for key, value in pairs(Default) do
@@ -29,13 +29,26 @@ function Module.ResetToDefault()
 end
 
 -- BuildGUI
-local BlackListTable = {}
+local BlackListTable, WhiteListTable = {}, {}
+
 local function UpdateBlackListTable()
 	wipe(BlackListTable)
+	BlackListTable["BlackListNew"] = {
+		type = "input", order = 1,
+		name = "添加新条目", width = "full",
+		get = function() return "无" end,
+		set = function(_, value)
+			local Name = GetSpellInfo(tonumber(value))
+			ClassTimerDB["BlackList"][Name] = true
+			UpdateBlackListTable()
+		end,
+	}
+	local Order = 1
 	for key, value in pairs(ClassTimerDB["BlackList"]) do
 		if value then
+			Order = Order + 1
 			BlackListTable[key] = {
-				type = "toggle",
+				type = "toggle", order = Order,
 				name = key, desc = "启用/禁用",
 				get = function() return value end,
 				set = function(_, val)
@@ -46,8 +59,39 @@ local function UpdateBlackListTable()
 		end
 	end
 end
+
+local function UpdateWhiteListTable()
+	wipe(WhiteListTable)
+	WhiteListTable["WhiteListNew"] = {
+		type = "input", order = 1,
+		name = "添加新条目", width = "full",
+		get = function() return "无" end,
+		set = function(_, value)
+			local Name = GetSpellInfo(tonumber(value))
+			ClassTimerDB["WhiteList"][Name] = true
+			UpdateWhiteListTable()
+		end,
+	}
+	local Order = 1
+	for key, value in pairs(ClassTimerDB["WhiteList"]) do
+		if value then
+			Order = Order + 1
+			WhiteListTable[key] = {
+				type = "toggle", order = Order,
+				name = key, desc = "启用/禁用",
+				get = function() return value end,
+				set = function(_, val)
+					ClassTimerDB["WhiteList"][key] = val
+					UpdateWhiteListTable()
+				end,
+			}
+		end
+	end
+end
+
 function Module.BuildGUI()
 	UpdateBlackListTable()
+	UpdateWhiteListTable()
 	if DB["Config"] then
 		DB["Config"]["ClassTimer"] =  {
 			type = "group", order = 6,
@@ -69,8 +113,9 @@ function Module.BuildGUI()
 						},
 						PlayerLimit = {
 							type = "range", order = 2,
-							name = "玩家增益计时阈值：", desc = "请输入玩家增益计时阈值",
+							name = "玩家增益计时阈值(秒) ：", desc = "请输入玩家增益计时阈值(秒)",
 							min = 0, max = 600, step = 1, width = "double",
+							disabled = ClassTimerDB["PlayerMode"] == "None",
 							get = function() return ClassTimerDB["PlayerLimit"] end,
 							set = function(_, value) ClassTimerDB["PlayerLimit"] = value end,
 						},
@@ -86,8 +131,9 @@ function Module.BuildGUI()
 						}, 
 						TargetLimit = {
 							type = "range", order = 4,
-							name = "目标减益计时阈值：", desc = "请输入目标减益计时阈值",
+							name = "目标减益计时阈值(秒)：", desc = "请输入目标减益计时阈值(秒)",
 							min = 0, max = 600, step = 1, width = "double",
+							disabled = ClassTimerDB["TargetMode"] == "None",
 							get = function() return ClassTimerDB["TargetLimit"] end,
 							set = function(_, value) ClassTimerDB["TargetLimit"] = value end,
 						},
@@ -95,32 +141,15 @@ function Module.BuildGUI()
 				}, 
 				Gruop_2 = {
 					type = "group", order = 2, 
-					name = " ", guiInline = true, 
-					args = {
-						BlackListEnable = {
-							type = "toggle", order = 1,
-							name = "启用黑名单",
-							get = function() return ClassTimerDB["BlackListEnable"] end,
-							set = function(_, value) ClassTimerDB["BlackListEnable"] = value end,
-						},
-						BlackListNew = {
-							type = "input", order = 2,
-							name = "添加新条目",
-							disabled = not ClassTimerDB["BlackListEnable"],
-							get = function() return "无" end,
-							set = function(_, value)
-								local Name = GetSpellInfo(tonumber(value))
-								ClassTimerDB["BlackList"][Name] = true
-								UpdateBlackListTable()
-							end,
-						}, 
-					}, 
+					name = "黑名单", guiInline = true, 
+					disabled = ClassTimerDB["PlayerMode"] == "None" and ClassTimerDB["TargetMode"] == "None",
+					args = BlackListTable,
 				}, 
 				Gruop_3 = {
 					type = "group", order = 3, 
-					name = "黑名单", guiInline = true, 
-					disabled = not ClassTimerDB["BlackListEnable"],	
-					args = BlackListTable,
+					name = "白名单", guiInline = true, 
+					disabled = ClassTimerDB["PlayerMode"] == "None" and ClassTimerDB["TargetMode"] == "None",
+					args = WhiteListTable,
 				}, 
 			},
 		}

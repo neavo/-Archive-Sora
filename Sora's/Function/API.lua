@@ -12,6 +12,16 @@ function S.MakeShadow(Parent, Size)
 	return Shadow
 end
 
+function S.MakeBorder(Parent, Size)
+	local Border = CreateFrame("Frame", nil, Parent)
+	Border:SetFrameLevel(0)
+	Border:SetPoint("TOPLEFT", -Size, Size)
+	Border:SetPoint("BOTTOMRIGHT", Size, -Size)
+	Border:SetBackdrop({edgeFile = DB.Solid, edgeSize = Size})
+	Border:SetBackdropBorderColor(0, 0, 0, 1)
+	return Border
+end
+
 function S.MakeBG(Parent, Size)
 	local BG = CreateFrame("Frame", nil, Parent)
 	BG:SetFrameLevel(0)

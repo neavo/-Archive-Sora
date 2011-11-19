@@ -2,7 +2,7 @@
 -- Engines
 local _, _, _, DB = unpack(select(2, ...))
 
-CHAT_FONT_HEIGHTS = { 8, 9, 10, 11, 12, 13, 14, 15, 16}
+CHAT_FONT_HEIGHTS = {10, 11, 12, 13, 14, 15, 16, 17, 18}
 
 --other variables
 local tscol = "64C2F5"						-- Timestamp coloring
@@ -27,7 +27,7 @@ ChatTypeInfo["RAID"].sticky 	  = 1 -- 团队
 ChatTypeInfo["OFFICER"].sticky    = 1 -- 官员
 ChatTypeInfo["CHANNEL"].sticky 	  = 0 -- 频道
 
--- 聊天标签
+--[[ 聊天标签
 CHAT_FRAME_FADE_OUT_TIME = 0 					-- 聊天窗口褪色时间
 CHAT_TAB_HIDE_DELAY = 0     					-- 聊天标签弹出延时
 CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA = 0.2  	-- 鼠标停留时, 标签透明度
@@ -35,7 +35,7 @@ CHAT_FRAME_TAB_NORMAL_NOMOUSE_ALPHA = 0       	-- 鼠标离开时, 标签透明�
 CHAT_FRAME_TAB_SELECTED_MOUSEOVER_ALPHA = 1   	-- 鼠标停留时, 选择标签时透明度
 CHAT_FRAME_TAB_SELECTED_NOMOUSE_ALPHA = 0     	-- 鼠标离开时, 选择标签时透明度
 CHAT_FRAME_TAB_ALERTING_MOUSEOVER_ALPHA = 0 	-- 鼠标停留时, 标签闪动时透明度
-CHAT_FRAME_TAB_ALERTING_NOMOUSE_ALPHA = 0     	-- 鼠标离开时, 标签闪动时透明度
+CHAT_FRAME_TAB_ALERTING_NOMOUSE_ALPHA = 0     	-- 鼠标离开时, 标签闪动时透明度]]
 
 do
 	local function kill(frame)
@@ -129,21 +129,18 @@ do
 end
 
 ---------------- > Enable/Disable mouse for editbox
-eb_mouseon = function()
+hooksecurefunc("ChatFrame_OpenChat", function()
 	for i =1, 10 do
 		local eb = _G["ChatFrame"..i.."EditBox"]
 		eb:EnableMouse(true)
 	end
-end
-eb_mouseoff = function()
+end)
+hooksecurefunc("ChatEdit_SendText", function()
 	for i =1, 10 do
 		local eb = _G["ChatFrame"..i.."EditBox"]
 		eb:EnableMouse(false)
 	end
-end
-hooksecurefunc("ChatFrame_OpenChat", eb_mouseon)
-hooksecurefunc("ChatEdit_SendText", eb_mouseoff)
-
+end)
 
 --  快速翻页
 FloatingChatFrame_OnMouseScroll = function(self, dir)
@@ -162,8 +159,8 @@ FloatingChatFrame_OnMouseScroll = function(self, dir)
 			self:ScrollToBottom()
 		elseif IsShiftKeyDown() then
 			self:ScrollDown()
-			  self:ScrollDown()
-			  self:ScrollDown()
+			self:ScrollDown()
+			self:ScrollDown()
 		else
 			self:ScrollDown()
 		end

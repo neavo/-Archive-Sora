@@ -57,7 +57,7 @@ end
 
 -- InitChatbar
 local function InitChatbar()
-	local Channel = {"SAY", "YELL", "PARTY", "GUILD", "RAID"}
+	local Channel = {"/s ","/y ","/p ","/g ","/raid ","/1 ","/2 "}
 	local Color = {
 		{255/255, 255/255, 255/255}, 
 		{255/255,  64/255,  64/255}, 
@@ -68,10 +68,9 @@ local function InitChatbar()
 		{160/255, 120/255,  90/255}, 
 		{255/255, 255/255,   0/255}, 
 	}
-	for i=1, 7 do
+	for i = 1, 7 do
 		local Button = CreateFrame("Button", nil, MainBar)
-		Button:SetWidth((MainBar:GetWidth()-10)/8)
-		Button:SetHeight(12)
+		Button:SetSize((MainBar:GetWidth()-10)/8, 12)
 		Button:SetBackdrop({ 
 			bgFile = DB.Statusbar, insets = {left = 3, right = 3, top = 3, bottom = 3}, 
 			edgeFile = DB.GlowTex, edgeSize = 4, 
@@ -85,25 +84,12 @@ local function InitChatbar()
 			Button:SetPoint("LEFT", ChatbarTable[i-1], "RIGHT", 0, 0)
 		end
 		Button:RegisterForClicks("AnyUp")
-		Button:SetScript("OnClick", function() 
-			EditBox = SELECTED_DOCK_FRAME.editBox
-			if i <= 5 then
-				ChatEdit_ActivateChat(EditBox)
-				EditBox:SetAttribute("chatType", Channel[i]) 
-				ChatEdit_UpdateHeader(EditBox)
-			else
-				ChatEdit_ActivateChat(EditBox)
-				EditBox:SetAttribute("channelTarget", i-5)
-				EditBox:SetAttribute("chatType", "CHANNEL")
-				ChatEdit_UpdateHeader(EditBox) 
-			end
-		end)
+		Button:SetScript("OnClick", function() ChatFrame_OpenChat(Channel[i], chatFrame) end)
 		tinsert(ChatbarTable, Button)
 	end
 
 	local Button = CreateFrame("Button", nil, MainBar, "SecureActionButtonTemplate")
-	Button:SetWidth((MainBar:GetWidth()-10)/8)
-	Button:SetHeight(12)
+	Button:SetSize((MainBar:GetWidth()-10)/8, 12)
 	Button:SetBackdrop({ 
 		bgFile = DB.Statusbar, insets = {left = 3, right = 3, top = 3, bottom = 3}, 
 		edgeFile = DB.GlowTex, edgeSize = 4, 
@@ -117,19 +103,17 @@ local function InitChatbar()
 	Button:SetAttribute("macrotext", "/roll")
 	tinsert(ChatbarTable, Button)
 	
-	for i = 1, 10 do
-		local EditBox = _G["ChatFrame"..i.."EditBox"]
-		EditBox:SetScript("OnShow", function(self)
-			for _,value in pairs(ChatbarTable) do
-				UIFrameFadeOut(value, 0.5, 0.6, 0)
-			end
-		end)
-		EditBox:SetScript("OnHide", function(self)
-			for _,value in pairs(ChatbarTable) do
-				UIFrameFadeIn(value, 0.5, 0, 0.6)
-			end
-		end)
-	end
+	local ChatFrame1EditBox = _G["ChatFrame1EditBox"]
+	ChatFrame1EditBox:HookScript("OnShow", function(self)
+		for _,value in pairs(ChatbarTable) do
+			UIFrameFadeOut(value, 0.5, 0.6, 0)
+		end
+	end)
+	ChatFrame1EditBox:HookScript("OnHide", function(self)
+		for _,value in pairs(ChatbarTable) do
+			UIFrameFadeIn(value, 0.5, 0, 0.6)
+		end
+	end)
 end
 
 -- InitNewWhisper

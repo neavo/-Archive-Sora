@@ -125,7 +125,7 @@ function Module:UpdatePlayerActive()
 	while true do
 		if not UnitBuff("player", index) then break end
 		local name, _, icon, count, _, duration, expires, caster = UnitBuff("player", index)
-		if caster == "player" and ((duration < C["PlayerLimit"] and duration ~= 0) or C["PlayerLimit"] == 0) and (C["BlackListEnable"] and not C["BlackList"][name] or not C["BlackListEnable"]) then
+		if caster == "player" and ((((duration < C["PlayerLimit"] and duration ~= 0) or C["PlayerLimit"] == 0) and not C["BlackList"][name]) or C["WhiteList"][name]) then
 			tinsert(PlayerActive, {name, icon, count, duration, expires})
 		end
 		index = index + 1
@@ -218,7 +218,7 @@ function Module:UpdateTargetActive()
 	while true do
 		if not UnitDebuff("target", index) then break end
 		local name, _, icon, count, _, duration, expires, caster = UnitDebuff("target", index)
-		if caster == "player" and ((duration < C["TargetLimit"] and duration ~= 0) or C["TargetLimit"] == 0) and (C["BlackListEnable"] and not C["BlackList"][name] or not C["BlackListEnable"]) then
+		if caster == "player" and ((((duration < C["TargetLimit"] and duration ~= 0) or C["TargetLimit"] == 0) and not C["BlackList"][name]) or C["WhiteList"][name]) then
 			tinsert(TargetActive, {name, icon, count, duration, expires})
 		end
 		index = index + 1
@@ -274,5 +274,6 @@ end
 
 function Module:OnInitialize()
 	C = ClassTimerDB
+	Module:RegisterEvent("UNIT_TARGET", "UpdateAll")
 	Module:RegisterEvent("UNIT_AURA", "UpdateAll")
 end
