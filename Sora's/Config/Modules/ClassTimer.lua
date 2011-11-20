@@ -110,7 +110,7 @@ function Module.BuildGUI()
 							get = function() return ClassTimerDB["PlayerMode"] end,
 							set = function(_, value)
 								ClassTimerDB["PlayerMode"] = value
-								Sora:GetModule("ClassTimer"):ClearPlayerAura()
+								Sora:GetModule("ClassTimer"):ClearAura("player")
 							end,
 						},
 						PlayerLimit = {
@@ -129,7 +129,7 @@ function Module.BuildGUI()
 							get = function() return ClassTimerDB["PlayerIconSize"] end,
 							set = function(_, value)
 								ClassTimerDB["PlayerIconSize"] = value
-								Sora:GetModule("ClassTimer"):ClearTargetAura()
+								Sora:GetModule("ClassTimer"):ClearAura("player")
 							end,
 						},
 						TargetMode = {
@@ -139,7 +139,7 @@ function Module.BuildGUI()
 							get = function() return ClassTimerDB["TargetMode"] end,
 							set = function(_, value)
 								ClassTimerDB["TargetMode"] = value
-								Sora:GetModule("ClassTimer"):ClearTargetAura()
+								Sora:GetModule("ClassTimer"):ClearAura("target")
 							end,
 						}, 
 						TargetLimit = {
@@ -158,7 +158,7 @@ function Module.BuildGUI()
 							get = function() return ClassTimerDB["TargetIconSize"] end,
 							set = function(_, value)
 								ClassTimerDB["TargetIconSize"] = value
-								Sora:GetModule("ClassTimer"):ClearTargetAura()
+								Sora:GetModule("ClassTimer"):ClearAura("target")
 							end,
 						},
 					},

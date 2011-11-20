@@ -51,102 +51,103 @@ function Module:BuildIcon(IconSize)
 	return Aura
 end
 
+function Module:GetUnitVal(unit)
+	if unit == "player" then
+		return _G["oUF_SoraPlayer"], C["PlayerMode"], C["PlayerIconSize"], C["PlayerLimit"], PlayerAura, PlayerActive, UnitBuff
+	end
+	if unit == "target" then 
+		return _G["oUF_SoraTarget"], C["TargetMode"], C["TargetIconSize"], C["TargetLimit"], TargetAura, TargetActive, UnitDebuff
+	end
+end
+
 function Module:BuildAura(unit)
-	if unit == "palyer" then
-		local oUF_SoraPlayer = _G["oUF_SoraPlayer"]
-		if C["PlayerMode"] == "Icon" then
-			return Module:BuildIcon(C["PlayerIconSize"])
-		end
-		if C["PlayerMode"] == "Bar" then
-			return Module:BuildBar(oUF_SoraPlayer:GetWidth()-20, C["TargetIconSize"])
-		end
+	local Parent, Mode, IconSize = Module:GetUnitVal(unit)
+	if Mode == "Icon" then
+		return Module:BuildIcon(IconSize)
 	end
-	if unit == "target" then
-		local oUF_SoraTarget = _G["oUF_SoraTarget"]
-		if C["TargetMode"] == "Icon" then
-			return Module:BuildIcon(C["PlayerIconSize"])
-		end
-		if C["TargetMode"] == "Bar" then
-			return Module:BuildBar(oUF_SoraPlayer:GetWidth()-20, C["TargetIconSize"])
-		end
+	if Mode == "Bar" then
+		return Module:BuildBar(Parent:GetWidth()-20, IconSize)
 	end
 end
 
-function Module:ClearPlayerAura()
-	for _, value in pairs(PlayerAura) do
+function Module:ClearAura(unit)
+	local _, _, _, _, Aura = Module:GetUnitVal(unit)
+	for _, value in pairs(Aura) do
 		value:Hide()
 		value:ClearAllPoints()
 		value:SetScript("OnUpdate", nil)
 	end
-	wipe(PlayerAura)
+	wipe(Aura)
 end
 
-function Module:CleanUpPlayerAura()
-	wipe(PlayerActive)
-	for _, value in pairs(PlayerAura) do
+function Module:CleanUpAura(unit)
+	local _, _, _, _, Aura, Active = Module:GetUnitVal(unit)
+	wipe(Active)
+	for _, value in pairs(Aura) do
 		value:Hide()
 	end
 end
 
-function Module:UpdatePlayerAuraPos()
-	if C["PlayerMode"] == "Bar" then
-		for i = 1, #PlayerAura do
-			local oUF_SoraPlayer = _G["oUF_SoraPlayer"]
-			local Aura, Pre = PlayerAura[i], PlayerAura[i-1]
-			Aura:ClearAllPoints()
+function Module:UpdateAuraPos(unit)
+	local Parent, Mode, IconSize, _, Aura = Module:GetUnitVal(unit)
+	if Mode == "Bar" then
+		for i = 1, #Aura do
+			local Frame, Pre = Aura[i], Aura[i-1]
+			Frame:ClearAllPoints()
 			if i == 1 then
-				Aura:SetPoint("BOTTOM", oUF_SoraPlayer, "TOP", 0, 15)
+				Frame:SetPoint("BOTTOM", Parent, "TOP", 0, 15)
 			else
-				Aura:SetPoint("BOTTOM", Pre, "TOP", 0, 5)
+				Frame:SetPoint("BOTTOM", Pre, "TOP", 0, 5)
 			end
-			Aura.ID = i
+			Frame.ID = i
 		end
 	end
-	if C["PlayerMode"] == "Icon" then
+	if Mode == "Icon" then
 		for i = 1, #PlayerAura do
-			local oUF_SoraPlayer = _G["oUF_SoraPlayer"]
-			local Aura, Pre, IconPerRow = PlayerAura[i], PlayerAura[i-1], floor((oUF_SoraPlayer:GetWidth()+5)/C["PlayerIconSize"])
-			local PreRowAura = PlayerAura[i-IconPerRow]
-			Aura:ClearAllPoints()
+			local Frame, Pre, IconPerRow = Aura[i], Aura[i-1], floor((Parent:GetWidth()+5)/IconSize)
+			local PreRowFrame = Aura[i-IconPerRow]
+			Frame:ClearAllPoints()
 			if i == 1 then
-				Aura:SetPoint("BOTTOMLEFT", oUF_SoraPlayer, "TOPLEFT", 0, 12)
+				Frame:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 12)
 			elseif i%IconPerRow == 1 then
-				Aura:SetPoint("BOTTOM", PreRowAura, "TOP", 0, 5)
+				Frame:SetPoint("BOTTOM", PreRowFrame, "TOP", 0, 5)
 			else
-				Aura:SetPoint("LEFT", Pre, "RIGHT", 5, 0)
+				Frame:SetPoint("LEFT", Pre, "RIGHT", 5, 0)
 			end
-			Aura.ID = i
+			Frame.ID = i
 		end
 	end
 end
 
-function Module:UpdatePlayerActive()
+function Module:UpdateActive(unit)
+	local _, _, _, Limit, _, Active, Func = Module:GetUnitVal(unit)
 	local index = 1
 	while true do
-		if not UnitBuff("player", index) then break end
-		local name, _, icon, count, _, duration, expires, caster = UnitBuff("player", index)
-		if caster == "player" and ((((duration < C["PlayerLimit"] and duration ~= 0) or C["PlayerLimit"] == 0) and not C["BlackList"][name]) or C["WhiteList"][name]) then
-			tinsert(PlayerActive, {name, icon, count, duration, expires})
+		if not Func(unit, index) then break end
+		local name, _, icon, count, _, duration, expires, caster = Func(unit, index)
+		if caster == "player" and ((((duration < Limit and duration ~= 0) or Limit == 0) and not C["BlackList"][name]) or C["WhiteList"][name]) then
+			tinsert(Active, {name, icon, count, duration, expires})
 		end
 		index = index + 1
 	end
 end
 
-function Module:UpdatePlayerAura()
-	for key, value in pairs(PlayerActive) do
+function Module:UpdateAura(unit)
+	local _, _, _, _, Aura, Active, Func = Module:GetUnitVal(unit)
+	for key, value in pairs(Active) do
 		local name, icon, count, duration, expires = unpack(value)
-		if not PlayerAura[key] then PlayerAura[key] = Module:BuildAura("palyer") end
-		local Aura = PlayerAura[key]
-		local Spellname, Icon, Count, Time, Statusbar, Cooldown = Aura.Spellname, Aura.Icon, Aura.Count, Aura.Time, Aura.Statusbar, Aura.Cooldown
+		if not Aura[key] then Aura[key] = Module:BuildAura(unit) end
+		local Frame = Aura[key]
+		local Spellname, Icon, Count, Time, Statusbar, Cooldown = Frame.Spellname, Frame.Icon, Frame.Count, Frame.Time, Frame.Statusbar, Frame.Cooldown
 		if Spellname then Spellname:SetText(name) end
 		if Icon then Icon:SetTexture(icon) end
 		if Count then Count:SetText(count>1 and count or "") end
 		if Statusbar then Statusbar:SetMinMaxValues(0, duration) end
 		if Cooldown then CooldownFrame_SetTimer(Cooldown, expires-duration, duration, 1) end
 		local Timer = 0
-		Aura:SetScript("OnUpdate", function(self, elapsed)
+		Frame:SetScript("OnUpdate", function(self, elapsed)
 			Timer = expires-GetTime()
-			if UnitBuff("player", name) then
+			if Func(unit, name) then
 				if Timer >= 60 then
 					if Time then Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
 					if Statusbar then Statusbar:SetValue(Timer) end
@@ -157,118 +158,25 @@ function Module:UpdatePlayerAura()
 			else
 				self:Hide()
 				self:SetScript("OnUpdate", nil)
-				tremove(PlayerAura, self.ID)
-				Module:UpdatePlayerAuraPos()
+				tremove(Aura, self.ID)
+				Module:UpdateAuraPos(unit)
 			end
 		end)
-		Aura:Show()
-	end
-end
-
-function Module:ClearTargetAura()
-	for _, value in pairs(TargetAura) do
-		value:Hide()
-		value:ClearAllPoints()
-		value:SetScript("OnUpdate", nil)
-	end
-	wipe(TargetAura)
-end
-
-function Module:CleanUpTargetAura()
-	wipe(TargetActive)
-	for _, value in pairs(TargetAura) do
-		value:Hide()
-	end
-end
-
-function Module:UpdateTargetAuraPos()
-	if C["TargetMode"] == "Bar" then
-		for i = 1, #TargetAura do
-			local oUF_SoraTarget = _G["oUF_SoraTarget"]
-			local Aura, Pre = TargetAura[i], TargetAura[i-1]
-			Aura:ClearAllPoints()
-			if i == 1 then
-				Aura:SetPoint("BOTTOM", oUF_SoraTarget, "TOP", 0, 10)
-			else
-				Aura:SetPoint("BOTTOM", Pre, "TOP", 0, 5)
-			end
-			Aura.ID = i
-		end
-	end
-	if C["TargetMode"] == "Icon" then
-		for i = 1, #TargetAura do
-			local oUF_SoraTarget = _G["oUF_SoraTarget"]
-			local Aura, Pre, IconPerRow = TargetAura[i], TargetAura[i-1], floor((oUF_SoraTarget:GetWidth()+5)/C["PlayerIconSize"])
-			local PreRowAura = TargetAura[i-IconPerRow]
-			Aura:ClearAllPoints()
-			if i == 1 then
-				Aura:SetPoint("BOTTOMLEFT", oUF_SoraTarget, "TOPLEFT", 0, 12)
-			elseif i%IconPerRow == 1 then
-				Aura:SetPoint("BOTTOM", PreRowAura, "TOP", 0, 5)
-			else
-				Aura:SetPoint("LEFT", Pre, "RIGHT", 5, 0)
-			end
-			Aura.ID = i
-		end
-	end
-end
-
-function Module:UpdateTargetActive()
-	local index = 1
-	while true do
-		if not UnitDebuff("target", index) then break end
-		local name, _, icon, count, _, duration, expires, caster = UnitDebuff("target", index)
-		if caster == "player" and ((((duration < C["TargetLimit"] and duration ~= 0) or C["TargetLimit"] == 0) and not C["BlackList"][name]) or C["WhiteList"][name]) then
-			tinsert(TargetActive, {name, icon, count, duration, expires})
-		end
-		index = index + 1
-	end
-end
-
-function Module:UpdateTargetAura()
-	for key, value in pairs(TargetActive) do
-		local name, icon, count, duration, expires = unpack(value)
-		if not TargetAura[key] then TargetAura[key] = Module:BuildAura("target") end
-		local Aura = TargetAura[key]
-		local Spellname, Icon, Count, Time, Statusbar, Cooldown = Aura.Spellname, Aura.Icon, Aura.Count, Aura.Time, Aura.Statusbar, Aura.Cooldown
-		if Spellname then Spellname:SetText(name) end
-		if Icon then Icon:SetTexture(icon) end
-		if Count then Count:SetText(count>1 and count or "") end
-		if Statusbar then Statusbar:SetMinMaxValues(0, duration) end
-		if Cooldown then CooldownFrame_SetTimer(Cooldown, expires-duration, duration, 1) end
-		local Timer = 0
-		Aura:SetScript("OnUpdate", function(self, elapsed)
-			Timer = expires-GetTime()
-			if UnitDebuff("target", name) then
-				if Timer >= 60 then
-					if Time then Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
-					if Statusbar then Statusbar:SetValue(Timer) end
-				elseif Timer < 60 then
-					if Time then Time:SetFormattedText("%.1f", Timer) end
-					if Statusbar then Statusbar:SetValue(Timer) end
-				end
-			else
-				self:Hide()
-				self:SetScript("OnUpdate", nil)
-				tremove(TargetAura, self.ID)
-				Module:UpdateTargetAuraPos()
-			end
-		end)
-		Aura:Show()
+		Frame:Show()
 	end
 end
 
 function Module:UpdateAll(event, unit, ...)
 	if unit == "player" and C["PlayerMode"] ~= "None" then
-		Module:CleanUpPlayerAura()
-		Module:UpdatePlayerActive()
-		Module:UpdatePlayerAura()
-		Module:UpdatePlayerAuraPos()
+		Module:CleanUpAura(unit)
+		Module:UpdateActive(unit)
+		Module:UpdateAura(unit)
+		Module:UpdateAuraPos(unit)
 	elseif unit == "target" and C["TargetMode"] ~= "None" then
-		Module:CleanUpTargetAura()
-		Module:UpdateTargetActive()
-		Module:UpdateTargetAura()
-		Module:UpdateTargetAuraPos()
+		Module:CleanUpAura(unit)
+		Module:UpdateActive(unit)
+		Module:UpdateAura(unit)
+		Module:UpdateAuraPos(unit)
 	end
 end
 
