@@ -11,8 +11,10 @@ function Module.LoadSettings()
 	local Default = {
 		["PlayerMode"] = "Icon",
 			["PlayerLimit"] = 60,
+			["PlayerIconSize"] = 30,
 		["TargetMode"] = "Bar",
 			["TargetLimit"] = 60,
+			["TargetIconSize"] = 20,
 		["BlackList"] = {},
 		["WhiteList"] = {},
 	}
@@ -113,14 +115,25 @@ function Module.BuildGUI()
 						},
 						PlayerLimit = {
 							type = "range", order = 2,
-							name = "玩家增益计时阈值(秒) ：", desc = "请输入玩家增益计时阈值(秒)",
-							min = 0, max = 600, step = 1, width = "double",
+							name = "玩家增益计时阈值(秒)：", desc = "请输入玩家增益计时阈值(秒)",
+							min = 0, max = 600, step = 1,
 							disabled = ClassTimerDB["PlayerMode"] == "None",
 							get = function() return ClassTimerDB["PlayerLimit"] end,
 							set = function(_, value) ClassTimerDB["PlayerLimit"] = value end,
 						},
+						PlayerIconSize = {
+							type = "range", order = 3,
+							name = "玩家增益计时图标大小：", desc = "请输入玩家增益计时图标大小",
+							min = 10, max = 100, step = 1,
+							disabled = ClassTimerDB["PlayerMode"] == "None",
+							get = function() return ClassTimerDB["PlayerIconSize"] end,
+							set = function(_, value)
+								ClassTimerDB["PlayerIconSize"] = value
+								Sora:GetModule("ClassTimer"):ClearTargetAura()
+							end,
+						},
 						TargetMode = {
-							type = "select", order = 3,
+							type = "select", order = 4,
 							name = "目标减益计时模式：", desc = "请选择目标减益计时模式：",
 							values = {["Bar"] = "计时条模式", ["Icon"] = "图标模式", ["None"] = "无"},
 							get = function() return ClassTimerDB["TargetMode"] end,
@@ -130,12 +143,23 @@ function Module.BuildGUI()
 							end,
 						}, 
 						TargetLimit = {
-							type = "range", order = 4,
+							type = "range", order = 5,
 							name = "目标减益计时阈值(秒)：", desc = "请输入目标减益计时阈值(秒)",
-							min = 0, max = 600, step = 1, width = "double",
+							min = 0, max = 600, step = 1,
 							disabled = ClassTimerDB["TargetMode"] == "None",
 							get = function() return ClassTimerDB["TargetLimit"] end,
 							set = function(_, value) ClassTimerDB["TargetLimit"] = value end,
+						},
+						TargetIconSize = {
+							type = "range", order = 6,
+							name = "目标减益计时图标大小：", desc = "请输入目标减益计时图标大小",
+							min = 10, max = 100, step = 1,
+							disabled = ClassTimerDB["TargetMode"] == "None",
+							get = function() return ClassTimerDB["TargetIconSize"] end,
+							set = function(_, value)
+								ClassTimerDB["TargetIconSize"] = value
+								Sora:GetModule("ClassTimer"):ClearTargetAura()
+							end,
 						},
 					},
 				}, 

@@ -55,19 +55,19 @@ function Module:BuildAura(unit)
 	if unit == "palyer" then
 		local oUF_SoraPlayer = _G["oUF_SoraPlayer"]
 		if C["PlayerMode"] == "Icon" then
-			return Module:BuildIcon(30)
+			return Module:BuildIcon(C["PlayerIconSize"])
 		end
 		if C["PlayerMode"] == "Bar" then
-			return Module:BuildBar(oUF_SoraPlayer:GetWidth()-20, 20)
+			return Module:BuildBar(oUF_SoraPlayer:GetWidth()-20, C["TargetIconSize"])
 		end
 	end
 	if unit == "target" then
 		local oUF_SoraTarget = _G["oUF_SoraTarget"]
 		if C["TargetMode"] == "Icon" then
-			return Module:BuildIcon(30)
+			return Module:BuildIcon(C["PlayerIconSize"])
 		end
 		if C["TargetMode"] == "Bar" then
-			return Module:BuildBar(oUF_SoraPlayer:GetWidth()-20, 20)
+			return Module:BuildBar(oUF_SoraPlayer:GetWidth()-20, C["TargetIconSize"])
 		end
 	end
 end
@@ -105,7 +105,7 @@ function Module:UpdatePlayerAuraPos()
 	if C["PlayerMode"] == "Icon" then
 		for i = 1, #PlayerAura do
 			local oUF_SoraPlayer = _G["oUF_SoraPlayer"]
-			local Aura, Pre, IconPerRow = PlayerAura[i], PlayerAura[i-1], floor(oUF_SoraPlayer:GetWidth()/30)
+			local Aura, Pre, IconPerRow = PlayerAura[i], PlayerAura[i-1], floor((oUF_SoraPlayer:GetWidth()+5)/C["PlayerIconSize"])
 			local PreRowAura = PlayerAura[i-IconPerRow]
 			Aura:ClearAllPoints()
 			if i == 1 then
@@ -198,7 +198,7 @@ function Module:UpdateTargetAuraPos()
 	if C["TargetMode"] == "Icon" then
 		for i = 1, #TargetAura do
 			local oUF_SoraTarget = _G["oUF_SoraTarget"]
-			local Aura, Pre, IconPerRow = TargetAura[i], TargetAura[i-1], floor(oUF_SoraTarget:GetWidth()/30)
+			local Aura, Pre, IconPerRow = TargetAura[i], TargetAura[i-1], floor((oUF_SoraTarget:GetWidth()+5)/C["PlayerIconSize"])
 			local PreRowAura = TargetAura[i-IconPerRow]
 			Aura:ClearAllPoints()
 			if i == 1 then
