@@ -21,7 +21,7 @@ function Module:BuildBar(BarWidth, IconSize)
 	Aura.Statusbar.Shadow = S.MakeShadow(Aura.Statusbar, 3)
 
 	Aura.Count = S.MakeFontString(Aura, 9)
-	Aura.Count:SetPoint("BOTTOMRIGHT", Aura.Icon, "BOTTOMRIGHT", 3, -1) 
+	Aura.Count:SetPoint("BOTTOMRIGHT", Aura.Icon, "BOTTOMRIGHT", 3, -2) 
 
 	Aura.Time = S.MakeFontString(Aura.Statusbar, 11)
 	Aura.Time:SetPoint("RIGHT", 0, 5) 
@@ -42,7 +42,7 @@ function Module:BuildIcon(IconSize)
 	Aura.Icon.Shadow = S.MakeTexShadow(Aura, Aura.Icon, 3)
 	
 	Aura.Count = S.MakeFontString(Aura, 10)
-	Aura.Count:SetPoint("BOTTOMRIGHT", 3, -1)
+	Aura.Count:SetPoint("BOTTOMRIGHT", 3, -2)
 	
 	Aura.Cooldown = CreateFrame("Cooldown", nil, Aura) 
 	Aura.Cooldown:SetAllPoints() 
@@ -80,7 +80,7 @@ function Module:ClearAura(unit)
 	wipe(Aura)
 end
 
-function Module:CleanUpAura(unit)
+function Module:CleanUp(unit)
 	local _, _, _, _, Aura, Active = Module:GetUnitVal(unit)
 	wipe(Active)
 	for _, value in pairs(Aura) do
@@ -95,7 +95,7 @@ function Module:UpdateAuraPos(unit)
 			local Frame, Pre = Aura[i], Aura[i-1]
 			Frame:ClearAllPoints()
 			if i == 1 then
-				Frame:SetPoint("BOTTOM", Parent, "TOP", 0, 15)
+				Frame:SetPoint("BOTTOM", Parent, "TOP", 0, unit == "player" and 12 or 8)
 			else
 				Frame:SetPoint("BOTTOM", Pre, "TOP", 0, 5)
 			end
@@ -103,12 +103,12 @@ function Module:UpdateAuraPos(unit)
 		end
 	end
 	if Mode == "Icon" then
-		for i = 1, #PlayerAura do
-			local Frame, Pre, IconPerRow = Aura[i], Aura[i-1], floor((Parent:GetWidth()+5)/IconSize)
+		for i = 1, #Aura do
+			local Frame, Pre, IconPerRow = Aura[i], Aura[i-1], floor(Parent:GetWidth()/(IconSize+5))
 			local PreRowFrame = Aura[i-IconPerRow]
 			Frame:ClearAllPoints()
 			if i == 1 then
-				Frame:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 12)
+				Frame:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, unit == "player" and 12 or 8)
 			elseif i%IconPerRow == 1 then
 				Frame:SetPoint("BOTTOM", PreRowFrame, "TOP", 0, 5)
 			else
@@ -168,12 +168,12 @@ end
 
 function Module:UpdateAll(event, unit, ...)
 	if unit == "player" and C["PlayerMode"] ~= "None" then
-		Module:CleanUpAura(unit)
+		Module:CleanUp(unit)
 		Module:UpdateActive(unit)
 		Module:UpdateAura(unit)
 		Module:UpdateAuraPos(unit)
 	elseif unit == "target" and C["TargetMode"] ~= "None" then
-		Module:CleanUpAura(unit)
+		Module:CleanUp(unit)
 		Module:UpdateActive(unit)
 		Module:UpdateAura(unit)
 		Module:UpdateAuraPos(unit)
