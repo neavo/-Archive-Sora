@@ -125,7 +125,7 @@ function Module:UpdateActive(unit)
 	while true do
 		if not Func(unit, index) then break end
 		local name, _, icon, count, _, duration, expires, caster = Func(unit, index)
-		if caster == "player" and ((((duration < Limit and duration ~= 0) or Limit == 0) and not C["BlackList"][name]) or C["WhiteList"][name]) then
+		if (caster == "player" and (((duration < Limit and duration ~= 0) or Limit == 0) and not C["BlackList"][name])) or C["WhiteList"][name] then
 			tinsert(Active, {name, icon, count, duration, expires})
 		end
 		index = index + 1

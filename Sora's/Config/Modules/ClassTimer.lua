@@ -16,7 +16,32 @@ function Module.LoadSettings()
 			["TargetLimit"] = 60,
 			["TargetIconSize"] = 20,
 		["BlackList"] = {},
-		["WhiteList"] = {},
+		["WhiteList"] = {
+			-- 嗜血
+			[GetSpellInfo(2825)] = true,
+			-- 邪恶狂热
+			[GetSpellInfo(8699)] = true,
+			-- 能量灌注
+			[GetSpellInfo(10060)] = true,
+			-- 英勇
+			[GetSpellInfo(32182)] = true,
+			-- 痛苦压制
+			[GetSpellInfo(33206)] = true,
+			-- 反魔法领域
+			[GetSpellInfo(50461)] = true,
+			-- 神圣牺牲
+			[GetSpellInfo(64205)] = true,
+			-- 时间扭曲
+			[GetSpellInfo(80353)] = true,
+			-- 真言术：障
+			[GetSpellInfo(81781)] = true,
+			-- 远古狂乱
+			[GetSpellInfo(90355)] = true,
+			-- 集结呐喊
+			[GetSpellInfo(97463)] = true,
+			-- 灵魂链接图腾
+			[GetSpellInfo(98007)] = true,
+		},
 	}
 	if not ClassTimerDB then ClassTimerDB = {} end
 	for key, value in pairs(Default) do
