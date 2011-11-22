@@ -132,6 +132,15 @@ function Module:UpdateActive(unit)
 	end
 end
 
+local function SortMethod(a, b)
+	return a[5]-GetTime() < b[5]-GetTime()
+end
+
+function Module:SortActive(unit)
+	local _, _, _, _, _, Active = Module:GetUnitVal(unit)
+	table.sort(Active, SortMethod)
+end
+
 function Module:UpdateAura(unit)
 	local _, _, _, _, Aura, Active, Func = Module:GetUnitVal(unit)
 	for key, value in pairs(Active) do
@@ -170,11 +179,13 @@ function Module:UpdateAll(event, unit, ...)
 	if unit == "player" and C["PlayerMode"] ~= "None" then
 		Module:CleanUp(unit)
 		Module:UpdateActive(unit)
+		Module:SortActive(unit)
 		Module:UpdateAura(unit)
 		Module:UpdateAuraPos(unit)
 	elseif unit == "target" and C["TargetMode"] ~= "None" then
 		Module:CleanUp(unit)
 		Module:UpdateActive(unit)
+		Module:SortActive(unit)
 		Module:UpdateAura(unit)
 		Module:UpdateAuraPos(unit)
 	end
