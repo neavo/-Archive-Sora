@@ -1,11 +1,12 @@
-﻿local Event = CreateFrame("Frame")
+﻿local Count = 0
+local Event = CreateFrame("Frame")
 Event:RegisterAllEvents()
-Event.Count = 0
 Event:SetScript("OnEvent", function(self, event, ...)
-	if UnitAffectingCombat("player") then return end
-	Event.Count = Event.Count + 1
-	if Event.Count > 6000 or event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_REGEN_ENABLED" then
-		collectgarbage("collect")
-		Event.Count = 0
+	if not UnitAffectingCombat("player") then
+		Count = Count + 1
+		if Count > 6000 or event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_REGEN_ENABLED" then
+			collectgarbage("collect")
+			Count = 0
+		end
 	end
 end)

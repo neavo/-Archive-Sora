@@ -2,7 +2,7 @@
 
 	<Script file = "Castbar.lua"/>
 	<Script file = "Focuser.lua"/>
-	<Script file = "Indicator.lua"/>
+	<Script file = "Indicators.lua"/>
 	<Script file = "MirrorTimer.lua"/>
 	<Script file = "RaidDebuff.lua"/>
 	<Script file = "Smooth.lua"/>

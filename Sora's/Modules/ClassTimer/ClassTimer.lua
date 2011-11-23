@@ -83,11 +83,9 @@ end
 function Module:CleanUp(unit)
 	local _, _, _, _, Aura, Active = Module:GetUnitVal(unit)
 	for key, value in pairs(Active) do
-		Active[value] = nil
-		tremove(Active, key)
+		Active[key] = nil
 	end
-	wipe(Active)
-	for _, value in pairs(Aura) do
+	for key, value in pairs(Aura) do
 		value:Hide()
 	end
 end
@@ -130,14 +128,14 @@ function Module:UpdateActive(unit)
 		local name, _, icon, count, _, duration, expires, caster = Func(unit, index)
 		if not name then break end	
 		if (caster == "player" and (((duration < Limit and duration ~= 0) or Limit == 0) and not C["BlackList"][name])) or C["WhiteList"][name] then
-			tinsert(Active, {name, icon, count, duration, expires})
+			Active[name] = {icon, count, duration, expires}
 		end
 		index = index + 1
 	end
 end
 
 local function SortMethod(a, b)
-	return a[5]-GetTime() < b[5]-GetTime()
+	return a[4]-GetTime() < b[4]-GetTime()
 end
 
 function Module:SortActive(unit)
@@ -147,16 +145,29 @@ end
 
 function Module:UpdateAura(unit)
 	local _, _, _, _, Aura, Active, Func = Module:GetUnitVal(unit)
+	local index = 1
 	for key, value in pairs(Active) do
-		local name, icon, count, duration, expires = unpack(value)
-		if not Aura[key] then Aura[key] = Module:BuildAura(unit) end
-		local Frame = Aura[key]
+		local name, icon, count, duration, expires = key, unpack(value)
+		if not Aura[index] then
+			Aura[index] = Module:BuildAura(unit)
+		end
+		local Frame = Aura[index]
 		local Spellname, Icon, Count, Time, Statusbar, Cooldown = Frame.Spellname, Frame.Icon, Frame.Count, Frame.Time, Frame.Statusbar, Frame.Cooldown
-		if Spellname then Spellname:SetText(name) end
-		if Icon then Icon:SetTexture(icon) end
-		if Count then Count:SetText(count>1 and count or "") end
-		if Statusbar then Statusbar:SetMinMaxValues(0, duration) end
-		if Cooldown then CooldownFrame_SetTimer(Cooldown, expires-duration, duration, 1) end
+		if Spellname then
+			Spellname:SetText(name)
+		end
+		if Icon then
+			Icon:SetTexture(icon)
+		end
+		if Count then
+			Count:SetText(count>1 and count or "")
+		end
+		if Statusbar then
+			Statusbar:SetMinMaxValues(0, duration)
+		end
+		if Cooldown then
+			CooldownFrame_SetTimer(Cooldown, expires-duration, duration, 1)
+		end
 		local Timer = 0
 		Frame:SetScript("OnUpdate", function(self, elapsed)
 			Timer = expires-GetTime()
@@ -169,6 +180,7 @@ function Module:UpdateAura(unit)
 			end
 		end)
 		Frame:Show()
+		index = index + 1
 	end
 end
 

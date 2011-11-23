@@ -63,35 +63,36 @@ end
 
 local function Update(self, event, unit)
     if self.unit ~= unit then return end
-	local Indicator = self.Indicator
+	local Indicators = self.Indicators
 	for key, value in pairs(IndicatorList) do
 		local Name = GetSpellInfo(value)
+		local Indicator = Indicators[key]
 		if select(8, UnitBuff(unit, Name)) == "player" then
-			Indicator[key].expires = select(7, UnitBuff(unit, Name))
-			Indicator[key].Timer = 0
-			Indicator[key]:Show()
-			Indicator[key]:SetScript("OnUpdate", OnUpdate)
+			Indicator.expires = select(7, UnitBuff(unit, Name))
+			Indicator.Timer = 0
+			Indicator:Show()
+			Indicator:SetScript("OnUpdate", OnUpdate)
 		elseif select(8, UnitDebuff(unit, Name)) == "player" then
-			Indicator[key].expires = select(7, UnitDebuff(unit, Name))
-			Indicator[key].Timer = 0
-			Indicator[key]:Show()
-			Indicator[key]:SetScript("OnUpdate", OnUpdate)
+			Indicator.expires = select(7, UnitDebuff(unit, Name))
+			Indicator.Timer = 0
+			Indicator:Show()
+			Indicator:SetScript("OnUpdate", OnUpdate)
 		else
-			Indicator[key]:Hide()
-			Indicator[key]:SetScript("OnUpdate", nil)			
+			Indicator:Hide()
+			Indicator:SetScript("OnUpdate", nil)			
 		end
 	end
 end
 
 local function Enable(self)
-	if self.Indicator then
+	if self.Indicators then
 		self:RegisterEvent("UNIT_AURA", Update)
 		return true
 	end
 end
 
 local function Disable(self)
-	if self.Indicator then self:UnregisterEvent("UNIT_AURA", Update) end
+	if self.Indicators then self:UnregisterEvent("UNIT_AURA", Update) end
 end
 
-oUF:AddElement("Indicator", Update, Enable, Disable)
+oUF:AddElement("Indicators", Update, Enable, Disable)

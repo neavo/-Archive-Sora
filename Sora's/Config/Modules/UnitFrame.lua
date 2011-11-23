@@ -49,9 +49,10 @@ function Module.LoadSettings()
 			["ShowBossDebuff"] = true,
 			["ShowBossBuff"] = true,
 		-- 团队框体
-		["ShowRaidFrame"] = true,
+		["ShowRaid"] = true,
 			["RaidUnitWidth"] = 70,
-			["RaidUnitHeight"] = 20,
+			["RaidUnitHealthHeight"] = 18,
+			["RaidUnitPowerHeight"] = 2,
 			["RaidPartyArrangement"] = "Horizontal",
 	}
 	if not UnitFrameDB then UnitFrameDB = {} end
@@ -93,7 +94,7 @@ function Module.BuildGUI()
 						PlayerWidth = {
 							type = "range", order = 1,
 							name = "玩家框体宽度：", desc = "请输入玩家框体宽度",
-							min = 100, max = 600, step = 10,
+							min = 1, max = 1000, step = 1,
 							get = function() return UnitFrameDB["PlayerWidth"] end,
 							set = function(_, value)
 								UnitFrameDB["PlayerWidth"] = value
@@ -104,7 +105,7 @@ function Module.BuildGUI()
 						PlayerHealthHeight = {
 							type = "range", order = 2,
 							name = "玩家框体生命值高度：", desc = "请输入玩家框体生命值高度",
-							min = 2, max = 100, step = 2,
+							min = 1, max = 200, step = 1,
 							get = function() return UnitFrameDB["PlayerHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["PlayerHealthHeight"] = value
@@ -114,7 +115,7 @@ function Module.BuildGUI()
 						PlayerPowerHeight = {
 							type = "range", order = 3,
 							name = "玩家框体能量值高度：", desc = "请输入玩家框体能量值高度",
-							min = 2, max = 100, step = 2,
+							min = 1, max = 200, step = 2,
 							get = function() return UnitFrameDB["PlayerPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["PlayerPowerHeight"] = value
@@ -151,7 +152,7 @@ function Module.BuildGUI()
 						PlayerCastbarWidth = {
 							type = "range", order = 2,
 							name = "施法条宽度：", desc = "请输入施法条宽度",
-							min = 100, max = 1000, step = 20,
+							min = 1, max = 1000, step = 1,
 							disabled = not UnitFrameDB["PlayerCastbarEnable"] or not UnitFrameDB["PlayerEnable"],
 							get = function() return UnitFrameDB["PlayerCastbarWidth"] end,
 							set = function(_, value)
@@ -160,9 +161,9 @@ function Module.BuildGUI()
 							end,
 						},
 						PlayerCastbarHeight = {
-							type = "range", order = 2,
+							type = "range", order = 3,
 							name = "施法条高度：", desc = "请输入施法条高度",
-							min = 10, max = 100, step = 5,
+							min = 1, max = 200, step = 1,
 							disabled = not UnitFrameDB["PlayerCastbarEnable"] or not UnitFrameDB["PlayerEnable"],
 							get = function() return UnitFrameDB["PlayerCastbarHeight"] end,
 							set = function(_, value)
@@ -180,7 +181,7 @@ function Module.BuildGUI()
 						PetWidth = {
 							type = "range", order = 1,
 							name = "宠物框体宽度：", desc = "请输入宠物框体宽度",
-							min = 20, max = 200, step = 10,
+							min = 1, max = 200, step = 1,
 							get = function() return UnitFrameDB["PetWidth"] end,
 							set = function(_, value)
 								UnitFrameDB["PetWidth"] = value
@@ -190,7 +191,7 @@ function Module.BuildGUI()
 						PetHealthHeight = {
 							type = "range", order = 2,
 							name = "宠物框体生命值高度：", desc = "请输入宠物框体生命值高度",
-							min = 1, max = 50, step = 2,
+							min = 1, max = 50, step = 1,
 							get = function() return UnitFrameDB["PetHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["PetHealthHeight"] = value
@@ -200,7 +201,7 @@ function Module.BuildGUI()
 						PetPowerHeight = {
 							type = "range", order = 3,
 							name = "宠物框体能量值高度：", desc = "请输入宠物框体能量值高度",
-							min = 1, max = 50, step = 2,
+							min = 1, max = 50, step = 1,
 							get = function() return UnitFrameDB["PetPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["PetPowerHeight"] = value
@@ -235,7 +236,7 @@ function Module.BuildGUI()
 						TargetWidth = {
 							type = "range", order = 1,
 							name = "目标框体宽度：", desc = "请输入目标框体宽度",
-							min = 100, max = 600, step = 10,
+							min = 1, max = 1000, step = 1,
 							get = function() return UnitFrameDB["TargetWidth"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetWidth"] = value
@@ -245,7 +246,7 @@ function Module.BuildGUI()
 						TargetHealthHeight = {
 							type = "range", order = 2,
 							name = "目标框体生命值高度：", desc = "请输入目标框体生命值高度",
-							min = 2, max = 100, step = 2,
+							min = 1, max = 200, step = 1,
 							get = function() return UnitFrameDB["TargetHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetHealthHeight"] = value
@@ -255,7 +256,7 @@ function Module.BuildGUI()
 						TargetPowerHeight = {
 							type = "range", order = 3,
 							name = "目标框体能量值高度：", desc = "请输入目标框体能量值高度",
-							min = 2, max = 100, step = 2,
+							min = 1, max = 200, step = 1,
 							get = function() return UnitFrameDB["TargetPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetPowerHeight"] = value
@@ -292,7 +293,7 @@ function Module.BuildGUI()
 						TargetCastbarWidth = {
 							type = "range", order = 2,
 							name = "施法条宽度：", desc = "请输入施法条宽度",
-							min = 100, max = 1000, step = 20,
+							min = 1, max = 1000, step = 1,
 							disabled = not UnitFrameDB["TargetCastbarEnable"],
 							get = function() return UnitFrameDB["TargetCastbarWidth"] end,
 							set = function(_, value)
@@ -303,7 +304,7 @@ function Module.BuildGUI()
 						TargetCastbarHeight = {
 							type = "range", order = 2,
 							name = "施法条高度：", desc = "请输入施法条高度",
-							min = 10, max = 100, step = 5,
+							min = 1, max = 200, step = 1,
 							disabled = not UnitFrameDB["TargetCastbarEnable"],
 							get = function() return UnitFrameDB["TargetCastbarHeight"] end,
 							set = function(_, value)
@@ -321,7 +322,7 @@ function Module.BuildGUI()
 						TargetTargetWidth = {
 							type = "range", order = 1,
 							name = "目标的目标宽度：", desc = "请输入目标的目标宽度",
-							min = 20, max = 200, step = 10,	
+							min = 1, max = 200, step = 1,	
 							get = function() return UnitFrameDB["TargetTargetWidth"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetTargetWidth"] = value
@@ -331,7 +332,7 @@ function Module.BuildGUI()
 						TargetTargetHealthHeight = {
 							type = "range", order = 2,
 							name = "目标的目标生命值高度：", desc = "请输入目标的目标生命值高度",
-							min = 1, max = 50, step = 2,
+							min = 1, max = 50, step = 1,
 							get = function() return UnitFrameDB["TargetTargetHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetTargetHealthHeight"] = value
@@ -341,7 +342,7 @@ function Module.BuildGUI()
 						TargetTargetPowerHeight = {
 							type = "range", order = 3,
 							name = "目标的目标能量值高度：", desc = "请输入目标的目标能量值高度",
-							min = 1, max = 50, step = 2,	
+							min = 1, max = 50, step = 1,	
 							get = function() return UnitFrameDB["TargetTargetPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetTargetPowerHeight"] = value
@@ -376,7 +377,7 @@ function Module.BuildGUI()
 						FocusWidth = {
 							type = "range", order = 1,
 							name = "焦点框体宽度：", desc = "请输入焦点框体宽度",
-							min = 100, max = 600, step = 10,
+							min = 1, max = 1000, step = 1,
 							get = function() return UnitFrameDB["FocusWidth"] end,
 							set = function(_, value)
 								UnitFrameDB["FocusWidth"] = value
@@ -386,7 +387,7 @@ function Module.BuildGUI()
 						FocusHealthHeight = {
 							type = "range", order = 2,
 							name = "焦点框体生命值高度：", desc = "请输入焦点框体生命值高度",
-							min = 2, max = 100, step = 2,
+							min = 1, max = 200, step = 1,
 							get = function() return UnitFrameDB["FocusHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["FocusHealthHeight"] = value
@@ -396,7 +397,7 @@ function Module.BuildGUI()
 						FocusPowerHeight = {
 							type = "range", order = 3,
 							name = "焦点框体能量值高度：", desc = "请输入焦点框体能量值高度",
-							min = 2, max = 100, step = 2,
+							min = 1, max = 200, step = 1,
 							get = function() return UnitFrameDB["FocusPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["FocusPowerHeight"] = value
@@ -421,7 +422,7 @@ function Module.BuildGUI()
 				}
 			}
 		}
-		DB["Config"]["BossFrame"] =  {
+		DB["Config"]["Boss"] =  {
 			type = "group", order = 12,
 			name = "首领框体",
 			args = {
@@ -467,43 +468,57 @@ function Module.BuildGUI()
 				}
 			}
 		}
-		DB["Config"]["RaidFrame"] =  {
+		DB["Config"]["Raid"] =  {
 			type = "group", order = 13,
 			name = "团队框体",
 			args = {	
-				ShowRaidFrame = {
+				ShowRaid = {
 					type = "toggle", order = 1,
 					name = "启用团队框体",
-					get = function() return UnitFrameDB.ShowRaidFrame end,
-					set = function(_, value) UnitFrameDB.ShowRaidFrame = value end,
+					get = function() return UnitFrameDB["ShowRaid"] end,
+					set = function(_, value) UnitFrameDB["ShowRaid"] = value end,
 				},
 				Gruop = {
 					type = "group", order = 2,
 					name = " ", guiInline = true,
+					disabled = not UnitFrameDB["ShowRaid"],
 					args = {
 						RaidUnitWidth = {
 							type = "range", order = 1,
 							name = "团队框体单位宽度：", desc = "请输入团队框体单位宽度",
-							min = 30, max = 200, step = 1,
-							disabled = not UnitFrameDB.ShowRaidFrame,
-							get = function() return UnitFrameDB.RaidUnitWidth end,
-							set = function(_, value) UnitFrameDB.RaidUnitWidth = value end,
+							min = 1, max = 200, step = 1,				
+							get = function() return UnitFrameDB["RaidUnitWidth"] end,
+							set = function(_, value)
+								UnitFrameDB["RaidUnitWidth"] = value
+								Sora:GetModule("Raid"):UpdateWidth()
+							end,
 						},
-						RaidUnitHeight = {
+						RaidUnitHealthHeight = {
 							type = "range", order = 2,
-							name = "团队框体单位高度：", desc = "请输入团队框体单位高度",
-							min = 10, max = 50, step = 1,
-							disabled = not UnitFrameDB.ShowRaidFrame,
-							get = function() return UnitFrameDB.RaidUnitHeight end,
-							set = function(_, value) UnitFrameDB.RaidUnitHeight = value end,
+							name = "团队框体单位生命值高度：", desc = "请输入团队框体单位生命值高度",
+							min = 1, max = 100, step = 1,
+							get = function() return UnitFrameDB["RaidUnitHealthHeight"] end,
+							set = function(_, value)
+								UnitFrameDB["RaidUnitHealthHeight"] = value
+								Sora:GetModule("Raid"):UpdateHealthHeight()
+							end,
+						},
+						RaidUnitPowerHeight = {
+							type = "range", order = 3,
+							name = "团队框体单位能量值高度：", desc = "请输入团队框体单位能量值高度",
+							min = 1, max = 100, step = 1,
+							get = function() return UnitFrameDB["RaidUnitPowerHeight"] end,
+							set = function(_, value)
+								UnitFrameDB["RaidUnitPowerHeight"] = value
+								Sora:GetModule("Raid"):UpdatePowerHeight()
+							end,
 						},
 						RaidPartyArrangement = {
-							type = "select", order = 3,
+							type = "select", order = 4,
 							name = "小队成员排列方式：", desc = "请选择小队成员排列方式",
-							values = {["Horizontal"] = "横向排列", ["Vertical"] = "纵向排列"},
-							disabled = not UnitFrameDB.ShowRaidFrame,			
-							get = function() return UnitFrameDB.RaidPartyArrangement end,
-							set = function(_, value) UnitFrameDB.RaidPartyArrangement = value end,
+							values = {["Horizontal"] = "横向排列", ["Vertical"] = "纵向排列"},	
+							get = function() return UnitFrameDB["RaidPartyArrangement"] end,
+							set = function(_, value) UnitFrameDB["RaidPartyArrangement"] = value end,
 						},
 					}
 				}
