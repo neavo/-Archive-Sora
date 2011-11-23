@@ -250,7 +250,7 @@ function Module:OnInitialize()
 		"showRaid", true,  
 		"showPlayer", true, 
 		"showParty", true, 
-		"showSolo", false, 
+		"showSolo", true, 
 		"xoffset", (UnitFrameDB.RaidPartyArrangement == "Horizontal") and 5 or 0, 
 		"yoffset", (UnitFrameDB.RaidPartyArrangement == "Vertical") and -5 or 0, 
 		"groupFilter", "1,2,3,4,5", 

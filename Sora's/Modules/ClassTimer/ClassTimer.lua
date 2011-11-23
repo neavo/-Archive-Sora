@@ -82,6 +82,10 @@ end
 
 function Module:CleanUp(unit)
 	local _, _, _, _, Aura, Active = Module:GetUnitVal(unit)
+	for key, value in pairs(Active) do
+		Active[value] = nil
+		tremove(Active, key)
+	end
 	wipe(Active)
 	for _, value in pairs(Aura) do
 		value:Hide()
@@ -123,8 +127,8 @@ function Module:UpdateActive(unit)
 	local _, _, _, Limit, _, Active, Func = Module:GetUnitVal(unit)
 	local index = 1
 	while true do
-		if not Func(unit, index) then break end
 		local name, _, icon, count, _, duration, expires, caster = Func(unit, index)
+		if not name then break end	
 		if (caster == "player" and (((duration < Limit and duration ~= 0) or Limit == 0) and not C["BlackList"][name])) or C["WhiteList"][name] then
 			tinsert(Active, {name, icon, count, duration, expires})
 		end
@@ -156,19 +160,12 @@ function Module:UpdateAura(unit)
 		local Timer = 0
 		Frame:SetScript("OnUpdate", function(self, elapsed)
 			Timer = expires-GetTime()
-			if Func(unit, name) then
-				if Timer >= 60 then
-					if Time then Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
-					if Statusbar then Statusbar:SetValue(Timer) end
-				elseif Timer < 60 then
-					if Time then Time:SetFormattedText("%.1f", Timer) end
-					if Statusbar then Statusbar:SetValue(Timer) end
-				end
-			else
-				self:Hide()
-				self:SetScript("OnUpdate", nil)
-				tremove(Aura, self.ID)
-				Module:UpdateAuraPos(unit)
+			if Timer >= 60 then
+				if Time then Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
+				if Statusbar then Statusbar:SetValue(Timer) end
+			elseif Timer < 60 then
+				if Time then Time:SetFormattedText("%.1f", Timer) end
+				if Statusbar then Statusbar:SetValue(Timer) end
 			end
 		end)
 		Frame:Show()
@@ -176,13 +173,15 @@ function Module:UpdateAura(unit)
 end
 
 function Module:UpdateAll(event, unit, ...)
+	if not unit == "player" or not unit == "target" then return end
 	if unit == "player" and C["PlayerMode"] ~= "None" then
 		Module:CleanUp(unit)
 		Module:UpdateActive(unit)
 		Module:SortActive(unit)
 		Module:UpdateAura(unit)
 		Module:UpdateAuraPos(unit)
-	elseif unit == "target" and C["TargetMode"] ~= "None" then
+	end
+	if unit == "target" and C["TargetMode"] ~= "None" then
 		Module:CleanUp(unit)
 		Module:UpdateActive(unit)
 		Module:SortActive(unit)

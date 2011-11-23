@@ -1,365 +1,366 @@
 ﻿local _, ns = ...
 local oUF = ns.oUF or oUF
 
-local PrePriority = 0
-local ZoneList = {}
+local PrePriority, ZoneList = 0, {}
 local RaidDebuffList = {
 	-- Baradin Hold
 	[752] = {
 		-- Demon Containment Unit
-		{89354, 2},
+		[GetSpellInfo(89354)] = 2,
 		-- Argaloth
-		{88942, 11}, -- Meteor Slash
-		{88954, 12}, -- Consuming Darkness
+		[GetSpellInfo(88942)] = 11, -- Meteor Slash
+		[GetSpellInfo(88954)] = 12, -- Consuming Darkness
 		-- Occu'thar
-		{96913, 21}, -- Searing Shadows
+		[GetSpellInfo(96913)] = 21, -- Searing Shadows
 		-- Eye of Occu'thar
-		{97028, 22}, -- Gaze of Occu'thar		
+		[GetSpellInfo(97028)] = 22, -- Gaze of Occu'thar		
 	},
 	-- Firelands
 	[800] = {
 		-- Flamewaker Forward Guard
-		{76622, 2}, -- Sunder Armor
-		{99610, 2}, -- Shockwave
+		[GetSpellInfo(76622)] = 2, -- Sunder Armor
+		[GetSpellInfo(99610)] = 2, -- Shockwave
 		-- Flamewaker Pathfinder
-		{99695, 2}, -- Flaming Spear
-		{99800, 2}, -- Ensnare
+		[GetSpellInfo(99695)] = 2, -- Flaming Spear
+		[GetSpellInfo(99800)] = 2, -- Ensnare
 		-- Fire Scorpion
-		{99993, 2}, -- Fiery Blood
+		[GetSpellInfo(99993)] = 2, -- Fiery Blood
 		-- Molten Lord
-		{100767, 2}, -- Melt Armor
+		[GetSpellInfo(100767)] = 2, -- Melt Armor
 		-- Ancient Core Hound
-		{99693, 2}, -- Dinner Time
+		[GetSpellInfo(99693)] = 2, -- Dinner Time
 		-- Unstable Magma
-		{100549, 2}, -- Lava Surge
+		[GetSpellInfo(100549)] = 2, -- Lava Surge
 		-- Hell Hound
-		{100057, 2}, -- Rend Flesh
+		[GetSpellInfo(100057)] = 2, -- Rend Flesh
 		-- Unbound Pyrelord
-		{101166, 2}, -- Ignite
+		[GetSpellInfo(101166)] = 2, -- Ignite
 		-- Flamewalker Subjugator
-		{100526, 2}, -- Blistering Wound
+		[GetSpellInfo(100526)] = 2, -- Blistering Wound
 		-- Harbinger of Flame
-		{100095, 2}, -- Fieroclast Barrage
+		[GetSpellInfo(100095)] = 2, -- Fieroclast Barrage
 		-- Druid of the Flame
-		{99650, 2}, -- Reactive flames
+		[GetSpellInfo(99650)] = 2, -- Reactive flames
 		-- Magma
-		{97151, 2}, -- Magma
+		[GetSpellInfo(97151)] = 2, -- Magma
 
 		-- Beth'tilac
-		{99506, 11}, -- The Widow's Kiss
+		[GetSpellInfo(99506)] = 11, -- The Widow's Kiss
 		-- Cinderweb Drone
-		{49026, 12}, -- Fixate (Heroic)
+		[GetSpellInfo(49026)] = 12, -- Fixate (Heroic)
 		-- Cinderweb Spinner
-		{97202, 13}, -- Fiery Web Spin
+		[GetSpellInfo(97202)] = 13, -- Fiery Web Spin
 		-- Cinderweb Spiderling
-		{97079, 14}, -- Seeping Venom
+		[GetSpellInfo(97079)] = 14, -- Seeping Venom
 		-- Upstairs
-		{100048, 15}, -- Fiery Web Silk
+		[GetSpellInfo(100048)] = 15, -- Fiery Web Silk
 
 		-- Lord Rhyolith
-		{98492, 21}, -- Eruption
+		[GetSpellInfo(98492)] = 21, -- Eruption
 
 		-- Alysrazor
-		{101729, 31}, -- Blazing Claw
-		{100094, 32}, -- Fieroblast
-		{99389, 33}, -- Imprinted
-		{99308, 34}, -- Gushing Wound
-		{100640, 35}, -- Harsh Winds
-		{100555, 35}, -- Smouldering Roots
+		[GetSpellInfo(101729)] = 31, -- Blazing Claw
+		[GetSpellInfo(100094)] = 32, -- Fieroblast
+		[GetSpellInfo(99389)] = 33, -- Imprinted
+		[GetSpellInfo(99308)] = 34, -- Gushing Wound
+		[GetSpellInfo(100640)] = 35, -- Harsh Winds
+		[GetSpellInfo(100555)] = 35, -- Smouldering Roots
 
 		-- Shannox
-		{99936, 41}, -- Jagged Tear
-		{99837, 42}, -- Crystal Prison Trap Effect
-		{101208, 43}, -- Immolation Trap
-		{99840, 44}, -- Magma Rupture
+		[GetSpellInfo(99936)] = 41, -- Jagged Tear
+		[GetSpellInfo(99837)] = 42, -- Crystal Prison Trap Effect
+		[GetSpellInfo(101208)] = 43, -- Immolation Trap
+		[GetSpellInfo(99840)] = 44, -- Magma Rupture
 		-- Rageface
-		{99947, 45},  -- Face Rage
-		{100415, 46}, -- Rage
+		[GetSpellInfo(99947)] = 45,  -- Face Rage
+		[GetSpellInfo(100415)] = 46, -- Rage
 
 		-- Baleroc
-		{99252, 51}, -- Blaze of Glory
-		{99256, 52}, -- Torment
-		{99403, 53}, -- Tormented
-		{99516, 54}, -- Countdown
-		{99353, 55}, -- Decimating Strike
-		{100908, 56}, -- Fiery Torment
+		[GetSpellInfo(99252)] = 51, -- Blaze of Glory
+		[GetSpellInfo(99256)] = 52, -- Torment
+		[GetSpellInfo(99403)] = 53, -- Tormented
+		[GetSpellInfo(99516)] = 54, -- Countdown
+		[GetSpellInfo(99353)] = 55, -- Decimating Strike
+		[GetSpellInfo(100908)] = 56, -- Fiery Torment
 
 		-- Majordomo Staghelm
-		{98535, 61}, -- Leaping Flames
-		{98443, 62}, -- Fiery Cyclone
-		{98450, 63}, -- Searing Seeds
+		[GetSpellInfo(98535)] = 61, -- Leaping Flames
+		[GetSpellInfo(98443)] = 62, -- Fiery Cyclone
+		[GetSpellInfo(98450)] = 63, -- Searing Seeds
 		-- Burning Orbs
-		{100210, 65}, -- Burning Orb
+		[GetSpellInfo(100210)] = 65, -- Burning Orb
 		-- ?
-		{96993, 64}, -- Stay Withdrawn?
+		[GetSpellInfo(96993)] = 64, -- Stay Withdrawn?
 
 		-- Ragnaros
-		{99399, 71}, -- Burning Wound
-		{100293, 72}, -- Lava Wave
-		{100238, 73}, -- Magma Trap Vulnerability
-		{98313, 74}, -- Magma Blast
+		[GetSpellInfo(99399)] = 71, -- Burning Wound
+		[GetSpellInfo(100293)] = 72, -- Lava Wave
+		[GetSpellInfo(100238)] = 73, -- Magma Trap Vulnerability
+		[GetSpellInfo(98313)] = 74, -- Magma Blast
 		-- Lava Scion
-		{100460, 75}, -- Blazing Heat
+		[GetSpellInfo(100460)] = 75, -- Blazing Heat
 		-- Lava
-		{98981, 76}, -- Lava Bolt
+		[GetSpellInfo(98981)] = 76, -- Lava Bolt
 		-- Living Meteor
-		{100249, 77}, -- Combustion
+		[GetSpellInfo(100249)] = 77, -- Combustion
 		-- Molten Wyrms
-		{99613, 78}, -- Molten Blast
+		[GetSpellInfo(99613)] = 78, -- Molten Blast
 	},
 	-- Blackwing Descent
 	[754] = {
 		-- Drakonid Slayer
-		{80390, 2}, -- Mortal Strike
+		[GetSpellInfo(80390)] = 2, -- Mortal Strike
 		-- Maimgor/Ivoroc
-		{80270, 2}, -- Shadowflame
-		{80145, 2}, -- Piercing Grip
+		[GetSpellInfo(80270)] = 2, -- Shadowflame
+		[GetSpellInfo(80145)] = 2, -- Piercing Grip
 		-- Spirit of Ironstar (spreads to other spirits when you kill Ironstar)
-		{80727, 2}, -- Execution Sentence
+		[GetSpellInfo(80727)] = 2, -- Execution Sentence
 		-- Drakeadon Mongrel
-		{80345, 2}, -- Corrosive Acid
-		{80329, 2}, -- Time Lapse
+		[GetSpellInfo(80345)] = 2, -- Corrosive Acid
+		[GetSpellInfo(80329)] = 2, -- Time Lapse
 		-- Drakonid Drudge
-		{79630, 2}, -- Drakonid Rush
+		[GetSpellInfo(79630)] = 2, -- Drakonid Rush
 		-- Drakonid Chainwielder
-		{79589, 2}, -- Constricting Chains
-		{79580, 2}, -- Overhead Smash
-		{91910, 2}, -- Grievous Wound
+		[GetSpellInfo(79589)] = 2, -- Constricting Chains
+		[GetSpellInfo(79580)] = 2, -- Overhead Smash
+		[GetSpellInfo(91910)] = 2, -- Grievous Wound
 		-- Golem Sentry
-		{81060, 2}, -- Flash Bomb
+		[GetSpellInfo(81060)] = 2, -- Flash Bomb
 		-- Pyrecraw
-		{80127, 2}, -- Flame Buffet
+		[GetSpellInfo(80127)] = 2, -- Flame Buffet
 		-- Nefarian
-		{79353, 2}, -- Shadow of Cowardice
+		[GetSpellInfo(79353)] = 2, -- Shadow of Cowardice
 		
 		-- Magmaw
-		{89773, 11}, -- Mangle
-		{78941, 12}, -- Parasitic Infection
-		{88287, 13}, -- Massive Crash
-		{78199, 14}, -- Sweltering Armor
+		[GetSpellInfo(89773)] = 11, -- Mangle
+		[GetSpellInfo(78941)] = 12, -- Parasitic Infection
+		[GetSpellInfo(88287)] = 13, -- Massive Crash
+		[GetSpellInfo(78199)] = 14, -- Sweltering Armor
 		
 		-- Omnitron Defense System
-		{79888, 21}, -- Lightning Conductor
-		{80161, 22}, -- Chemical Cloud
-		{80011, 23}, -- Soaked in Poison
-		{79505, 24}, -- Flamethrower
-		{80094, 25}, -- Fixate
-		{79501, 26}, -- Acquiring Target
+		[GetSpellInfo(79888)] = 21, -- Lightning Conductor
+		[GetSpellInfo(80161)] = 22, -- Chemical Cloud
+		[GetSpellInfo(80011)] = 23, -- Soaked in Poison
+		[GetSpellInfo(79505)] = 24, -- Flamethrower
+		[GetSpellInfo(80094)] = 25, -- Fixate
+		[GetSpellInfo(79501)] = 26, -- Acquiring Target
 		-- Omnitron Defense System(Heroic)
-		{92053, 27}, -- Shadow Conductor
-		{92048, 28}, -- Shadow Infusion
-		{92023, 29}, -- Encasing Shadows
+		[GetSpellInfo(92053)] = 27, -- Shadow Conductor
+		[GetSpellInfo(92048)] = 28, -- Shadow Infusion
+		[GetSpellInfo(92023)] = 29, -- Encasing Shadows
 		
 		-- Chimaeron
-		{89084, 31}, -- Low Health
-		{82890, 32}, -- Mortality
-		{82935, 33}, -- Caustic Slime
+		[GetSpellInfo(89084)] = 31, -- Low Health
+		[GetSpellInfo(82890)] = 32, -- Mortality
+		[GetSpellInfo(82935)] = 33, -- Caustic Slime
 		-- Chimaeron(Heroic)
-		{82881, 34}, -- Break
-		{91307, 35}, -- Mocking Shadows
+		[GetSpellInfo(82881)] = 34, -- Break
+		[GetSpellInfo(91307)] = 35, -- Mocking Shadows
 
 		-- Atramedes
-		{78092, 41}, -- Tracking
-		{77982, 42}, -- Searing Flame
-		{78023, 43}, -- Roaring Flame
-		{78897, 44}, -- Noisy!
+		[GetSpellInfo(78092)] = 41, -- Tracking
+		[GetSpellInfo(77982)] = 42, -- Searing Flame
+		[GetSpellInfo(78023)] = 43, -- Roaring Flame
+		[GetSpellInfo(78897)] = 44, -- Noisy!
 		-- Atramedes(Heroic)
-		{92685, 45}, --Pestered!
+		[GetSpellInfo(92685)] = 45, -- Pestered!
 
 		-- Maloriak
-		{78034, 51}, -- Rend 10-normal
-		{78225, 52}, -- Acid Nova 10-normal
-		{77615, 53}, -- Debilitating Slime 10-normal/25-normal
-		{77786, 54}, -- Consuming Flames 10-normal
-		{78617, 55}, -- Fixate
-		{77760, 56}, -- Biting Chill
-		{77699, 57}, -- Flash Freeze 10-normal
+		[GetSpellInfo(78034)] = 51, -- Rend 10-normal
+		[GetSpellInfo(78225)] = 52, -- Acid Nova 10-normal
+		[GetSpellInfo(77615)] = 53, -- Debilitating Slime 10-normal/25-normal
+		[GetSpellInfo(77786)] = 54, -- Consuming Flames 10-normal
+		[GetSpellInfo(78617)] = 55, -- Fixate
+		[GetSpellInfo(77760)] = 56, -- Biting Chill
+		[GetSpellInfo(77699)] = 57, -- Flash Freeze 10-normal
 		-- Maloriak(Heroic)
-		{92987, 58}, -- Dark Sludge 
-		{92982, 59}, -- Engulfing Darkness
+		[GetSpellInfo(92987)] = 58, -- Dark Sludge 
+		[GetSpellInfo(92982)] = 59, -- Engulfing Darkness
 
 		-- Nefarian
-		{81118, 81}, -- Magma 10-normal
-		{77827, 82}, -- Tail Lash 10-normal
+		[GetSpellInfo(81118)] = 81, -- Magma 10-normal
+		[GetSpellInfo(77827)] = 82, -- Tail Lash 10-normal
 		-- Nefarian(Heroic)
-		{79339, 83}, -- Explosive Cinders
-		{79318, 84}, -- Dominion
+		[GetSpellInfo(79339)] = 83, -- Explosive Cinders
+		[GetSpellInfo(79318)] = 84, -- Dominion
 	},
 	-- The Bastion of Twilight
 	[758] = {
 		-- Magma (falling off)
-		{81118, 2}, -- Magma
+		[GetSpellInfo(81118)] = 2, -- Magma
 		-- Tremors
-		{87931, 2}, -- Tremors
+		[GetSpellInfo(87931)] = 2, -- Tremors
 		-- Phased Burn
-		{85799, 2}, -- Phased Burn
+		[GetSpellInfo(85799)] = 2, -- Phased Burn
 		-- Crimson Flames
-		{88232, 2}, -- Crimson Flames
+		[GetSpellInfo(88232)] = 2, -- Crimson Flames
 		-- Twilight Soulblade
-		{84850, 2}, -- Soul Blade
-		{84853, 2}, -- Dark Pool
+		[GetSpellInfo(84850)] = 2, -- Soul Blade
+		[GetSpellInfo(84853)] = 2, -- Dark Pool
 		-- Crimsonborne Firestarter
-		{88219, 2}, -- Burning Twilight
+		[GetSpellInfo(88219)] = 2, -- Burning Twilight
 		-- Twilight Elementalist
-		{88079, 2}, -- Frostfire Bolt
+		[GetSpellInfo(88079)] = 2, -- Frostfire Bolt
 		-- Twilight Shadow Knight
-		{76622, 2}, -- Sunder Armor
-		{84832, 2}, -- Dismantle
+		[GetSpellInfo(76622)] = 2, -- Sunder Armor
+		[GetSpellInfo(84832)] = 2, -- Dismantle
 		-- Twilight Dark Mender
-		{84856, 2}, -- Hungering Shadows
+		[GetSpellInfo(84856)] = 2, -- Hungering Shadows
 		-- Twilight Shadow Mender
-		{85643, 2}, -- Mind Sear
+		[GetSpellInfo(85643)] = 2, -- Mind Sear
 		-- Twilight-shifter
-		{85564, 2}, -- Shifted Reality
+		[GetSpellInfo(85564)] = 2, -- Shifted Reality
 		-- Bound Zephyr
-		{93277, 2}, -- Rending Gale
-		{93306, 2}, -- Vaporize
+		[GetSpellInfo(93277)] = 2, -- Rending Gale
+		[GetSpellInfo(93306)] = 2, -- Vaporize
 		-- Bound Rumbler
-		{93327, 2}, -- Entomb
-		{93325, 2}, -- Shockwave
+		[GetSpellInfo(93327)] = 2, -- Entomb
+		[GetSpellInfo(93325)] = 2, -- Shockwave
 		-- Faceless Guardian
-		{85482, 2}, -- Shadow Volley
+		[GetSpellInfo(85482)] = 2, -- Shadow Volley
 		-- Shadow Lord
-		{87629, 2}, -- Gripping Shadows
+		[GetSpellInfo(87629)] = 2, -- Gripping Shadows
 
 		-- Halfus Wyrmbreaker
-		{83710, 11}, -- Furious Roar
-		{83908, 12}, -- Malevolent Strikes
-		{83603, 13}, -- Stone Touch
+		[GetSpellInfo(83710)] = 11, -- Furious Roar
+		[GetSpellInfo(83908)] = 12, -- Malevolent Strikes
+		[GetSpellInfo(83603)] = 13, -- Stone Touch
 
 		-- Valiona and Theralion
-		{86788, 21}, -- Blackout 10-normal
-		{86622, 22}, -- Engulfing Magic 10-normal
-		{86202, 23}, -- Twilight Shift 10-normal
-		{86014, 24}, -- Twilight Meteorite
-		{92886, 25}, -- Twilight Zone
+		[GetSpellInfo(86788)] = 21, -- Blackout 10-normal
+		[GetSpellInfo(86622)] = 22, -- Engulfing Magic 10-normal
+		[GetSpellInfo(86202)] = 23, -- Twilight Shift 10-normal
+		[GetSpellInfo(86014)] = 24, -- Twilight Meteorite
+		[GetSpellInfo(92886)] = 25, -- Twilight Zone
 
 		-- Twilight Ascendant Council
-		{82762, 31}, -- Waterlogged
-		{83099, 32}, -- Lightning Rod
-		{82285, 33}, -- Elemental Stasis
-		{82660, 34}, -- Burning Blood
-		{82665, 35}, -- Heart of Ice
-		{82772, 36}, -- Frozen
-		{84948, 37}, -- Gravity Crush
-		{83500, 38}, -- Swirling Winds
-		{83581, 38}, -- Grounded
-		{82285, 38}, -- Elemental Stasis
+		[GetSpellInfo(82762)] = 31, -- Waterlogged
+		[GetSpellInfo(83099)] = 32, -- Lightning Rod
+		[GetSpellInfo(82285)] = 33, -- Elemental Stasis
+		[GetSpellInfo(82660)] = 34, -- Burning Blood
+		[GetSpellInfo(82665)] = 35, -- Heart of Ice
+		[GetSpellInfo(82772)] = 36, -- Frozen
+		[GetSpellInfo(84948)] = 37, -- Gravity Crush
+		[GetSpellInfo(83500)] = 38, -- Swirling Winds
+		[GetSpellInfo(83581)] = 38, -- Grounded
+		[GetSpellInfo(82285)] = 38, -- Elemental Stasis
 		-- Twilight Ascendant Council(Heroic)
-		{92307, 39}, -- Frost Beacon
-		{92467, 39}, -- Static Overload
-		{92538, 39}, -- Gravity Core
+		[GetSpellInfo(92307)] = 39, -- Frost Beacon
+		[GetSpellInfo(92467)] = 39, -- Static Overload
+		[GetSpellInfo(92538)] = 39, -- Gravity Core
 
 		-- Cho'gall
-		{81701, 41}, -- Corrupted Blood
-		{81836, 42}, -- Corruption: Accelerated
-		{82125, 43}, -- Corruption: Malformation
-		{82170, 44}, -- Corruption: Absolute
-		{82523, 45}, -- Gall's Blast
-		{82518, 46}, -- Cho's Blast
-		{82411, 47}, -- Debilitating Beam
+		[GetSpellInfo(81701)] = 41, -- Corrupted Blood
+		[GetSpellInfo(81836)] = 42, -- Corruption: Accelerated
+		[GetSpellInfo(82125)] = 43, -- Corruption: Malformation
+		[GetSpellInfo(82170)] = 44, -- Corruption: Absolute
+		[GetSpellInfo(82523)] = 45, -- Gall's Blast
+		[GetSpellInfo(82518)] = 46, -- Cho's Blast
+		[GetSpellInfo(82411)] = 47, -- Debilitating Beam
 
 		-- Sinestra
-		{89299, 51}, -- Twilight Spit
+		[GetSpellInfo(89299)] = 51, -- Twilight Spit
 	},
 	-- Throne of the Four Winds
 	[773] = {
 		-- Conclave of Wind
-		{84645, 11}, -- Wind Chill
-		{86111, 12}, -- Ice Patch
-		{86082, 13}, -- Permafrost
-		{86481, 14}, -- Hurricane
-		{86282, 15}, -- Toxic Spores
-		{85573, 16}, -- Deafening Winds
-		{85576, 17}, -- Withering Winds
+		[GetSpellInfo(84645)] = 11, -- Wind Chill
+		[GetSpellInfo(86111)] = 12, -- Ice Patch
+		[GetSpellInfo(86082)] = 13, -- Permafrost
+		[GetSpellInfo(86481)] = 14, -- Hurricane
+		[GetSpellInfo(86282)] = 15, -- Toxic Spores
+		[GetSpellInfo(85573)] = 16, -- Deafening Winds
+		[GetSpellInfo(85576)] = 17, -- Withering Winds
 		-- Conclave of Wind(Heroic)
-		{93057, 18}, -- Slicing Gale
+		[GetSpellInfo(93057)] = 18, -- Slicing Gale
 
 		--Al'Akir
-		{88301, 21}, --Acid Rain
-		{87873, 22}, --Static Shock
-		{88427, 23}, --Electrocute
-		{89666, 24}, --Lightning Rod
-		{89668, 25}, --Lightning Rod
-		{87856, 25}, --Squall Line
-	}, 
+		[GetSpellInfo(88301)] = 21, --Acid Rain
+		[GetSpellInfo(87873)] = 22, --Static Shock
+		[GetSpellInfo(88427)] = 23, --Electrocute
+		[GetSpellInfo(89666)] = 24, --Lightning Rod
+		[GetSpellInfo(89668)] = 25, --Lightning Rod
+		[GetSpellInfo(87856)] = 25, --Squall Line
+	},
 	-- AnyZone
 	["AnyZone"] = {
 		-- Priest
-		{6346, 1}, -- Fear Ward
-		{605, 1}, -- Mind Control
-		{8122, 1}, -- Psychic Scream
-		{64044, 1}, -- Psychic Horror	
-		{69910, 1}, -- Pain Suppression
-		{15487, 1}, -- Silence
-		{47585, 1}, -- Dispersion	
-		{17, 1}, -- Power Word: Shield
-		{88625, 1}, -- Holy Word: Chastise
+		[GetSpellInfo(6346)] = 1, -- Fear Ward
+		[GetSpellInfo(605)] = 1, -- Mind Control
+		[GetSpellInfo(8122)] = 1, -- Psychic Scream
+		[GetSpellInfo(64044)] = 1, -- Psychic Horror	
+		[GetSpellInfo(69910)] = 1, -- Pain Suppression
+		[GetSpellInfo(15487)] = 1, -- Silence
+		[GetSpellInfo(47585)] = 1, -- Dispersion	
+		[GetSpellInfo(17)] = 1, -- Power Word: Shield
+		[GetSpellInfo(88625)] = 1, -- Holy Word: Chastise
 		
 		-- Paladin
-		{853, 1}, -- Hammer of Justice
-		{642, 1}, -- Divine Shield
-		{1022, 1}, -- Hand of Protection
-		{1044, 1}, -- Hand of Freedom
-		{6940, 1}, -- Hand of Sacrifice	
-		{20066, 1}, -- Repentance
+		[GetSpellInfo(853)] = 1, -- Hammer of Justice
+		[GetSpellInfo(642)] = 1, -- Divine Shield
+		[GetSpellInfo(1022)] = 1, -- Hand of Protection
+		[GetSpellInfo(1044)] = 1, -- Hand of Freedom
+		[GetSpellInfo(6940)] = 1, -- Hand of Sacrifice	
+		[GetSpellInfo(20066)] = 1, -- Repentance
+		[GetSpellInfo(20925)] = 1, -- 神圣之盾
+		[GetSpellInfo(86150)] = 1, -- 远古列王守卫
 		
 		-- Rogue
-		{31224, 1}, -- Cloak of Shadows
-		{5277, 1}, -- Evasion
-		{43235, 1}, -- Wound Poison
-		{2094, 1}, -- Blind
-		{6770, 1}, -- Sap
-		{408, 1}, -- Kidney Shot
-		{1776, 1}, -- Gouge	
+		[GetSpellInfo(31224)] = 1, -- Cloak of Shadows
+		[GetSpellInfo(5277)] = 1, -- Evasion
+		[GetSpellInfo(43235)] = 1, -- Wound Poison
+		[GetSpellInfo(2094)] = 1, -- Blind
+		[GetSpellInfo(6770)] = 1, -- Sap
+		[GetSpellInfo(408)] = 1, -- Kidney Shot
+		[GetSpellInfo(1776)] = 1, -- Gouge	
 			
 		-- Warrior
-		{12294, 1}, -- Mortal Strike
-		{1715, 1}, -- Hamstring
-		{871, 1}, -- Shield Wall	
-		{18499, 1}, -- Berserker Rage
+		[GetSpellInfo(12294)] = 1, -- Mortal Strike
+		[GetSpellInfo(1715)] = 1, -- Hamstring
+		[GetSpellInfo(871)] = 1, -- Shield Wall	
+		[GetSpellInfo(18499)] = 1, -- Berserker Rage
 		
 		-- Druid
-		{33786, 1}, -- Cyclone
-		{339, 1}, -- Entangling Roots
-		{29166, 1}, -- Innervate
-		{2637, 1}, -- Hibernate
+		[GetSpellInfo(33786)] = 1, -- Cyclone
+		[GetSpellInfo(339)] = 1, -- Entangling Roots
+		[GetSpellInfo(29166)] = 1, -- Innervate
+		[GetSpellInfo(2637)] = 1, -- Hibernate
 		
 		-- Warlock
-		{5782, 1}, -- Fear
-		{5484, 1}, -- Howl of Terror
-		{6358, 1}, -- Seduction	
-		{1714, 1}, -- Curse of Tongues
-		{18223, 1}, -- Curse of Exhaustion
-		{6789, 1}, -- Death Coil
-		{30283, 1}, -- Shadowfury
+		[GetSpellInfo(5782)] = 1, -- Fear
+		[GetSpellInfo(5484)] = 1, -- Howl of Terror
+		[GetSpellInfo(6358)] = 1, -- Seduction	
+		[GetSpellInfo(1714)] = 1, -- Curse of Tongues
+		[GetSpellInfo(18223)] = 1, -- Curse of Exhaustion
+		[GetSpellInfo(6789)] = 1, -- Death Coil
+		[GetSpellInfo(30283)] = 1, -- Shadowfury
 		
 		-- Shaman
-		{51514, 1}, -- Hex
+		[GetSpellInfo(51514)] = 1, -- Hex
 		
 		-- Mage
-		{18469, 1}, -- Silenced - Improved Counterspell - Rank1
-		{55021, 1}, -- Silenced - Improved Counterspell - Rank2
-		{2139, 1}, -- Counterspell
-		{118, 1}, -- Polymorph
-		{44572, 1}, -- Deep Freeze
-		{45438, 1}, -- Ice Block	
-		{122, 1}, -- Frost Nova
+		[GetSpellInfo(18469)] = 1, -- Silenced - Improved Counterspell - Rank1
+		[GetSpellInfo(55021)] = 1, -- Silenced - Improved Counterspell - Rank2
+		[GetSpellInfo(2139)] = 1, -- Counterspell
+		[GetSpellInfo(118)] = 1, -- Polymorph
+		[GetSpellInfo(44572)] = 1, -- Deep Freeze
+		[GetSpellInfo(45438)] = 1, -- Ice Block	
+		[GetSpellInfo(122)] = 1, -- Frost Nova
 	
 		-- Hunter
-		{19503, 1}, -- Scatter Shot
-		{55041, 1}, -- Freezing Trap Effect
-		{2974, 1}, -- Wing Clip
-		{19263, 1}, -- Deterrence
-		{34490, 1}, -- Silencing Shot
-		{19386, 1}, -- Wyvern Sting
-		{19577, 1}, -- Intimidation
+		[GetSpellInfo(19503)] = 1, -- Scatter Shot
+		[GetSpellInfo(55041)] = 1, -- Freezing Trap Effect
+		[GetSpellInfo(2974)] = 1, -- Wing Clip
+		[GetSpellInfo(19263)] = 1, -- Deterrence
+		[GetSpellInfo(34490)] = 1, -- Silencing Shot
+		[GetSpellInfo(19386)] = 1, -- Wyvern Sting
+		[GetSpellInfo(19577)] = 1, -- Intimidation
 		
 		-- Death Knight
-		{45524, 1}, -- Chains of Ice
-		{48707, 1}, -- Anti-Magic Shell
-		{47476, 1}, -- Strangulate
-	}
+		[GetSpellInfo(45524)] = 1, -- Chains of Ice
+		[GetSpellInfo(48707)] = 1, -- Anti-Magic Shell
+		[GetSpellInfo(47476)] = 1, -- Strangulate
+	},
 }
 
 local Event = CreateFrame("Frame")
@@ -369,81 +370,77 @@ Event:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 Event:SetScript("OnEvent", function(self, event, ...)
     self:SetScript("OnUpdate", function(self, elapsed)
 		self.Timer = self.Timer + elapsed
-		if self.Timer < 5 then return end
-		if IsInInstance() then
-			SetMapToCurrentZone()
-			local Zone = GetCurrentMapAreaID()
-			ZoneList = RaidDebuffList["AnyZone"]
-			if RaidDebuffList[Zone] then
-				for _, value in pairs(RaidDebuffList[Zone]) do
-					tinsert(ZoneList, value)
+		if self.Timer > 5 then
+			if IsInInstance() then
+				SetMapToCurrentZone()
+				local AreaID = GetCurrentMapAreaID()
+				ZoneList = RaidDebuffList["AnyZone"]
+				if RaidDebuffList[AreaID] then
+					for key, value in pairs(RaidDebuffList[AreaID]) do
+						ZoneList[key] = value
+					end
 				end
-			end
-		else
-			ZoneList = RaidDebuffList["AnyZone"]
+			else
+				ZoneList = RaidDebuffList["AnyZone"]
+			end		
+			self:SetScript("OnUpdate", nil)
+			self.Timer = 0
 		end
-		self:SetScript("OnUpdate", nil)
 	end)
 
-    if event == "PLAYER_ENTERING_WORLD" then self:UnregisterEvent("PLAYER_ENTERING_WORLD") end
+    if event == "PLAYER_ENTERING_WORLD" then
+		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	end
 end)
 
 local function UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
 	if RaidDebuff then
 		RaidDebuff:Show()
-		RaidDebuff.Timer = expires-duration
-		RaidDebuff:SetScript("OnUpdate", function(self, elapsed)
-			self.Timer = self.Timer + elapsed
-			if self.Timer > expires then
-				self:Hide()
-				self:SetScript("OnUpdate", nil)
-				PrePriority = 0
-			end
-		end)
 	end
-	if RaidDebuff.Icon then RaidDebuff.Icon:SetTexture(icon) end
-	if RaidDebuff.Count then RaidDebuff.Count:SetText(count > 1 and count or nil) end
-	if RaidDebuff.Cooldown then CooldownFrame_SetTimer(RaidDebuff.Cooldown, expires-duration, duration, 1) end
+	if RaidDebuff.Icon then
+		RaidDebuff.Icon:SetTexture(icon)
+	end
+	if RaidDebuff.Count then
+		RaidDebuff.Count:SetText(count > 1 and count or "")
+	end
+	if RaidDebuff.Cooldown then
+		CooldownFrame_SetTimer(RaidDebuff.Cooldown, expires-duration, duration, 1)
+	end
 end
 
 local function Update(self, event, unit)
     if self.unit ~= unit then return end
+	
 	local RaidDebuff = self.RaidDebuff
 	local Flag = true
-	for _, value in pairs(ZoneList) do
-		local name = GetSpellInfo(value[1])
-		if UnitBuff(unit, name) and value[2] >= PrePriority then
-			local name, _, icon, count, _, duration, expires = UnitBuff(unit, name)
+	
+    local index = 1
+    while true do
+		local name, _, icon, count, _, duration, expires = UnitBuff(unit, index)
+		if not name then break end
+		if ZoneList[name] and ZoneList[name] >= PrePriority then
 			UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
-			PrePriority = value[2]
-			Flag = false
+			PrePriority = ZoneList[name]
+			Flag = false			
 		end
-		if UnitDebuff(unit, name) and value[2] >= PrePriority then
-			local name, _, icon, count, _, duration, expires = UnitDebuff(unit, name)
-			UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
-			PrePriority = value[2]
-			Flag = false
-		end
+		index = index + 1
 	end
-	if Flag then
-		RaidDebuff:Hide()
-		RaidDebuff:SetScript("OnUpdate", nil)
-		PrePriority = 0
-		for _, value in pairs(ZoneList) do
-			local name = GetSpellInfo(value[1])
-			if UnitBuff(unit, name) and value[2] >= PrePriority then
-				local name, _, icon, count, _, duration, expires = UnitBuff(unit, name)
-				UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
-				PrePriority = value[2]
-				Flag = false
-			end
-			if UnitDebuff(unit, name) and value[2] >= PrePriority then
-				local name, _, icon, count, _, duration, expires = UnitDebuff(unit, name)
-				UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
-				PrePriority = value[2]
-				Flag = false
-			end
+	
+	local index = 1
+    while true do
+		local name, _, icon, count, _, duration, expires = UnitDebuff(unit, index)
+		if not name then break end
+		if ZoneList[name] and ZoneList[name] >= PrePriority then
+			UpdateRaidDebuff(RaidDebuff, icon, count, duration, expires)
+			PrePriority = ZoneList[name]
+			Flag = false			
 		end
+		index = index + 1
+	end
+	
+	if Flag then
+		PrePriority = 0
+		RaidDebuff:Hide()
 	end
 end
 
