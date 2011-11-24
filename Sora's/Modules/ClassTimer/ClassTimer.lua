@@ -184,20 +184,32 @@ function Module:UpdateAura(unit)
 	end
 end
 
-function Module:OnEnter(event, unit, ...)
-	if event == "UNIT_AURA" or event == "UNIT_TARGET" then
-		if not unit == "player" or not unit == "target" then
-			return
-		end
-		if unit == "player" and C["PlayerMode"] ~= "None" then
-			Module:Update(unit)
-		end
-		if unit == "target" and C["TargetMode"] ~= "None" then
-			Module:Update(unit)
-		end
-	end
-	if event == "PLAYER_DEAD" then
+function Module:PLAYER_DEAD(event, unit, ...)
+	if C["PlayerMode"] ~= "None" then
 		Module:Update("player")
+	end
+	if C["TargetMode"] ~= "None" then
+		Module:Update("target")
+	end
+end
+
+function Module:UNIT_AURA(event, unit, ...)
+	if not unit == "player" or not unit == "target" then
+		return
+	end
+	if unit == "player" and C["PlayerMode"] ~= "None" then
+		Module:Update(unit)
+	end
+	if unit == "target" and C["TargetMode"] ~= "None" then
+		Module:Update(unit)
+	end
+end
+
+function Module:UNIT_TARGET(event, unit, ...)
+	if C["PlayerMode"] ~= "None" then
+		Module:Update("player")
+	end
+	if C["TargetMode"] ~= "None" then
 		Module:Update("target")
 	end
 end
@@ -208,12 +220,11 @@ function Module:Update(unit)
 	Module:SortActive(unit)
 	Module:UpdateAura(unit)
 	Module:UpdateAuraPos(unit)
-	Module:UpdateAuraPos(unit)
 end
 
 function Module:OnInitialize()
 	C = ClassTimerDB
-	Module:RegisterEvent("UNIT_TARGET", "OnEnter")
-	Module:RegisterEvent("PLAYER_DEAD", "OnEnter")
-	Module:RegisterEvent("UNIT_AURA", "OnEnter")
+	Module:RegisterEvent("UNIT_TARGET")
+	Module:RegisterEvent("PLAYER_DEAD")
+	Module:RegisterEvent("UNIT_AURA")
 end
