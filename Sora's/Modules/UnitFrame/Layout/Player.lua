@@ -320,7 +320,7 @@ function Module:UpdateCastbarHeight()
 		UnitFrame.Castbar.Icon:SetSize(C["PlayerCastbarHeight"], C["PlayerCastbarHeight"])
 	end
 	if MoveHandle.PlayerCastbar then
-		MoveHandle.PlayerCastbar:SetWidth(C["PlayerCastbarHeight"])
+		MoveHandle.PlayerCastbar:SetHeight(C["PlayerCastbarHeight"])
 	end
 end
 
