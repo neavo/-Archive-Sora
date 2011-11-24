@@ -3,25 +3,47 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Player")
-local Parent = nil
+
+function Module:SetRegisterForClicks(self)
+	self.menu = function(self)
+		local unit = self.unit:sub(1, -2)
+		local cunit = self.unit:gsub("^%l", string.upper)
+
+		if cunit == "Vehicle" then cunit = "Pet" end
+
+		if unit == "party" or unit == "partypet" then
+			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+		elseif _G[cunit.."FrameDropDown"] then
+			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+		end
+	end
+	self:SetScript("OnEnter", UnitFrame_OnEnter)
+	self:SetScript("OnLeave", UnitFrame_OnLeave)
+	self:RegisterForClicks("AnyUp")
+end
 
 function Module:UpdateWidth()
-	if Parent then Parent:SetWidth(UnitFrameDB["PlayerWidth"]) end
-	if Parent.Health then Parent.Health:SetWidth(UnitFrameDB["PlayerWidth"]) end
-	if Parent.Power then Parent.Power:SetWidth(UnitFrameDB["PlayerWidth"]) end
-	if MoveHandle.Player then MoveHandle.Player:SetWidth(UnitFrameDB["PlayerWidth"]) end
+	local UnitFrame = _G["oUF_SoraPlayer"]
+	if UnitFrame then 
+		UnitFrame:SetWidth(C["PlayerWidth"])
+		UnitFrame.Health:SetWidth(C["PlayerWidth"])
+		UnitFrame.Power:SetWidth(C["PlayerWidth"])	
+	end
+	if MoveHandle.Player then
+		MoveHandle.Player:SetWidth(C["PlayerWidth"])
+	end
 end
 
-function Module:UpdateHealthHeight()
-	if Parent then Parent:SetHeight(UnitFrameDB["PlayerHealthHeight"]+UnitFrameDB["PlayerPowerHeight"]+4) end
-	if Parent.Health then Parent.Health:SetHeight(UnitFrameDB["PlayerHealthHeight"]) end
-	if MoveHandle.Player then MoveHandle.Player:SetHeight(UnitFrameDB["PlayerHealthHeight"]+UnitFrameDB["PlayerPowerHeight"]+4) end
-end
-
-function Module:UpdatePowerHeight()
-	if Parent then Parent:SetHeight(UnitFrameDB["PlayerPowerHeight"]+UnitFrameDB["PlayerHealthHeight"]+4) end
-	if Parent.Power then Parent.Power:SetHeight(UnitFrameDB["PlayerPowerHeight"]) end
-	if MoveHandle.Player then MoveHandle.Player:SetHeight(UnitFrameDB["PlayerPowerHeight"]+UnitFrameDB["PlayerHealthHeight"]+4) end
+function Module:UpdateHeight()
+	local UnitFrame = _G["oUF_SoraPlayer"]
+	if UnitFrame then
+		UnitFrame:SetHeight(C["PlayerHealthHeight"]+C["PlayerPowerHeight"]+4)
+		UnitFrame.Health:SetHeight(C["PlayerHealthHeight"])
+		UnitFrame.Power:SetHeight(C["PlayerPowerHeight"])
+	end
+	if MoveHandle.Player then
+		MoveHandle.Player:SetHeight(C["PlayerHealthHeight"]+C["PlayerPowerHeight"]+4)
+	end
 end
 
 function Module:BuildHealthBar(self)
@@ -40,8 +62,6 @@ function Module:BuildHealthBar(self)
 	Health.Smooth = true
 	
 	self.Health = Health
-	Module:UpdateWidth()
-	Module:UpdateHealthHeight()
 end
 
 function Module:BuildPowerBar(self)
@@ -60,70 +80,6 @@ function Module:BuildPowerBar(self)
 	Power.colorPower = true
 	
 	self.Power = Power
-	Module:UpdateWidth()
-	Module:UpdatePowerHeight()
-end
-
-function Module:UpdateClassPowerBar()
-	if Parent.Runes then
-		local Runes = Parent.Runes
-		for i = 1, 6 do
-			Runes[i]:SetSize((Parent:GetWidth()-15)/6, 3)
-			if i == 1 then
-				Runes[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
-			else
-				Runes[i]:SetPoint("LEFT", Runes[i-1], "RIGHT", 3, 0)
-			end
-		end
-	end
-	if Parent.HolyPower then
-		local HolyPower = Parent.HolyPower
-		for i = 1, 3 do
-			HolyPower[i]:SetSize((Parent:GetWidth()-10)/3, 3)
-			if i == 1 then
-				HolyPower[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
-			else
-				HolyPower[i]:SetPoint("LEFT", HolyPower[i-1], "RIGHT", 5, 0)
-			end
-		end
-	end
-	if Parent.SoulShards then
-		local SoulShards = Parent.SoulShards
-		for i = 1, 3 do
-			SoulShards[i]:SetSize((Parent:GetWidth()-10)/3, 3)
-			if i == 1 then
-				SoulShards[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
-			else
-				SoulShards[i]:SetPoint("LEFT", SoulShards[i-1], "RIGHT", 5, 0)
-			end
-		end
-	end
-	if Parent.Totems then
-		local Totems = Parent.Totems
-		for i = 1, 4 do
-			Totems[i]:SetSize((Parent:GetWidth()-15)/4, 3)
-			if i == 1 then
-				Totems[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
-			else
-				Totems[i]:SetPoint("LEFT", Totems[i-1], "RIGHT", 5, 0)
-			end	
-		end
-	end
-	if Parent.CPoints then	
-		local CPoints = Parent.CPoints
-		for i = 1, 5 do
-			CPoints[i]:SetSize((Parent:GetWidth() / 5)-5, 3)
-			if i == 1 then
-				CPoints[i]:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, 4)
-			else
-				CPoints[i]:SetPoint("LEFT", CPoints[i-1], "RIGHT", 6, 0)
-			end
-		end
-	end
-	if Parent.EclipseBar then
-		local EclipseBar = Parent.EclipseBar
-		EclipseBar:SetSize(Parent:GetWidth(), 3)
-	end
 end
 
 function Module:BuildClassPowerBar(self)
@@ -139,6 +95,14 @@ function Module:BuildClassPowerBar(self)
 			Rune.BG:SetVertexColor(0.1, 0.1, 0.1)	
 			Runes[i] = Rune
 		end
+		for i = 1, 6 do
+			Runes[i]:SetSize((self:GetWidth()-15)/6, 3)
+			if i == 1 then
+				Runes[i]:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
+			else
+				Runes[i]:SetPoint("LEFT", Runes[i-1], "RIGHT", 3, 0)
+			end
+		end
 		self.Runes = Runes
 	end
 	if DB.MyClass == "PALADIN" then
@@ -149,6 +113,14 @@ function Module:BuildClassPowerBar(self)
 			HolyShard:SetStatusBarColor(0.9, 0.95, 0.33)		
 			HolyShard.Shadow = S.MakeShadow(HolyShard, 3)
 			HolyPower[i] = HolyShard
+		end
+		for i = 1, 3 do
+			HolyPower[i]:SetSize((self:GetWidth()-10)/3, 3)
+			if i == 1 then
+				HolyPower[i]:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
+			else
+				HolyPower[i]:SetPoint("LEFT", HolyPower[i-1], "RIGHT", 5, 0)
+			end
 		end
 		self.HolyPower = HolyPower
 		self.HolyPower.Override = function(self, event, unit, powerType)
@@ -171,6 +143,14 @@ function Module:BuildClassPowerBar(self)
 			SoulShard.Shadow = S.MakeShadow(SoulShard, 3)
 			SoulShards[i] = SoulShard
 		end
+		for i = 1, 3 do
+			SoulShards[i]:SetSize((self:GetWidth()-10)/3, 3)
+			if i == 1 then
+				SoulShards[i]:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
+			else
+				SoulShards[i]:SetPoint("LEFT", SoulShards[i-1], "RIGHT", 5, 0)
+			end
+		end
 		self.SoulShards = SoulShards
 		self.SoulShards.Override = function(self, event, unit, powerType)
 			if self.unit ~= unit or (powerType and powerType ~= "SOUL_SHARDS") then return end
@@ -185,6 +165,7 @@ function Module:BuildClassPowerBar(self)
 	end
 	if DB.MyClass == "DRUID" then
 		local EclipseBar = CreateFrame("Frame", nil, self)
+		EclipseBar:SetSize(self:GetWidth(), 3)
 		EclipseBar:SetPoint("BOTTOM", self, "TOP", 0, 4)
 		EclipseBar.Shadow = S.MakeShadow(EclipseBar, 3)
 		EclipseBar.BG = EclipseBar:CreateTexture(nil, "BACKGROUND")
@@ -213,6 +194,14 @@ function Module:BuildClassPowerBar(self)
 			Totem.Shadow = S.MakeShadow(Totem, 3)
 			Totems[i] = Totem
 		end
+		for i = 1, 4 do
+			Totems[i]:SetSize((self:GetWidth()-15)/4, 3)
+			if i == 1 then
+				Totems[i]:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
+			else
+				Totems[i]:SetPoint("LEFT", Totems[i-1], "RIGHT", 5, 0)
+			end	
+		end
 		self.Totems = Totems
 		self.Totems.PostUpdate = function(self, slot, haveTotem, name, start, duration)
 			local Totem = self[slot]
@@ -229,17 +218,26 @@ function Module:BuildClassPowerBar(self)
 			CPoint.Shadow = S.MakeShadow(CPoint, 3)
 			CPoints[i] = CPoint
 		end
+		for i = 1, 5 do
+			CPoints[i]:SetSize((self:GetWidth() / 5)-5, 3)
+			if i == 1 then
+				CPoints[i]:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
+			else
+				CPoints[i]:SetPoint("LEFT", CPoints[i-1], "RIGHT", 6, 0)
+			end
+		end
 		self.CPoints = CPoints
 		self.CPoints.unit = "player"
 	end
-	Module:UpdateClassPowerBar()
 end
 
 function Module:BuildPortrait(self)
 	local Portrait = CreateFrame("PlayerModel", nil, self.Health)
 	Portrait:SetAlpha(0.3) 
 	Portrait.PostUpdate = function(self) 
-		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then self:SetCamera(1) end	
+		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then
+			self:SetCamera(1)
+		end	
 	end
 	Portrait:SetAllPoints()
 	Portrait:SetFrameLevel(self.Health:GetFrameLevel()+1)
@@ -299,25 +297,35 @@ function Module:BuildTags(self)
 		end
 	end)
 
-	self:Tag(HPTag, UnitFrameDB["PlayerTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
-	self:Tag(PPTag, UnitFrameDB["PlayerTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")
+	self:Tag(HPTag, C["PlayerTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
+	self:Tag(PPTag, C["PlayerTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")
 end
 
 function Module:UpdateCastbarWidth()
-	if Parent.CastbarPos then Parent.CastbarPos:SetWidth(UnitFrameDB["PlayerCastbarWidth"]) end
-	if Parent.Castbar then Parent.Castbar:SetWidth(UnitFrameDB["PlayerCastbarWidth"]-UnitFrameDB["PlayerCastbarHeight"]-5) end
-	if MoveHandle.PlayerCastbar then MoveHandle.PlayerCastbar:SetWidth(UnitFrameDB["PlayerCastbarWidth"]) end
+	local UnitFrame = _G["oUF_SoraPlayer"]
+	if UnitFrame then
+		UnitFrame.CastbarPos:SetWidth(C["PlayerCastbarWidth"])
+		UnitFrame.Castbar:SetWidth(C["PlayerCastbarWidth"]-C["PlayerCastbarHeight"]-5)
+	end
+	if MoveHandle.PlayerCastbar then
+		MoveHandle.PlayerCastbar:SetWidth(C["PlayerCastbarWidth"])
+	end
 end
 
 function Module:UpdateCastbarHeight()
-	if Parent.CastbarPos then Parent.CastbarPos:SetHeight(UnitFrameDB["PlayerCastbarHeight"]) end
-	if Parent.Castbar then Parent.Castbar:SetSize(UnitFrameDB["PlayerCastbarWidth"]-UnitFrameDB["PlayerCastbarHeight"]-5, UnitFrameDB["PlayerCastbarHeight"]) end
-	if Parent.Castbar.Icon then Parent.Castbar.Icon:SetSize(UnitFrameDB["PlayerCastbarHeight"], UnitFrameDB["PlayerCastbarHeight"]) end
-	if MoveHandle.PlayerCastbar then MoveHandle.PlayerCastbar:SetHeight(UnitFrameDB["PlayerCastbarHeight"]) end
+	local UnitFrame = _G["oUF_SoraPlayer"]
+	if UnitFrame then
+		UnitFrame.CastbarPos:SetHeight(C["PlayerCastbarHeight"])
+		UnitFrame.Castbar:SetSize(C["PlayerCastbarWidth"]-C["PlayerCastbarHeight"]-5, C["PlayerCastbarHeight"])
+		UnitFrame.Castbar.Icon:SetSize(C["PlayerCastbarHeight"], C["PlayerCastbarHeight"])
+	end
+	if MoveHandle.PlayerCastbar then
+		MoveHandle.PlayerCastbar:SetWidth(C["PlayerCastbarHeight"])
+	end
 end
 
 function Module:BuildCastbar(self)
-	if not UnitFrameDB["PlayerCastbarEnable"] then return end
+	if not C["PlayerCastbarEnable"] then return end
 	local CastbarPos = CreateFrame("Frame", nil, self)
 	local Castbar = CreateFrame("StatusBar", nil, CastbarPos)
 	Castbar:SetStatusBarTexture(DB.Statusbar)
@@ -373,7 +381,7 @@ function Module:BuildCastbar(self)
 end
 
 function Module:BuildDebuff(self)
-	if UnitFrameDB["PlayerDebuffMode"] == "None" then return end
+	if C["PlayerDebuffMode"] == "None" then return end
 	local Debuffs = CreateFrame("Frame", nil, self)
 	Debuffs.size = 20
 	Debuffs.spacing = 5
@@ -415,27 +423,11 @@ function Module:BuildCombatIcon(self)
 end
 
 local function BuildPlayer(self, ...)
-	Parent = self
-	
-	-- RegisterForClicks
-	self.menu = function(self)
-		local unit = self.unit:sub(1, -2)
-		local cunit = self.unit:gsub("^%l", string.upper)
-
-		if cunit == "Vehicle" then cunit = "Pet" end
-
-		if unit == "party" or unit == "partypet" then
-			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-		elseif _G[cunit.."FrameDropDown"] then
-			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-		end
-	end
-	self:SetScript("OnEnter", UnitFrame_OnEnter)
-	self:SetScript("OnLeave", UnitFrame_OnLeave)
-	self:RegisterForClicks("AnyUp")
-
+	Module:SetRegisterForClicks(self)
 	Module:BuildHealthBar(self)
 	Module:BuildPowerBar(self)
+	Module:UpdateWidth()
+	Module:UpdateHeight()
 	Module:BuildClassPowerBar(self)
 	Module:BuildPortrait(self)
 	Module:BuildTags(self)
@@ -446,9 +438,11 @@ local function BuildPlayer(self, ...)
 end
 
 function Module:OnInitialize()
-	if not UnitFrameDB["PlayerEnable"] then return end
-	oUF:RegisterStyle("Player", BuildPlayer)
-	oUF:SetActiveStyle("Player")
-	DB.Player = oUF:Spawn("player", "oUF_SoraPlayer")
-	MoveHandle.Player = S.MakeMoveHandle(DB.Player, "玩家框体", "Player")
+	C =	UnitFrameDB
+	if C["PlayerEnable"] then 
+		oUF:RegisterStyle("Player", BuildPlayer)
+		oUF:SetActiveStyle("Player")
+		DB.Player = oUF:Spawn("player", "oUF_SoraPlayer")
+		MoveHandle.Player = S.MakeMoveHandle(DB.Player, "玩家框体", "Player")
+	end
 end

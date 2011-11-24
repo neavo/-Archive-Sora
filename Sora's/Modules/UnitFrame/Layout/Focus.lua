@@ -3,25 +3,47 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Focus")
-local Parent = nil
+
+function Module:SetRegisterForClicks(self)
+	self.menu = function(self)
+		local unit = self.unit:sub(1, -2)
+		local cunit = self.unit:gsub("^%l", string.upper)
+
+		if cunit == "Vehicle" then cunit = "Pet" end
+
+		if unit == "party" or unit == "partypet" then
+			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+		elseif _G[cunit.."FrameDropDown"] then
+			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+		end
+	end
+	self:SetScript("OnEnter", UnitFrame_OnEnter)
+	self:SetScript("OnLeave", UnitFrame_OnLeave)
+	self:RegisterForClicks("AnyUp")
+end
 
 function Module:UpdateWidth()
-	if Parent then Parent:SetWidth(UnitFrameDB["FocusWidth"]) end
-	if Parent.Health then Parent.Health:SetWidth(UnitFrameDB["FocusWidth"]) end
-	if Parent.Power then Parent.Power:SetWidth(UnitFrameDB["FocusWidth"]) end
-	if MoveHandle.Focus then MoveHandle.Focus:SetWidth(UnitFrameDB["FocusWidth"]) end
+	local UnitFrame = _G["oUF_SoraFocus"]
+	if UnitFrame then 
+		UnitFrame:SetWidth(C["FocusWidth"])
+		UnitFrame.Health:SetWidth(C["FocusWidth"])
+		UnitFrame.Power:SetWidth(C["FocusWidth"])	
+	end
+	if MoveHandle.Player then
+		MoveHandle.Player:SetWidth(C["FocusWidth"])
+	end
 end
 
-function Module:UpdateHealthHeight()
-	if Parent then Parent:SetHeight(UnitFrameDB["FocusHealthHeight"]+UnitFrameDB["FocusPowerHeight"]+4) end
-	if Parent.Health then Parent.Health:SetHeight(UnitFrameDB["FocusHealthHeight"]) end
-	if MoveHandle.Focus then MoveHandle.Focus:SetHeight(UnitFrameDB["FocusHealthHeight"]+UnitFrameDB["FocusPowerHeight"]+4) end
-end
-
-function Module:UpdatePowerHeight()
-	if Parent then Parent:SetHeight(UnitFrameDB["FocusPowerHeight"]+UnitFrameDB["FocusHealthHeight"]+4) end
-	if Parent.Power then Parent.Power:SetHeight(UnitFrameDB["FocusPowerHeight"]) end
-	if MoveHandle.Focus then MoveHandle.Focus:SetHeight(UnitFrameDB["FocusPowerHeight"]+UnitFrameDB["FocusHealthHeight"]+4) end
+function Module:UpdateHeight()
+	local UnitFrame = _G["oUF_SoraFocus"]
+	if UnitFrame then
+		UnitFrame:SetHeight(C["FocusHealthHeight"]+C["FocusPowerHeight"]+4)
+		UnitFrame.Health:SetHeight(C["FocusHealthHeight"])
+		UnitFrame.Power:SetHeight(C["FocusPowerHeight"])
+	end
+	if MoveHandle.Focus then
+		MoveHandle.Focus:SetHeight(C["FocusHealthHeight"]+C["FocusPowerHeight"]+4)
+	end
 end
 
 function Module:BuildHealthBar(self)
@@ -43,8 +65,6 @@ function Module:BuildHealthBar(self)
 	Health.colorTapping = true
 	
 	self.Health = Health
-	Module:UpdateWidth()
-	Module:UpdateHealthHeight()
 end
 
 function Module:BuildPowerBar(self)
@@ -63,15 +83,15 @@ function Module:BuildPowerBar(self)
 	Power.colorPower = true
 	
 	self.Power = Power
-	Module:UpdateWidth()
-	Module:UpdatePowerHeight()
 end
 
 function Module:BuildPortrait(self)
 	local Portrait = CreateFrame("PlayerModel", nil, self.Health)
 	Portrait:SetAlpha(0.3) 
 	Portrait.PostUpdate = function(self) 
-		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then self:SetCamera(1) end	
+		if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then
+			self:SetCamera(1)
+		end	
 	end
 	Portrait:SetAllPoints()
 	Portrait:SetFrameLevel(self.Health:GetFrameLevel()+1)
@@ -130,14 +150,13 @@ function Module:BuildTags(self)
 		end
 	end)
 
-	self:Tag(HPTag, UnitFrameDB["FocusTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
-	self:Tag(PPTag, UnitFrameDB["FocusTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
+	self:Tag(HPTag, C["FocusTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
+	self:Tag(PPTag, C["FocusTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
 end
 
 function Module:BuildCastbar(self)
 	local Castbar = CreateFrame("StatusBar", nil, self)
-	Castbar:SetHeight(10)
-	Castbar:SetWidth(self:GetWidth()-70)
+	Castbar:SetSize(self:GetWidth()-70, 10)
 	Castbar:SetStatusBarTexture(DB.Statusbar)
 	Castbar:SetStatusBarColor(95/255, 182/255, 255/255, 1)
 	Castbar:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 14)
@@ -179,39 +198,40 @@ function Module:BuildCastbar(self)
 end
 
 function Module:BuildAura(self)
-	if UnitFrameDB["FocusAuraMode"] == "None" then return end
-	local Auras = CreateFrame("Frame", nil, self)
-	Auras.onlyShowPlayer = (UnitFrameDB["FocusAuraMode"] == "OnlyPlayer")
-	Auras.initialAnchor = "TOPLEFT"
-	Auras["growth-x"] = "RIGHT"
-	Auras["growth-y"] = "DOWN"
-	Auras.size = 20
-	Auras.spacing = 5
-	Auras.numBuffs = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))
-	Auras.gap = true
-	Auras.num = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))*3
-	Auras:SetSize(self:GetWidth(), Auras.size*3+Auras.spacing*2)
-	Auras:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
-	Auras.PostCreateIcon = function(self, Button)
-		Button.Shadow = S.MakeShadow(Button, 3)	
-		Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-		Button.icon:SetAllPoints()
-		Button.count = S.MakeFontString(Button, 9)
-		Button.count:SetPoint("TOPRIGHT", 3, 0)
-	end
-	Auras.PostUpdateIcon = function(self, unit, Button, index, offset, filter, isDebuff)
-		local Caster = select(8, UnitAura(unit, index, Button.filter))
-		if Button.debuff then
-			if Caster == "player" or Caster == "vehicle" then
-				Button.icon:SetDesaturated(false)                 
-			elseif not UnitPlayerControlled(unit) then -- If Unit is Player Controlled dont desaturate debuffs
-				Button:SetBackdropColor(0, 0, 0)
-				Button.overlay:SetVertexColor(0.3, 0.3, 0.3)      
-				Button.icon:SetDesaturated(true)  
+	if C["FocusAuraMode"] ~= "None" then
+		local Auras = CreateFrame("Frame", nil, self)
+		Auras.onlyShowPlayer = (C["FocusAuraMode"] == "OnlyPlayer")
+		Auras.initialAnchor = "TOPLEFT"
+		Auras["growth-x"] = "RIGHT"
+		Auras["growth-y"] = "DOWN"
+		Auras.size = 20
+		Auras.spacing = 5
+		Auras.numBuffs = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))
+		Auras.gap = true
+		Auras.num = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))*3
+		Auras:SetSize(self:GetWidth(), Auras.size*3+Auras.spacing*2)
+		Auras:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -5)
+		Auras.PostCreateIcon = function(self, Button)
+			Button.Shadow = S.MakeShadow(Button, 3)	
+			Button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+			Button.icon:SetAllPoints()
+			Button.count = S.MakeFontString(Button, 9)
+			Button.count:SetPoint("TOPRIGHT", 3, 0)
+		end
+		Auras.PostUpdateIcon = function(self, unit, Button, index, offset, filter, isDebuff)
+			local Caster = select(8, UnitAura(unit, index, Button.filter))
+			if Button.debuff then
+				if Caster == "player" or Caster == "vehicle" then
+					Button.icon:SetDesaturated(false)                 
+				elseif not UnitPlayerControlled(unit) then -- If Unit is Player Controlled dont desaturate debuffs
+					Button:SetBackdropColor(0, 0, 0)
+					Button.overlay:SetVertexColor(0.3, 0.3, 0.3)      
+					Button.icon:SetDesaturated(true)  
+				end
 			end
 		end
+		self.Auras = Auras
 	end
-	self.Auras = Auras
 end
 
 function Module:BuildRaidIcon(self)
@@ -236,27 +256,11 @@ function Module:BuildCombatIcon(self)
 end
 
 local function BuildFocus(self, ...)
-	Parent = self
-
-	-- RegisterForClicks
-	self.menu = function(self)
-		local unit = self.unit:sub(1, -2)
-		local cunit = self.unit:gsub("^%l", string.upper)
-
-		if cunit == "Vehicle" then cunit = "Pet" end
-
-		if unit == "party" or unit == "partypet" then
-			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-		elseif _G[cunit.."FrameDropDown"] then
-			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-		end
-	end
-	self:SetScript("OnEnter", UnitFrame_OnEnter)
-	self:SetScript("OnLeave", UnitFrame_OnLeave)
-	self:RegisterForClicks("AnyUp")
-	
+	Module:SetRegisterForClicks(self)
 	Module:BuildHealthBar(self)
 	Module:BuildPowerBar(self)
+	Module:UpdateWidth()
+	Module:UpdateHeight()
 	Module:BuildPortrait(self)
 	Module:BuildTags(self)
 	Module:BuildCastbar(self)
@@ -266,9 +270,12 @@ local function BuildFocus(self, ...)
 end
 
 function Module:OnInitialize()
-	if not UnitFrameDB["FocusEnable"] then return end
-	oUF:RegisterStyle("SoraFocus", BuildFocus)
-	oUF:SetActiveStyle("SoraFocus")
-	DB.Focus = oUF:Spawn("focus", "oUF_SoraFocus")
-	MoveHandle.Focus = S.MakeMoveHandle(DB.Focus, "焦点框体", "Focus")
+	C =	UnitFrameDB
+	
+	if C["FocusEnable"] then
+		oUF:RegisterStyle("SoraFocus", BuildFocus)
+		oUF:SetActiveStyle("SoraFocus")
+		DB.Focus = oUF:Spawn("focus", "oUF_SoraFocus")
+		MoveHandle.Focus = S.MakeMoveHandle(DB.Focus, "焦点框体", "Focus")
+	end
 end

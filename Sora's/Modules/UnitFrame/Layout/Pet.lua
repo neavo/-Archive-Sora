@@ -3,25 +3,47 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Pet")
-local Parent = nil
+
+function Module:SetRegisterForClicks(self)
+	self.menu = function(self)
+		local unit = self.unit:sub(1, -2)
+		local cunit = self.unit:gsub("^%l", string.upper)
+
+		if cunit == "Vehicle" then cunit = "Pet" end
+
+		if unit == "party" or unit == "partypet" then
+			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+		elseif _G[cunit.."FrameDropDown"] then
+			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+		end
+	end
+	self:SetScript("OnEnter", UnitFrame_OnEnter)
+	self:SetScript("OnLeave", UnitFrame_OnLeave)
+	self:RegisterForClicks("AnyUp")
+end
 
 function Module:UpdateWidth()
-	if Parent then Parent:SetWidth(UnitFrameDB["PetWidth"]) end
-	if Parent.Health then Parent.Health:SetWidth(UnitFrameDB["PetWidth"]) end
-	if Parent.Power then Parent.Power:SetWidth(UnitFrameDB["PetWidth"]) end
-	if MoveHandle.Pet then MoveHandle.Pet:SetWidth(UnitFrameDB["PetWidth"]) end
+	local UnitFrame = _G["oUF_SoraPet"]
+	if UnitFrame then
+		UnitFrame:SetWidth(C["PetWidth"])
+		UnitFrame.Health:SetWidth(C["PetWidth"])
+		UnitFrame.Power:SetWidth(C["PetWidth"])		
+	end
+	if MoveHandle.Pet then
+		MoveHandle.Pet:SetWidth(C["PetWidth"])
+	end
 end
 
-function Module:UpdateHealthHeight()
-	if Parent then Parent:SetHeight(UnitFrameDB["PetHealthHeight"]+UnitFrameDB["PetPowerHeight"]+4) end
-	if Parent.Health then Parent.Health:SetHeight(UnitFrameDB["PetHealthHeight"]) end
-	if MoveHandle.Pet then MoveHandle.Pet:SetHeight(UnitFrameDB["PetHealthHeight"]+UnitFrameDB["PetPowerHeight"]+4) end
-end
-
-function Module:UpdatePowerHeight()
-	if Parent then Parent:SetHeight(UnitFrameDB["PetPowerHeight"]+UnitFrameDB["PetHealthHeight"]+4) end
-	if Parent.Power then Parent.Power:SetHeight(UnitFrameDB["PetPowerHeight"]) end
-	if MoveHandle.Pet then MoveHandle.Pet:SetHeight(UnitFrameDB["PetPowerHeight"]+UnitFrameDB["PetHealthHeight"]+4) end
+function Module:UpdateHeight()
+	local UnitFrame = _G["oUF_SoraPet"]
+	if UnitFrame then
+		UnitFrame:SetHeight(C["PetHealthHeight"]+C["PetPowerHeight"]+2)
+		UnitFrame.Health:SetHeight(C["PetHealthHeight"])
+		UnitFrame.Power:SetHeight(C["PetPowerHeight"])
+	end
+	if MoveHandle.Pet then
+		MoveHandle.Pet:SetHeight(C["PetHealthHeight"]+C["PetPowerHeight"]+2)
+	end
 end
 
 function Module:BuildHealthBar(self)
@@ -41,8 +63,6 @@ function Module:BuildHealthBar(self)
 	Health.Smooth = true
 	
 	self.Health = Health
-	Module:UpdateWidth()
-	Module:UpdateHealthHeight()
 end
 
 function Module:BuildPowerBar(self)
@@ -61,8 +81,6 @@ function Module:BuildPowerBar(self)
 	Power.colorPower = true
 	
 	self.Power = Power
-	Module:UpdateWidth()
-	Module:UpdatePowerHeight()
 end
 
 function Module:BuildTags(self)
@@ -82,33 +100,18 @@ function Module:BuildRaidIcon(self)
 end
 
 local function BuildPet(self, ...)
-	Parent = self
-
-	-- RegisterForClicks
-	self.menu = function(self)
-		local unit = self.unit:sub(1, -2)
-		local cunit = self.unit:gsub("^%l", string.upper)
-
-		if cunit == "Vehicle" then cunit = "Pet" end
-
-		if unit == "party" or unit == "partypet" then
-			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-		elseif _G[cunit.."FrameDropDown"] then
-			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-		end
-	end
-	self:SetScript("OnEnter", UnitFrame_OnEnter)
-	self:SetScript("OnLeave", UnitFrame_OnLeave)
-	self:RegisterForClicks("AnyUp")
-	
+	Module:SetRegisterForClicks(self)
 	Module:BuildHealthBar(self)
 	Module:BuildPowerBar(self)
+	Module:UpdateWidth()
+	Module:UpdateHeight()
 	Module:BuildTags(self)
 	Module:BuildRaidIcon(self)
 end
 
 function Module:OnInitialize()
-	if not UnitFrameDB["PlayerEnable"] then return end
+	C =	UnitFrameDB
+	if not C["PlayerEnable"] then return end
 	oUF:RegisterStyle("Pet", BuildPet)
 	oUF:SetActiveStyle("Pet")
 	DB.Pet = oUF:Spawn("pet", "oUF_SoraPet")

@@ -3,25 +3,47 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Target")
-local Parent = nil
+
+function Module:SetRegisterForClicks(self)
+	self.menu = function(self)
+		local unit = self.unit:sub(1, -2)
+		local cunit = self.unit:gsub("^%l", string.upper)
+
+		if cunit == "Vehicle" then cunit = "Pet" end
+
+		if unit == "party" or unit == "partypet" then
+			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
+		elseif _G[cunit.."FrameDropDown"] then
+			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+		end
+	end
+	self:SetScript("OnEnter", UnitFrame_OnEnter)
+	self:SetScript("OnLeave", UnitFrame_OnLeave)
+	self:RegisterForClicks("AnyUp")
+end
 
 function Module:UpdateWidth()
-	if Parent then Parent:SetWidth(UnitFrameDB["TargetWidth"]) end
-	if Parent.Health then Parent.Health:SetWidth(UnitFrameDB["TargetWidth"]) end
-	if Parent.Power then Parent.Power:SetWidth(UnitFrameDB["TargetWidth"]) end
-	if MoveHandle.Target then MoveHandle.Target:SetWidth(UnitFrameDB["TargetWidth"]) end
+	local UnitFrame = _G["oUF_SoraTarget"]
+	if UnitFrame then
+		UnitFrame:SetWidth(C["TargetWidth"])
+		UnitFrame.Health:SetWidth(C["TargetWidth"])
+		UnitFrame.Power:SetWidth(C["TargetWidth"])
+	end
+	if MoveHandle.Target then
+		MoveHandle.Target:SetWidth(C["TargetWidth"])
+	end
 end
 
-function Module:UpdateHealthHeight()
-	if Parent then Parent:SetHeight(UnitFrameDB["TargetHealthHeight"]+UnitFrameDB["TargetPowerHeight"]+4) end
-	if Parent.Health then Parent.Health:SetHeight(UnitFrameDB["TargetHealthHeight"]) end
-	if MoveHandle.Target then MoveHandle.Target:SetHeight(UnitFrameDB["TargetHealthHeight"]+UnitFrameDB["TargetPowerHeight"]+4) end
-end
-
-function Module:UpdatePowerHeight()
-	if Parent then Parent:SetHeight(UnitFrameDB["TargetPowerHeight"]+UnitFrameDB["TargetHealthHeight"]+4) end
-	if Parent.Power then Parent.Power:SetHeight(UnitFrameDB["TargetPowerHeight"]) end
-	if MoveHandle.Target then MoveHandle.Target:SetHeight(UnitFrameDB["TargetPowerHeight"]+UnitFrameDB["TargetHealthHeight"]+4) end
+function Module:UpdateHeight()
+	local UnitFrame = _G["oUF_SoraTarget"]
+	if UnitFrame then
+		UnitFrame:SetHeight(C["TargetHealthHeight"]+C["TargetPowerHeight"]+4)
+		UnitFrame.Health:SetHeight(C["TargetHealthHeight"])
+		UnitFrame.Power:SetHeight(C["TargetPowerHeight"])
+	end
+	if MoveHandle.Target then
+		MoveHandle.Target:SetHeight(C["TargetHealthHeight"]+C["TargetPowerHeight"]+4)
+	end
 end
 
 function Module:BuildHealthBar(self)
@@ -43,8 +65,6 @@ function Module:BuildHealthBar(self)
 	Health.colorTapping = true
 	
 	self.Health = Health
-	Module:UpdateWidth()
-	Module:UpdateHealthHeight()
 end
 
 function Module:BuildPowerBar(self)
@@ -63,8 +83,6 @@ function Module:BuildPowerBar(self)
 	Power.colorPower = true
 	
 	self.Power = Power
-	Module:UpdateWidth()
-	Module:UpdatePowerHeight()
 end
 
 function Module:BuildPortrait(self)
@@ -132,25 +150,35 @@ function Module:BuildTags(self)
 		end
 	end)
 
-	self:Tag(HPTag, UnitFrameDB["TargetTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
-	self:Tag(PPTag, UnitFrameDB["TargetTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
+	self:Tag(HPTag, C["TargetTagMode"] == "Short" and "[Sora:color][Sora:hp]" or "[Sora:color][curhp] | [perhp]%")
+	self:Tag(PPTag, C["TargetTagMode"] == "Short" and "[Sora:pp]" or "[curpp] | [perpp]%")	
 end
 
 function Module:UpdateCastbarWidth()
-	if Parent.CastbarPos then Parent.CastbarPos:SetWidth(UnitFrameDB["TargetCastbarWidth"]) end
-	if Parent.Castbar then Parent.Castbar:SetWidth(UnitFrameDB["TargetCastbarWidth"]-UnitFrameDB["TargetCastbarHeight"]-5) end
-	if MoveHandle.TargetCastbar then MoveHandle.TargetCastbar:SetWidth(UnitFrameDB["TargetCastbarWidth"]) end
+	local UnitFrame = _G["oUF_SoraTarget"]
+	if UnitFrame then
+		UnitFrame.CastbarPos:SetWidth(C["TargetCastbarWidth"])
+		UnitFrame.Castbar:SetWidth(C["TargetCastbarWidth"]-C["TargetCastbarHeight"]-5)
+	end
+	if MoveHandle.TargetCastbar then
+		MoveHandle.TargetCastbar:SetWidth(C["TargetCastbarWidth"])
+	end
 end
 
 function Module:UpdateCastbarHeight()
-	if Parent.CastbarPos then Parent.CastbarPos:SetHeight(UnitFrameDB["TargetCastbarHeight"]) end
-	if Parent.Castbar then Parent.Castbar:SetSize(UnitFrameDB["TargetCastbarWidth"]-UnitFrameDB["TargetCastbarHeight"]-5, UnitFrameDB["TargetCastbarHeight"]) end
-	if Parent.Castbar.Icon then Parent.Castbar.Icon:SetSize(UnitFrameDB["TargetCastbarHeight"], UnitFrameDB["TargetCastbarHeight"]) end
-	if MoveHandle.TargetCastbar then MoveHandle.TargetCastbar:SetHeight(UnitFrameDB["TargetCastbarHeight"]) end
+	local UnitFrame = _G["oUF_SoraTarget"]
+	if UnitFrame then
+		UnitFrame.CastbarPos:SetHeight(C["TargetCastbarHeight"])
+		UnitFrame.Castbar:SetSize(C["TargetCastbarWidth"]-C["TargetCastbarHeight"]-5, C["TargetCastbarHeight"])
+		UnitFrame.Castbar.Icon:SetSize(C["TargetCastbarHeight"], C["TargetCastbarHeight"])
+	end
+	if MoveHandle.TargetCastbar then
+		MoveHandle.TargetCastbar:SetHeight(C["TargetCastbarHeight"])
+	end
 end
 
 function Module:BuildCastbar(self)
-	if not UnitFrameDB["TargetCastbarEnable"] then return end
+	if not C["TargetCastbarEnable"] then return end
 	local CastbarPos = CreateFrame("Frame", nil, self)
 	local Castbar = CreateFrame("StatusBar", nil, CastbarPos)
 	Castbar:SetStatusBarTexture(DB.Statusbar)
@@ -197,9 +225,9 @@ function Module:BuildCastbar(self)
 end
 
 function Module:BuildAura(self)
-	if UnitFrameDB["TargetAuraMode"] == "None" then return end
+	if C["TargetAuraMode"] == "None" then return end
 	local Auras = CreateFrame("Frame", nil, self)
-	Auras.onlyShowPlayer = (UnitFrameDB["TargetAuraMode"] == "OnlyPlayer")
+	Auras.onlyShowPlayer = (C["TargetAuraMode"] == "OnlyPlayer")
 	Auras.initialAnchor = "TOPLEFT"
 	Auras["growth-x"] = "RIGHT"
 	Auras["growth-y"] = "DOWN"
@@ -254,27 +282,11 @@ function Module:BuildCombatIcon(self)
 end
 
 local function BuildTarget(self, ...)
-	Parent = self
-
-	-- RegisterForClicks
-	self.menu = function(self)
-		local unit = self.unit:sub(1, -2)
-		local cunit = self.unit:gsub("^%l", string.upper)
-
-		if cunit == "Vehicle" then cunit = "Pet" end
-
-		if unit == "party" or unit == "partypet" then
-			ToggleDropDownMenu(1, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-		elseif _G[cunit.."FrameDropDown"] then
-			ToggleDropDownMenu(1, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-		end
-	end
-	self:SetScript("OnEnter", UnitFrame_OnEnter)
-	self:SetScript("OnLeave", UnitFrame_OnLeave)
-	self:RegisterForClicks("AnyUp")
-	
+	Module:SetRegisterForClicks(self)
 	Module:BuildHealthBar(self)
 	Module:BuildPowerBar(self)
+	Module:UpdateWidth()
+	Module:UpdateHeight()
 	Module:BuildPortrait(self)
 	Module:BuildTags(self)
 	Module:BuildCastbar(self)
@@ -284,7 +296,8 @@ local function BuildTarget(self, ...)
 end
 
 function Module:OnInitialize()
-	if not UnitFrameDB["TargetEnable"] then return end
+	C = UnitFrameDB
+	if not C["TargetEnable"] then return end
 	oUF:RegisterStyle("Target", BuildTarget)
 	oUF:SetActiveStyle("Target")
 	DB.Target = oUF:Spawn("target", "oUF_SoraTarget")

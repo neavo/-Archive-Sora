@@ -99,7 +99,6 @@ function Module.BuildGUI()
 							set = function(_, value)
 								UnitFrameDB["PlayerWidth"] = value
 								Sora:GetModule("Player"):UpdateWidth()
-								Sora:GetModule("Player"):UpdateClassPowerBar()
 							end,
 						},
 						PlayerHealthHeight = {
@@ -109,7 +108,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["PlayerHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["PlayerHealthHeight"] = value
-								Sora:GetModule("Player"):UpdateHealthHeight()
+								Sora:GetModule("Player"):UpdateHeight()
 							end,
 						},
 						PlayerPowerHeight = {
@@ -119,7 +118,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["PlayerPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["PlayerPowerHeight"] = value
-								Sora:GetModule("Player"):UpdatePowerHeight()
+								Sora:GetModule("Player"):UpdateHeight()
 							end,
 						},
 						PlayerTagMode = {
@@ -127,7 +126,7 @@ function Module.BuildGUI()
 							name = "状态数值：", desc = "请选择状态数值模式",
 							values = {["Short"] = "缩略", ["Full"] = "详细"},
 							get = function() return UnitFrameDB["PlayerTagMode"] end,
-							set = function(_, value) UnitFrameDB["PlayerTagMode"] = value end,
+							set = function(_, value) UnitFrameDB["PlayerTagMode"] = value Sora:GetModule("Player"):UpdateTags() end,
 						},
 						PlayerDebuffMode = {
 							type = "select", order = 5,
@@ -195,7 +194,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["PetHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["PetHealthHeight"] = value
-								Sora:GetModule("Pet"):UpdateHealthHeight()							
+								Sora:GetModule("Pet"):UpdateHeight()							
 							end,
 						},
 						PetPowerHeight = {
@@ -205,7 +204,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["PetPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["PetPowerHeight"] = value
-								Sora:GetModule("Pet"):UpdatePowerHeight()							
+								Sora:GetModule("Pet"):UpdateHeight()							
 							end,
 						},
 					}
@@ -250,7 +249,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["TargetHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetHealthHeight"] = value
-								Sora:GetModule("Target"):UpdateHealthHeight()				
+								Sora:GetModule("Target"):UpdateHeight()				
 							end,
 						},
 						TargetPowerHeight = {
@@ -260,7 +259,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["TargetPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetPowerHeight"] = value
-								Sora:GetModule("Target"):UpdatePowerHeight()		
+								Sora:GetModule("Target"):UpdateHeight()		
 							end,
 						},
 						TargetTagMode = {
@@ -336,7 +335,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["TargetTargetHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetTargetHealthHeight"] = value
-								Sora:GetModule("TargetTarget"):UpdateHealthHeight()	
+								Sora:GetModule("TargetTarget"):UpdateHeight()	
 							end,
 						},
 						TargetTargetPowerHeight = {
@@ -346,7 +345,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["TargetTargetPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["TargetTargetPowerHeight"] = value
-								Sora:GetModule("TargetTarget"):UpdatePowerHeight()		
+								Sora:GetModule("TargetTarget"):UpdateHeight()		
 							end,
 						},
 					}
@@ -391,7 +390,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["FocusHealthHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["FocusHealthHeight"] = value
-								Sora:GetModule("Focus"):UpdateHealthHeight()					
+								Sora:GetModule("Focus"):UpdateHeight()					
 							end,
 						},
 						FocusPowerHeight = {
@@ -401,7 +400,7 @@ function Module.BuildGUI()
 							get = function() return UnitFrameDB["FocusPowerHeight"] end,
 							set = function(_, value)
 								UnitFrameDB["FocusPowerHeight"] = value
-								Sora:GetModule("Focus"):UpdatePowerHeight()
+								Sora:GetModule("Focus"):UpdateHeight()
 							end,
 						},
 						FocusTagMode = {
