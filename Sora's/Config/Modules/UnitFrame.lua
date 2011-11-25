@@ -126,7 +126,7 @@ function Module.BuildGUI()
 							name = "状态数值：", desc = "请选择状态数值模式",
 							values = {["Short"] = "缩略", ["Full"] = "详细"},
 							get = function() return UnitFrameDB["PlayerTagMode"] end,
-							set = function(_, value) UnitFrameDB["PlayerTagMode"] = value Sora:GetModule("Player"):UpdateTags() end,
+							set = function(_, value) UnitFrameDB["PlayerTagMode"] = value end,
 						},
 						PlayerDebuffMode = {
 							type = "select", order = 5,
@@ -477,7 +477,7 @@ function Module.BuildGUI()
 					get = function() return UnitFrameDB["ShowRaid"] end,
 					set = function(_, value) UnitFrameDB["ShowRaid"] = value end,
 				},
-				Gruop = {
+				Gruop_1 = {
 					type = "group", order = 2,
 					name = " ", guiInline = true,
 					disabled = not UnitFrameDB["ShowRaid"],

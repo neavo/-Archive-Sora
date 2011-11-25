@@ -233,7 +233,7 @@ function Module:BuildAura(self)
 	Auras["growth-y"] = "DOWN"
 	Auras.size = 20
 	Auras.spacing = 5
-	Auras.numBuffs = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))
+	Auras.numBuffs = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))*2
 	Auras.gap = true
 	Auras.num = floor((self:GetWidth()+Auras.spacing)/(Auras.size+Auras.spacing))*3
 	Auras:SetSize(self:GetWidth(), Auras.size*3+Auras.spacing*2)

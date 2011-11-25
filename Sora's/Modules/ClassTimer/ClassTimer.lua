@@ -2,6 +2,7 @@
 local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("ClassTimer", "AceEvent-3.0")
 local PlayerAura, PlayerActive, TargetAura, TargetActive = {}, {}, {}, {}
+local UnitFrame, Mode, IconSize, Limit, Aura, Active, Func =  nil, nil, nil, nil, nil, nil, nil
 
 function Module:BuildBar(BarWidth, IconSize)
 	local Aura = CreateFrame("Frame", nil, UIParent)
@@ -53,25 +54,25 @@ end
 
 function Module:GetUnitVal(unit)
 	if unit == "player" then
-		return _G["oUF_SoraPlayer"], C["PlayerMode"], C["PlayerIconSize"], C["PlayerLimit"], PlayerAura, PlayerActive, UnitBuff
+		UnitFrame, Mode, IconSize, Limit, Aura, Active, Func = _G["oUF_SoraPlayer"], C["PlayerMode"], C["PlayerIconSize"], C["PlayerLimit"], PlayerAura, PlayerActive, UnitBuff
 	end
 	if unit == "target" then 
-		return _G["oUF_SoraTarget"], C["TargetMode"], C["TargetIconSize"], C["TargetLimit"], TargetAura, TargetActive, UnitDebuff
+		UnitFrame, Mode, IconSize, Limit, Aura, Active, Func = _G["oUF_SoraTarget"], C["TargetMode"], C["TargetIconSize"], C["TargetLimit"], TargetAura, TargetActive, UnitDebuff
 	end
 end
 
 function Module:BuildAura(unit)
-	local Parent, Mode, IconSize = Module:GetUnitVal(unit)
+	Module:GetUnitVal(unit)
 	if Mode == "Icon" then
 		return Module:BuildIcon(IconSize)
 	end
 	if Mode == "Bar" then
-		return Module:BuildBar(Parent:GetWidth()-20, IconSize)
+		return Module:BuildBar(UnitFrame:GetWidth()-20, IconSize)
 	end
 end
 
 function Module:ClearAura(unit)
-	local _, _, _, _, Aura = Module:GetUnitVal(unit)
+	Module:GetUnitVal(unit)
 	for _, value in pairs(Aura) do
 		value:Hide()
 		value:ClearAllPoints()
@@ -81,23 +82,21 @@ function Module:ClearAura(unit)
 end
 
 function Module:CleanUp(unit)
-	local _, _, _, _, Aura, Active = Module:GetUnitVal(unit)
-	for key, value in pairs(Active) do
-		Active[key] = nil
-	end
+	Module:GetUnitVal(unit)
+	wipe(Active)
 	for key, value in pairs(Aura) do
 		value:Hide()
 	end
 end
 
 function Module:UpdateAuraPos(unit)
-	local Parent, Mode, IconSize, _, Aura = Module:GetUnitVal(unit)
+	Module:GetUnitVal(unit)
 	if Mode == "Bar" then
 		for i = 1, #Aura do
 			local Frame, Pre = Aura[i], Aura[i-1]
 			Frame:ClearAllPoints()
 			if i == 1 then
-				Frame:SetPoint("BOTTOM", Parent, "TOP", 0, unit == "player" and 12 or 8)
+				Frame:SetPoint("BOTTOM", UnitFrame, "TOP", 0, unit == "player" and 12 or 8)
 			else
 				Frame:SetPoint("BOTTOM", Pre, "TOP", 0, 5)
 			end
@@ -106,11 +105,11 @@ function Module:UpdateAuraPos(unit)
 	end
 	if Mode == "Icon" then
 		for i = 1, #Aura do
-			local Frame, Pre, IconPerRow = Aura[i], Aura[i-1], floor(Parent:GetWidth()/(IconSize+5))
+			local Frame, Pre, IconPerRow = Aura[i], Aura[i-1], floor(UnitFrame:GetWidth()/(IconSize+5))
 			local PreRowFrame = Aura[i-IconPerRow]
 			Frame:ClearAllPoints()
 			if i == 1 then
-				Frame:SetPoint("BOTTOMLEFT", Parent, "TOPLEFT", 0, unit == "player" and 12 or 8)
+				Frame:SetPoint("BOTTOMLEFT", UnitFrame, "TOPLEFT", 0, unit == "player" and 12 or 8)
 			elseif i%IconPerRow == 1 then
 				Frame:SetPoint("BOTTOM", PreRowFrame, "TOP", 0, 5)
 			else
@@ -122,13 +121,13 @@ function Module:UpdateAuraPos(unit)
 end
 
 function Module:UpdateActive(unit)
-	local _, _, _, Limit, _, Active, Func = Module:GetUnitVal(unit)
+	Module:GetUnitVal(unit)
 	local index = 1
 	while true do
 		local name, _, icon, count, _, duration, expires, caster = Func(unit, index)
-		if not name then break end	
+		if not name then break end
 		if (caster == "player" and (((duration < Limit and duration ~= 0) or Limit == 0) and not C["BlackList"][name])) or C["WhiteList"][name] then
-			Active[name] = {icon, count, duration, expires}
+			tinsert(Active, {name, icon, count, duration, expires})
 		end
 		index = index + 1
 	end
@@ -139,19 +138,18 @@ local function SortMethod(a, b)
 end
 
 function Module:SortActive(unit)
-	local _, _, _, _, _, Active = Module:GetUnitVal(unit)
+	Module:GetUnitVal(unit)
 	table.sort(Active, SortMethod)
 end
 
 function Module:UpdateAura(unit)
-	local _, _, _, _, Aura, Active, Func = Module:GetUnitVal(unit)
-	local index = 1
+	Module:GetUnitVal(unit)
 	for key, value in pairs(Active) do
-		local name, icon, count, duration, expires = key, unpack(value)
-		if not Aura[index] then
-			Aura[index] = Module:BuildAura(unit)
+		local name, icon, count, duration, expires = unpack(value)
+		if not Aura[key] then
+			Aura[key] = Module:BuildAura(unit)
 		end
-		local Frame = Aura[index]
+		local Frame = Aura[key]
 		local Spellname, Icon, Count, Time, Statusbar, Cooldown = Frame.Spellname, Frame.Icon, Frame.Count, Frame.Time, Frame.Statusbar, Frame.Cooldown
 		if Spellname then
 			Spellname:SetText(name)
@@ -180,11 +178,10 @@ function Module:UpdateAura(unit)
 			end
 		end)
 		Frame:Show()
-		index = index + 1
 	end
 end
 
-function Module:PLAYER_DEAD(event, unit, ...)
+function Module:PLAYER_DEAD(event, ...)
 	if C["PlayerMode"] ~= "None" then
 		Module:Update("player")
 	end
