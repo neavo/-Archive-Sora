@@ -27,16 +27,6 @@ ChatTypeInfo["RAID"].sticky 	  = 1 -- 团队
 ChatTypeInfo["OFFICER"].sticky    = 1 -- 官员
 ChatTypeInfo["CHANNEL"].sticky 	  = 0 -- 频道
 
---[[ 聊天标签
-CHAT_FRAME_FADE_OUT_TIME = 0 					-- 聊天窗口褪色时间
-CHAT_TAB_HIDE_DELAY = 0     					-- 聊天标签弹出延时
-CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA = 0.2  	-- 鼠标停留时, 标签透明度
-CHAT_FRAME_TAB_NORMAL_NOMOUSE_ALPHA = 0       	-- 鼠标离开时, 标签透明度 (修改这里能一直显示)
-CHAT_FRAME_TAB_SELECTED_MOUSEOVER_ALPHA = 1   	-- 鼠标停留时, 选择标签时透明度
-CHAT_FRAME_TAB_SELECTED_NOMOUSE_ALPHA = 0     	-- 鼠标离开时, 选择标签时透明度
-CHAT_FRAME_TAB_ALERTING_MOUSEOVER_ALPHA = 0 	-- 鼠标停留时, 标签闪动时透明度
-CHAT_FRAME_TAB_ALERTING_NOMOUSE_ALPHA = 0     	-- 鼠标离开时, 标签闪动时透明度]]
-
 do
 	local function kill(frame)
 		if frame.UnregisterAllEvents then frame:UnregisterAllEvents()
@@ -114,8 +104,6 @@ do
 		-- 聊天框缩放按钮
 		local resize = _G["ChatFrame"..i.."ResizeButton"]
 		resize:SetPoint("BOTTOMRIGHT", cf, "BOTTOMRIGHT", 5, -9) 
-		resize:SetScale(.7)  --大小
-		resize:SetAlpha(.8)  --透明度
 	
 		--Remove scroll buttons
 		local bf = _G["ChatFrame"..i.."ButtonFrame"]

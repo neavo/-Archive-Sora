@@ -550,6 +550,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
+		hooksecurefunc("UIDropDownMenu_CreateFrames", SkinDropDownList)
+
 		-- Pet stuff
 
 		if class == "HUNTER" or class == "MAGE" or class == "DEATHKNIGHT" or class == "WARLOCK" then
@@ -1065,7 +1067,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local friendshandler = CreateFrame("Frame")
 		friendshandler:RegisterEvent("FRIENDLIST_UPDATE")
 		friendshandler:RegisterEvent("BN_FRIEND_TOON_ONLINE")
-		friendshandler:RegisterEvent("BN_FRIEND_ACCOUNT_OFFLINE")
+		friendshandler:RegisterEvent("BN_FRIEND_TOON_OFFLINE")
 		friendshandler:SetScript("OnEvent", UpdateScroll)
 		FriendsFrameFriendsScrollFrame:HookScript("OnVerticalScroll", UpdateScroll)
 
@@ -1193,7 +1195,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local sets = false
 		PaperDollSidebarTab3:HookScript("OnClick", function()
 			if sets == false then
-				for i = 1, 8 do
+				for i = 1, 9 do
 					local bu = _G["PaperDollEquipmentManagerPaneButton"..i]
 					local bd = _G["PaperDollEquipmentManagerPaneButton"..i.."Stripe"]
 					local ic = _G["PaperDollEquipmentManagerPaneButton"..i.."Icon"]
@@ -1527,7 +1529,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, #bglayers do
 			_G[bglayers[i]]:DisableDrawLayer("BACKGROUND")
 		end
-		local borderlayers = {"SpellBookFrame", "SpellBookFrameInset", "LFDParentFrame", "LFDParentFrameInset", "CharacterFrame", "CharacterFrameInset", "CharacterFrameInsetRight", "MerchantFrame", "PVPFrame", "PVPFrameInset", "PVPConquestFrameInfoButton", "PVPFrameTopInset", "PVPTeamManagementFrame", "PVPBannerFrame", "PVPBannerFrameInset", "TabardFrame", "QuestLogDetailFrame", "HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "TaxiFrame", "ItemTextFrame", "CharacterModelFrame", "OpenMailFrame", "EncounterJournal", "EncounterJournalInset", "EncounterJournalNavBar", "WorldStateScoreFrame", "WorldStateScoreFrameInset", "VideoOptionsFramePanelContainer", "InterfaceOptionsFramePanelContainer", "QuestFrameDetailPanel"}
+		local borderlayers = {"SpellBookFrame", "SpellBookFrameInset", "LFDParentFrame", "LFDParentFrameInset", "CharacterFrame", "CharacterFrameInset", "CharacterFrameInsetRight", "MerchantFrame", "PVPFrame", "PVPFrameInset", "PVPConquestFrameInfoButton", "PVPFrameTopInset", "PVPTeamManagementFrame", "PVPBannerFrame", "PVPBannerFrameInset", "TabardFrame", "QuestLogDetailFrame", "HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "TaxiFrame", "ItemTextFrame", "CharacterModelFrame", "OpenMailFrame", "EncounterJournal", "EncounterJournalInset", "EncounterJournalNavBar", "WorldStateScoreFrame", "WorldStateScoreFrameInset", "VideoOptionsFramePanelContainer", "InterfaceOptionsFramePanelContainer", "QuestFrameDetailPanel", "QuestFrameRewardPanel"}
 		for i = 1, #borderlayers do
 			_G[borderlayers[i]]:DisableDrawLayer("BORDER")
 		end
@@ -1669,7 +1671,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestLogFrameShowMapButton.Show = F.dummy
 		select(6, GuildRegistrarFrameEditBox:GetRegions()):Hide()
 		select(7, GuildRegistrarFrameEditBox:GetRegions()):Hide()
-		LFDQueueFramePartyBackfill:SetAlpha(.6)
 		ChannelFrameDaughterFrameCorner:Hide()
 		PetitionFramePortrait:Hide()
 		FriendsFrame:DisableDrawLayer("LOW")
@@ -2227,27 +2228,29 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			local it = _G["BrowseButton"..i.."Item"]
 			local ic = _G["BrowseButton"..i.."ItemIconTexture"]
 
-			it:SetNormalTexture("")
-			ic:SetTexCoord(.08, .92, .08, .92)
+			if bu then
+				it:SetNormalTexture("")
+				ic:SetTexCoord(.08, .92, .08, .92)
 
-			F.CreateBG(it)
+				F.CreateBG(it)
 
-			_G["BrowseButton"..i.."Left"]:Hide()
-			select(6, _G["BrowseButton"..i]:GetRegions()):Hide()
-			_G["BrowseButton"..i.."Right"]:Hide()
+				_G["BrowseButton"..i.."Left"]:Hide()
+				select(6, _G["BrowseButton"..i]:GetRegions()):Hide()
+				_G["BrowseButton"..i.."Right"]:Hide()
 
-			local bd = CreateFrame("Frame", nil, bu)
-			bd:SetPoint("TOPLEFT")
-			bd:SetPoint("BOTTOMRIGHT", 0, 5)
-			bd:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bd, .25)
+				local bd = CreateFrame("Frame", nil, bu)
+				bd:SetPoint("TOPLEFT")
+				bd:SetPoint("BOTTOMRIGHT", 0, 5)
+				bd:SetFrameLevel(bu:GetFrameLevel()-1)
+				F.CreateBD(bd, .25)
 
-			bu:SetHighlightTexture(C.media.backdrop)
-			local hl = bu:GetHighlightTexture()
-			hl:SetVertexColor(r, g, b, .2)
-			hl:ClearAllPoints()
-			hl:SetPoint("TOPLEFT", 0, -1)
-			hl:SetPoint("BOTTOMRIGHT", -1, 6)
+				bu:SetHighlightTexture(C.media.backdrop)
+				local hl = bu:GetHighlightTexture()
+				hl:SetVertexColor(r, g, b, .2)
+				hl:ClearAllPoints()
+				hl:SetPoint("TOPLEFT", 0, -1)
+				hl:SetPoint("BOTTOMRIGHT", -1, 6)
+			end
 		end
 
 		for i = 1, NUM_BIDS_TO_DISPLAY do
@@ -3801,8 +3804,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.CreateBG(ic)
 
 			local bd = CreateFrame("Frame", nil, bu)
-			bd:SetPoint("TOPLEFT", na, 14, -25)
-			bd:SetPoint("BOTTOMRIGHT", na, -53, 24)
+			bd:SetPoint("TOPLEFT", 39, -1)
+			bd:SetPoint("BOTTOMRIGHT", 0, 1)
 			bd:SetFrameLevel(0)
 			F.CreateBD(bd, .25)
 
@@ -3874,7 +3877,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		ClassTrainerFrameSkillStepButtonIcon:SetTexCoord(.08, .92, .08, .92)
 
-		for i = 1, CLASS_TRAINER_SKILLS_DISPLAYED do
+		for i = 1, 8 do
 			local bu = _G["ClassTrainerScrollFrameButton"..i]
 			local ic = _G["ClassTrainerScrollFrameButton"..i.."Icon"]
 
@@ -3936,6 +3939,56 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 	end
 end)
+
+-- [[ Mac Options ]]
+
+if IsMacClient() then
+	F.CreateBD(MacOptionsFrame)
+	MacOptionsFrameHeader:SetTexture("")
+	MacOptionsFrameHeader:ClearAllPoints()
+	MacOptionsFrameHeader:SetPoint("TOP", MacOptionsFrame, 0, 0)
+ 
+	F.CreateBD(MacOptionsFrameMovieRecording, .25)
+	F.CreateBD(MacOptionsITunesRemote, .25)
+
+	F.Reskin(MacOptionsButtonKeybindings)
+	F.Reskin(MacOptionsButtonCompress)
+	F.Reskin(MacOptionsFrameCancel)
+	F.Reskin(MacOptionsFrameOkay)
+	F.Reskin(MacOptionsFrameDefaults)
+
+	F.ReskinDropDown(MacOptionsFrameResolutionDropDown)
+	F.ReskinDropDown(MacOptionsFrameFramerateDropDown)
+	F.ReskinDropDown(MacOptionsFrameCodecDropDown)
+	F.ReskinCheck(MacOptionsFrameCheckButton1)
+	F.ReskinCheck(MacOptionsFrameCheckButton2)
+	F.ReskinCheck(MacOptionsFrameCheckButton3)
+	F.ReskinCheck(MacOptionsFrameCheckButton4)
+	F.ReskinCheck(MacOptionsFrameCheckButton5)
+	F.ReskinCheck(MacOptionsFrameCheckButton6)
+	F.ReskinCheck(MacOptionsFrameCheckButton7)
+	F.ReskinCheck(MacOptionsFrameCheckButton8)
+ 
+	MacOptionsButtonCompress:SetWidth(136)
+ 
+	MacOptionsFrameCancel:SetWidth(96)
+	MacOptionsFrameCancel:SetHeight(22)
+	MacOptionsFrameCancel:ClearAllPoints()
+	MacOptionsFrameCancel:SetPoint("LEFT", MacOptionsButtonKeybindings, "RIGHT", 107, 0)
+ 
+	MacOptionsFrameOkay:SetWidth(96)
+	MacOptionsFrameOkay:SetHeight(22)
+	MacOptionsFrameOkay:ClearAllPoints()
+	MacOptionsFrameOkay:SetPoint("LEFT", MacOptionsButtonKeybindings, "RIGHT", 5, 0)
+ 
+	MacOptionsButtonKeybindings:SetWidth(96)
+	MacOptionsButtonKeybindings:SetHeight(22)
+	MacOptionsButtonKeybindings:ClearAllPoints()
+	MacOptionsButtonKeybindings:SetPoint("LEFT", MacOptionsFrameDefaults, "RIGHT", 5, 0)
+ 
+	MacOptionsFrameDefaults:SetWidth(96)
+	MacOptionsFrameDefaults:SetHeight(22)
+end
 
 local Delay = CreateFrame("Frame")
 Delay:RegisterEvent("PLAYER_ENTERING_WORLD")

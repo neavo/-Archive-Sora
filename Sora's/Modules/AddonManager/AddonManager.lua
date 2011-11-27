@@ -1,7 +1,6 @@
 ﻿-- Engines
 local S, C, L, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("AddonManager")
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("AddonManager")
 local AddonList, AddonButton, Page, MaxPage = {}, {}, 1, 1
 
 local function UpdateAddonList()
