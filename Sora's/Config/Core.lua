@@ -2,7 +2,7 @@
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("Congig", "AceConsole-3.0")
-local Version, SoraAutoWipe = 1124, true
+local Version = 1124
 
 function Module:SetDefault()
 	SlashCmdList.AutoSet()
@@ -108,7 +108,7 @@ end
 
 function Module:OnEnable()
 	Module:BuildGameMenuButton()
-	if not SoraVersion or (SoraVersion < Version and SoraAutoWipe) then
+	if not SoraVersion or (SoraVersion < Version) then
 		StaticPopupDialogs["Sora's"] = {
 			text = "欢迎使用|cff70C0F5Sora's|r\n\n请点击确定按钮加载默认配置\n",
 			button1 = OKAY,
