@@ -4,7 +4,6 @@
 	<Script file = "AlreadyKnown.lua"/>
 	<Script file = "AutoRepair.lua"/>
 	<Script file = "AutoSell.lua"/>
-	<Script file = "CombatAlert.lua"/>
 	<Script file = "Durability.lua"/>
 	<Script file = "Glow.lua"/>
 	<Script file = "HoverTips.lua"/>

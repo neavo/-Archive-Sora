@@ -17,7 +17,7 @@ function Module:BuildChatbar()
 	
 	local PreButton = nil
 	local Parent = CreateFrame("Frame", nil, UIParent)
-	Parent:SetAlpha(0.3)
+	Parent:SetAlpha(0.2)
 	for i = 1, 8 do
 		local Button = nil
 		if i <= 7 then
@@ -42,7 +42,7 @@ function Module:BuildChatbar()
 			Parent:SetAlpha(1)
 		end)
 		Button:SetScript("OnLeave", function(self)
-			Parent:SetAlpha(0.3)
+			Parent:SetAlpha(0.2)
 		end)
 		if i == 1 then
 			Button:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT", 0, -11)

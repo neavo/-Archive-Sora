@@ -10,7 +10,6 @@ function Module:OnEnable()
 		local Button = _G["PetActionButton"..i]
 		Button:ClearAllPoints()
 		Button:SetParent(DB.ActionBar)
-		Button:SetAlpha(0.3)
 		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 		if ActionBarDB.MainBarLayout == 1 then
 			if i == 1 then
@@ -28,12 +27,6 @@ function Module:OnEnable()
 				Button:SetPoint("LEFT", _G["PetActionButton"..i-1], "RIGHT", 3, 0)
 			end
 		end
-		Button:HookScript("OnEnter", function(self) 
-			for i = 1, NUM_PET_ACTION_SLOTS do _G["PetActionButton"..i]:SetAlpha(1) end
-		end)
-		Button:HookScript("OnLeave",function(self) 
-			for i = 1, NUM_PET_ACTION_SLOTS do _G["PetActionButton"..i]:SetAlpha(0.3) end
-		end)
 		RegisterStateDriver(Button, "visibility", "[pet,novehicleui,nobonusbar:5] show; hide")
 	end
 end

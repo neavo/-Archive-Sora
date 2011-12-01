@@ -241,9 +241,9 @@ m_ActionBars.MouseOverBind = function()
 		end
 
 		StaticPopupDialogs["KEYBIND_MODE"] = {
-			text = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbutton's keybinding.",
-			button1 = "Save bindings",
-			button2 = "Discard bindings",
+			text = "请将你的鼠标指向你想设置的动作条按钮并按下你想设置的快捷键，按下|cff70C0F5ESC|r或者|cff70C0F5鼠标右键|r可以取消已绑定的快捷键",
+			button1 = OKAY,
+			button2 = CANCEL,
 			OnAccept = function() bind:Deactivate(true) end,
 			OnCancel = function() bind:Deactivate(false) end,
 			timeout = 0,
