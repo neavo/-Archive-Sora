@@ -1,4 +1,10 @@
-﻿-- locals and speed
+--[[
+	tullaRange
+		Adds out of range coloring to action buttons
+		Derived from RedRange with negligable improvements to CPU usage
+--]]
+
+--locals and speed
 local _G = _G
 local UPDATE_DELAY = 0.15
 local ATTACK_BUTTON_FLASH_TIME = ATTACK_BUTTON_FLASH_TIME
@@ -10,7 +16,8 @@ local IsActionInRange = IsActionInRange
 local IsUsableAction = IsUsableAction
 local HasAction = HasAction
 
--- code for handling defaults
+
+--code for handling defaults
 local function removeDefaults(tbl, defaults)
 	for k, v in pairs(defaults) do
 		if type(tbl[k]) == 'table' and type(v) == 'table' then
@@ -44,22 +51,27 @@ local function timer_Create(parent, interval)
 			parent:Start(interval)
 		end
 	end)
+
 	local a = updater:CreateAnimation('Animation'); a:SetOrder(1)
+
 	parent.Start = function(self)
 		self:Stop()
 		a:SetDuration(interval)
 		updater:Play()
 		return self
 	end
+
 	parent.Stop = function(self)
 		if updater:IsPlaying() then
 			updater:Stop()
 		end
 		return self
 	end
+
 	parent.Active = function(self)
 		return updater:IsPlaying()
 	end
+
 	return parent
 end
 
@@ -70,8 +82,13 @@ local isHolyPowerAbility
 do
 	local HOLY_POWER_SPELLS = {
 		[85256] = GetSpellInfo(85256), --Templar's Verdict
+--		[53385] = GetSpellInfo(53385), --Divine Storm
 		[53600] = GetSpellInfo(53600), --Shield of the Righteous
+--		[84963] = GetSpellInfo(84963), --Inquisition
+--		[85673] = GetSpellInfo(85673), --Word of Glory (Not included: linear increase per holy power)
+--		[85222] = GetSpellInfo(85222), --Light of Dawn (Not included: linear increase per holy power)
 	}
+
 	isHolyPowerAbility = function(actionId)
 		local actionType, id = GetActionInfo(actionId)
 		if actionType == 'macro' then
@@ -91,7 +108,8 @@ do
 end
 
 
--- The main thing
+--[[ The main thing ]]--
+
 local tullaRange = timer_Create(CreateFrame('Frame', 'tullaRange'), UPDATE_DELAY)
 
 function tullaRange:Load()
@@ -100,7 +118,9 @@ function tullaRange:Load()
 	self:RegisterEvent('PLAYER_LOGOUT')
 end
 
--- Frame Events
+
+--[[ Frame Events ]]--
+
 function tullaRange:OnEvent(event, ...)
 	local action = self[event]
 	if action then
@@ -108,13 +128,23 @@ function tullaRange:OnEvent(event, ...)
 	end
 end
 
--- Game Events
+--[[ Game Events ]]--
+
 function tullaRange:PLAYER_LOGIN()
 	if not TULLARANGE_COLORS then
 		TULLARANGE_COLORS = {}
 	end
-	self.colors = copyDefaults(TULLARANGE_COLORS, self:GetDefaults())
+	self.sets = copyDefaults(TULLARANGE_COLORS, self:GetDefaults())
+
+	--add options loader
+	local f = CreateFrame('Frame', nil, InterfaceOptionsFrame)
+	f:SetScript('OnShow', function(self)
+		self:SetScript('OnShow', nil)
+		LoadAddOn('tullaRange_Config')
+	end)
+
 	self.buttonsToUpdate = {}
+
 	hooksecurefunc('ActionButton_OnUpdate', self.RegisterButton)
 	hooksecurefunc('ActionButton_UpdateUsable', self.OnUpdateButtonUsable)
 	hooksecurefunc('ActionButton_Update', self.OnButtonUpdate)
@@ -124,7 +154,9 @@ function tullaRange:PLAYER_LOGOUT()
 	removeDefaults(TULLARANGE_COLORS, self:GetDefaults())
 end
 
--- Actions
+
+--[[ Actions ]]--
+
 function tullaRange:Update()
 	return self:UpdateButtons(UPDATE_DELAY)
 end
@@ -170,11 +202,15 @@ function tullaRange:UpdateButtonStatus(button)
 	self:UpdateActive()
 end
 
--- Button Hooking
+
+
+--[[ Button Hooking ]]--
+
 function tullaRange.RegisterButton(button)
 	button:HookScript('OnShow', tullaRange.OnButtonShow)
 	button:HookScript('OnHide', tullaRange.OnButtonHide)
 	button:SetScript('OnUpdate', nil)
+
 	tullaRange:UpdateButtonStatus(button)
 end
 
@@ -195,32 +231,45 @@ function tullaRange.OnButtonUpdate(button)
 	 tullaRange:UpdateButtonStatus(button)
 end
 
--- Range Coloring
+
+--[[ Range Coloring ]]--
+
 function tullaRange.UpdateButtonUsable(button)
 	local action = ActionButton_GetPagedID(button)
 	local isUsable, notEnoughMana = IsUsableAction(action)
-	if isUsable then 	--usable
-		if IsActionInRange(action) == 0 then	--but out of range
+
+	--usable
+	if isUsable then
+		--but out of range
+		if IsActionInRange(action) == 0 then
 			tullaRange.SetButtonColor(button, 'oor')
 		--a holy power abilty, and we're less than 3 Holy Power
-		elseif PLAYER_IS_PALADIN and isHolyPowerAbility(action) and not(UnitPower('player', SPELL_POWER_HOLY_POWER) == 3 or UnitBuff('player', HAND_OF_LIGHT)) then
+		elseif PLAYER_IS_PALADIN and isHolyPowerAbility(action) and not(UnitPower('player', SPELL_POWER_HOLY_POWER) >= tullaRange:GetHolyPowerThreshold() or UnitBuff('player', HAND_OF_LIGHT)) then
 			tullaRange.SetButtonColor(button, 'ooh')
-		else	--in range
+		--in range
+		else
 			tullaRange.SetButtonColor(button, 'normal')
 		end
-	elseif notEnoughMana then	--out of mana
-		tullaRange.SetButtonColor(button, 'oom')
-	else	--unusable
-		tullaRange.SetButtonColor(button, 'unusuable')
+	--out of mana
+	elseif notEnoughMana then
+		--a holy power abilty, and we're less than 3 Holy Power
+		if PLAYER_IS_PALADIN and isHolyPowerAbility(action) and not(UnitPower('player', SPELL_POWER_HOLY_POWER) >= tullaRange:GetHolyPowerThreshold() or UnitBuff('player', HAND_OF_LIGHT)) then
+			tullaRange.SetButtonColor(button, 'ooh')
+		else
+			tullaRange.SetButtonColor(button, 'oom')
+		end
+	--unusable
+	else
+		button.tullaRangeColor = 'unusuable'
 	end
-	local nt = button:GetNormalTexture()
-	nt:SetVertexColor(0, 0, 0)
 end
 
 function tullaRange.SetButtonColor(button, colorType)
 	if button.tullaRangeColor ~= colorType then
 		button.tullaRangeColor = colorType
+
 		local r, g, b = tullaRange:GetColor(colorType)
+
 		local icon =  _G[button:GetName() .. 'Icon']
 		icon:SetVertexColor(r, g, b)
 	end
@@ -229,12 +278,14 @@ end
 function tullaRange.UpdateFlash(button, elapsed)
 	if ActionButton_IsFlashing(button) then
 		local flashtime = button.flashtime - elapsed
+
 		if flashtime <= 0 then
 			local overtime = -flashtime
 			if overtime >= ATTACK_BUTTON_FLASH_TIME then
 				overtime = 0
 			end
 			flashtime = ATTACK_BUTTON_FLASH_TIME - overtime
+
 			local flashTexture = _G[button:GetName() .. 'Flash']
 			if flashTexture:IsShown() then
 				flashTexture:Hide()
@@ -242,39 +293,53 @@ function tullaRange.UpdateFlash(button, elapsed)
 				flashTexture:Show()
 			end
 		end
+
 		button.flashtime = flashtime
 	end
 end
 
--- Configuration
+
+--[[ Configuration ]]--
+
 function tullaRange:GetDefaults()
 	return {
 		normal = {1, 1, 1},
-		oor = {0.8, 0.3, 0.2},
-		oom = {0.3, 0.3, 0.7},
+		oor = {1, 0.3, 0.1},
+		oom = {0.1, 0.3, 1},
 		ooh = {0.45, 0.45, 1},
-		unusuable = {0.4, 0.4, 0.4},
+		holyPowerThreshold = 3
 	}
 end
 
 function tullaRange:Reset()
 	TULLARANGE_COLORS = {}
-	self.colors = copyDefaults(TULLARANGE_COLORS, self:GetDefaults())
+	self.sets = copyDefaults(TULLARANGE_COLORS, self:GetDefaults())
 
 	self:ForceColorUpdate()
 end
 
 function tullaRange:SetColor(index, r, g, b)
-	local color = self.colors[index]
+	local color = self.sets[index]
 	color[1] = r
 	color[2] = g
 	color[3] = b
+
 	self:ForceColorUpdate()
 end
 
 function tullaRange:GetColor(index)
-	local color = self.colors[index]
+	local color = self.sets[index]
 	return color[1], color[2], color[3]
 end
+
+function tullaRange:SetHolyPowerThreshold(value)
+	self.sets.holyPowerThreshold = value
+end
+
+function tullaRange:GetHolyPowerThreshold()
+	return self.sets.holyPowerThreshold
+end
+
+--[[ Load The Thing ]]--
 
 tullaRange:Load()

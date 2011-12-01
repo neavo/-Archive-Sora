@@ -8,6 +8,6 @@
 	<Script file="ButtonsStyler.lua"/>
 	<Script file="HoverBind.lua"/>
 	<Script file="Panel.lua"/>
-	<Script file="RangeCheck.lua"/>
+	<Script file="tullaRange.lua"/>
 
 </Ui>
