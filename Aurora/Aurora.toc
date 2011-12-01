@@ -4,4 +4,5 @@
 ## Author: Haleth/Freethinker
 ## Version: 3.3.6
 
-aurora.lua
+Aurora_42.lua
+Aurora_43.lua

@@ -99,8 +99,8 @@ local function StyleSmallButton(Button, Icon, name)
 	end
 end
 local function StyleFlyout(self)
-	self.FlyoutBorder:SetAlpha(0)
-	self.FlyoutBorderShadow:SetAlpha(0)
+	--self.FlyoutBorder:SetAlpha(0)
+	--self.FlyoutBorderShadow:SetAlpha(0)
 	
 	SpellFlyoutHorizontalBackground:SetAlpha(0)
 	SpellFlyoutVerticalBackground:SetAlpha(0)
