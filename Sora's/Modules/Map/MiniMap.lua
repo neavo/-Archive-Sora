@@ -12,6 +12,9 @@ function Module:OnInitialize()
 	MoveHandle.Minimap = S.MakeMoveHandle(Minimap, "小地图", "Minimap")
 end
 
+if LFDSearchStatus then
+	LFDSearchStatus:SetClampedToScreen(true)
+end
 DropDownList1:SetClampedToScreen(true)
 
 Minimap.Shadow = S.MakeShadow(Minimap, 4)
@@ -83,7 +86,7 @@ end)
 local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", UIParent, "UIDropDownMenuTemplate")
 local menuList = {
 	{text = ENCOUNTER_JOURNAL, 
-	func = function() if not IsAddOnLoaded('Blizzard_EncounterJournal') then LoadAddOn('Blizzard_EncounterJournal'); end ToggleFrame(EncounterJournal) end},	
+	func = function() if not IsAddOnLoaded("Blizzard_EncounterJournal") then LoadAddOn("Blizzard_EncounterJournal"); end ToggleFrame(EncounterJournal) end},	
 	{text = CHARACTER_BUTTON,
 	func = function() ToggleCharacter("PaperDollFrame") end},
 	{text = SPELLBOOK_ABILITIES_BUTTON,
@@ -104,11 +107,6 @@ local menuList = {
 	func = function() ToggleFrame(LFRParentFrame) end},
 	{text = HELP_BUTTON,
 	func = function() ToggleHelpFrame() end},
-	{text = SLASH_CALENDAR1:gsub("/(.*)","%1"), 
-	func = function()
-	if(not CalendarFrame) then LoadAddOn("Blizzard_Calendar") end
-		Calendar_Toggle()
-	end},
 	{text = "打开背包", func = function() ToggleBackpack() end}, 
 }
 
