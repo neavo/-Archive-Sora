@@ -9,7 +9,6 @@
 	<Script file = "CloseUp.lua"/>
 	<Script file = "DragEmAll.lua"/>
 	<Script file = "Durability.lua"/>
-	<Script file = "FastError.lua"/>
 	<Script file = "Glow.lua"/>
 	<Script file = "HoverTips.lua"/>
 	<Script file = "Mail.lua"/>
