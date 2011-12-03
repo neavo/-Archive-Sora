@@ -1,0 +1,16 @@
+﻿<!-- 
+-->
+
+
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	
+	<Script file="cfg.lua"/>
+	<Script file="RaidBuffList.lua"/>
+	<Script file="ClassBuffList.lua"/>
+	<Script file="ClassBuffReminder.lua"/>
+	<Script file="RaidBuffReminder.lua"/>
+	
+
+</Ui>

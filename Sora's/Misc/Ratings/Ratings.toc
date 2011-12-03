@@ -1,0 +1,18 @@
+## Interface: 40200
+## Title: Ratings
+## Version: v1.5.2-release
+## Note: Convert ratings to percentages.
+## Notes-zhTW: 轉換等級為百分比。
+## Notes-zhCN: 转换等级为百分比。
+## Author: Jerry
+## Credits: Whitetooth
+## X-Category: Interface Enhancements
+## DefaultState: Enabled
+## SavedVariablesPerCharacter: RatingsDB
+## X-Curse-Packaged-Version: v1.5.2-release
+## X-Curse-Project-Name: Ratings
+## X-Curse-Project-ID: ratings
+## X-Curse-Repository-ID: wow/ratings/mainline
+
+core.lua
+panel.lua
