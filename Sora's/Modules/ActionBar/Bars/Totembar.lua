@@ -1,4 +1,4 @@
-﻿-- Engines
+-- Engines
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("Totembar")
@@ -12,13 +12,20 @@ function Module:OnEnable()
 		MultiCastActionBarFrame:SetScript("OnHide", nil)
 		MultiCastActionBarFrame:SetParent(DB.ActionBar)
 		MultiCastActionBarFrame:ClearAllPoints()
-		MultiCastActionBarFrame.ClearAllPoints = function() end
 		MultiCastActionBarFrame.SetParent = function() end
 		MultiCastActionBarFrame.SetPoint = function() end
+		MultiCastRecallSpellButton.SetPoint = function() end
+		
+		hooksecurefunc("MultiCastActionButton_Update",function(Bar)
+			if not InCombatLockdown() then
+				Bar:SetAllPoints(Bar.slotButton)
+			end
+		end)
 	end
+	
 	local Color = {
-		[EARTH_TOTEM_SLOT] = { 074/255, 142/255, 041/255 },
-		[FIRE_TOTEM_SLOT] = { 181/255, 073/255, 033/255 },
+		[EARTH_TOTEM_SLOT] = { 181/255, 073/255, 033/255 },
+		[FIRE_TOTEM_SLOT] = { 074/255, 142/255, 041/255 },
 		[WATER_TOTEM_SLOT] = { 057/255, 146/255, 181/255 },
 		[AIR_TOTEM_SLOT] = { 132/255, 056/255, 231/255 }
 	}

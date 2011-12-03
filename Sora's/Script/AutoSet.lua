@@ -7,7 +7,7 @@ local function SetChatFrame()
 	ChatFrame1:SetWidth(360)
 	ChatFrame1:SetHeight(100)
 	ChatFrame1:SetUserPlaced(true)
-	for i=1,10 do FCF_SetWindowAlpha(_G["ChatFrame"..i], 0) end
+	for i = 1,10 do FCF_SetWindowAlpha(_G["ChatFrame"..i], 0) end
 	FCF_SavePositionAndDimensions(ChatFrame1)
 	FCF_SetLocked(ChatFrame1, 1)
 end
@@ -24,7 +24,6 @@ SlashCmdList["AutoSet"] = function()
 	if not UnitAffectingCombat("player") then
 		SetChatFrame()
 		SetUIScale()
-		--ReloadUI()
 	end
 end
 SLASH_AutoSet1 = "/AutoSet"

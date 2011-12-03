@@ -1,8 +1,7 @@
-﻿-- Engines
-local S, C, L, DB = unpack(select(2, ...))
-local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Others")
-
-function Module:OnInitialize()
+local OnLogon = CreateFrame("Frame")
+OnLogon:RegisterEvent("PLAYER_ENTERING_WORLD")
+OnLogon:SetScript("OnEvent", function(self, event)
+	self:UnregisterEvent("PLAYER_ENTERING_WORLD")	
 	SetActionBarToggles(1, 1, 1, 1, 0)
 	SetCVar("alwaysShowActionBars", 0)	
 	ActionButton_HideGrid = function() end
@@ -31,4 +30,4 @@ function Module:OnInitialize()
 		button:SetAttribute("showgrid", 1)
 		ActionButton_ShowGrid(button)
 	end
-end
+end)

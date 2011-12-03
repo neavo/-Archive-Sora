@@ -11,5 +11,6 @@
 	<Script file = "Stancebar.lua"/>
 	<Script file = "Totembar.lua"/>
 	<Script file = "VehicleExit.lua"/>
+	<Script file = "Style.lua"/>
 	
 </Ui>
