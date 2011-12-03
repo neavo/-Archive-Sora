@@ -13,8 +13,7 @@ local Page = {
 
 local function GetBar()
 	local condition = Page["DEFAULT"]
-	local class = myclass
-	local page = Page[class]
+	local page = Page[DB.MyClass]
 	if page then
 		condition = condition.." "..page
 	end
