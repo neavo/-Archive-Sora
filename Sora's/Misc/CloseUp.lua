@@ -1,3 +1,4 @@
+﻿local S, _, _, _ = unpack(select(2, ...))
 local _G = getfenv(0)
 local GetCursorPosition = GetCursorPosition
 local function nada() end
@@ -137,6 +138,7 @@ local function DoAH()
 	newbutton("CloseUpAHResetButton", du, "R", 20, 22, nil, "Reset", function() du:Dress() end):SetPoint("RIGHT", tb, "LEFT", 0, 0)
 	newbutton("CloseUpAHUndressButton", du, "U", 20, 22, nil, "Undress", function() du:Undress() end):SetPoint("LEFT", tb, "RIGHT", 0, 0)
 	ToggleBG(true)
+
 end
 local function DoIns()
 	Apply("InspectModelFrame")
@@ -177,7 +179,7 @@ do
 	end)
 	
 	-- convert default close button into set target button
-	newbutton(nil, nil, "Tar", w, h, tb, "Target", function()
+	newbutton(nil, nil, "目标", w, h, tb, "Target", function()
 		if UnitExists("target") and UnitIsVisible("target") then 
 			if UnitIsPlayer("target") then
 				tm:Hide()
@@ -193,8 +195,9 @@ do
 	end)
 	local a,b,c,d,e = tb:GetPoint()
 	tb:SetPoint(a, b, c, d - (w/2), e)
-
-	newbutton("CloseUpUndressButton", DressUpFrame, "Und", w, h, nil, "Undress", function() m:Undress() end):SetPoint("LEFT", tb, "RIGHT", -2, 0)
+	S.Reskin(tb)
+	newbutton("CloseUpUndressButton", DressUpFrame, "脱衣", w, h, nil, "Undress", function() m:Undress() end):SetPoint("LEFT", tb, "RIGHT", 0, 0)
+	S.Reskin(CloseUpUndressButton)
 end
 
 Apply("CharacterModelFrame")
