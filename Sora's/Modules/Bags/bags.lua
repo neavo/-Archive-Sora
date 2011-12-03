@@ -65,7 +65,7 @@ function MyButton:OnCreate()
 	self.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	
 	self.Count:SetPoint("BOTTOMRIGHT", -1, 3)
-	self.Count:SetFont( DB.Font, 12, "THINOUTLINE")
+	self.Count:SetFont(DB.Font, 10, "THINOUTLINE")
 	
 	self.Border = CreateFrame("Frame", nil, self)
 	self.Border:SetAllPoints(self.Icon)
@@ -150,18 +150,18 @@ function MyContainer:OnCreate(name, settings)
 	-- 信息条
 	local infoFrame = CreateFrame("Button", nil, self)
 	infoFrame:SetPoint("BOTTOM", -20, 0)
-	infoFrame:SetWidth(220)
+	infoFrame:SetWidth(210)
 	infoFrame:SetHeight(32)
 	
 	-- 信息条插件:金币
 	local tagDisplay = self:SpawnPlugin("TagDisplay", "[money]", infoFrame)
 	tagDisplay:SetFontObject("NumberFontNormal")
-	tagDisplay:SetFont(DB.Font, 12)
-	tagDisplay:SetPoint("RIGHT", infoFrame, "RIGHT", 0, 0)	
+	tagDisplay:SetFont(DB.Font, 11, "THINOUTLINE")
+	tagDisplay:SetPoint("RIGHT", infoFrame, "RIGHT", -10, 0)	
 	-- 信息条插件:搜索栏
 	local searchText = infoFrame:CreateFontString(nil, "OVERLAY")
 	searchText:SetPoint("LEFT", infoFrame, "LEFT", 0, 1)
-	searchText:SetFont(DB.Font, 10, "THINOUTLINE")
+	searchText:SetFont(DB.Font, 11, "THINOUTLINE")
 	searchText:SetText("搜索")	
 	local search = self:SpawnPlugin("SearchBar", infoFrame)
 	search.highlightFunction = highlightFunction
@@ -193,7 +193,7 @@ function MyContainer:OnCreate(name, settings)
 	end)
 	BagToggle.Text = BagToggle:CreateFontString(nil, "OVERLAY")
 	BagToggle.Text:SetPoint("CENTER")
-	BagToggle.Text:SetFont(DB.Font, 12, "THINOUTLINE")
+	BagToggle.Text:SetFont(DB.Font, 11, "THINOUTLINE")
 	BagToggle.Text:SetText("背包")
 	
 	-- 背包整理按钮
@@ -203,12 +203,11 @@ function MyContainer:OnCreate(name, settings)
 	SortButton:SetScript("OnClick", function() JPack:Pack() end)
 	SortButton.Text = SortButton:CreateFontString(nil, "OVERLAY")
 	SortButton.Text:SetPoint("CENTER")
-	SortButton.Text:SetFont(DB.Font, 12, "THINOUTLINE")
+	SortButton.Text:SetFont(DB.Font, 11, "THINOUTLINE")
 	SortButton.Text:SetText("整理背包")
 
 	-- 关闭按钮
 	local CloseButton = S.MakeButton(self)
-	--CloseButton:SetFrameLevel(3)
 	CloseButton:SetSize(20, 20)
 	CloseButton:SetScript( "OnClick", function(self) CloseAllBags() end)
 	CloseButton:SetPoint("BOTTOMRIGHT", -7, 7)
