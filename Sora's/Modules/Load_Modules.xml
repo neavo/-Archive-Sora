@@ -6,11 +6,14 @@
 	<Include file = "Buff\Load_Buff.xml"/>
 	<Include file = "Chat\Load_Chat.xml"/>
 	<Include file = "ClassTimer\Load_ClassTimer.xml"/>
+	<Include file = "Icicle\Load_Icicle.xml"/>
 	<Include file = "InfoPanel\Load_InfoPanel.xml"/>
 	<Include file = "Map\Load_Map.xml"/>
+	<Include file = "Molinari\Load_Molinari.xml"/>
 	<Include file = "Nameplate\Load_Nameplate.xml"/>
 	<Include file = "Quest\Load_Quest.xml"/>
 	<Include file = "Reminder\Load_Reminder.xml"/>
+	<Include file = "RETabBinder\Load_RETabBinder.xml"/>
 	<Include file = "Threat\Load_Threat.xml"/>
 	<Include file = "Tooltip\Load_Tooltip.xml"/>
 	<Include file = "tullaCC\Load_tullaCC.xml"/>

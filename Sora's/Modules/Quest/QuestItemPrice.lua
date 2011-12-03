@@ -1,9 +1,5 @@
-﻿------------------------------------------------------------
--- QuestPrice.lua
---
--- Abin
--- 2010/12/10
-------------------------------------------------------------
+﻿-- Engines
+local S, _, _, DB = unpack(select(2, ...))
 
 local _G = _G
 local QuestLogFrame = QuestLogFrame
@@ -14,7 +10,6 @@ local select = select
 local GetItemInfo = GetItemInfo
 local MoneyFrame_SetType = MoneyFrame_SetType
 local MoneyFrame_Update = MoneyFrame_Update
-
 local function QuestPriceFrame_OnUpdate(self)
 	local button = self.button
 	if not button.rewardType or button.rewardType == "item" then
@@ -51,10 +46,6 @@ local function CreatePriceFrame(name)
 	end
 end
 
-local i
 for i = 1, 10 do
-	CreatePriceFrame("QuestInfoItem"..i) -- 3.35/CTM
-	CreatePriceFrame("QuestLogItem"..i) -- CWLK 3.22
-	CreatePriceFrame("QuestDetailItem"..i) -- CWLK 3.22
-	CreatePriceFrame("QuestRewardItem"..i) -- CWLK 3.22
+	CreatePriceFrame("QuestInfoItem"..i)
 end

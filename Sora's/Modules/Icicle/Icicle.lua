@@ -93,7 +93,7 @@ local sourcetable = function(Name, spellID, spellName)
 	for k, v in ipairs(IcicleInterrupts) do
 		if v == spellName then
 			local iconBorder = icon:CreateTexture(nil, "OVERLAY")
-			iconBorder:SetTexture("Interface\\Addons\\Sora's\\Misc\\Icicle\\Border.tga")
+			iconBorder:SetTexture("Interface\\Addons\\Sora's\\Modules\\Icicle\\Border.tga")
 			iconBorder:SetVertexColor(1, 0.35, 0)
 			iconBorder:SetAllPoints(icon)
 		end

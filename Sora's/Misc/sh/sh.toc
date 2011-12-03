@@ -1,5 +1,0 @@
-## Interface: 40200
-## Title: |cffffe00a<|r|cffFF0000整合大全|r|cffffe00a>|r |cff44CCFFsh|r
-## Notes: 孫小貓斩杀提示
-
-sh.lua
