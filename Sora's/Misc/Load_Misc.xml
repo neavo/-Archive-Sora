@@ -18,6 +18,7 @@
 	<Script file = "ProfessionTabs.lua"/>
 	<Script file = "Ratings.lua"/>
 	<Script file = "SR.lua"/>
+	<Script file = "tekKompare.lua"/>
 	<Script file = "TheBurningTrade.lua"/>
 
 </Ui>
