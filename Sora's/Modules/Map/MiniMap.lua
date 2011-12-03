@@ -69,10 +69,6 @@ MiniMapMailFrame:SetFrameStrata("LOW")
 MiniMapMailIcon:SetTexture("Interface\\AddOns\\Sora's\Media\\mail.tga")
 MiniMapMailBorder:Hide()
 
----Hide Instance Difficulty flag
-MiniMapInstanceDifficulty:ClearAllPoints()
-MiniMapInstanceDifficulty:Hide()
-
 -- Enable mouse scrolling
 Minimap:EnableMouseWheel(true)
 Minimap:SetScript("OnMouseWheel", function(self, d)
