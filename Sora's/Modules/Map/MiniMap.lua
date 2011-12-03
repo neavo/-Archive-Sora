@@ -44,7 +44,6 @@ local frames = {
 	"MiniMapVoiceChatFrame",
 	"MiniMapWorldMapButton",
 	"MiniMapMailBorder",
-	"GuildInstanceDifficulty",
 	"MiniMapBattlefieldBorder",
 }
 
@@ -62,6 +61,14 @@ MiniMapBattlefieldFrame:SetPoint("BOTTOMLEFT", Minimap, 0, 0)
 MiniMapLFGFrame:ClearAllPoints()
 MiniMapLFGFrameBorder:SetAlpha(0)
 MiniMapLFGFrame:SetPoint("TOPLEFT", Minimap, 0, 0)
+
+MiniMapInstanceDifficulty:ClearAllPoints()
+MiniMapInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
+MiniMapInstanceDifficulty:SetScale(0.8)
+
+GuildInstanceDifficulty:ClearAllPoints()
+GuildInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, 4)
+GuildInstanceDifficulty:SetScale(0.8)
 
 MiniMapMailFrame:ClearAllPoints()
 MiniMapMailFrame:SetPoint("TOPRIGHT", Minimap, 0, 0)

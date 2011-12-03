@@ -14,7 +14,6 @@
 	<Script file = "HoverTips.lua"/>
 	<Script file = "Mail.lua"/>
 	<Script file = "Roster.lua"/>
-	<Script file = "ProfessionalDatebase.lua"/>
 	<Script file = "ProfessionTabs.lua"/>
 	<Script file = "Ratings.lua"/>
 	<Script file = "tekKompare.lua"/>
