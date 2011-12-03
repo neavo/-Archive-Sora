@@ -84,8 +84,8 @@ local function StyleSmallButton(NormalTexture, Button, Icon, IsPet)
 		if IsPet then
 			local AutoCastable = _G[Name.."AutoCastable"]
 			AutoCastable:ClearAllPoints()
-			AutoCastable:SetPoint("TOPLEFT", -10, 10)
-			AutoCastable:SetPoint("BOTTOMRIGHT", 10, -10)
+			AutoCastable:SetPoint("TOPLEFT", -12, 12)
+			AutoCastable:SetPoint("BOTTOMRIGHT", 12, -12)
 		end
 	end
 	

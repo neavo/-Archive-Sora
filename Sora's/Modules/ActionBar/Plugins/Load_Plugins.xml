@@ -5,9 +5,8 @@
 
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-	<Script file="ButtonsStyler.lua"/>
-	<Script file="HoverBind.lua"/>
-	<Script file="Panel.lua"/>
-	<Script file="tullaRange.lua"/>
+	<Script file = "HoverBind.lua"/>
+	<Script file = "Panel.lua"/>
+	<Script file = "tullaRange.lua"/>
 
 </Ui>
