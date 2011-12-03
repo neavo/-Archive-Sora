@@ -52,7 +52,12 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self)
             local text2 = GameTooltipTextLeft2:GetText()
             if unitGuild and text2 and text2:find("^"..unitGuild) then GameTooltipTextLeft2:SetTextColor(1, 0.1, 0.8) end
         end
-
+		local unitGuild, tmp,tmp2 = GetGuildInfo(unit)
+            local text = GameTooltipTextLeft2:GetText()
+            if tmp then
+               --tmp2=tmp2+1
+               GameTooltipTextLeft2:SetText("<"..text..">  "..tmp.."  ("..tmp2..")")
+            end
         local alive = not UnitIsDeadOrGhost(unit)
         local level = UnitLevel(unit)
         if level then

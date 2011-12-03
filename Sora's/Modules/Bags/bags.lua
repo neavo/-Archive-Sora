@@ -65,7 +65,7 @@ function MyButton:OnCreate()
 	self.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	
 	self.Count:SetPoint("BOTTOMRIGHT", -1, 3)
-	self.Count:SetFont( DB.Font, 10, "THINOUTLINE")
+	self.Count:SetFont( DB.Font, 12, "THINOUTLINE")
 	
 	self.Border = CreateFrame("Frame", nil, self)
 	self.Border:SetAllPoints(self.Icon)
@@ -101,7 +101,7 @@ end
 
 -- 更新背包栏
 local UpdateDimensions = function(self)
-	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 6, 10, -10)
+	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 4, 10, -10)
 	local margin = 40
 	if self.BagBar and self.BagBar:IsShown() then
 		margin = margin + 45
@@ -112,7 +112,7 @@ end
 local MyContainer = Bags:GetContainerClass()
 function MyContainer:OnContentsChanged()
 	self:SortButtons("bagSlot")
-	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 6, 10, -10)
+	local width, height = self:LayoutButtons("grid", self.Settings.Columns, 4, 10, -10)
 	self:SetSize(width + 20, height + 10)
 	if self.UpdateDimensions then
 		self:UpdateDimensions()
@@ -193,7 +193,7 @@ function MyContainer:OnCreate(name, settings)
 	end)
 	BagToggle.Text = BagToggle:CreateFontString(nil, "OVERLAY")
 	BagToggle.Text:SetPoint("CENTER")
-	BagToggle.Text:SetFont(DB.Font, 10, "THINOUTLINE")
+	BagToggle.Text:SetFont(DB.Font, 12, "THINOUTLINE")
 	BagToggle.Text:SetText("背包")
 	
 	-- 背包整理按钮
@@ -203,7 +203,7 @@ function MyContainer:OnCreate(name, settings)
 	SortButton:SetScript("OnClick", function() JPack:Pack() end)
 	SortButton.Text = SortButton:CreateFontString(nil, "OVERLAY")
 	SortButton.Text:SetPoint("CENTER")
-	SortButton.Text:SetFont(DB.Font, 10, "THINOUTLINE")
+	SortButton.Text:SetFont(DB.Font, 12, "THINOUTLINE")
 	SortButton.Text:SetText("整理背包")
 
 	-- 关闭按钮

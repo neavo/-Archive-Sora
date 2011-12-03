@@ -96,7 +96,7 @@ do
 		_G["ChatFrame"..i.."EditBoxLanguage"]:ClearAllPoints()
 		EditBox:SetAltArrowKeyMode(false)
 		EditBox:ClearAllPoints()
-		EditBox:SetFont(DB.Font, 11, "THINOUTLINE")
+		EditBox:SetFont(DB.Font, 12, "THINOUTLINE")
 		EditBox:SetPoint("TOPLEFT", cf, "BOTTOMLEFT", -8, -6)
 		EditBox:SetPoint("BOTTOMRIGHT", cf, "BOTTOMRIGHT", 8, -22)
 		EditBox:EnableMouse(false)

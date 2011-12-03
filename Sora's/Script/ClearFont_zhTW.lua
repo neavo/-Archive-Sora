@@ -1,5 +1,3 @@
-if not (GetLocale() == "zhTW") then return end
-
 -- /////////////////////////////////////////////////////////////////////////////
 -- =============================================================================
 --  ClearFont v4.01a 台服用戶端
@@ -18,6 +16,9 @@ if not (GetLocale() == "zhTW") then return end
 -- =============================================================================
 -- /////////////////////////////////////////////////////////////////////////////
 
+
+
+
 -- =============================================================================
 --  A. ClearFont 框架 及為了以後代碼的簡潔而預先定義字體位置
 --  你可以根據範例添加屬於自己的字體
@@ -29,19 +30,19 @@ if not (GetLocale() == "zhTW") then return end
 	local CLEAR_FONT_BASE = "Fonts\\";
 
 -- 金幣、堆疊、按鍵綁定等字體
-	local CLEAR_FONT_NUMBER = CLEAR_FONT_BASE .. "FRIZQT__.TTF";--"FRIZQT__.TTF";
+	local CLEAR_FONT_NUMBER = CLEAR_FONT_BASE .. "FRIZQT__.TTF";
 -- 生命條、經驗條上的字體
-	local CLEAR_FONT_EXP = CLEAR_FONT_BASE .. "ARIALN.TTF";--"ARIALN.TTF";
+	local CLEAR_FONT_EXP = CLEAR_FONT_BASE .. "ARIALN.TTF";
 -- 任務說明和書信、石碑的正文字體
-	local CLEAR_FONT_QUEST = CLEAR_FONT_BASE .. "bLEI00D.TTF";--"bLEI00D.TTF";
+	local CLEAR_FONT_QUEST = CLEAR_FONT_BASE .. "bLEI00D.TTF";
 -- 戰鬥傷害數值提示
-	local CLEAR_FONT_DAMAGE = CLEAR_FONT_BASE .. "bKAI00M.TTF";--"bKAI00M.TTF";
+	local CLEAR_FONT_DAMAGE = CLEAR_FONT_BASE .. "bKAI00M.TTF";
 -- 遊戲介面中的主要字體
-	local CLEAR_FONT = CLEAR_FONT_BASE .. "bLEI00D.TTF";--"bLEI00D.TTF";
+	local CLEAR_FONT = CLEAR_FONT_BASE .. "bLEI00D.TTF";
 -- 物品、技能的說明字體
-	local CLEAR_FONT_ITEM = CLEAR_FONT_BASE .. "bHEI00M.TTF";--"bHEI00M.TTF";
+	local CLEAR_FONT_ITEM = CLEAR_FONT_BASE .. "bHEI00M.TTF";
 -- 聊天字體
-	local CLEAR_FONT_CHAT = CLEAR_FONT_BASE .. "bHEI01B.TTF";--"bHEI01B.TTF";
+	local CLEAR_FONT_CHAT = CLEAR_FONT_BASE .. "bHEI01B.TTF";
 
 -- 添加屬於自己的字體 （範例）
 --	local YOUR_FONT_STYLE = CLEAR_FONT_BASE .. "YourFontName.ttf";
@@ -52,7 +53,7 @@ if not (GetLocale() == "zhTW") then return end
 --  範例：你想把所有字體縮小到80%，那麼可以將"1.0"改成"0.8"
 -- -----------------------------------------------------------------------------
 
-	local CF_SCALE = 1.0
+	local CF_SCALE = 1.1
 
 
 -- -----------------------------------------------------------------------------
@@ -345,10 +346,32 @@ if not (GetLocale() == "zhTW") then return end
 -- -----------------------------------------------------------------------------
 
 -- 聊天輸入框字體
-	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE, "THINOUTLINE"); end	-- 預設值：14
+	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 14 * CF_SCALE, "THINOUTLINE"); end	-- 預設值：14
+
+-- 可選聊天框字體
+	CHAT_FONT_HEIGHTS = {
+		[1] = 7,
+		[2] = 8,
+		[3] = 9,
+		[4] = 10,
+		[5] = 11,
+		[6] = 12,
+		[7] = 13,
+		[8] = 14,
+		[9] = 15,
+		[10] = 16,
+		[11] = 17,
+		[12] = 18,
+		[13] = 19,
+		[14] = 20,
+		[15] = 21,
+		[16] = 22,
+		[17] = 23,
+		[18] = 24
+	};
 
 -- 聊天視窗默認字體
-	if (CanSetFont(ChatFontSmall)) then 				ChatFontSmall:SetFont(CLEAR_FONT_CHAT, 12 * CF_SCALE); end	-- 預設值：12
+	if (CanSetFont(ChatFontSmall)) then 				ChatFontSmall:SetFont(CLEAR_FONT_CHAT, 13 * CF_SCALE); end	-- 預設值：12
 
 
 -- -----------------------------------------------------------------------------
@@ -357,13 +380,15 @@ if not (GetLocale() == "zhTW") then return end
 
 -- 任務標題
 	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 預設值：17
+	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetShadowColor(1.0, 0.82, 0); end		-- 預設值：(0, 0, 0)
 
 	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 預設值：17
+	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetShadowColor(0, 0, 0); end		-- 預設值：(0, 0, 0)
 	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetTextColor(1.0, 0.82, 0); end			-- 預設值：(1.0, 0.82, 0)
 
 -- 任務描述
 	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetFont(CLEAR_FONT_QUEST, 14 * CF_SCALE); end		-- 預設值：14
-	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetTextColor(1, 1, 1); end			-- 預設值：(0, 0, 0)
+	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetTextColor(1.0, 0.82, 0); end			-- 預設值：(0, 0, 0)
 
 -- 任務目標
 	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- 預設值：14
@@ -386,7 +411,7 @@ if not (GetLocale() == "zhTW") then return end
 -- -----------------------------------------------------------------------------
 
 	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- 預設值：15
-	if (CanSetFont(MailTextFontNormal)) then 		   	MailTextFontNormal:SetTextColor(1, 1, 1); end		-- 預設值：(0.18, 0.12, 0.06)
+	if (CanSetFont(MailTextFontNormal)) then 		   	MailTextFontNormal:SetTextColor(0.18, 0.12, 0.06); end		-- 預設值：(0.18, 0.12, 0.06)
 --	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetShadowColor(0.54, 0.4, 0.1); end
 --	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetShadowOffset(1, -1); end
    
