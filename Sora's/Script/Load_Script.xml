@@ -9,7 +9,6 @@
 	<Script file = "DragEmAll.lua"/>
 	<Script file = "GuildRosterSelectedFix.lua"/>
 	<Script file = "InspectFix.lua"/>
-	<Script file = "PFEIL.lua"/>
 	<Script file = "Roster.lua"/>
 	<Script file = "UIParentFade.lua"/>
 

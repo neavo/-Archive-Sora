@@ -9,6 +9,5 @@
 	<Include file = "Modules\Load_Modules.xml"/>
 	<Include file = "Script\Load_Script.xml"/>
 	<Include file = "Skin\Load_Skin.xml"/>
-	<Include file = "Topbar\Load_Topbar.xml"/>
 
 </Ui>

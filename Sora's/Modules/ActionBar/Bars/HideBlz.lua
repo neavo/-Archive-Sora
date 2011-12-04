@@ -174,7 +174,10 @@ do
 	ShapeshiftBarFrame:EnableMouse(false)
 	
 	local elements = {
-		MainMenuBar, MainMenuBarArtFrame, BonusActionBarFrame, VehicleMenuBar,
+		MainMenuBar, 
+		-- 会导致货币面板消失
+		-- MainMenuBarArtFrame,
+		BonusActionBarFrame, VehicleMenuBar,
 		PossessBarFrame, PetActionBarFrame, ShapeshiftBarFrame,
 		ShapeshiftBarLeft, ShapeshiftBarMiddle, ShapeshiftBarRight,
 	}

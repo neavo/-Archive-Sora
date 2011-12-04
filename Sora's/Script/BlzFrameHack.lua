@@ -23,7 +23,6 @@ WatchFrame:SetPoint("RIGHT", UIParent, -20, -10)
 WatchFrame.SetPoint = function() end
 WatchFrame:SetHeight(400)  
 
-
 -- 屏蔽系统红字提示
 local Event = CreateFrame("Frame")
 UIErrorsFrame:UnregisterEvent("UI_ERROR_MESSAGE")

@@ -14,7 +14,6 @@ function Module:OnEnable()
 		MultiCastActionBarFrame:ClearAllPoints()
 		MultiCastActionBarFrame.SetParent = function() end
 		MultiCastActionBarFrame.SetPoint = function() end
-		MultiCastRecallSpellButton.SetPoint = function() end
 		
 		hooksecurefunc("MultiCastActionButton_Update",function(Bar)
 			if not InCombatLockdown() then

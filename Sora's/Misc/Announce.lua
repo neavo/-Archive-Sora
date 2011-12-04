@@ -17,7 +17,7 @@ announce:SetScript("OnEvent", function(self, _, ...)
 		54646, --魔法凝聚
 		
 	}
-	local spellsall = false  --false僅僅只通報自己释放的true全部包括隊友的
+	local spellsall = true  --false僅僅只通報自己释放的true全部包括隊友的
 	if not (inInstance and (instanceType == "raid" or instanceType == "party")) then return end
 
 	if event == "SPELL_CAST_SUCCESS" or event == "SPELL_RESURRECT" then
