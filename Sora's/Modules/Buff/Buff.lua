@@ -1,161 +1,167 @@
 ﻿-- Engines
 local S, C, L, DB = unpack(select(2, ...))
-local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
-local Module = Sora:NewModule("Buff")
-local MediaPath = "Interface\\Addons\\Sora's\\Media\\"
-Font = MediaPath.."ROADWAY.ttf"
-local function Style(buttonName, i)
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Buff")
+local IconPerRow = 12
+local BuffPos, DebuffPos = nil, nil
+local tinsert, _G, tsort = tinsert, _G, table.sort
+local BuffTable = {["Time"] = {}, ["None"] = {}}
+
+function Module:Style(buttonName, i)
+
 	if not _G[buttonName..i] then return end
 	
 	local Button	= _G[buttonName..i]
 	local Icon		= _G[buttonName..i.."Icon"]
 	local Duration	= _G[buttonName..i.."Duration"]
 	local Count 	= _G[buttonName..i.."Count"]
+	local Border = _G[buttonName..i.."Border"]
 
-	Button:SetSize(BuffDB.IconSize, BuffDB.IconSize)
+	Button:SetSize(C["IconSize"], C["IconSize"])
+	
 	Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	
 	Duration:ClearAllPoints()
 	Duration:SetParent(Button)
 	Duration:SetPoint("TOP", Button, "BOTTOM", 0, 5)
-	Duration:SetFont(Font, 10, "THINOUTLINE")
+	Duration:SetFont("Interface\\Addons\\Sora's\\Media\\ROADWAY.ttf", 12, "THINOUTLINE")
+	
 	Count:ClearAllPoints()
 	Count:SetParent(Button)
 	Count:SetPoint("TOPRIGHT", Button, 3, -1)
-	Count:SetFont(Font, 11, "THINOUTLINE")
-	if not Button.Shadow then Button.Shadow = S.MakeShadow(Button, 3) end
-end
-local GetFormattedTime = function(s)
-	if s >= 86400 then
-		return format('%dd', floor(s/86400 + 0.5))
-	elseif s >= 3600 then
-		return format('%dh', floor(s/3600 + 0.5))
-	elseif s >= 60 then
-		return format('%dm', floor(s/60 + 0.5))
+	Count:SetFont("Interface\\Addons\\Sora's\\Media\\ROADWAY.ttf", 11, "THINOUTLINE")
+	
+	if Border then
+		Border:Hide()
 	end
-	return format('%ds', floor(s + 0.5))
+	
+	if not Button.Shadow then
+		Button.Shadow = S.MakeShadow(Button, 3)
+	end	
 end
 
 function Module:OnInitialize()
+	C = BuffDB
 	SetCVar("consolidateBuffs", 0)
 	SetCVar("buffDurations", 1)
 end
 
 function Module:OnEnable()
-local UpdateDuration = function(auraButton, timeLeft)
-	local Duration = auraButton.duration
-	if SHOW_BUFF_DURATIONS == "1" and timeLeft then
-		Duration:SetFormattedText(GetFormattedTime(timeLeft))
-		if timeLeft < BUFF_DURATION_WARNING_TIME then
-			Duration:SetVertexColor(1, 1, 1)
-		else
-			Duration:SetVertexColor(0.96, 0.82, 0.1)
-			--duration:SetVertexColor(245/255, 210/255, 26/255)
-		end
-		Duration:Show()
-	else
-		Duration:Hide()
+	BuffPos = CreateFrame("Frame", nil, UIParent)
+	BuffPos:SetSize(C["IconSize"], C["IconSize"])
+	MoveHandle.Buff = S.MakeMoveHandle(BuffPos, "Buff", "Buff")
+	DebuffPos = CreateFrame("Frame", nil, UIParent)
+	DebuffPos:SetSize(C["IconSize"], C["IconSize"])
+	MoveHandle.Debuff = S.MakeMoveHandle(DebuffPos, "Debuff", "Debuff")
+end
+
+function Module:SortBuff()
+	tsort(BuffTable["Time"], function(a, b)
+		return a.timeLeft > b.timeLeft
+	end)
+	for key, value in pairs(BuffTable["Time"]) do
+		tinsert(BuffTable["None"], value)
 	end
 end
-	local BuffPos = CreateFrame("Frame", nil, UIParent)
-	BuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
-	MoveHandle.Buff = S.MakeMoveHandle(BuffPos, "Buff", "Buff")
-	local DebuffPos = CreateFrame("Frame", nil, UIParent)
-	DebuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
-	MoveHandle.Debuff = S.MakeMoveHandle(DebuffPos, "Debuff", "Debuff")
-	hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", function()
-		local Temp = {[1]={}, [2]={}}
-		for i=1, BUFF_ACTUAL_DISPLAY do	
-			local Duration = select(6, UnitBuff("player", i))
-			if Duration == 0 then
-				table.insert(Temp[1], _G["BuffButton"..i])
-			else
-				table.insert(Temp[2], _G["BuffButton"..i])		
-			end
-		end
-		for i=1, #Temp[2]-1 do
-			for t=i+1, #Temp[2] do
-				if Temp[2][t].timeLeft > Temp[2][i].timeLeft then
-					Temp[2][t], Temp[2][i] = Temp[2][i], Temp[2][t]
-				end
-			end
-		end	
-		local BuffSort = {}
-		local Num = 0
-		hasMainHandEnchant, _, _, hasOffHandEnchant, _, _, hasThrownEnchant = GetWeaponEnchantInfo()
-		if hasMainHandEnchant then Num = Num + 1 end
-		if hasOffHandEnchant then Num = Num + 1 end
-		if hasThrownEnchant then Num = Num + 1 end
-		for i = 1, Num do
-			Style("TempEnchant", i)
-			tinsert(BuffSort, _G["TempEnchant"..i])
-		end
-		for i=1, 2 do
-			for t=1, #Temp[i] do
-				tinsert(BuffSort, Temp[i][t])
-			end
-		end
-		for i=1, BUFF_ACTUAL_DISPLAY + Num do
-			Style("BuffButton", i)
-			local Buff = BuffSort[i]
-			Buff:ClearAllPoints()
-			if BuffDB.BuffDirection == 1 then
-				if i == 1 then
-					Buff:SetPoint("CENTER", BuffPos)
-				elseif i == BuffDB.IconsPerRow + 1 then
-					Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -15)
-				elseif i == BuffDB.IconsPerRow*2 + 1 then
-					Buff:SetPoint("TOP", BuffSort[BuffDB.IconsPerRow + 1], "BOTTOM", 0, -15)		
-				elseif i < BuffDB.IconsPerRow*3 + 1 then
-					Buff:SetPoint("RIGHT", BuffSort[i-1], "LEFT", -BuffDB.Spacing, 0)
-				end
-			elseif BuffDB.BuffDirection == 2 then
-				if i == 1 then
-					Buff:SetPoint("CENTER", BuffPos)
-				elseif i == BuffDB.IconsPerRow + 1 then
-					Buff:SetPoint("TOP", BuffSort[1], "BOTTOM", 0, -15)
-				elseif i == BuffDB.IconsPerRow*2 + 1 then
-					Buff:SetPoint("TOP", BuffSort[BuffDB.IconsPerRow + 1], "BOTTOM", 0, -15)		
-				elseif i < BuffDB.IconsPerRow*3 + 1 then
-					Buff:SetPoint("LEFT", BuffSort[i-1], "RIGHT", BuffDB.Spacing, 0)
-				end
-			end
-		end
-	end)
-	hooksecurefunc("DebuffButton_UpdateAnchors", function(buttonName, i)
-		Style(buttonName, i)
-		local Debuff = _G[buttonName..i]
-		local Border = _G[buttonName..i.."Border"]
-		local Pre = _G[buttonName..(i-1)]
-		Debuff:ClearAllPoints()
-		Border:Hide()
-		if BuffDB.DebuffDirection == 1 then
-			if i == 1 then
-				Debuff:SetPoint("CENTER", DebuffPos)
-			elseif i == BuffDB.IconsPerRow + 1 then
-				Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -15)
-			elseif i < BuffDB.IconsPerRow*2 + 1 then
-				Debuff:SetPoint("RIGHT", Pre, "LEFT", -BuffDB.Spacing, 0)
-			end
-		elseif BuffDB.DebuffDirection == 2 then
-			if i == 1 then
-				Debuff:SetPoint("CENTER", DebuffPos)
-			elseif i == BuffDB.IconsPerRow + 1 then
-				Debuff:SetPoint("TOP", DebuffButton1, "BOTTOM", 0, -15)
-			elseif i < BuffDB.IconsPerRow*2 + 1 then
-				Debuff:SetPoint("LEFT", Pre, "RIGHT", BuffDB.Spacing, 0)
-			end
-		end
-	end)
-	--[[hooksecurefunc("AuraButton_OnUpdate", function(self, elapsed)
-		if self.timeLeft > BuffDB.WarningTime then
-			self.duration:SetTextColor(1, 1, 1)
-			self:SetAlpha(1)
-		elseif self.timeLeft < BuffDB.WarningTime then
-			self.duration:SetTextColor(1, 0, 0)
-			self:SetAlpha(BuffFrame.BuffAlphaValue)
-		else
-			self:SetAlpha(1)
-		end
-	end)--]]
-	hooksecurefunc("AuraButton_UpdateDuration", UpdateDuration)
+
+function Module:GetWeaponEnchantNum()
+	local Num = 0
+	hasMainHandEnchant, _, _, hasOffHandEnchant, _, _, hasThrownEnchant = GetWeaponEnchantInfo()
+	if hasMainHandEnchant then Num = Num + 1 end
+	if hasOffHandEnchant then Num = Num + 1 end
+	if hasThrownEnchant then Num = Num + 1 end
+	for i = 1, Num do
+		Module:Style("TempEnchant", i)
+		tinsert(BuffTable["None"], _G["TempEnchant"..i])
+	end
 end
+
+function Module:UpdateBuffPos()
+	for key, value in pairs(BuffTable["None"]) do
+		local Pre = BuffTable["None"][key-1]
+		local PreRow = BuffTable["None"][key-IconPerRow]
+		value:ClearAllPoints()
+		if C["BuffDirection"] == 1 then
+			if key == 1 then
+				value:SetPoint("CENTER", BuffPos)
+			elseif key%IconPerRow == 1 then
+				value:SetPoint("TOP", PreRow, "BOTTOM", 0, -15)
+			else
+				value:SetPoint("RIGHT", Pre, "LEFT", -8, 0)
+			end
+		end
+		if C["BuffDirection"] == 2 then
+			if key == 1 then
+				value:SetPoint("CENTER", BuffPos)
+			elseif key%IconPerRow == 1 then
+				value:SetPoint("TOP", PreRow, "BOTTOM", 0, -15)
+			else
+				value:SetPoint("LEFT", Pre, "RIGHT", 8, 0)
+			end
+		end
+	end
+end
+
+hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", function()
+	wipe(BuffTable["Time"])
+	wipe(BuffTable["None"])
+	
+	Module:GetWeaponEnchantNum()
+	
+	for i = 1, BUFF_ACTUAL_DISPLAY do
+		Module:Style("BuffButton", i)
+		if select(6, UnitBuff("player", i)) == 0 then
+			tinsert(BuffTable["None"], _G["BuffButton"..i])
+		else
+			tinsert(BuffTable["Time"], _G["BuffButton"..i])
+		end
+	end
+	
+	Module:SortBuff()
+	Module:UpdateBuffPos()
+end)
+
+hooksecurefunc("AuraButton_OnUpdate", function(self, elapsed)
+	if self.timeLeft < BUFF_DURATION_WARNING_TIME then
+		self:SetAlpha(BuffFrame.BuffAlphaValue)
+	else
+		self:SetAlpha(1)
+	end
+end)
+
+hooksecurefunc("AuraButton_UpdateDuration", function(auraButton, timeLeft)
+	local Duration = auraButton.duration
+	if timeLeft then
+		Duration:SetText(S.FormatTime(timeLeft, true))
+		if timeLeft < BUFF_DURATION_WARNING_TIME then
+			Duration:SetVertexColor(1, 0, 0)
+		else
+			Duration:SetVertexColor(0.96, 0.82, 0.1)
+		end
+	end
+end)
+
+hooksecurefunc("DebuffButton_UpdateAnchors", function(buttonName, i)
+	Module:Style(buttonName, i)
+	local Aura = _G[buttonName..i]
+	local Pre = _G[buttonName..(i-1)]
+	local PreRow = _G[buttonName..(i-IconPerRow)]
+	Aura:ClearAllPoints()
+	if C["DebuffDirection"] == 1 then
+		if i == 1 then
+			Aura:SetPoint("CENTER", DebuffPos)
+		elseif i%IconPerRow == 1 then
+			Aura:SetPoint("TOP", PreRow, "BOTTOM", 0, -15)
+		else
+			Aura:SetPoint("RIGHT", Pre, "LEFT", -8, 0)
+		end
+	end
+	if C["DebuffDirection"] == 2 then
+		if i == 1 then
+			Aura:SetPoint("CENTER", DebuffPos)
+		elseif i%IconPerRow == 1 then
+			Aura:SetPoint("TOP", PreRow, "BOTTOM", 0, -15)
+		else
+			Aura:SetPoint("LEFT", Pre, "RIGHT", 8, 0)
+		end
+	end
+end)

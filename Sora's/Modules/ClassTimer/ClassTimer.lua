@@ -123,14 +123,11 @@ end
 
 function Module:UpdateActive(unit)
 	Module:GetUnitVal(unit)
-	local index = 1
-	while true do
-		local name, _, icon, count, _, duration, expires, caster = Func(unit, index)
-		if not name then break end
+	for i = 1, BUFF_ACTUAL_DISPLAY do 
+		local name, _, icon, count, _, duration, expires, caster = Func(unit, i)
 		if (caster == "player" and (((duration < Limit and duration ~= 0) or Limit == 0) and not C["BlackList"][name])) or C["WhiteList"][name] then
 			tinsert(Active, {name, icon, count, duration, expires})
 		end
-		index = index + 1
 	end
 end
 
