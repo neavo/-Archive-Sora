@@ -2,7 +2,8 @@
 local S, C, L, DB = unpack(select(2, ...))
 local Sora = LibStub("AceAddon-3.0"):GetAddon("Sora")
 local Module = Sora:NewModule("Buff")
-
+local MediaPath = "Interface\\Addons\\Sora's\\Media\\"
+Font = MediaPath.."ROADWAY.ttf"
 local function Style(buttonName, i)
 	if not _G[buttonName..i] then return end
 	
@@ -15,13 +16,23 @@ local function Style(buttonName, i)
 	Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	Duration:ClearAllPoints()
 	Duration:SetParent(Button)
-	Duration:SetPoint("TOP", Button, "BOTTOM", 1, -3)
-	Duration:SetFont(DB.Font, 9, "THINOUTLINE")
+	Duration:SetPoint("TOP", Button, "BOTTOM", 0, 5)
+	Duration:SetFont(Font, 10, "THINOUTLINE")
 	Count:ClearAllPoints()
 	Count:SetParent(Button)
-	Count:SetPoint("BOTTOMRIGHT", Button, 3, -1)
-	Count:SetFont(DB.Font, 8, "THINOUTLINE")
+	Count:SetPoint("TOPRIGHT", Button, 3, -1)
+	Count:SetFont(Font, 11, "THINOUTLINE")
 	if not Button.Shadow then Button.Shadow = S.MakeShadow(Button, 3) end
+end
+local GetFormattedTime = function(s)
+	if s >= 86400 then
+		return format('%dd', floor(s/86400 + 0.5))
+	elseif s >= 3600 then
+		return format('%dh', floor(s/3600 + 0.5))
+	elseif s >= 60 then
+		return format('%dm', floor(s/60 + 0.5))
+	end
+	return format('%ds', floor(s + 0.5))
 end
 
 function Module:OnInitialize()
@@ -30,6 +41,21 @@ function Module:OnInitialize()
 end
 
 function Module:OnEnable()
+local UpdateDuration = function(auraButton, timeLeft)
+	local Duration = auraButton.duration
+	if SHOW_BUFF_DURATIONS == "1" and timeLeft then
+		Duration:SetFormattedText(GetFormattedTime(timeLeft))
+		if timeLeft < BUFF_DURATION_WARNING_TIME then
+			Duration:SetVertexColor(1, 1, 1)
+		else
+			Duration:SetVertexColor(0.96, 0.82, 0.1)
+			--duration:SetVertexColor(245/255, 210/255, 26/255)
+		end
+		Duration:Show()
+	else
+		Duration:Hide()
+	end
+end
 	local BuffPos = CreateFrame("Frame", nil, UIParent)
 	BuffPos:SetSize(BuffDB.IconSize, BuffDB.IconSize)
 	MoveHandle.Buff = S.MakeMoveHandle(BuffPos, "Buff", "Buff")
@@ -120,7 +146,7 @@ function Module:OnEnable()
 			end
 		end
 	end)
-	hooksecurefunc("AuraButton_OnUpdate", function(self, elapsed)
+	--[[hooksecurefunc("AuraButton_OnUpdate", function(self, elapsed)
 		if self.timeLeft > BuffDB.WarningTime then
 			self.duration:SetTextColor(1, 1, 1)
 			self:SetAlpha(1)
@@ -130,5 +156,6 @@ function Module:OnEnable()
 		else
 			self:SetAlpha(1)
 		end
-	end)
+	end)--]]
+	hooksecurefunc("AuraButton_UpdateDuration", UpdateDuration)
 end

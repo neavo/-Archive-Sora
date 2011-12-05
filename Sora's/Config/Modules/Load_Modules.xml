@@ -1,6 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
 
 	<Script file = "ActionBar.lua"/>
+	<Script file = "Announce.lua"/>
 	<Script file = "Buff.lua"/>
 	<Script file = "ClassTimer.lua"/>
 	<Script file = "MoveHandle.lua"/>
