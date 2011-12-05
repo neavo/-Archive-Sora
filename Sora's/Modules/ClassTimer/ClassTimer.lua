@@ -3,6 +3,7 @@ local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("ClassTimer", "AceEvent-3.0")
 local PlayerAura, PlayerActive, TargetAura, TargetActive = {}, {}, {}, {}
 local UnitFrame, Mode, IconSize, Limit, Aura, Active, Func =  nil, nil, nil, nil, nil, nil, nil
+local tinsert, tsort, _G, UnitBuff, UnitDebuff = tinsert, table.sort, _G, UnitBuff, UnitDebuff
 
 function Module:BuildBar(BarWidth, IconSize)
 	local Aura = CreateFrame("Frame", nil, UIParent)
@@ -133,13 +134,11 @@ function Module:UpdateActive(unit)
 	end
 end
 
-local function SortMethod(a, b)
-	return a[4]-GetTime() < b[4]-GetTime()
-end
-
 function Module:SortActive(unit)
 	Module:GetUnitVal(unit)
-	table.sort(Active, SortMethod)
+	tsort(Active, function(a, b)
+		return (a[5]-GetTime()) < (b[5]-GetTime())
+	end)
 end
 
 function Module:UpdateAura(unit)
@@ -149,35 +148,28 @@ function Module:UpdateAura(unit)
 		if not Aura[key] then
 			Aura[key] = Module:BuildAura(unit)
 		end
-		local Frame = Aura[key]
-		local Spellname, Icon, Count, Time, Statusbar, Cooldown = Frame.Spellname, Frame.Icon, Frame.Count, Frame.Time, Frame.Statusbar, Frame.Cooldown
-		if Spellname then
-			Spellname:SetText(name)
+		local Aura = Aura[key]
+		Aura.Icon:SetTexture(icon)
+		Aura.Count:SetText(count>1 and count or "")		
+		if Mode == "Icon" then
+			CooldownFrame_SetTimer(Aura.Cooldown, expires-duration, duration, 1)
 		end
-		if Icon then
-			Icon:SetTexture(icon)
+		if Mode == "Bar" then
+			Aura.Spellname:SetText(name)
+			Aura.Statusbar:SetMinMaxValues(0, duration)
+			Aura.Timer = 0
+			Aura:SetScript("OnUpdate", function(self, elapsed)
+				self.Timer = expires-GetTime()
+				if self.Timer >= 60 then
+					self.Time:SetFormattedText("%d:%.2d", self.Timer/60, self.Timer%60)
+					self.Statusbar:SetValue(self.Timer)
+				elseif self.Timer < 60 then
+					self.Time:SetFormattedText("%.1f", self.Timer)
+					self.Statusbar:SetValue(self.Timer)
+				end
+			end)
 		end
-		if Count then
-			Count:SetText(count>1 and count or "")
-		end
-		if Statusbar then
-			Statusbar:SetMinMaxValues(0, duration)
-		end
-		if Cooldown then
-			CooldownFrame_SetTimer(Cooldown, expires-duration, duration, 1)
-		end
-		local Timer = 0
-		Frame:SetScript("OnUpdate", function(self, elapsed)
-			Timer = expires-GetTime()
-			if Timer >= 60 then
-				if Time then Time:SetFormattedText("%d:%.2d", Timer/60, Timer%60) end
-				if Statusbar then Statusbar:SetValue(Timer) end
-			elseif Timer < 60 then
-				if Time then Time:SetFormattedText("%.1f", Timer) end
-				if Statusbar then Statusbar:SetValue(Timer) end
-			end
-		end)
-		Frame:Show()
+		Aura:Show()
 	end
 end
 
