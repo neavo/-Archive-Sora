@@ -5,7 +5,7 @@ function Module:OnEnable()
 local open = AnnounceDB.Open
 local spells = AnnounceDB.List
 local spellsall = AnnounceDB.All
-if open == true then 
+if open ~= true then return end
 local announce = CreateFrame("Frame")
 announce:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 announce:SetScript("OnEvent", function(self, _, ...)
@@ -42,5 +42,4 @@ if not (inInstance and (instanceType == "raid" or instanceType == "party")) then
 		end
 	end
 end)
-end
 end
