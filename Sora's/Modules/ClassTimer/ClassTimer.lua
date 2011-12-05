@@ -55,10 +55,10 @@ end
 
 function Module:GetUnitVal(unit)
 	if unit == "player" then
-		UnitFrame, Mode, IconSize, Limit, Aura, Active, Func = _G["oUF_SoraPlayer"], C["PlayerMode"], C["PlayerIconSize"], C["PlayerLimit"], PlayerAura, PlayerActive, UnitBuff
+		UnitFrame, Mode, IconSize, Limit, Aura, Active, Func = _G["oUF_SoraPlayer"], C["PlayerMode"], C["PlayerIconSize"], BUFF_ACTUAL_DISPLAY, PlayerAura, PlayerActive, UnitBuff
 	end
 	if unit == "target" then 
-		UnitFrame, Mode, IconSize, Limit, Aura, Active, Func = _G["oUF_SoraTarget"], C["TargetMode"], C["TargetIconSize"], C["TargetLimit"], TargetAura, TargetActive, UnitDebuff
+		UnitFrame, Mode, IconSize, Limit, Aura, Active, Func = _G["oUF_SoraTarget"], C["TargetMode"], C["TargetIconSize"], MAX_TARGET_DEBUFFS, TargetAura, TargetActive, UnitDebuff
 	end
 end
 
@@ -123,9 +123,9 @@ end
 
 function Module:UpdateActive(unit)
 	Module:GetUnitVal(unit)
-	for i = 1, BUFF_ACTUAL_DISPLAY do 
+	for i = 1, Limit do 
 		local name, _, icon, count, _, duration, expires, caster = Func(unit, i)
-		if (caster == "player" and (((duration < Limit and duration ~= 0) or Limit == 0) and not C["BlackList"][name])) or C["WhiteList"][name] then
+		if (caster == "player" and ((duration < 60 and duration ~= 0) and not C["BlackList"][name])) or C["WhiteList"][name] then
 			tinsert(Active, {name, icon, count, duration, expires})
 		end
 	end

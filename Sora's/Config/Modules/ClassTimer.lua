@@ -17,30 +17,18 @@ function Module.LoadSettings()
 			["TargetIconSize"] = 20,
 		["BlackList"] = {},
 		["WhiteList"] = {
-			-- 嗜血
-			[GetSpellInfo(2825)] = true,
-			-- 邪恶狂热
-			[GetSpellInfo(8699)] = true,
-			-- 能量灌注
-			[GetSpellInfo(10060)] = true,
-			-- 英勇
-			[GetSpellInfo(32182)] = true,
-			-- 痛苦压制
-			[GetSpellInfo(33206)] = true,
-			-- 反魔法领域
-			[GetSpellInfo(50461)] = true,
-			-- 神圣牺牲
-			[GetSpellInfo(64205)] = true,
-			-- 时间扭曲
-			[GetSpellInfo(80353)] = true,
-			-- 真言术：障
-			[GetSpellInfo(81781)] = true,
-			-- 远古狂乱
-			[GetSpellInfo(90355)] = true,
-			-- 集结呐喊
-			[GetSpellInfo(97463)] = true,
-			-- 灵魂链接图腾
-			[GetSpellInfo(98007)] = true,
+			[GetSpellInfo(2825)] = true, -- 嗜血
+			[GetSpellInfo(8699)] = true, -- 邪恶狂热
+			[GetSpellInfo(10060)] = true, -- 能量灌注
+			[GetSpellInfo(32182)] = true, -- 英勇
+			[GetSpellInfo(33206)] = true, -- 痛苦压制
+			[GetSpellInfo(50461)] = true, -- 反魔法领域
+			[GetSpellInfo(64205)] = true, -- 神圣牺牲
+			[GetSpellInfo(80353)] = true, -- 时间扭曲
+			[GetSpellInfo(81781)] = true, -- 真言术：障
+			[GetSpellInfo(90355)] = true, -- 远古狂乱
+			[GetSpellInfo(97463)] = true, -- 集结呐喊
+			[GetSpellInfo(98007)] = true, -- 灵魂链接图腾
 		},
 	}
 	if not ClassTimerDB then ClassTimerDB = {} end
@@ -138,18 +126,11 @@ function Module.BuildGUI()
 								Sora:GetModule("ClassTimer"):ClearAura("player")
 							end,
 						},
-						PlayerLimit = {
-							type = "range", order = 2,
-							name = "玩家增益计时阈值(秒)：", desc = "请输入玩家增益计时阈值(秒)",
-							min = 0, max = 600, step = 1,
-							disabled = ClassTimerDB["PlayerMode"] == "None",
-							get = function() return ClassTimerDB["PlayerLimit"] end,
-							set = function(_, value) ClassTimerDB["PlayerLimit"] = value end,
-						},
 						PlayerIconSize = {
-							type = "range", order = 3,
+							type = "range", order = 2,
 							name = "玩家增益计时图标大小：", desc = "请输入玩家增益计时图标大小",
 							min = 10, max = 100, step = 1,
+							width = "full",
 							disabled = ClassTimerDB["PlayerMode"] == "None",
 							get = function() return ClassTimerDB["PlayerIconSize"] end,
 							set = function(_, value)
@@ -158,7 +139,7 @@ function Module.BuildGUI()
 							end,
 						},
 						TargetMode = {
-							type = "select", order = 4,
+							type = "select", order = 3,
 							name = "目标减益计时模式：", desc = "请选择目标减益计时模式：",
 							values = {["Bar"] = "计时条模式", ["Icon"] = "图标模式", ["None"] = "无"},
 							get = function() return ClassTimerDB["TargetMode"] end,
@@ -167,18 +148,11 @@ function Module.BuildGUI()
 								Sora:GetModule("ClassTimer"):ClearAura("target")
 							end,
 						}, 
-						TargetLimit = {
-							type = "range", order = 5,
-							name = "目标减益计时阈值(秒)：", desc = "请输入目标减益计时阈值(秒)",
-							min = 0, max = 600, step = 1,
-							disabled = ClassTimerDB["TargetMode"] == "None",
-							get = function() return ClassTimerDB["TargetLimit"] end,
-							set = function(_, value) ClassTimerDB["TargetLimit"] = value end,
-						},
 						TargetIconSize = {
-							type = "range", order = 6,
+							type = "range", order = 4,
 							name = "目标减益计时图标大小：", desc = "请输入目标减益计时图标大小",
 							min = 10, max = 100, step = 1,
+							width = "full",
 							disabled = ClassTimerDB["TargetMode"] == "None",
 							get = function() return ClassTimerDB["TargetIconSize"] end,
 							set = function(_, value)
