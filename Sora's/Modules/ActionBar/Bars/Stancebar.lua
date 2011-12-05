@@ -17,7 +17,6 @@ local States = {
 function Module:OnInitialize()
 	C = ActionBarDB
 	Module:RegisterEvent("PLAYER_LOGIN")
-	Module:RegisterEvent("PLAYER_ENTERING_WORLD", StyleShift)
 	Module:RegisterEvent("UPDATE_SHAPESHIFT_FORMS")
 	Module:RegisterEvent("UPDATE_SHAPESHIFT_USABLE", ShiftBarUpdate)
 	Module:RegisterEvent("UPDATE_SHAPESHIFT_COOLDOWN", ShiftBarUpdate)
@@ -42,6 +41,7 @@ function Module:PLAYER_LOGIN(self, event, ...)
 			Button:Show()
 		end
 	end
+	StyleShift()
 	RegisterStateDriver(Stancebar, "visibility", States[DB.MyClass] or "hide")
 end
 

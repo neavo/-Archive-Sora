@@ -338,30 +338,8 @@ if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
 end
 
 if ExtraActionBarFrame then
+	ExtraActionBarFrame:SetParent(UIParent)
 	ExtraActionBarFrame:ClearAllPoints()
 	ExtraActionBarFrame:SetPoint("BOTTOM", 0, 340)
+	ExtraActionBarFrame.SetPoint = function() end
 end
-
---[[ hook the texture, idea by roth via WoWInterface forums
-local button = ExtraActionButton1
-local icon = button.icon
-local texture = button.Style
-local disableTexture = function(Style, texture)
-	if string.sub(texture,1,9) == "Interface" then
-		Style:SetTexture("")
-	end
-end
-button.Style:SetTexture("")
-hooksecurefunc(texture, "SetTexture", disableTexture)
-
--- spell icon
-icon:SetTexCoord(.08, .92, .08, .92)
-icon:SetPoint("TOPLEFT", button, 2, -2)
-icon:SetPoint("BOTTOMRIGHT", button, -2, 2)
-
--- pushed/hover
-StyleButton(button,true)
-ExtraActionButton1:SetWidth(30)
-ExtraActionButton1:SetHeight(30)
--- backdrop
-CreateShadow(button)]]
