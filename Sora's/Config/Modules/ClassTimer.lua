@@ -10,15 +10,13 @@ local Module = DB["Modules"]["ClassTimer"]
 function Module.LoadSettings()
 	local Default = {
 		["PlayerMode"] = "Icon",
-			["PlayerLimit"] = 60,
 			["PlayerIconSize"] = 30,
 		["TargetMode"] = "Bar",
-			["TargetLimit"] = 60,
 			["TargetIconSize"] = 20,
 		["BlackList"] = {},
 		["WhiteList"] = {
-			[GetSpellInfo(2825)] = true, -- 嗜血
-			[GetSpellInfo(8699)] = true, -- 邪恶狂热
+			[GetSpellInfo( 2825)] = true, -- 嗜血
+			[GetSpellInfo( 8699)] = true, -- 邪恶狂热
 			[GetSpellInfo(10060)] = true, -- 能量灌注
 			[GetSpellInfo(32182)] = true, -- 英勇
 			[GetSpellInfo(33206)] = true, -- 痛苦压制
@@ -130,7 +128,7 @@ function Module.BuildGUI()
 							type = "range", order = 2,
 							name = "玩家增益计时图标大小：", desc = "请输入玩家增益计时图标大小",
 							min = 10, max = 100, step = 1,
-							width = "full",
+							width = "double",
 							disabled = ClassTimerDB["PlayerMode"] == "None",
 							get = function() return ClassTimerDB["PlayerIconSize"] end,
 							set = function(_, value)
@@ -152,7 +150,7 @@ function Module.BuildGUI()
 							type = "range", order = 4,
 							name = "目标减益计时图标大小：", desc = "请输入目标减益计时图标大小",
 							min = 10, max = 100, step = 1,
-							width = "full",
+							width = "double",
 							disabled = ClassTimerDB["TargetMode"] == "None",
 							get = function() return ClassTimerDB["TargetIconSize"] end,
 							set = function(_, value)

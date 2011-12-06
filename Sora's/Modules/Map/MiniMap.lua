@@ -39,23 +39,23 @@ MinimapCluster:EnableMouse(false)
 
 --BG icon
 MiniMapBattlefieldFrame:ClearAllPoints()
-MiniMapBattlefieldFrame:SetPoint("BOTTOMLEFT", 0, -4)
+MiniMapBattlefieldFrame:SetPoint("BOTTOMLEFT", Minimap, 0, -4)
 
 --LFG icon
 MiniMapLFGFrame:ClearAllPoints()
 MiniMapLFGFrameBorder:SetAlpha(0)
-MiniMapLFGFrame:SetPoint("TOPLEFT", 0, 4)
+MiniMapLFGFrame:SetPoint("TOPLEFT", Minimap, 0, 4)
 
 MiniMapInstanceDifficulty:ClearAllPoints()
-MiniMapInstanceDifficulty:SetPoint("TOPRIGHT", 0, 4)
+MiniMapInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, 0, 4)
 MiniMapInstanceDifficulty:SetScale(0.8)
 
 GuildInstanceDifficulty:ClearAllPoints()
-GuildInstanceDifficulty:SetPoint("TOPRIGHT", 0, 4)
+GuildInstanceDifficulty:SetPoint("TOPRIGHT", Minimap, 0, 4)
 GuildInstanceDifficulty:SetScale(0.8)
 
 MiniMapMailFrame:ClearAllPoints()
-MiniMapMailFrame:SetPoint("BOTTOMRIGHT", 0, -4)
+MiniMapMailFrame:SetPoint("BOTTOMRIGHT", Minimap, 0, -4)
 MiniMapMailIcon:SetTexture("Interface\\AddOns\\Sora's\\Media\\Mail")
 MiniMapMailBorder:Hide()
 
