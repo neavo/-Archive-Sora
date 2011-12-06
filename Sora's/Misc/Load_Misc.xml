@@ -2,7 +2,6 @@
 
 	<Script file = "Align.lua"/>
 	<Script file = "AlreadyKnown.lua"/>
-	<Script file = "Announce.lua"/>
 	<Script file = "AutoRepair.lua"/>
 	<Script file = "AutoSell.lua"/>
 	<Script file = "Durability.lua"/>	
