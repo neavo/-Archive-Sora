@@ -7,7 +7,7 @@ if uiVersion ~= 40300 then return end
 
 function Module:OnEnable()
 
-	local Bar = CreateFrame("Frame", nil,UIParent, "SecureHandlerStateTemplate")
+	local Bar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
 	Bar:SetSize(40, 40)
 	Bar:SetPoint("BOTTOM", 0, 350)
 
