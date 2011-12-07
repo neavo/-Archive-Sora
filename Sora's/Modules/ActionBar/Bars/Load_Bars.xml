@@ -5,6 +5,7 @@
 	<Script file = "Bar3.lua"/>
 	<Script file = "Bar4.lua"/>
 	<Script file = "Bar5.lua"/>
+	<Script file = "ExtraActionBar.lua"/>
 	<Script file = "HideBlz.lua"/>
 	<Script file = "Others.lua"/>
 	<Script file = "Petbar.lua"/>

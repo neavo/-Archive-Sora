@@ -240,106 +240,98 @@ hooksecurefunc("ActionButton_Update", Style)
 hooksecurefunc("ActionButton_UpdateHotkeys", updatehotkey)
 hooksecurefunc("ActionButton_UpdateFlyout", styleflyout)
 
-if select(2, UnitClass("player"))== "SHAMAN" and MultiCastActionBarFrame then
-	hooksecurefunc("MultiCastFlyoutFrame_ToggleFlyout", function(Flyout)
-		Flyout.top:SetTexture(nil)
-		Flyout.middle:SetTexture(nil)
-		local last = nil
-		
-		for _, Button in ipairs(Flyout.buttons) do
-			local Icon = select(1, Button:GetRegions())
-			Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-			Icon:SetDrawLayer("ARTWORK")
-			Icon:SetPoint("TOPLEFT", 2, -2)
-			Icon:SetPoint("BOTTOMRIGHT", -2, 2)		
-			if not InCombatLockdown() then
-				Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
-				Button:ClearAllPoints()
-				Button:SetPoint("BOTTOM", last, "TOP", 0, 3)
-				Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
-			end
-			if Button:IsVisible() then last = Button end
-			Button:SetBackdropBorderColor(Flyout.parent:GetBackdropBorderColor())
-			StyleButton(Button)		
-		end
-		
-		Flyout.buttons[1]:SetPoint("BOTTOM")	
-		Flyout:ClearAllPoints()
-		Flyout:SetPoint("BOTTOM", Flyout.parent, "TOP", 0, 4)
-	end)
-	local function StyleTotemSlotButton(Button, index)
-		Button.overlayTex:SetTexture(nil)
-		Button.background:ClearAllPoints()
-		Button.background:SetPoint("TOPLEFT", 2, -2)
-		Button.background:SetPoint("BOTTOMRIGHT", -2, 2)
-		Button.Shadow = S.MakeTexShadow(Button, Button.background, 4)
-		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
-		Button:ClearAllPoints()
-		if index == 1 then
-			Button:SetPoint("LEFT", MultiCastSummonSpellButton, "RIGHT", ActionBarDB.ButtonSize+3*2, 0)
-		elseif index == 2 then
-			Button:SetPoint("LEFT", MultiCastSummonSpellButton, "RIGHT", 3, 0)
-		elseif index == 3 then
-			Button:SetPoint("LEFT", MultiCastSlotButton1, "RIGHT", 3, 0)
-		elseif index == 4 then
-			Button:SetPoint("LEFT", MultiCastSlotButton3, "RIGHT", 3, 0)		
-		end
-		StyleButton(Button)
-	end
-	hooksecurefunc("MultiCastSlotButton_Update", function(self, slot) StyleTotemSlotButton(self, tonumber(string.match(self:GetName(), "MultiCastSlotButton(%d)"))) end)
-
-	local function StyleTotemActionButton(Button, index)
+if DB.MyClass ~= "SHAMAN" then return end
+hooksecurefunc("MultiCastFlyoutFrame_ToggleFlyout", function(Flyout)
+	Flyout.top:SetTexture(nil)
+	Flyout.middle:SetTexture(nil)
+	local last = nil
+	
+	for _, Button in ipairs(Flyout.buttons) do
 		local Icon = select(1, Button:GetRegions())
 		Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+		Icon:SetDrawLayer("ARTWORK")
 		Icon:SetPoint("TOPLEFT", 2, -2)
-		Icon:SetPoint("BOTTOMRIGHT", -2, 2)
-		Button.overlayTex:SetTexture(nil)
-		Button.overlayTex:Hide()
-		Button:GetNormalTexture():SetTexCoord(0, 0, 0, 0)
-		if Button.slotButton then
+		Icon:SetPoint("BOTTOMRIGHT", -2, 2)		
+		if not InCombatLockdown() then
+			Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
 			Button:ClearAllPoints()
-			Button:SetAllPoints(Button.slotButton)
-			Button:SetFrameLevel(Button.slotButton:GetFrameLevel()+1)
+			Button:SetPoint("BOTTOM", last, "TOP", 0, 3)
+			Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
 		end
-		Button:SetBackdropColor(0, 0, 0, 0)
-		StyleButton(Button, true)
+		if Button:IsVisible() then last = Button end
+		Button:SetBackdropBorderColor(Flyout.parent:GetBackdropBorderColor())
+		StyleButton(Button)		
 	end
-	hooksecurefunc("MultiCastActionButton_Update", function(actionButton, actionId, actionIndex, slot) StyleTotemActionButton(actionButton, actionIndex) end)
-	hooksecurefunc("MultiCastSummonSpellButton_Update", function(Button)
-		if not Button then return end
-		local Icon = select(1, Button:GetRegions())
-		Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-		Icon:SetPoint("TOPLEFT", 2, -2)
-		Icon:SetPoint("BOTTOMRIGHT", -2, 2)
-		Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
-		Button:GetNormalTexture():SetTexture(nil)
-		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
-		Button:ClearAllPoints()
-		Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", 0, 5)
-		_G[Button:GetName().."Highlight"]:SetTexture(nil)
-		_G[Button:GetName().."NormalTexture"]:SetTexture(nil)
-		StyleButton(Button)
-	end)
-	hooksecurefunc("MultiCastRecallSpellButton_Update", function(Button)
-		if not Button then return end
-		local Icon = select(1, Button:GetRegions())
-		Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-		Icon:SetPoint("TOPLEFT", 2, -2)
-		Icon:SetPoint("BOTTOMRIGHT", -2, 2)
-		Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
-		Button:GetNormalTexture():SetTexture(nil)
-		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
-		Button:ClearAllPoints()
-		Button:SetPoint("LEFT", MultiCastSlotButton4, "RIGHT", 3, 0)	
-		_G[Button:GetName().."Highlight"]:SetTexture(nil)
-		_G[Button:GetName().."NormalTexture"]:SetTexture(nil)
-		StyleButton(Button)
-	end)
+	
+	Flyout.buttons[1]:SetPoint("BOTTOM")	
+	Flyout:ClearAllPoints()
+	Flyout:SetPoint("BOTTOM", Flyout.parent, "TOP", 0, 4)
+end)
+local function StyleTotemSlotButton(Button, index)
+	Button.overlayTex:SetTexture(nil)
+	Button.background:ClearAllPoints()
+	Button.background:SetPoint("TOPLEFT", 2, -2)
+	Button.background:SetPoint("BOTTOMRIGHT", -2, 2)
+	Button.Shadow = S.MakeTexShadow(Button, Button.background, 4)
+	Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
+	Button:ClearAllPoints()
+	if index == 1 then
+		Button:SetPoint("LEFT", MultiCastSummonSpellButton, "RIGHT", ActionBarDB.ButtonSize+3*2, 0)
+	elseif index == 2 then
+		Button:SetPoint("LEFT", MultiCastSummonSpellButton, "RIGHT", 3, 0)
+	elseif index == 3 then
+		Button:SetPoint("LEFT", MultiCastSlotButton1, "RIGHT", 3, 0)
+	elseif index == 4 then
+		Button:SetPoint("LEFT", MultiCastSlotButton3, "RIGHT", 3, 0)		
+	end
+	StyleButton(Button)
 end
+hooksecurefunc("MultiCastSlotButton_Update", function(self, slot) StyleTotemSlotButton(self, tonumber(string.match(self:GetName(), "MultiCastSlotButton(%d)"))) end)
 
-if ExtraActionBarFrame then
-	ExtraActionBarFrame:SetParent(UIParent)
-	ExtraActionBarFrame:ClearAllPoints()
-	ExtraActionBarFrame:SetPoint("BOTTOM", 0, 340)
-	ExtraActionBarFrame.SetPoint = function() end
+local function StyleTotemActionButton(Button, index)
+	local Icon = select(1, Button:GetRegions())
+	Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	Icon:SetPoint("TOPLEFT", 2, -2)
+	Icon:SetPoint("BOTTOMRIGHT", -2, 2)
+	Button.overlayTex:SetTexture(nil)
+	Button.overlayTex:Hide()
+	Button:GetNormalTexture():SetTexCoord(0, 0, 0, 0)
+	if Button.slotButton then
+		Button:ClearAllPoints()
+		Button:SetAllPoints(Button.slotButton)
+		Button:SetFrameLevel(Button.slotButton:GetFrameLevel()+1)
+	end
+	Button:SetBackdropColor(0, 0, 0, 0)
+	StyleButton(Button, true)
 end
+hooksecurefunc("MultiCastActionButton_Update", function(actionButton, actionId, actionIndex, slot) StyleTotemActionButton(actionButton, actionIndex) end)
+hooksecurefunc("MultiCastSummonSpellButton_Update", function(Button)
+	if not Button then return end
+	local Icon = select(1, Button:GetRegions())
+	Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	Icon:SetPoint("TOPLEFT", 2, -2)
+	Icon:SetPoint("BOTTOMRIGHT", -2, 2)
+	Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
+	Button:GetNormalTexture():SetTexture(nil)
+	Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
+	Button:ClearAllPoints()
+	Button:SetPoint("BOTTOMLEFT", DB.ActionBar, "TOPLEFT", 0, 5)
+	_G[Button:GetName().."Highlight"]:SetTexture(nil)
+	_G[Button:GetName().."NormalTexture"]:SetTexture(nil)
+	StyleButton(Button)
+end)
+hooksecurefunc("MultiCastRecallSpellButton_Update", function(Button)
+	if not Button then return end
+	local Icon = select(1, Button:GetRegions())
+	Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	Icon:SetPoint("TOPLEFT", 2, -2)
+	Icon:SetPoint("BOTTOMRIGHT", -2, 2)
+	Button.Shadow = S.MakeTexShadow(Button, Icon, 4)
+	Button:GetNormalTexture():SetTexture(nil)
+	Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
+	Button:ClearAllPoints()
+	Button:SetPoint("LEFT", MultiCastSlotButton4, "RIGHT", 3, 0)	
+	_G[Button:GetName().."Highlight"]:SetTexture(nil)
+	_G[Button:GetName().."NormalTexture"]:SetTexture(nil)
+	StyleButton(Button)
+end)
