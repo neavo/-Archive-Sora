@@ -2,7 +2,11 @@
 local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("ExtraActionBar")
 
+local _, _, _, uiVersion = GetBuildInfo()
+if uiVersion ~= 40300 then return end
+
 function Module:OnEnable()
+
 	local Bar = CreateFrame("Frame","rABS_ExtraActionBar",UIParent, "SecureHandlerStateTemplate")
 	Bar:SetSize(40, 40)
 	Bar:SetPoint("BOTTOM", 0, 350)
