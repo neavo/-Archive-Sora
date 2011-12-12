@@ -8,10 +8,9 @@
 	<Script file = "ExtraActionBar.lua"/>
 	<Script file = "HideBlz.lua"/>
 	<Script file = "Others.lua"/>
-	<Script file = "Petbar.lua"/>
-	<Script file = "Stancebar.lua"/>
-	<Script file = "Totembar.lua"/>
+	<Script file = "PetBar.lua"/>
+	<Script file = "StanceBar.lua"/>
+	<Script file = "TotemBar.lua"/>
 	<Script file = "VehicleExit.lua"/>
-	<Script file = "Style.lua"/>
 	
 </Ui>

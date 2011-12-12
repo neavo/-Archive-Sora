@@ -1,14 +1,17 @@
--- Engines
+﻿-- Engines
 local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Bar2")
 
-function Module:OnEnable()
+function Module:OnInitialize()
+	C = ActionBarDB
 	MultiBarBottomLeft:SetParent(DB.ActionBar)
-	MultiBarBottomLeft:ClearAllPoints()
-	MultiBarBottomLeft.SetPoint = function() end
+end
+
+function Module:OnEnable()
+	local Button = nil
 	for i = 1, 12 do
-		local Button = _G["MultiBarBottomLeftButton"..i]
-		Button:SetSize(ActionBarDB.ButtonSize, ActionBarDB.ButtonSize)
+		Button = _G["MultiBarBottomLeftButton"..i]
+		Button:SetSize(C["ButtonSize"], C["ButtonSize"])
 		Button:ClearAllPoints()
 		if i == 1 then
 			Button:SetPoint("BOTTOM", ActionButton1, "TOP", 0, 5)

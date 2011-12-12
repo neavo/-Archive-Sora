@@ -7,6 +7,7 @@
 
 	<Script file = "HoverBind.lua"/>
 	<Script file = "Panel.lua"/>
+	<Script file = "Style.lua"/>
 	<Script file = "tullaRange.lua"/>
 
 </Ui>

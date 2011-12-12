@@ -7,7 +7,8 @@ local Page = {
 	["DRUID"] = "[bonusbar:1,nostealth] 7; [bonusbar:1,stealth] 8; [bonusbar:2] 8; [bonusbar:3] 9; [bonusbar:4] 10;",
 	["WARRIOR"] = "[bonusbar:1] 7; [bonusbar:2] 8; [bonusbar:3] 9;",
 	["PRIEST"] = "[bonusbar:1] 7;",
-	["ROGUE"] = "[bonusbar:1] 7; [form:3] 7;",
+	["ROGUE"] = "[bonusbar:1] 7; [form:3] 10;",
+	["WARLOCK"] = "[form:2] 7;",
 	["DEFAULT"] = "[bonusbar:5] 11; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;",
 }
 
@@ -25,11 +26,10 @@ function Module:OnInitialize()
 	C = ActionBarDB
 	Module:RegisterEvent("PLAYER_LOGIN")
 	Module:RegisterEvent("PLAYER_ENTERING_WORLD")
-	Module:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 	Module:RegisterEvent("KNOWN_CURRENCY_TYPES_UPDATE", MainMenuBar_OnEvent)
 	Module:RegisterEvent("CURRENCY_DISPLAY_UPDATE", MainMenuBar_OnEvent)
 	Module:RegisterEvent("BAG_UPDATE", MainMenuBar_OnEvent)
-
+	
 	if C["MainBarLayout"] == 1 then
 		DB.ActionBar:SetSize(C["ButtonSize"]*18+3*17, C["ButtonSize"]*2+5)
 	elseif C["MainBarLayout"] == 2 then
@@ -38,12 +38,12 @@ function Module:OnInitialize()
 	MoveHandle.ActionBar = S.MakeMoveHandle(DB.ActionBar, "主动作条", "ActionBar")
 end
 
-function Module:PLAYER_LOGIN(self, event, ...)
-	local button
+function Module:PLAYER_LOGIN(event, ...)
+	local button, buttons
 	for i = 1, NUM_ACTIONBAR_BUTTONS do
 		button = _G["ActionButton"..i]
 		DB.ActionBar:SetFrameRef("ActionButton"..i, button)
-	end	
+	end
 
 	DB.ActionBar:Execute([[
 		buttons = table.new()
@@ -52,16 +52,16 @@ function Module:PLAYER_LOGIN(self, event, ...)
 		end
 	]])
 
-	DB.ActionBar:SetAttribute("_onstate-page", [[ 
+	DB.ActionBar:SetAttribute("_onstate-page", [[
 		for i, button in ipairs(buttons) do
 			button:SetAttribute("actionpage", tonumber(newstate))
 		end
 	]])
-		
+
 	RegisterStateDriver(DB.ActionBar, "page", GetBar())
 end
 
-function Module:PLAYER_ENTERING_WORLD(self, event, ...)
+function Module:PLAYER_ENTERING_WORLD(event, ...)
 	local Button = nil
 	for i = 1, 12 do
 		Button = _G["ActionButton"..i]
@@ -84,8 +84,4 @@ function Module:PLAYER_ENTERING_WORLD(self, event, ...)
 			end			
 		end
 	end
-end
-
-function Module:ACTIVE_TALENT_GROUP_CHANGED(self, event, ...)
-	LoadAddOn("Blizzard_GlyphUI")
 end

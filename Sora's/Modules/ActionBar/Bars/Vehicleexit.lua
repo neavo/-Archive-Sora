@@ -1,6 +1,6 @@
 ﻿-- Engines
 local S, C, L, DB = unpack(select(2, ...))
-local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("Vehicleexit")
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("VehicleExit")
 
 function Module:OnEnable()
 	local VehicleExitButton = CreateFrame("Button", nil, UIParent, "SecureHandlerClickTemplate")

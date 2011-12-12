@@ -8,7 +8,6 @@
 	<Include file = "ClassTimer\Load_ClassTimer.xml"/>
 	<Include file = "InfoPanel\Load_InfoPanel.xml"/>
 	<Include file = "Map\Load_Map.xml"/>
-	<Include file = "Molinari\Load_Molinari.xml"/>
 	<Include file = "Nameplate\Load_Nameplate.xml"/>
 	<Include file = "Quest\Load_Quest.xml"/>
 	<Include file = "Reminder\Load_Reminder.xml"/>
