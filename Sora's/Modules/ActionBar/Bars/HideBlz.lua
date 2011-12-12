@@ -33,23 +33,3 @@ end
 hooksecurefunc('TalentFrame_LoadUI', function()
 	PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 end)
-
-do
-	local uiManagedFrames = {
-		"MultiBarLeft",
-		"MultiBarRight",
-		"MultiBarBottomLeft",
-		"MultiBarBottomRight",
-		"ShapeshiftBarFrame",
-		"PossessBarFrame",
-		"PETACTIONBAR_YPOS",
-		"MultiCastActionBarFrame",
-		"MULTICASTACTIONBAR_YPOS",
-		"ChatFrame1",
-		"ChatFrame2",
-	}
-	for _, frame in pairs(uiManagedFrames) do
-		UIPARENT_MANAGED_FRAME_POSITIONS[frame] = nil
-	end
-	uiManagedFrames = nil
-end
