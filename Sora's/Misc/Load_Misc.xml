@@ -7,6 +7,7 @@
 	<Script file = "Durability.lua"/>	
 	<Script file = "Faction.lua"/>
 	<Script file = "Glow.lua"/>
+	<Script file = "HoverTips.lua"/>
 	<Script file = "Mail.lua"/>
 	<Script file = "Roster.lua"/>
 	<Script file = "ProfessionTabs.lua"/>

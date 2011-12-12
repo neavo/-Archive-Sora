@@ -1,20 +1,20 @@
-if not (GetLocale() == "zhTW") then return end
+ï»¿if not (GetLocale() == "zhCN") then return end
 
 -- /////////////////////////////////////////////////////////////////////////////
 -- =============================================================================
---  ClearFont v4.01a Ì¨·şÓÃ‘ô¶Ë
---  £¨¸ù“şClearFont v20000-2 °æ±¾h»¯ĞŞ¸Ä£©
---  Ô­×÷Õß£ºKIRKBURN£¨Ô­×÷ÕßÒÑ²»ÔÙ¸üĞÂ£¡£©
---  ¹Ù·½¾Wí“£ºhttp://www.clearfont.co.uk/
---  h»¯ĞŞ¸Ä£ºÎå…^ ÔªËØÖ®Á¦ ÄæÒuµÄË{/Ì¨·ş °Í¼{¼™ – ÄæÒuµÄÌm
---  °lÑí“Ãæ£ºhttp://bbs.game.mop.com/viewthread.php?tid=1503056
---  °lÑÈÕÆÚ£º2010.10.19
+--  ClearFont v4.01a å°æœç”¨æˆ¶ç«¯
+--  ï¼ˆæ ¹æ“šClearFont v20000-2 ç‰ˆæœ¬æ¼¢åŒ–ä¿®æ”¹ï¼‰
+--  åŸä½œè€…ï¼šKIRKBURNï¼ˆåŸä½œè€…å·²ä¸å†æ›´æ–°ï¼ï¼‰
+--  å®˜æ–¹ç¶²é ï¼šhttp://www.clearfont.co.uk/
+--  æ¼¢åŒ–ä¿®æ”¹ï¼šäº”å€ å…ƒç´ ä¹‹åŠ› é€†è¥²çš„è—/å°æœ å·´ç´ç´®çˆ¾ é€†è¥²çš„è˜­
+--  ç™¼ä½ˆé é¢ï¼šhttp://bbs.game.mop.com/viewthread.php?tid=1503056
+--  ç™¼ä½ˆæ—¥æœŸï¼š2010.10.19
 -- -----------------------------------------------------------------------------
 --  CLEARFONT.LUA - STANDARD WOW UI FONTS
---	A. ClearFont ¿ò¼Ü ¼°éÁËÒÔáá´ú´aµÄº†¶øîAÏÈ¶¨Áx×ÖówÎ»ÖÃ
---	B. ˜ËœÊµÄWOWÓÃ‘ô½éÃæ²¿·Ö
---	C. Ã¿®”Ò»‚€²å¼şİdÈë•r¶¼ÖØĞÂİdÈëµÄ¹¦ÄÜ
---	D. µÚÒ»´Î†¢„Ó•r‘ªÓÃÒÔÉÏÔO¶¨
+--	A. ClearFont æ¡†æ¶ åŠç‚ºäº†ä»¥å¾Œä»£ç¢¼çš„ç°¡æ½”è€Œé å…ˆå®šç¾©å­—é«”ä½ç½®
+--	B. æ¨™æº–çš„WOWç”¨æˆ¶ä»‹é¢éƒ¨åˆ†
+--	C. æ¯ç•¶ä¸€å€‹æ’ä»¶è¼‰å…¥æ™‚éƒ½é‡æ–°è¼‰å…¥çš„åŠŸèƒ½
+--	D. ç¬¬ä¸€æ¬¡å•Ÿå‹•æ™‚æ‡‰ç”¨ä»¥ä¸Šè¨­å®š
 -- =============================================================================
 -- /////////////////////////////////////////////////////////////////////////////
 
@@ -22,44 +22,44 @@ if not (GetLocale() == "zhTW") then return end
 
 
 -- =============================================================================
---  A. ClearFont ¿ò¼Ü ¼°éÁËÒÔáá´ú´aµÄº†¶øîAÏÈ¶¨Áx×ÖówÎ»ÖÃ
---  Äã¿ÉÒÔ¸ù“ş¹ ÀıÌí¼ÓŒÙì¶×Ô¼ºµÄ×Öów
+--  A. ClearFont æ¡†æ¶ åŠç‚ºäº†ä»¥å¾Œä»£ç¢¼çš„ç°¡æ½”è€Œé å…ˆå®šç¾©å­—é«”ä½ç½®
+--  ä½ å¯ä»¥æ ¹æ“šç¯„ä¾‹æ·»åŠ å±¬æ–¼è‡ªå·±çš„å­—é«”
 -- =============================================================================
 
 	ClearFont = CreateFrame("Frame", "ClearFont");
 
--- Ö¸³öÔÚÄÄÀïŒ¤ÕÒ×Öów
+-- æŒ‡å‡ºåœ¨å“ªé‡Œå°‹æ‰¾å­—é«”
 	local CLEAR_FONT_BASE = "Fonts\\";
 
--- ½ğÅ¡¢¶Ñ¯B¡¢°´æI½‰¶¨µÈ×Öów
+-- é‡‘å¹£ã€å †ç–Šã€æŒ‰éµç¶å®šç­‰å­—é«”
 	local CLEAR_FONT_NUMBER = CLEAR_FONT_BASE .. "FRIZQT__.TTF";
--- ÉúÃü—l¡¢½›ò—lÉÏµÄ×Öów
+-- ç”Ÿå‘½æ¢ã€ç¶“é©—æ¢ä¸Šçš„å­—é«”
 	local CLEAR_FONT_EXP = CLEAR_FONT_BASE .. "ARIALN.TTF";
--- ÈÎ„ÕÕfÃ÷ºÍ•øĞÅ¡¢Ê¯±®µÄÕıÎÄ×Öów
+-- ä»»å‹™èªªæ˜å’Œæ›¸ä¿¡ã€çŸ³ç¢‘çš„æ­£æ–‡å­—é«”
 	local CLEAR_FONT_QUEST = CLEAR_FONT_BASE .. "bLEI00D.TTF";
--- ‘ğôY‚ûº¦”µÖµÌáÊ¾
+-- æˆ°é¬¥å‚·å®³æ•¸å€¼æç¤º
 	local CLEAR_FONT_DAMAGE = CLEAR_FONT_BASE .. "bKAI00M.TTF";
--- ß[‘ò½éÃæÖĞµÄÖ÷Òª×Öów
+-- éŠæˆ²ä»‹é¢ä¸­çš„ä¸»è¦å­—é«”
 	local CLEAR_FONT = CLEAR_FONT_BASE .. "bLEI00D.TTF";
--- ÎïÆ·¡¢¼¼ÄÜµÄÕfÃ÷×Öów
+-- ç‰©å“ã€æŠ€èƒ½çš„èªªæ˜å­—é«”
 	local CLEAR_FONT_ITEM = CLEAR_FONT_BASE .. "bHEI00M.TTF";
--- ÁÄÌì×Öów
+-- èŠå¤©å­—é«”
 	local CLEAR_FONT_CHAT = CLEAR_FONT_BASE .. "bHEI01B.TTF";
 
--- Ìí¼ÓŒÙì¶×Ô¼ºµÄ×Öów £¨¹ Àı£©
---	local YOUR_FONT_STYLE = CLEAR_FONT_BASE .. "YourFontName.ttf";
+-- æ·»åŠ å±äºè‡ªå·±çš„å­—ä½“ ï¼ˆèŒƒä¾‹ï¼‰
+-- local YOUR_FONT_STYLE = CLEAR_FONT_BASE .. "YourFontName.ttf";
 
 
 -- -----------------------------------------------------------------------------
--- È«¾Ö×Öów±ÈÀıÕ{Õû£¨®”ÄãÓXµÃËùÓĞ×Öów¶¼Ì«´ó»òÌ«Ğ¡•rÕ{Õûß@‚€…¢”µ£©
---  ¹ Àı£ºÄãÏë°ÑËùÓĞ×Öów¿sĞ¡µ½80%£¬ÄÇüN¿ÉÒÔŒ¢"1.0"¸Ä³É"0.8"
+-- å…¨å±€å­—é«”æ¯”ä¾‹èª¿æ•´ï¼ˆç•¶ä½ è¦ºå¾—æ‰€æœ‰å­—é«”éƒ½å¤ªå¤§æˆ–å¤ªå°æ™‚èª¿æ•´é€™å€‹åƒæ•¸ï¼‰
+--  ç¯„ä¾‹ï¼šä½ æƒ³æŠŠæ‰€æœ‰å­—é«”ç¸®å°åˆ°80%ï¼Œé‚£éº¼å¯ä»¥å°‡"1.0"æ”¹æˆ"0.8"
 -- -----------------------------------------------------------------------------
 
-	local CF_SCALE = 1
+	local CF_SCALE = 1.0
 
 
 -- -----------------------------------------------------------------------------
--- ™z²é´æÔÚµÄ×ÖówK¸Ä×ƒËü‚ƒ
+-- æª¢æŸ¥å­˜åœ¨çš„å­—é«”ä¸¦æ”¹è®Šå®ƒå€‘
 -- -----------------------------------------------------------------------------
 
 	local function CanSetFont(object) 
@@ -72,23 +72,23 @@ if not (GetLocale() == "zhTW") then return end
 
 
 -- =============================================================================
---  B. WOWÓÃ‘ô½éÃæÔOÓ‹
+--  B. WOWç”¨æˆ¶ä»‹é¢è¨­è¨ˆ
 -- =============================================================================
---   ß@ÊÇ**ĞŞ¸Ä×Öów´óĞ¡/ÌØĞ§**×îÖØÒªµÄ²¿·Ö
---   Ö÷ÒªµÄ×Öów±»×îÏÈÁĞ³ö£¬ÆäğN²¿·Ö×Öów°´ÕÕ×ÖÄ¸±íí˜ĞòÅÅÁĞ
---   ÒÔÏÂÁĞ³öÖ»°üÀ¨ ClearFont ĞŞ¸ÄÁËµÄ¹ Àı²¿·Ö£¬K²»ÊÇËùÓĞ·½Ãæ¶¼•şï@Ê¾³öí£¨¹ Àı£ºêÓ°£©
+--   é€™æ˜¯**ä¿®æ”¹å­—é«”å¤§å°/ç‰¹æ•ˆ**æœ€é‡è¦çš„éƒ¨åˆ†
+--   ä¸»è¦çš„å­—é«”è¢«æœ€å…ˆåˆ—å‡ºï¼Œå…¶é¤˜éƒ¨åˆ†å­—é«”æŒ‰ç…§å­—æ¯è¡¨é †åºæ’åˆ—
+--   ä»¥ä¸‹åˆ—å‡ºåªåŒ…æ‹¬ ClearFont ä¿®æ”¹äº†çš„ç¯„ä¾‹éƒ¨åˆ†ï¼Œä¸¦ä¸æ˜¯æ‰€æœ‰æ–¹é¢éƒ½æœƒé¡¯ç¤ºå‡ºä¾†ï¼ˆç¯„ä¾‹ï¼šé™°å½±ï¼‰
 -- -----------------------------------------------------------------------------
---  Œ¦ì¶ÒÔÏÂ¿ÉÓÃ´ú´aµÄ½âáŒ
---   ²»§Ãèß…:		Font:SetFont(SOMETHING_TEXT_FONT, x * scale)
---   ÆÕÍ¨Ãèß…:		Font:SetFont(SOMETHING_TEXT_FONT, x * scale, "OUTLINE")
---   ´ÖÃèß…:			Font:SetFont(SOMETHING_TEXT_FONT, x * scale, "THICKOUTLINE")
---   ×ÖówîÉ«:		Font:SetTextColor(r, g, b)
---   êÓ°îÉ«:		Font:SetShadowColor(r, g, b) 
---   êÓ°Î»ÖÃ:		Font:SetShadowOffset(x, y) 
---   Í¸Ã÷¶È:			Font:SetAlpha(x)
+--  å°æ–¼ä»¥ä¸‹å¯ç”¨ä»£ç¢¼çš„è§£é‡‹
+--   ä¸å¸¶æé‚Š:		Font:SetFont(SOMETHING_TEXT_FONT, x * scale)
+--   æ™®é€šæé‚Š:		Font:SetFont(SOMETHING_TEXT_FONT, x * scale, "OUTLINE")
+--   ç²—æé‚Š:			Font:SetFont(SOMETHING_TEXT_FONT, x * scale, "THINOUTLINE")
+--   å­—é«”é¡è‰²:		Font:SetTextColor(r, g, b)
+--   é™°å½±é¡è‰²:		Font:SetShadowColor(r, g, b) 
+--   é™°å½±ä½ç½®:		Font:SetShadowOffset(x, y) 
+--   é€æ˜åº¦:			Font:SetAlpha(x)
 --
---  ¹ Àı£º			SetFont(CLEAR_FONT, 13 * CF_SCALE)
---   ÔÚÀ¨»¡ÑYµÄµÚÒ»²¿·ÖÊÇ(A.)ÖĞÉêÃ÷ß^µÄ×Öów´úÌ–£¬µÚ¶ş²¿·ÖÊÇ×Öów´óĞ¡
+--  ç¯„ä¾‹ï¼š			SetFont(CLEAR_FONT, 13 * CF_SCALE)
+--   åœ¨æ‹¬å¼§è£çš„ç¬¬ä¸€éƒ¨åˆ†æ˜¯(A.)ä¸­ç”³æ˜éçš„å­—é«”ä»£è™Ÿï¼Œç¬¬äºŒéƒ¨åˆ†æ˜¯å­—é«”å¤§å°
 -- =============================================================================
 
 
@@ -96,62 +96,62 @@ if not (GetLocale() == "zhTW") then return end
 
 
 -- -----------------------------------------------------------------------------
--- ÌØÊâß[‘òÊÀ½çµÄ"3D"×Öów£¨Dark Imakuni£©
---  ***×¢Òâ*** ClearFont ²»ÄÜ¶¨Áxß@Ğ©×ÖówµÄ´óĞ¡ºÍÌØĞ§£¨ÊÜÏŞì¶BlizzardÄ¬ÕJß[‘ò¿ò¼Ü£©
+-- ç‰¹æ®ŠéŠæˆ²ä¸–ç•Œçš„"3D"å­—é«”ï¼ˆDark Imakuniï¼‰
+--  ***æ³¨æ„*** ClearFont ä¸èƒ½å®šç¾©é€™äº›å­—é«”çš„å¤§å°å’Œç‰¹æ•ˆï¼ˆå—é™æ–¼Blizzardé»˜èªéŠæˆ²æ¡†æ¶ï¼‰
 -- -----------------------------------------------------------------------------
---  ß@Ğ©ĞĞÕZ¾ä•şÔÚÓÃÄ¬ÕJˆFê ¿ò¼Ü¡°ÔOÖÃMT/MA¡±•rŒ§ÖÂ†–î}
---  Èç¹ûÄã²»ÓÃµ½¡°ÔOÖÃMT/MA¡±£¬¿ÉÒÔ±£Áôß@Ğ©ĞĞÕZ¾ä£¬²»•şÓĞÈÎºÎ†–î}£¡
---  ÕÚÕÖß@Ğ©ÕZ¾äµÄ·½·¨£¬ÔÚŒ¦‘ª´ú´a**ĞĞÊ×**¼ÓÉÏ¡°--¡±
---   ¹ Àı£º--	STANDARD_TEXT_FONT = CLEAR_FONT_CHAT;
+--  é€™äº›è¡Œèªå¥æœƒåœ¨ç”¨é»˜èªåœ˜éšŠæ¡†æ¶â€œè¨­ç½®MT/MAâ€æ™‚å°è‡´å•é¡Œ
+--  å¦‚æœä½ ä¸ç”¨åˆ°â€œè¨­ç½®MT/MAâ€ï¼Œå¯ä»¥ä¿ç•™é€™äº›è¡Œèªå¥ï¼Œä¸æœƒæœ‰ä»»ä½•å•é¡Œï¼
+--  é®ç½©é€™äº›èªå¥çš„æ–¹æ³•ï¼Œåœ¨å°æ‡‰ä»£ç¢¼**è¡Œé¦–**åŠ ä¸Šâ€œ--â€
+--   ç¯„ä¾‹ï¼š--	STANDARD_TEXT_FONT = CLEAR_FONT_CHAT;
 -- -----------------------------------------------------------------------------
 
--- ÁÄÌìÅİÅİ
+-- èŠå¤©æ³¡æ³¡
 	STANDARD_TEXT_FONT = CLEAR_FONT_CHAT;
 
--- î^ÏñÉÏµÄÃû×Ö£¬Æ¯¸¡ÎÄ±¾£¨ßhÌ¼´¿É¿´ÒŠ£©
+-- é ­åƒä¸Šçš„åå­—ï¼Œæ¼‚æµ®æ–‡æœ¬ï¼ˆé è™•å³å¯çœ‹è¦‹ï¼‰
 	UNIT_NAME_FONT = CLEAR_FONT;
 
--- î^ÏñÉÏµÄÃû×Ö£¬ÔÚĞÕÃû°åÉÏ£¨NamePlate£¬°´¡°V¡±áá¿¿½üÄ¿˜Ë£¬³ö¬FµÄÑª—l£©
+-- é ­åƒä¸Šçš„åå­—ï¼Œåœ¨å§“åæ¿ä¸Šï¼ˆNamePlateï¼ŒæŒ‰â€œVâ€å¾Œé è¿‘ç›®æ¨™ï¼Œå‡ºç¾çš„è¡€æ¢ï¼‰
 	NAMEPLATE_FONT = CLEAR_FONT;
 
--- ±»¹¥“ôÄ¿˜ËÉÏ·½—³öµÄ‚ûº¦Ö¸Ê¾£¨Åc²å¼şSCT/DCTŸoêP£©
+-- è¢«æ”»æ“Šç›®æ¨™ä¸Šæ–¹å½ˆå‡ºçš„å‚·å®³æŒ‡ç¤ºï¼ˆèˆ‡æ’ä»¶SCT/DCTç„¡é—œï¼‰
 	DAMAGE_TEXT_FONT = CLEAR_FONT_DAMAGE;
 
 
 -- ----------------------------------------------------------------------------- 
--- ÏÂÀ­¹¦ÄÜ±í×Öów´óĞ¡£¨Note by Kirkburn£©
---  ***×¢Òâ*** ClearFont Ö»ÄÜ¶¨Áxß@‚€×ÖówµÄ´óĞ¡£¨ÊÜÏŞì¶BlizzardÄ¬ÕJß[‘ò¿ò¼Ü£©
+-- ä¸‹æ‹‰åŠŸèƒ½è¡¨å­—é«”å¤§å°ï¼ˆNote by Kirkburnï¼‰
+--  ***æ³¨æ„*** ClearFont åªèƒ½å®šç¾©é€™å€‹å­—é«”çš„å¤§å°ï¼ˆå—é™æ–¼Blizzardé»˜èªéŠæˆ²æ¡†æ¶ï¼‰
 -- ----------------------------------------------------------------------------- 
---  ß@Ğ©ĞĞÕZ¾ä•şÔÚÓÃÄ¬ÕJˆFê ¿ò¼Ü¡°ÔOÖÃMT/MA¡±•rŒ§ÖÂ†–î}
---  Èç¹ûÄã²»ÓÃµ½¡°ÔOÖÃMT/MA¡±£¬¿ÉÒÔ±£Áôß@Ğ©ĞĞÕZ¾ä£¬²»•şÓĞÈÎºÎ†–î}£¡
---  ÕÚÕÖß@Ğ©ÕZ¾äµÄ·½·¨£¬ÔÚŒ¦‘ª´ú´a**ĞĞÊ×**¼ÓÉÏ¡°--¡±
---   ¹ Àı£º--	UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = 12 * CF_SCALE;
+--  é€™äº›è¡Œèªå¥æœƒåœ¨ç”¨é»˜èªåœ˜éšŠæ¡†æ¶â€œè¨­ç½®MT/MAâ€æ™‚å°è‡´å•é¡Œ
+--  å¦‚æœä½ ä¸ç”¨åˆ°â€œè¨­ç½®MT/MAâ€ï¼Œå¯ä»¥ä¿ç•™é€™äº›è¡Œèªå¥ï¼Œä¸æœƒæœ‰ä»»ä½•å•é¡Œï¼
+--  é®ç½©é€™äº›èªå¥çš„æ–¹æ³•ï¼Œåœ¨å°æ‡‰ä»£ç¢¼**è¡Œé¦–**åŠ ä¸Šâ€œ--â€
+--   ç¯„ä¾‹ï¼š--	UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = 12 * CF_SCALE;
 -- ----------------------------------------------------------------------------- 
 
 	UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = 12 * CF_SCALE;
 
 
 -- -----------------------------------------------------------------------------
--- Âš˜IÉ«²Ê£¨ÒÔÏÂ¾ùéîAÔOÖµ/Ä¬ÕJÕÚÕÖ£©
+-- è·æ¥­è‰²å½©ï¼ˆä»¥ä¸‹å‡ç‚ºé è¨­å€¼/é»˜èªé®ç½©ï¼‰
 -- -----------------------------------------------------------------------------
 
 --	RAID_CLASS_COLORS = {
---		["HUNTER"] = { r = 0.67, g = 0.83, b = 0.45 },			-- «CÈË
---		["WARLOCK"] = { r = 0.58, g = 0.51, b = 0.79 },			-- ĞgÊ¿
---		["PRIEST"] = { r = 1.0, g = 1.0, b = 1.0 },				-- ÄÁŸ
---		["PALADIN"] = { r = 0.96, g = 0.55, b = 0.73 },			-- Â}òTÊ¿
---		["MAGE"] = { r = 0.41, g = 0.8, b = 0.94 },				-- ·¨Ÿ
---		["ROGUE"] = { r = 1.0, g = 0.96, b = 0.41 },			-- “ĞĞÕß
---		["DRUID"] = { r = 1.0, g = 0.49, b = 0.04 },			-- µÂô”ÒÁ
---		["SHAMAN"] = { r = 0.14, g = 0.35, b = 1.0 },			-- Ë_M
---		["WARRIOR"] = { r = 0.78, g = 0.61, b = 0.43 }			-- ‘ğÊ¿
---		["DEATHKNIGHT"] = { r = 0.77, g = 0.12 , b = 0.23 },	-- ËÀÍöòTÊ¿
+--		["HUNTER"] = { r = 0.67, g = 0.83, b = 0.45 },			-- çµäºº
+--		["WARLOCK"] = { r = 0.58, g = 0.51, b = 0.79 },			-- è¡“å£«
+--		["PRIEST"] = { r = 1.0, g = 1.0, b = 1.0 },				-- ç‰§å¸«
+--		["PALADIN"] = { r = 0.96, g = 0.55, b = 0.73 },			-- è–é¨å£«
+--		["MAGE"] = { r = 0.41, g = 0.8, b = 0.94 },				-- æ³•å¸«
+--		["ROGUE"] = { r = 1.0, g = 0.96, b = 0.41 },			-- æ½›è¡Œè€…
+--		["DRUID"] = { r = 1.0, g = 0.49, b = 0.04 },			-- å¾·é­¯ä¼Š
+--		["SHAMAN"] = { r = 0.14, g = 0.35, b = 1.0 },			-- è–©æ»¿
+--		["WARRIOR"] = { r = 0.78, g = 0.61, b = 0.43 }			-- æˆ°å£«
+--		["DEATHKNIGHT"] = { r = 0.77, g = 0.12 , b = 0.23 },	-- æ­»äº¡é¨å£«
 --	};
 
 
 -- -----------------------------------------------------------------------------
--- Ïµ½y×Öów£¨ÒÔÏÂ¾ùéîAÔOÖµ/Ä¬ÕJÕÚÕÖ£©
--- ß@î×ÖówÊÇÏµ½y×ÖówÄ£°æ£¬Ö÷ÒªÓÃí±»ÆäËû×ÖówÀ^³Ğ£¨New in WotLK/3.x£©
+-- ç³»çµ±å­—é«”ï¼ˆä»¥ä¸‹å‡ç‚ºé è¨­å€¼/é»˜èªé®ç½©ï¼‰
+-- é€™é¡å­—é«”æ˜¯ç³»çµ±å­—é«”æ¨¡ç‰ˆï¼Œä¸»è¦ç”¨ä¾†è¢«å…¶ä»–å­—é«”ç¹¼æ‰¿ï¼ˆNew in WotLK/3.xï¼‰
 -- -----------------------------------------------------------------------------
 
 --	SystemFont_Tiny:SetFont(CLEAR_FONT, 9 * CF_SCALE)
@@ -201,7 +201,7 @@ if not (GetLocale() == "zhTW") then return end
 --	SystemFont_Shadow_Huge1:SetTextColor(0, 0, 0)
 --	SystemFont_Shadow_Huge1:SetShadowOffset(1, -1) 
 	
---	SystemFont_OutlineThick_Huge2:SetFont(CLEAR_FONT, 22 * CF_SCALE, "THICKOUTLINE")
+--	SystemFont_OutlineThick_Huge2:SetFont(CLEAR_FONT, 22 * CF_SCALE, "THINOUTLINE")
 	
 --	SystemFont_Shadow_Outline_Huge2:SetFont(CLEAR_FONT, 25 * CF_SCALE, "OUTLINE")
 --	SystemFont_Shadow_Outline_Huge2:SetTextColor(0, 0, 0)
@@ -211,9 +211,9 @@ if not (GetLocale() == "zhTW") then return end
 --	SystemFont_Shadow_Huge3:SetTextColor(0, 0, 0)
 --	SystemFont_Shadow_Huge3:SetShadowOffset(1, -1) 
 	
---	SystemFont_OutlineThick_Huge4:SetFont(CLEAR_FONT, 26 * CF_SCALE, "THICKOUTLINE")
+--	SystemFont_OutlineThick_Huge4:SetFont(CLEAR_FONT, 26 * CF_SCALE, "THINOUTLINE")
 	
---	SystemFont_OutlineThick_WTF:SetFont(CLEAR_FONT_CHAT, 112 * CF_SCALE, "THICKOUTLINE")
+--	SystemFont_OutlineThick_WTF:SetFont(CLEAR_FONT_CHAT, 112 * CF_SCALE, "THINOUTLINE")
 	
 --	ReputationDetailFont:SetFont(CLEAR_FONT, 13 * CF_SCALE)
 --	ReputationDetailFont:SetTextColor(1, 1, 1)
@@ -239,327 +239,303 @@ if not (GetLocale() == "zhTW") then return end
 
 
 -- -----------------------------------------------------------------------------
--- Ö÷ß[‘ò×Öów: ëSÌ¿ÉÒŠµÄÖ÷ÒªµÄ×Öów
+-- ä¸»éŠæˆ²å­—é«”: éš¨è™•å¯è¦‹çš„ä¸»è¦çš„å­—é«”
 -- -----------------------------------------------------------------------------
 
--- Ö÷˜Ëî}£¬°´âo£¬¼¼ÄÜ˜Ëî}£¨¼¼ÄÜ•øÃæ°å£©£¬ÈÎ„ÕÃû£¨ÈÎ„ÕÈÕÕIÃæ°å£©£¬ºÃÓÑ½ÇÉ«Ãû×Ö£¨Éç½»Ãæ°å£©£¬˜s×uüc”µ¡¢¸‚¼¼ˆöüc”µ£¨PvPÃæ°å£©£¬Ïµ½y¹¦ÄÜ±íŒ£°¸
-	if (CanSetFont(GameFontNormal)) then 				GameFontNormal:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- îAÔOÖµ£º15
+-- ä¸»æ¨™é¡Œï¼ŒæŒ‰éˆ•ï¼ŒæŠ€èƒ½æ¨™é¡Œï¼ˆæŠ€èƒ½æ›¸é¢æ¿ï¼‰ï¼Œä»»å‹™åï¼ˆä»»å‹™æ—¥èªŒé¢æ¿ï¼‰ï¼Œå¥½å‹è§’è‰²åå­—ï¼ˆç¤¾äº¤é¢æ¿ï¼‰ï¼Œæ¦®è­½é»æ•¸ã€ç«¶æŠ€å ´é»æ•¸ï¼ˆPvPé¢æ¿ï¼‰ï¼Œç³»çµ±åŠŸèƒ½è¡¨å°ˆæ¡ˆ
+	if (CanSetFont(GameFontNormal)) then 				GameFontNormal:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- é è¨­å€¼ï¼š15
    
--- ¸±˜Ëî}£¬Ïµ½y¹¦ÄÜ±í°´âo£¬³É¾Íüc”µ¡¢³É¾Í—lÄ¿£¨³É¾ÍÃæ°å£©£¬Ø›ÅÃæ°å—lÄ¿£¬¸ßÁÁÈÎ„ÕÃû£¨ÈÎ„ÕÈÕÕIÃæ°å£©£¬ÈÕ•ÑÈÕÆÚ
-	if (CanSetFont(GameFontHighlight)) then 			GameFontHighlight:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- îAÔOÖµ£º15
+-- å‰¯æ¨™é¡Œï¼Œç³»çµ±åŠŸèƒ½è¡¨æŒ‰éˆ•ï¼Œæˆå°±é»æ•¸ã€æˆå°±æ¢ç›®ï¼ˆæˆå°±é¢æ¿ï¼‰ï¼Œè²¨å¹£é¢æ¿æ¢ç›®ï¼Œé«˜äº®ä»»å‹™åï¼ˆä»»å‹™æ—¥èªŒé¢æ¿ï¼‰ï¼Œæ—¥æ›†æ—¥æœŸ
+	if (CanSetFont(GameFontHighlight)) then 			GameFontHighlight:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- é è¨­å€¼ï¼š15
 
--- £¨Î´´_ÕJ£©
-	if (CanSetFont(GameFontNormalMed3)) then 			GameFontNormalMed3:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- îAÔOÖµ£º14
-	if (CanSetFont(GameFontNormalMed3)) then 			GameFontNormalMed3:SetTextColor(1.0, 0.82, 0); end	-- îAÔOÖµ£º(1.0, 0.82, 0)
+-- ï¼ˆæœªç¢ºèªï¼‰
+	if (CanSetFont(GameFontNormalMed3)) then 			GameFontNormalMed3:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- é è¨­å€¼ï¼š14
+	if (CanSetFont(GameFontNormalMed3)) then 			GameFontNormalMed3:SetTextColor(1.0, 0.82, 0); end	-- é è¨­å€¼ï¼š(1.0, 0.82, 0)
 
--- °´âo£¨²»¿Éßx î‘B£©
+-- æŒ‰éˆ•ï¼ˆä¸å¯é¸ç‹€æ…‹ï¼‰
 	if (CanSetFont(GameFontDisable)) then 				GameFontDisable:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
-	if (CanSetFont(GameFontDisable)) then 				GameFontDisable:SetTextColor(0.5, 0.5, 0.5); end	-- îAÔOÖµ£º(0.5, 0.5, 0.5)
+	if (CanSetFont(GameFontDisable)) then 				GameFontDisable:SetTextColor(0.5, 0.5, 0.5); end	-- é è¨­å€¼ï¼š(0.5, 0.5, 0.5)
 
--- ¸÷·NÉ«²ÊÎÄ×Ö
-	if (CanSetFont(GameFontGreen)) then 				GameFontGreen:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- îAÔOÖµ£º15
+-- å„ç¨®è‰²å½©æ–‡å­—
+	if (CanSetFont(GameFontGreen)) then 				GameFontGreen:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- é è¨­å€¼ï¼š15
 	if (CanSetFont(GameFontRed)) then 					GameFontRed:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
 	if (CanSetFont(GameFontBlack)) then 				GameFontBlack:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
 	if (CanSetFont(GameFontWhite)) then 				GameFontWhite:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
 
 
 -- -----------------------------------------------------------------------------
--- Ğ¡×Öów£º½›³£ÓÃĞ¡×ÖówµÄµØ·½£¬Èç½ÇÉ«ŒÙĞÔÃæ°å£¬BUFF•rég£¬ºê˜Ëî}
+-- å°å­—é«”ï¼šç¶“å¸¸ç”¨å°å­—é«”çš„åœ°æ–¹ï¼Œå¦‚è§’è‰²å±¬æ€§é¢æ¿ï¼ŒBUFFæ™‚é–“ï¼Œå®æ¨™é¡Œ
 -- -----------------------------------------------------------------------------
 
--- î^Ïñ¿ò¼ÜÃû×Ö£¬BUFF•rég£¬Î´ßx“ñµÄÃæ°å˜Ë»`£¬Ãæ°åÖĞ´ó²¿·ÖÃèÊö×Öów£¬ÌìÙxücµÄ”µÎ»£¬î^ã•ª„„î£¨³É¾ÍÃæ°å£©£¬²éÔƒ¡¢¹«•ş³É†T½ÇÉ«Ãû×Ö£¨Éç½»Ãæ°å£©£¬
--- ¸‚¼¼ˆöÕ¾ê Ô”¼š¡¢Õ¾ê µÈ¼‰£¨PvPÃæ°å£©£¬ÈÕ•Ñ»î„Ó—lÄ¿
-	if (CanSetFont(GameFontNormalSmall)) then 			GameFontNormalSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end		-- îAÔOÖµ£º15
+-- é ­åƒæ¡†æ¶åå­—ï¼ŒBUFFæ™‚é–“ï¼Œæœªé¸æ“‡çš„é¢æ¿æ¨™ç±¤ï¼Œé¢æ¿ä¸­å¤§éƒ¨åˆ†æè¿°å­—é«”ï¼Œå¤©è³¦é»çš„æ•¸ä½ï¼Œé ­éŠœçå‹µï¼ˆæˆå°±é¢æ¿ï¼‰ï¼ŒæŸ¥è©¢ã€å…¬æœƒæˆå“¡è§’è‰²åå­—ï¼ˆç¤¾äº¤é¢æ¿ï¼‰ï¼Œ
+-- ç«¶æŠ€å ´ç«™éšŠè©³ç´°ã€ç«™éšŠç­‰ç´šï¼ˆPvPé¢æ¿ï¼‰ï¼Œæ—¥æ›†æ´»å‹•æ¢ç›®
+	if (CanSetFont(GameFontNormalSmall)) then 			GameFontNormalSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end		-- é è¨­å€¼ï¼š15
 
--- ¸ßÁÁ×Öów£¬ÏÂÀ­¹¦ÄÜ±íßxí—£¬ÒÑßx“ñµÄÃæ°å˜Ë»`£¬½ÇÉ«ŒÙĞÔ¡¢¼¼ÄÜµÄ”µÎ»¡¢Â•Íû—lÄ¿£¨½ÇÉ«ÙYÓÃæ°å£©£¬ÌìÙxüc”µ£¨ÌìÙxÃæ°å£©£¬½ÇÉ«µÈ¼‰¡¢Âš˜IµÈÙYÓ¡¢¹«•şÙYÓ£¨Éç½»Ãæ°å£©£¬
--- Ô”¼š˜s×uüc¡¢¸‚¼¼ˆö±È·Ö£¨PvPÃæ°å£©£¬•régÙYÓ£¬Ïµ½y¹¦ÄÜ±í×ÓŒ£°¸
-	if (CanSetFont(GameFontHighlightSmall)) then 		GameFontHighlightSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- îAÔOÖµ£º15
+-- é«˜äº®å­—é«”ï¼Œä¸‹æ‹‰åŠŸèƒ½è¡¨é¸é …ï¼Œå·²é¸æ“‡çš„é¢æ¿æ¨™ç±¤ï¼Œè§’è‰²å±¬æ€§ã€æŠ€èƒ½çš„æ•¸ä½ã€è²æœ›æ¢ç›®ï¼ˆè§’è‰²è³‡è¨Šé¢æ¿ï¼‰ï¼Œå¤©è³¦é»æ•¸ï¼ˆå¤©è³¦é¢æ¿ï¼‰ï¼Œè§’è‰²ç­‰ç´šã€è·æ¥­ç­‰è³‡è¨Šã€å…¬æœƒè³‡è¨Šï¼ˆç¤¾äº¤é¢æ¿ï¼‰ï¼Œ
+-- è©³ç´°æ¦®è­½é»ã€ç«¶æŠ€å ´æ¯”åˆ†ï¼ˆPvPé¢æ¿ï¼‰ï¼Œæ™‚é–“è³‡è¨Šï¼Œç³»çµ±åŠŸèƒ½è¡¨å­å°ˆæ¡ˆ
+	if (CanSetFont(GameFontHighlightSmall)) then 		GameFontHighlightSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- é è¨­å€¼ï¼š15
 	if (CanSetFont(GameFontHighlightSmallOutline)) then	GameFontHighlightSmallOutline:SetFont(CLEAR_FONT, 12 * CF_SCALE, "OUTLINE"); end
 
--- PvPÃæ°åÃèÊö£¬ˆFê Ãæ°å°´âoµÈ
-	if (CanSetFont(GameFontDisableSmall)) then			GameFontDisableSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- îAÔOÖµ£º15
-	if (CanSetFont(GameFontDisableSmall)) then			GameFontDisableSmall:SetTextColor(0.5, 0.5, 0.5); end	-- îAÔOÖµ£º(0.5, 0.5, 0.5)
+-- PvPé¢æ¿æè¿°ï¼Œåœ˜éšŠé¢æ¿æŒ‰éˆ•ç­‰
+	if (CanSetFont(GameFontDisableSmall)) then			GameFontDisableSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- é è¨­å€¼ï¼š15
+	if (CanSetFont(GameFontDisableSmall)) then			GameFontDisableSmall:SetTextColor(0.5, 0.5, 0.5); end	-- é è¨­å€¼ï¼š(0.5, 0.5, 0.5)
 
--- £¨Î´´_ÕJ£©
-	if (CanSetFont(GameFontDarkGraySmall)) then 		GameFontDarkGraySmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- îAÔOÖµ£º15
-	if (CanSetFont(GameFontDarkGraySmall)) then 		GameFontDarkGraySmall:SetTextColor(0.35, 0.35, 0.35); end	-- îAÔOÖµ£º(0.35, 0.35, 0.35)
+-- ï¼ˆæœªç¢ºèªï¼‰
+	if (CanSetFont(GameFontDarkGraySmall)) then 		GameFontDarkGraySmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- é è¨­å€¼ï¼š15
+	if (CanSetFont(GameFontDarkGraySmall)) then 		GameFontDarkGraySmall:SetTextColor(0.35, 0.35, 0.35); end	-- é è¨­å€¼ï¼š(0.35, 0.35, 0.35)
 
--- £¨Î´´_ÕJ£©
-	if (CanSetFont(GameFontGreenSmall)) then 			GameFontGreenSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- îAÔOÖµ£º15
+-- ï¼ˆæœªç¢ºèªï¼‰
+	if (CanSetFont(GameFontGreenSmall)) then 			GameFontGreenSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end	-- é è¨­å€¼ï¼š15
 	if (CanSetFont(GameFontRedSmall)) then				GameFontRedSmall:SetFont(CLEAR_FONT, 12 * CF_SCALE); end
 	
--- ³¬Ğ¡×Öów
-	if (CanSetFont(GameFontHighlightExtraSmall)) then 		GameFontHighlightExtraSmall:SetFont(CLEAR_FONT, 11 * CF_SCALE); end		-- îAÔOÖµ£º15
+-- è¶…å°å­—é«”
+	if (CanSetFont(GameFontHighlightExtraSmall)) then 		GameFontHighlightExtraSmall:SetFont(CLEAR_FONT, 11 * CF_SCALE); end		-- é è¨­å€¼ï¼š15
 
 
 -- -----------------------------------------------------------------------------
--- ´ó×Öów£º˜Ëî}
+-- å¤§å­—é«”ï¼šæ¨™é¡Œ
 -- -----------------------------------------------------------------------------
 
--- •rçŠ£¬´aål
-	if (CanSetFont(GameFontNormalLarge)) then 			GameFontNormalLarge:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- îAÔOÖµ£º17
+-- æ™‚é˜ï¼Œç¢¼éŒ¶
+	if (CanSetFont(GameFontNormalLarge)) then 			GameFontNormalLarge:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- é è¨­å€¼ï¼š17
 	if (CanSetFont(GameFontHighlightLarge)) then 		GameFontHighlightLarge:SetFont(CLEAR_FONT, 13 * CF_SCALE); end
 
--- ¸‚¼¼ˆöÃæ°å
-	if (CanSetFont(GameFontDisableLarge)) then			GameFontDisableLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- îAÔOÖµ£º17
-	if (CanSetFont(GameFontDisableLarge)) then			GameFontDisableLarge:SetTextColor(0.5, 0.5, 0.5); end	-- îAÔOÖµ£º(0.5, 0.5, 0.5)
+-- ç«¶æŠ€å ´é¢æ¿
+	if (CanSetFont(GameFontDisableLarge)) then			GameFontDisableLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- é è¨­å€¼ï¼š17
+	if (CanSetFont(GameFontDisableLarge)) then			GameFontDisableLarge:SetTextColor(0.5, 0.5, 0.5); end	-- é è¨­å€¼ï¼š(0.5, 0.5, 0.5)
 
--- £¨Î´´_ÕJ£©
-	if (CanSetFont(GameFontGreenLarge)) then 			GameFontGreenLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- îAÔOÖµ£º17
+-- ï¼ˆæœªç¢ºèªï¼‰
+	if (CanSetFont(GameFontGreenLarge)) then 			GameFontGreenLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- é è¨­å€¼ï¼š17
 	if (CanSetFont(GameFontRedLarge)) then 			GameFontRedLarge:SetFont(CLEAR_FONT, 14 * CF_SCALE); end
 
 
 -- -----------------------------------------------------------------------------
--- ¾Ş´ó×Öów£ºRaid¾¯ˆó
+-- å·¨å¤§å­—é«”ï¼šRaidè­¦å ±
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(GameFontNormalHuge)) then			GameFontNormalHuge:SetFont(CLEAR_FONT, 20 * CF_SCALE); end	-- îAÔOÖµ£º20
-	if (CanSetFont(GameFontNormalHugeBlack)) then		GameFontNormalHugeBlack:SetFont(CLEAR_FONT, 20 * CF_SCALE); end	-- îAÔOÖµ£º20
+	if (CanSetFont(GameFontNormalHuge)) then			GameFontNormalHuge:SetFont(CLEAR_FONT, 20 * CF_SCALE); end	-- é è¨­å€¼ï¼š20
+	if (CanSetFont(GameFontNormalHugeBlack)) then		GameFontNormalHugeBlack:SetFont(CLEAR_FONT, 20 * CF_SCALE); end	-- é è¨­å€¼ï¼š20
 
 
 -- -----------------------------------------------------------------------------
--- Boss±íÇéÎÄ×Ö
+-- Bossè¡¨æƒ…æ–‡å­—
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(BossEmoteNormalHuge)) then			BossEmoteNormalHuge:SetFont(CLEAR_FONT, 25 * CF_SCALE); end		-- îAÔOÖµ£º25
+	if (CanSetFont(BossEmoteNormalHuge)) then			BossEmoteNormalHuge:SetFont(CLEAR_FONT, 25 * CF_SCALE); end		-- é è¨­å€¼ï¼š25
 
 -- -----------------------------------------------------------------------------
--- ”µÎ»×Öów: ÅÄÙuĞĞ£¬½ğÅ£¬°´æI½‰¶¨£¬ÎïÆ·¶Ñ¯B”µÁ¿
+-- æ•¸ä½å­—é«”: æ‹è³£è¡Œï¼Œé‡‘å¹£ï¼ŒæŒ‰éµç¶å®šï¼Œç‰©å“å †ç–Šæ•¸é‡
 -- -----------------------------------------------------------------------------
 
--- ½ğÅ£¬ÎïÆ·¡¢Buff¶Ñ¯B”µÁ¿
-	if (CanSetFont(NumberFontNormal)) then				NumberFontNormal:SetFont(CLEAR_FONT_NUMBER, 12 * CF_SCALE, "OUTLINE"); end		-- îAÔOÖµ£º12
+-- é‡‘å¹£ï¼Œç‰©å“ã€Buffå †ç–Šæ•¸é‡
+	if (CanSetFont(NumberFontNormal)) then				NumberFontNormal:SetFont(CLEAR_FONT_NUMBER, 12 * CF_SCALE, "OUTLINE"); end		-- é è¨­å€¼ï¼š12
 	if (CanSetFont(NumberFontNormalYellow)) then 		NumberFontNormalYellow:SetFont(CLEAR_FONT_NUMBER, 12 * CF_SCALE); end
 
--- „Ó×÷—lµÄ°´æI½‰¶¨
-	if (CanSetFont(NumberFontNormalSmall)) then 		NumberFontNormalSmall:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "OUTLINE"); end		-- îAÔOÖµ£º11
-	if (CanSetFont(NumberFontNormalSmallGray)) then 	NumberFontNormalSmallGray:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "THICKOUTLINE"); end
+-- å‹•ä½œæ¢çš„æŒ‰éµç¶å®š
+	if (CanSetFont(NumberFontNormalSmall)) then 		NumberFontNormalSmall:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "OUTLINE"); end		-- é è¨­å€¼ï¼š11
+	if (CanSetFont(NumberFontNormalSmallGray)) then 	NumberFontNormalSmallGray:SetFont(CLEAR_FONT_NUMBER, 11 * CF_SCALE, "THINOUTLINE"); end
 
--- £¨Î´´_ÕJ£©
-	if (CanSetFont(NumberFontNormalLarge)) then 		NumberFontNormalLarge:SetFont(CLEAR_FONT_NUMBER, 14 * CF_SCALE, "OUTLINE"); end		-- îAÔOÖµ£º14
+-- ï¼ˆæœªç¢ºèªï¼‰
+	if (CanSetFont(NumberFontNormalLarge)) then 		NumberFontNormalLarge:SetFont(CLEAR_FONT_NUMBER, 14 * CF_SCALE, "OUTLINE"); end		-- é è¨­å€¼ï¼š14
 
--- Íæ¼Òî^ÏñÉÏµÄ±»¹¥“ôÖ¸Ê¾
-	if (CanSetFont(NumberFontNormalHuge)) then			NumberFontNormalHuge:SetFont(CLEAR_FONT_DAMAGE, 20 * CF_SCALE, "THICKOUTLINE"); end	-- îAÔOÖµ£º20
+-- ç©å®¶é ­åƒä¸Šçš„è¢«æ”»æ“ŠæŒ‡ç¤º
+	if (CanSetFont(NumberFontNormalHuge)) then			NumberFontNormalHuge:SetFont(CLEAR_FONT_DAMAGE, 20 * CF_SCALE, "THINOUTLINE"); end	-- é è¨­å€¼ï¼š20
 --	if (CanSetFont(NumberFontNormalHuge)) then			NumberFontNormalHuge:SetAlpha(30); end
 
 
 -- -----------------------------------------------------------------------------
--- ÁÄÌìÒ•´°×ÖówºÍÁÄÌìİ”Èë¿ò×Öów
+-- èŠå¤©è¦–çª—å­—é«”å’ŒèŠå¤©è¼¸å…¥æ¡†å­—é«”
 -- -----------------------------------------------------------------------------
 
--- ÁÄÌìİ”Èë¿ò×Öów
-	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 14 * CF_SCALE, "THINOUTLINE"); end	-- îAÔOÖµ£º14
+-- èŠå¤©è¼¸å…¥æ¡†å­—é«”
+	if (CanSetFont(ChatFontNormal)) then 				ChatFontNormal:SetFont(CLEAR_FONT_CHAT, 11 * CF_SCALE, "THINOUTLINE"); end	-- é è¨­å€¼ï¼š14
 
--- ¿ÉßxÁÄÌì¿ò×Öów
-	CHAT_FONT_HEIGHTS = {
-		[1] = 7,
-		[2] = 8,
-		[3] = 9,
-		[4] = 10,
-		[5] = 11,
-		[6] = 12,
-		[7] = 13,
-		[8] = 14,
-		[9] = 15,
-		[10] = 16,
-		[11] = 17,
-		[12] = 18,
-		[13] = 19,
-		[14] = 20,
-		[15] = 21,
-		[16] = 22,
-		[17] = 23,
-		[18] = 24
-	};
-
--- ÁÄÌìÒ•´°Ä¬ÕJ×Öów
-	if (CanSetFont(ChatFontSmall)) then 				ChatFontSmall:SetFont(CLEAR_FONT_CHAT, 13 * CF_SCALE); end	-- îAÔOÖµ£º12
+-- èŠå¤©è¦–çª—é»˜èªå­—é«”
+	if (CanSetFont(ChatFontSmall)) then 				ChatFontSmall:SetFont(CLEAR_FONT_CHAT, 12 * CF_SCALE); end	-- é è¨­å€¼ï¼š12
 
 
 -- -----------------------------------------------------------------------------
--- ÈÎ„ÕÈÕÕI: ÈÎ„ÕÈÕÕI¡¢•ø¼®µÈ
+-- ä»»å‹™æ—¥èªŒ: ä»»å‹™æ—¥èªŒã€æ›¸ç±ç­‰
 -- -----------------------------------------------------------------------------
 
--- ÈÎ„Õ˜Ëî}
-	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- îAÔOÖµ£º17
-	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetShadowColor(1.0, 0.82, 0); end		-- îAÔOÖµ£º(0, 0, 0)
+-- ä»»å‹™æ¨™é¡Œ
+	if (CanSetFont(QuestTitleFont)) then 				QuestTitleFont:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- é è¨­å€¼ï¼š17
 
-	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- îAÔOÖµ£º17
-	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetShadowColor(0, 0, 0); end		-- îAÔOÖµ£º(0, 0, 0)
-	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetTextColor(1.0, 0.82, 0); end			-- îAÔOÖµ£º(1.0, 0.82, 0)
+	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- é è¨­å€¼ï¼š17
+	if (CanSetFont(QuestTitleFontBlackShadow)) then 	QuestTitleFontBlackShadow:SetTextColor(1.0, 0.82, 0); end			-- é è¨­å€¼ï¼š(1.0, 0.82, 0)
 
--- ÈÎ„ÕÃèÊö
-	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetFont(CLEAR_FONT_QUEST, 14 * CF_SCALE); end		-- îAÔOÖµ£º14
-	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetTextColor(1.0, 0.82, 0); end			-- îAÔOÖµ£º(0, 0, 0)
+-- ä»»å‹™æè¿°
+	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetFont(CLEAR_FONT_QUEST, 14 * CF_SCALE); end		-- é è¨­å€¼ï¼š14
+	if (CanSetFont(QuestFont)) then 		   			QuestFont:SetTextColor(1, 1, 1); end			-- é è¨­å€¼ï¼š(0, 0, 0)
 
--- ÈÎ„ÕÄ¿˜Ë
-	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- îAÔOÖµ£º14
-	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetShadowColor(0.3, 0.18, 0); end	-- îAÔOÖµ£º(0.3, 0.18, 0)
+-- ä»»å‹™ç›®æ¨™
+	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- é è¨­å€¼ï¼š14
+	if (CanSetFont(QuestFontNormalSmall)) then			QuestFontNormalSmall:SetShadowColor(0.3, 0.18, 0); end	-- é è¨­å€¼ï¼š(0.3, 0.18, 0)
 
--- ÈÎ„Õ¸ßÁÁ
-	if (CanSetFont(QuestFontHighlight)) then 			QuestFontHighlight:SetFont(CLEAR_FONT_QUEST, 13 * CF_SCALE); end	-- îAÔOÖµ£º13
+-- ä»»å‹™é«˜äº®
+	if (CanSetFont(QuestFontHighlight)) then 			QuestFontHighlight:SetFont(CLEAR_FONT_QUEST, 13 * CF_SCALE); end	-- é è¨­å€¼ï¼š13
 
 
 -- -----------------------------------------------------------------------------
--- ÎïÆ·ĞÅÏ¢: ÄÇĞ©"°´ÓÒæIé†×x"µÄÎïÆ·£¨ÈÎ„ÕÎïÆ·µÄƒÈÈİ×Öów£¬±ÈÈç¿ÉÒÔ”y§µÄ•ø¼®¡¢ĞÅ¼şµÄ¸±±¾µÈ£©
+-- ç‰©å“ä¿¡æ¯: é‚£äº›"æŒ‰å³éµé–±è®€"çš„ç‰©å“ï¼ˆä»»å‹™ç‰©å“çš„å…§å®¹å­—é«”ï¼Œæ¯”å¦‚å¯ä»¥æ”œå¸¶çš„æ›¸ç±ã€ä¿¡ä»¶çš„å‰¯æœ¬ç­‰ï¼‰
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(ItemTextFontNormal)) then 	 	  	ItemTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end		-- îAÔOÖµ£º15
-	if (CanSetFont(ItemTextFontNormal)) then			ItemTextFontNormal:SetShadowColor(0.18, 0.12, 0.06); end	-- îAÔOÖµ£º(0.18, 0.12, 0.06)
+	if (CanSetFont(ItemTextFontNormal)) then 	 	  	ItemTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end		-- é è¨­å€¼ï¼š15
+	if (CanSetFont(ItemTextFontNormal)) then			ItemTextFontNormal:SetShadowColor(0.18, 0.12, 0.06); end	-- é è¨­å€¼ï¼š(0.18, 0.12, 0.06)
 
 
 -- -----------------------------------------------------------------------------
--- à]¼ş
+-- éƒµä»¶
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- îAÔOÖµ£º15
-	if (CanSetFont(MailTextFontNormal)) then 		   	MailTextFontNormal:SetTextColor(0.18, 0.12, 0.06); end		-- îAÔOÖµ£º(0.18, 0.12, 0.06)
+	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetFont(CLEAR_FONT_QUEST, 15 * CF_SCALE); end	-- é è¨­å€¼ï¼š15
+	if (CanSetFont(MailTextFontNormal)) then 		   	MailTextFontNormal:SetTextColor(1, 1, 1); end		-- é è¨­å€¼ï¼š(0.18, 0.12, 0.06)
 --	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetShadowColor(0.54, 0.4, 0.1); end
 --	if (CanSetFont(MailTextFontNormal)) then 	 	  	MailTextFontNormal:SetShadowOffset(1, -1); end
    
    
 -- -----------------------------------------------------------------------------
--- ¼¼ÄÜ£º¼¼ÄÜîĞÍ£¨±»„Ó¡¢·N×åÌØéLµÈ£©¡¢¼¼ÄÜµÈ¼‰
+-- æŠ€èƒ½ï¼šæŠ€èƒ½é¡å‹ï¼ˆè¢«å‹•ã€ç¨®æ—ç‰¹é•·ç­‰ï¼‰ã€æŠ€èƒ½ç­‰ç´š
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(SubSpellFont)) then					SubSpellFont:SetFont(CLEAR_FONT_QUEST, 12 * CF_SCALE); end	-- îAÔOÖµ£º12
-	if (CanSetFont(SubSpellFont)) then 	   			SubSpellFont:SetTextColor(0.35, 0.2, 0); end	-- îAÔOÖµ£º(0.35, 0.2, 0)
+	if (CanSetFont(SubSpellFont)) then					SubSpellFont:SetFont(CLEAR_FONT_QUEST, 12 * CF_SCALE); end	-- é è¨­å€¼ï¼š12
+	if (CanSetFont(SubSpellFont)) then 	   			SubSpellFont:SetTextColor(0.35, 0.2, 0); end	-- é è¨­å€¼ï¼š(0.35, 0.2, 0)
 
 
 -- -----------------------------------------------------------------------------
--- Œ¦Ô’·½‰K°´âo£º"Í¬Òâ"µÈ×Ö˜Ó
+-- å°è©±æ–¹å¡ŠæŒ‰éˆ•ï¼š"åŒæ„"ç­‰å­—æ¨£
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(DialogButtonNormalText)) then 		DialogButtonNormalText:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- îAÔOÖµ£º13
+	if (CanSetFont(DialogButtonNormalText)) then 		DialogButtonNormalText:SetFont(CLEAR_FONT, 13 * CF_SCALE); end	-- é è¨­å€¼ï¼š13
 	if (CanSetFont(DialogButtonHighlightText)) then 	DialogButtonHighlightText:SetFont(CLEAR_FONT, 13 * CF_SCALE); end
 
 
 -- -----------------------------------------------------------------------------
--- …^ÓòÇĞ“Qï@Ê¾£ºÔÚÎÄ»ÖĞÑëÍ¨Öª
+-- å€åŸŸåˆ‡æ›é¡¯ç¤ºï¼šåœ¨è¢å¹•ä¸­å¤®é€šçŸ¥
 -- -----------------------------------------------------------------------------
 
--- ´ó…^¹¦ÄÜ×ƒ”µÃû·Q
-	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetFont(CLEAR_FONT, 32 * CF_SCALE, "THICKOUTLINE"); end		-- îAÔOÖµ£º112
-	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetShadowColor(1.0, 0.9294, 0.7607); end	-- îAÔOÖµ£º(1.0, 0.9294, 0.7607)
+-- å¤§å€åŠŸèƒ½è®Šæ•¸åç¨±
+	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetFont(CLEAR_FONT, 32 * CF_SCALE, "THINOUTLINE"); end		-- é è¨­å€¼ï¼š112
+	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetShadowColor(1.0, 0.9294, 0.7607); end	-- é è¨­å€¼ï¼š(1.0, 0.9294, 0.7607)
 	if (CanSetFont(ZoneTextFont)) then 	   			ZoneTextFont:SetShadowOffset(1, -1); end
 
--- ´Î…^¹¦ÄÜ×ƒ”µÃû·Q
-	if (CanSetFont(SubZoneTextFont)) then				SubZoneTextFont:SetFont(CLEAR_FONT, 26 * CF_SCALE, "THICKOUTLINE"); end		-- îAÔOÖµ£º26
+-- æ¬¡å€åŠŸèƒ½è®Šæ•¸åç¨±
+	if (CanSetFont(SubZoneTextFont)) then				SubZoneTextFont:SetFont(CLEAR_FONT, 26 * CF_SCALE, "THINOUTLINE"); end		-- é è¨­å€¼ï¼š26
 
 
 -- -----------------------------------------------------------------------------
--- PvPĞÅÏ¢£ºÈç¡° ŠZÖĞµÄîIÍÁ¡±¡¢¡°Â“ÃËîIµØ¡±µÈ
+-- PvPä¿¡æ¯ï¼šå¦‚â€œçˆ­å¥ªä¸­çš„é ˜åœŸâ€ã€â€œè¯ç›Ÿé ˜åœ°â€ç­‰
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(PVPInfoTextFont)) then				PVPInfoTextFont:SetFont(CLEAR_FONT, 20 * CF_SCALE, "THICKOUTLINE"); end		-- îAÔOÖµ£º22
-
-
--- -----------------------------------------------------------------------------
--- åeÕ`×Öów£º"ÁíÒ»‚€„Ó×÷ÕıÔÚßMĞĞÖĞ"µÈ×Ö˜Ó
--- -----------------------------------------------------------------------------
-
-	if (CanSetFont(ErrorFont)) then					ErrorFont:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- îAÔOÖµ£º17
-	if (CanSetFont(ErrorFont)) then					ErrorFont:SetShadowOffset(1, -1); end	-- îAÔOÖµ£º(1, -1)
+	if (CanSetFont(PVPInfoTextFont)) then				PVPInfoTextFont:SetFont(CLEAR_FONT, 20 * CF_SCALE, "THINOUTLINE"); end		-- é è¨­å€¼ï¼š22
 
 
 -- -----------------------------------------------------------------------------
---  î‘B™Ú£ºî^Ïñ¿ò¼ÜÖĞµÄ”µ×Ö£¨ÉúÃüÖµ¡¢·¨Á¦Öµ/Å­šâÖµ/ÄÜÁ¿ÖµµÈ£©£¬½›ò—l£¨½›ò¡¢Â•ÍûµÈ£©
+-- éŒ¯èª¤å­—é«”ï¼š"å¦ä¸€å€‹å‹•ä½œæ­£åœ¨é€²è¡Œä¸­"ç­‰å­—æ¨£
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(TextStatusBarText)) then			TextStatusBarText:SetFont(CLEAR_FONT_EXP, 12 * CF_SCALE, "OUTLINE"); end	-- îAÔOÖµ£º12
-	if (CanSetFont(TextStatusBarTextLarge)) then		TextStatusBarTextLarge:SetFont(CLEAR_FONT_EXP, 14 * CF_SCALE, "OUTLINE"); end	-- îAÔOÖµ£º15
+	if (CanSetFont(ErrorFont)) then					ErrorFont:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- é è¨­å€¼ï¼š17
+	if (CanSetFont(ErrorFont)) then					ErrorFont:SetShadowOffset(1, -1); end	-- é è¨­å€¼ï¼š(1, -1)
+
+
+-- -----------------------------------------------------------------------------
+-- ç‹€æ…‹æ¬„ï¼šé ­åƒæ¡†æ¶ä¸­çš„æ•¸å­—ï¼ˆç”Ÿå‘½å€¼ã€æ³•åŠ›å€¼/æ€’æ°£å€¼/èƒ½é‡å€¼ç­‰ï¼‰ï¼Œç¶“é©—æ¢ï¼ˆç¶“é©—ã€è²æœ›ç­‰ï¼‰
+-- -----------------------------------------------------------------------------
+
+	if (CanSetFont(TextStatusBarText)) then			TextStatusBarText:SetFont(CLEAR_FONT_EXP, 12 * CF_SCALE, "OUTLINE"); end	-- é è¨­å€¼ï¼š12
+	if (CanSetFont(TextStatusBarTextLarge)) then		TextStatusBarTextLarge:SetFont(CLEAR_FONT_EXP, 14 * CF_SCALE, "OUTLINE"); end	-- é è¨­å€¼ï¼š15
 	
 
 -- -----------------------------------------------------------------------------
--- ‘ğôY¼oä›ÎÄ×Ö
+-- æˆ°é¬¥ç´€éŒ„æ–‡å­—
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(CombatLogFont)) then				CombatLogFont:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- îAÔOÖµ£º16
+	if (CanSetFont(CombatLogFont)) then				CombatLogFont:SetFont(CLEAR_FONT, 14 * CF_SCALE); end	-- é è¨­å€¼ï¼š16
 
 
 -- -----------------------------------------------------------------------------
--- ÌáÊ¾¿ò£¨ToolTip£©
+-- æç¤ºæ¡†ï¼ˆToolTipï¼‰
 -- -----------------------------------------------------------------------------
 
--- ÌáÊ¾¿òÕıÎÄ
-	if (CanSetFont(GameTooltipText)) then				GameTooltipText:SetFont(CLEAR_FONT_ITEM, 13 * CF_SCALE); end		-- îAÔOÖµ£º13
+-- æç¤ºæ¡†æ­£æ–‡
+	if (CanSetFont(GameTooltipText)) then				GameTooltipText:SetFont(CLEAR_FONT_ITEM, 13 * CF_SCALE); end		-- é è¨­å€¼ï¼š13
    
--- Ñb‚ä±Èİ^µÄĞ¡×Ö²¿·Ö
-	if (CanSetFont(GameTooltipTextSmall)) then			GameTooltipTextSmall:SetFont(CLEAR_FONT_ITEM, 12 * CF_SCALE); end	-- îAÔOÖµ£º12
+-- è£å‚™æ¯”è¼ƒçš„å°å­—éƒ¨åˆ†
+	if (CanSetFont(GameTooltipTextSmall)) then			GameTooltipTextSmall:SetFont(CLEAR_FONT_ITEM, 12 * CF_SCALE); end	-- é è¨­å€¼ï¼š12
    
--- ÌáÊ¾¿ò˜Ëî}
-	if (CanSetFont(GameTooltipHeaderText)) then		GameTooltipHeaderText:SetFont(CLEAR_FONT, 15 * CF_SCALE, "OUTLINE"); end	-- îAÔOÖµ£º16
+-- æç¤ºæ¡†æ¨™é¡Œ
+	if (CanSetFont(GameTooltipHeaderText)) then		GameTooltipHeaderText:SetFont(CLEAR_FONT, 15 * CF_SCALE, "OUTLINE"); end	-- é è¨­å€¼ï¼š16
 
 
 -- -----------------------------------------------------------------------------
--- ÊÀ½çµØˆD£ºÎ»ÖÃ˜Ëî}
+-- ä¸–ç•Œåœ°åœ–ï¼šä½ç½®æ¨™é¡Œ
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetFont(CLEAR_FONT, 102 * CF_SCALE, "THICKOUTLINE"); end	-- îAÔOÖµ£º102
-	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetShadowColor(1.0, 0.9294, 0.7607); end	-- îAÔOÖµ£º(1.0, 0.9294, 0.7607)
+	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetFont(CLEAR_FONT, 102 * CF_SCALE, "THINOUTLINE"); end	-- é è¨­å€¼ï¼š102
+	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetShadowColor(1.0, 0.9294, 0.7607); end	-- é è¨­å€¼ï¼š(1.0, 0.9294, 0.7607)
 	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetShadowOffset(1, -1); end
 --	if (CanSetFont(WorldMapTextFont)) then				WorldMapTextFont:SetAlpha(0.4); end
 
 
 -- -----------------------------------------------------------------------------
--- °lØ›†Î£ºÅÄÙuĞĞà]¼ÄíµÄ°lØ›†Î
+-- ç™¼è²¨å–®ï¼šæ‹è³£è¡Œéƒµå¯„ä¾†çš„ç™¼è²¨å–®
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(InvoiceTextFontNormal)) then 	   	InvoiceTextFontNormal:SetFont(CLEAR_FONT_QUEST, 13 * CF_SCALE); end	-- îAÔOÖµ£º12
-	if (CanSetFont(InvoiceTextFontNormal)) then 	   	InvoiceTextFontNormal:SetTextColor(0.18, 0.12, 0.06); end	-- îAÔOÖµ£º(0.18, 0.12, 0.06)
+	if (CanSetFont(InvoiceTextFontNormal)) then 	   	InvoiceTextFontNormal:SetFont(CLEAR_FONT_QUEST, 13 * CF_SCALE); end	-- é è¨­å€¼ï¼š12
+	if (CanSetFont(InvoiceTextFontNormal)) then 	   	InvoiceTextFontNormal:SetTextColor(0.18, 0.12, 0.06); end	-- é è¨­å€¼ï¼š(0.18, 0.12, 0.06)
 
-	if (CanSetFont(InvoiceTextFontSmall)) then			InvoiceTextFontSmall:SetFont(CLEAR_FONT_QUEST, 11 * CF_SCALE); end	-- îAÔOÖµ£º10
-	if (CanSetFont(InvoiceTextFontSmall)) then			InvoiceTextFontSmall:SetTextColor(0.18, 0.12, 0.06); end	-- îAÔOÖµ£º(0.18, 0.12, 0.06)
-
-
--- -----------------------------------------------------------------------------
--- ‘ğôYÎÄ×Ö: ±©Ñ©ƒÈÖÃ‘ğôYÖ¸Ê¾Æ÷
--- -----------------------------------------------------------------------------
-
-	if (CanSetFont(CombatTextFont)) then				CombatTextFont:SetFont(CLEAR_FONT_DAMAGE, 25 * CF_SCALE); end		-- îAÔOÖµ£º25
+	if (CanSetFont(InvoiceTextFontSmall)) then			InvoiceTextFontSmall:SetFont(CLEAR_FONT_QUEST, 11 * CF_SCALE); end	-- é è¨­å€¼ï¼š10
+	if (CanSetFont(InvoiceTextFontSmall)) then			InvoiceTextFontSmall:SetTextColor(0.18, 0.12, 0.06); end	-- é è¨­å€¼ï¼š(0.18, 0.12, 0.06)
 
 
 -- -----------------------------------------------------------------------------
--- Ó°Æ¬×ÖÄ»ÎÄ×Ö£¨New in WotLK/3.x£©
+-- æˆ°é¬¥æ–‡å­—: æš´é›ªå…§ç½®æˆ°é¬¥æŒ‡ç¤ºå™¨
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(MovieSubtitleFont)) then			MovieSubtitleFont:SetFont(CLEAR_FONT, 25 * CF_SCALE); end		-- îAÔOÖµ£º25
-	if (CanSetFont(MovieSubtitleFont)) then			MovieSubtitleFont:SetTextColor(1.0, 0.78, 0); end	-- îAÔOÖµ£º(1.0, 0.78, 0)
+	if (CanSetFont(CombatTextFont)) then				CombatTextFont:SetFont(CLEAR_FONT_DAMAGE, 25 * CF_SCALE); end		-- é è¨­å€¼ï¼š25
 
 
 -- -----------------------------------------------------------------------------
--- ³É¾ÍÏµ½y£¨New in WotLK/3.x£©
+-- å½±ç‰‡å­—å¹•æ–‡å­—ï¼ˆNew in WotLK/3.xï¼‰
 -- -----------------------------------------------------------------------------
 
--- ³É¾ÍÏµ½yÆäËûÃæ°åÉÏµÄ³É¾Í·Ö”µ
-	if (CanSetFont(AchievementPointsFont)) then		AchievementPointsFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- îAÔOÖµ£º13
+	if (CanSetFont(MovieSubtitleFont)) then			MovieSubtitleFont:SetFont(CLEAR_FONT, 25 * CF_SCALE); end		-- é è¨­å€¼ï¼š25
+	if (CanSetFont(MovieSubtitleFont)) then			MovieSubtitleFont:SetTextColor(1.0, 0.78, 0); end	-- é è¨­å€¼ï¼š(1.0, 0.78, 0)
 
--- ³É¾ÍÏµ½y¿‚…RÃæ°åµÄ³É¾Í·Ö”µ
-	if (CanSetFont(AchievementPointsFontSmall)) then	AchievementPointsFontSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- îAÔOÖµ£º13
 
--- ³É¾ÍÏµ½yÃèÊöµÄƒÈÈİ
-	if (CanSetFont(AchievementDescriptionFont)) then	AchievementDescriptionFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- îAÔOÖµ£º13
+-- -----------------------------------------------------------------------------
+-- æˆå°±ç³»çµ±ï¼ˆNew in WotLK/3.xï¼‰
+-- -----------------------------------------------------------------------------
 
--- ³É¾ÍÏµ½yÃèÊöµÄ¸±˜Ëî}
-	if (CanSetFont(AchievementCriteriaFont)) then		AchievementCriteriaFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- îAÔOÖµ£º13
+-- æˆå°±ç³»çµ±å…¶ä»–é¢æ¿ä¸Šçš„æˆå°±åˆ†æ•¸
+	if (CanSetFont(AchievementPointsFont)) then		AchievementPointsFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- é è¨­å€¼ï¼š13
+
+-- æˆå°±ç³»çµ±ç¸½åŒ¯é¢æ¿çš„æˆå°±åˆ†æ•¸
+	if (CanSetFont(AchievementPointsFontSmall)) then	AchievementPointsFontSmall:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- é è¨­å€¼ï¼š13
+
+-- æˆå°±ç³»çµ±æè¿°çš„å…§å®¹
+	if (CanSetFont(AchievementDescriptionFont)) then	AchievementDescriptionFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- é è¨­å€¼ï¼š13
+
+-- æˆå°±ç³»çµ±æè¿°çš„å‰¯æ¨™é¡Œ
+	if (CanSetFont(AchievementCriteriaFont)) then		AchievementCriteriaFont:SetFont(CLEAR_FONT, 13 * CF_SCALE); end		-- é è¨­å€¼ï¼š13
    
--- ³É¾ÍÏµ½yÓ›ä›µÄÈÕÆÚ
-	if (CanSetFont(AchievementDateFont)) then			AchievementDateFont:SetFont(CLEAR_FONT, 11 * CF_SCALE); end		-- îAÔOÖµ£º13
+-- æˆå°±ç³»çµ±è¨˜éŒ„çš„æ—¥æœŸ
+	if (CanSetFont(AchievementDateFont)) then			AchievementDateFont:SetFont(CLEAR_FONT, 11 * CF_SCALE); end		-- é è¨­å€¼ï¼š13
 
 
 -- -----------------------------------------------------------------------------
--- ĞÂòT³Ë¡¢Ü‡İvÏµ½yÏàêP£¨´ı´_ÕJ£¬New in WotLK/3.2+£©
+-- æ–°é¨ä¹˜ã€è»Šè¼›ç³»çµ±ç›¸é—œï¼ˆå¾…ç¢ºèªï¼ŒNew in WotLK/3.2+ï¼‰
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(VehicleMenuBarStatusBarText)) then		VehicleMenuBarStatusBarText:SetFont(CLEAR_FONT, 15 * CF_SCALE); end		-- îAÔOÖµ£º15
-	if (CanSetFont(VehicleMenuBarStatusBarText)) then		VehicleMenuBarStatusBarText:SetTextColor(1.0, 1.0, 1.0); end	-- îAÔOÖµ£º(1.0, 1.0, 1.0)
+	if (CanSetFont(VehicleMenuBarStatusBarText)) then		VehicleMenuBarStatusBarText:SetFont(CLEAR_FONT, 15 * CF_SCALE); end		-- é è¨­å€¼ï¼š15
+	if (CanSetFont(VehicleMenuBarStatusBarText)) then		VehicleMenuBarStatusBarText:SetTextColor(1.0, 1.0, 1.0); end	-- é è¨­å€¼ï¼š(1.0, 1.0, 1.0)
 
 
 -- -----------------------------------------------------------------------------
--- ½¹üc¿ò¼Ü×Öów£¨´ı´_ÕJ£¬New in CTM/4.0+£©
+-- ç„¦é»æ¡†æ¶å­—é«”ï¼ˆå¾…ç¢ºèªï¼ŒNew in CTM/4.0+ï¼‰
 -- -----------------------------------------------------------------------------
 
-	if (CanSetFont(FocusFontSmall)) then				FocusFontSmall:SetFont(CLEAR_FONT, 15 * CF_SCALE); end		-- îAÔOÖµ£º16
+	if (CanSetFont(FocusFontSmall)) then				FocusFontSmall:SetFont(CLEAR_FONT, 15 * CF_SCALE); end		-- é è¨­å€¼ï¼š16
 
 
 	end
@@ -568,8 +544,8 @@ if not (GetLocale() == "zhTW") then return end
 
 
 -- =============================================================================
---  C. Ã¿®”Ò»‚€²å¼şİdÈë•r¶¼ÖØĞÂİdÈëµÄ¹¦ÄÜ
---  Ëû‚ƒÕæÏ²šg¸ãyÎÒµÄ²å¼ş£¡
+--  C. æ¯ç•¶ä¸€å€‹æ’ä»¶è¼‰å…¥æ™‚éƒ½é‡æ–°è¼‰å…¥çš„åŠŸèƒ½
+--  ä»–å€‘çœŸå–œæ­¡æäº‚æˆ‘çš„æ’ä»¶ï¼
 -- =============================================================================
 
 	ClearFont:SetScript("OnEvent",
@@ -585,8 +561,8 @@ if not (GetLocale() == "zhTW") then return end
 
 
 -- =============================================================================
---  D. µÚÒ»´Î†¢„Ó•r‘ªÓÃÒÔÉÏÔO¶¨
---  ×ŒÇòÄÜ‰òLÆğí
+--  D. ç¬¬ä¸€æ¬¡å•Ÿå‹•æ™‚æ‡‰ç”¨ä»¥ä¸Šè¨­å®š
+--  è®“çƒèƒ½å¤ æ»¾èµ·ä¾†
 -- =============================================================================
 
 	ClearFont:ApplySystemFonts()

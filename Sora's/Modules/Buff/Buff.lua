@@ -22,7 +22,7 @@ function Module:Style(buttonName, i)
 	
 	Duration:ClearAllPoints()
 	Duration:SetParent(Button)
-	Duration:SetPoint("TOP", Button, "BOTTOM", 0, 5)
+	Duration:SetPoint("TOP", Button, "BOTTOM", 2, 5)
 	Duration:SetFont("Interface\\Addons\\Sora's\\Media\\ROADWAY.ttf", 12, "THINOUTLINE")
 	
 	Count:ClearAllPoints()

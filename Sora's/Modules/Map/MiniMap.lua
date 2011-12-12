@@ -12,9 +12,6 @@ function Module:OnInitialize()
 	MoveHandle.Minimap = S.MakeMoveHandle(Minimap, "小地图", "Minimap")
 end
 
-if LFDSearchStatus then
-	LFDSearchStatus:SetClampedToScreen(true)
-end
 DropDownList1:SetClampedToScreen(true)
 
 local frames = {
