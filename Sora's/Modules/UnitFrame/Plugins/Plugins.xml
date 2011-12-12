@@ -4,8 +4,7 @@
 	<Script file = "Focuser.lua"/>
 	<Script file = "Indicators.lua"/>
 	<Script file = "MirrorTimer.lua"/>
-	<Script file = "RaidDebuff_42.lua"/>
-	<Script file = "RaidDebuff_43.lua"/>
+	<Script file = "RaidDebuff.lua"/>
 	<Script file = "Smooth.lua"/>
 	<Script file = "Tags.lua"/>
 
