@@ -7,7 +7,7 @@ VehicleMenuBar:EnableMouse(false)
 
 local FramesToHide = {
 	MainMenuBar,
-	MainMenuBarArtFrame,
+	--MainMenuBarArtFrame,
 	BonusActionBarFrame,
 	VehicleMenuBar,
 	PossessBarFrame,

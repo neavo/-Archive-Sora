@@ -12,7 +12,8 @@ function Module:OnInitialize()
 	MoveHandle.Minimap = S.MakeMoveHandle(Minimap, "小地图", "Minimap")
 end
 
-DropDownList1:SetClampedToScreen(true)
+LFGSearchStatus:SetClampedToScreen(true)
+LFGDungeonReadyStatus:SetClampedToScreen(true)
 
 local frames = {
 	"GameTimeFrame",
@@ -72,29 +73,57 @@ local menuList = {
 	{text = CHARACTER_BUTTON,
 	func = function() ToggleCharacter("PaperDollFrame") end},
 	{text = SPELLBOOK_ABILITIES_BUTTON,
-	func = function() ToggleFrame(SpellBookFrame) end},
+	func = function()
+		if not SpellBookFrame:IsShown() then
+			ShowUIPanel(SpellBookFrame)
+		else
+			HideUIPanel(SpellBookFrame)
+		end
+	end},
 	{text = TALENTS_BUTTON,
-	func = function() ToggleTalentFrame() end},
+	func = function()
+		if not PlayerTalentFrame then
+			LoadAddOn("Blizzard_TalentUI")
+		end
+		if not GlyphFrame then
+			LoadAddOn("Blizzard_GlyphUI")
+		end
+		PlayerTalentFrame_Toggle()
+	end},
+	{text = TIMEMANAGER_TITLE,
+	func = function() ToggleFrame(TimeManagerFrame) end},		
 	{text = ACHIEVEMENT_BUTTON,
 	func = function() ToggleAchievementFrame() end},
 	{text = QUESTLOG_BUTTON,
 	func = function() ToggleFrame(QuestLogFrame) end},
-	{text = GUILD,
-	func = function() ToggleGuildFrame(1) end},
+	{text = SOCIAL_BUTTON,
+	func = function() ToggleFriendsFrame(1) end},
+	{text = calendar_string,
+	func = function() GameTimeFrame:Click() end},
 	{text = PLAYER_V_PLAYER,
 	func = function() ToggleFrame(PVPFrame) end},
+	{text = ACHIEVEMENTS_GUILD_TAB,
+	func = function()
+		if IsInGuild() then
+			if not GuildFrame then LoadAddOn("Blizzard_GuildUI") end
+			GuildFrame_Toggle()
+		end
+	end},
 	{text = "地下城查找器",
 	func = function() ToggleFrame(LFDParentFrame) end},
+	{text = RAID_FINDER,
+	func = function() RaidMicroButton:Click() end},
 	{text = ENCOUNTER_JOURNAL, 
-	func = function() ToggleFrame(EncounterJournal) end},
-	{text = RAID, 
-	func = function() ToggleFriendsFrame(4) end},
+	func = function()
+		if not IsAddOnLoaded("Blizzard_EncounterJournal") then
+			LoadAddOn("Blizzard_EncounterJournal")
+		end
+		ToggleFrame(EncounterJournal)
+	end},		
 	{text = HELP_BUTTON,
 	func = function() ToggleHelpFrame() end},
 	{text = "打开背包",
 	func = function() ToggleBackpack() end}, 
-	{text = L_LFRAID,
-	func = function() ToggleFrame(LFRParentFrame) end},
 }
 
 Minimap:SetScript("OnMouseUp", function(self, button)

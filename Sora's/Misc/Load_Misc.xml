@@ -5,7 +5,6 @@
 	<Script file = "AutoRepair.lua"/>
 	<Script file = "AutoSell.lua"/>
 	<Script file = "Durability.lua"/>	
-	<Script file = "Faction.lua"/>
 	<Script file = "Glow.lua"/>
 	<Script file = "HoverTips.lua"/>
 	<Script file = "Mail.lua"/>
