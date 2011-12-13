@@ -90,16 +90,12 @@ local menuList = {
 		end
 		PlayerTalentFrame_Toggle()
 	end},
-	{text = TIMEMANAGER_TITLE,
-	func = function() ToggleFrame(TimeManagerFrame) end},		
 	{text = ACHIEVEMENT_BUTTON,
 	func = function() ToggleAchievementFrame() end},
 	{text = QUESTLOG_BUTTON,
 	func = function() ToggleFrame(QuestLogFrame) end},
 	{text = SOCIAL_BUTTON,
 	func = function() ToggleFriendsFrame(1) end},
-	{text = calendar_string,
-	func = function() GameTimeFrame:Click() end},
 	{text = PLAYER_V_PLAYER,
 	func = function() ToggleFrame(PVPFrame) end},
 	{text = ACHIEVEMENTS_GUILD_TAB,

@@ -1,14 +1,14 @@
 -- Engines
 local S, C, L, DB = unpack(select(2, ...))
-local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("ExtraActionBar")
+local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("ExtraActionBar", "AceEvent-3.0")
 local Bar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
 
 function Module:OnEvent(event, ...)
 	if HasExtraActionBar() then
-		self:Show()
+		Bar:Show()
 		ExtraActionButton1:Show()
 	else
-		self:Hide()
+		Bar:Hide()
 	end
 end
 
@@ -18,13 +18,12 @@ function Module:OnInitialize()
 end
 
 function Module:OnEnable()
-	ExtraActionBarFrame:SetParent(bar)
+	ExtraActionBarFrame:SetParent(Bar)
 	ExtraActionBarFrame:ClearAllPoints()
 	ExtraActionBarFrame:SetPoint("BOTTOM", 0, 300)
 	ExtraActionBarFrame.ignoreFramePositionManager = true
 
 	ExtraActionButton1:SetSize(40, 40)
-	Bar.button = ExtraActionButton1
 	ExtraActionButton1.style:SetTexture(nil)
 	hooksecurefunc(ExtraActionButton1.style, "SetTexture", function(style, texture)
 		if not texture then return end
