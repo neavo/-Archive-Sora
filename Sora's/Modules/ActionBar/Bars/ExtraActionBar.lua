@@ -3,32 +3,18 @@ local S, C, L, DB = unpack(select(2, ...))
 local Module = LibStub("AceAddon-3.0"):GetAddon("Sora"):NewModule("ExtraActionBar", "AceEvent-3.0")
 local Bar = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
 
-function Module:OnEvent(event, ...)
-	if HasExtraActionBar() then
-		Bar:Show()
-		ExtraActionButton1:Show()
-	else
-		Bar:Hide()
-	end
-end
-
 function Module:OnInitialize()
-	Module:RegisterEvent("UPDATE_EXTRA_ACTIONBAR", "OnEvent")
-	Module:RegisterEvent("PLAYER_REGEN_ENABLED", "OnEvent")
-end
-
-function Module:OnEnable()
+	Bar:SetPoint("BOTTOM", 0, 250)
+	Bar:SetSize(ExtraActionBarFrame:GetSize())
+	
 	ExtraActionBarFrame:SetParent(Bar)
 	ExtraActionBarFrame:ClearAllPoints()
-	ExtraActionBarFrame:SetPoint("BOTTOM", 0, 300)
-	ExtraActionBarFrame.ignoreFramePositionManager = true
-
-	ExtraActionButton1:SetSize(40, 40)
-	ExtraActionButton1.style:SetTexture(nil)
-	hooksecurefunc(ExtraActionButton1.style, "SetTexture", function(style, texture)
-		if not texture then return end
-		if string.sub(texture,1,9) == "Interface" then
-			style:SetTexture(nil)
-		end
-	end)
+	ExtraActionBarFrame:SetPoint("CENTER")
+		
+	UIPARENT_MANAGED_FRAME_POSITIONS.ExtraActionBarFrame = nil
+	UIPARENT_MANAGED_FRAME_POSITIONS.PlayerPowerBarAlt.extraActionBarFrame = nil
+	
+	if UIPARENT_MANAGED_FRAME_POSITIONS.CastingBarFrame then
+		UIPARENT_MANAGED_FRAME_POSITIONS.CastingBarFrame.extraActionBarFrame = nil
+	end
 end

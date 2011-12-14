@@ -385,6 +385,23 @@ F.ReskinSlider = function(f)
 	slider:SetBlendMode("ADD")
 end
 
+F.ReskinExpandOrCollapse = function(f)
+	F.Reskin(f, true)
+	f.SetNormalTexture = F.dummy
+
+	f.minus = f:CreateTexture(nil, "OVERLAY")
+	f.minus:SetSize(7, 1)
+	f.minus:SetPoint("CENTER")
+	f.minus:SetTexture(C.media.backdrop)
+	f.minus:SetVertexColor(1, 1, 1)
+
+	f.plus = f:CreateTexture(nil, "OVERLAY")
+	f.plus:SetSize(1, 7)
+	f.plus:SetPoint("CENTER")
+	f.plus:SetTexture(C.media.backdrop)
+	f.plus:SetVertexColor(1, 1, 1)
+end
+
 F.SetBD = function(f, x, y, x2, y2)
 	local bg = CreateFrame("Frame", nil, f)
 	if not x then
@@ -795,7 +812,32 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		ReputationFrame:HookScript("OnShow", UpdateFactionSkins)
-		hooksecurefunc("ReputationFrame_OnEvent", UpdateFactionSkins)
+		ReputationFrame:HookScript("OnEvent", UpdateFactionSkins)
+
+		for i = 1, NUM_FACTIONS_DISPLAYED do
+			local bu = _G["ReputationBar"..i.."ExpandOrCollapseButton"]
+			F.ReskinExpandOrCollapse(bu)
+		end
+
+		hooksecurefunc("ReputationFrame_Update", function()
+			local numFactions = GetNumFactions()
+			local factionIndex, factionButton, isCollapsed
+			local factionOffset = FauxScrollFrame_GetOffset(ReputationListScrollFrame)
+
+			for i = 1, NUM_FACTIONS_DISPLAYED do
+				factionIndex = factionOffset + i
+				factionButton = _G["ReputationBar"..i.."ExpandOrCollapseButton"]
+
+				if factionIndex <= numFactions then
+					_, _, _, _, _, _, _, _, _, isCollapsed = GetFactionInfo(factionIndex)
+					if isCollapsed then
+						factionButton.plus:Show()
+					else
+						factionButton.plus:Hide()
+					end
+				end
+			end
+		end)
 
 		-- LFD frame
 
@@ -858,6 +900,39 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		hooksecurefunc("LFDQueueFrameRandom_UpdateFrame", ReskinRewards)
+
+		for i = 1, NUM_LFD_CHOICE_BUTTONS do
+			F.ReskinCheck(_G["LFDQueueFrameSpecificListButton"..i.."EnableButton"])
+			F.ReskinExpandOrCollapse(_G["LFDQueueFrameSpecificListButton"..i.."ExpandOrCollapseButton"])
+		end
+
+		for i = 1, NUM_LFR_CHOICE_BUTTONS do
+			local bu = _G["LFRQueueFrameSpecificListButton"..i.."EnableButton"]
+			F.ReskinCheck(bu)
+			bu.SetNormalTexture = F.dummy
+			bu.SetPushedTexture = F.dummy
+
+			F.ReskinExpandOrCollapse(_G["LFRQueueFrameSpecificListButton"..i.."ExpandOrCollapseButton"])
+		end
+
+		hooksecurefunc("LFDQueueFrameSpecificListButton_SetDungeon", function(button, dungeonID)
+			local isCollapsed = LFGCollapseList[dungeonID]
+
+			if isCollapsed then
+				button.expandOrCollapseButton.plus:Show()
+			else
+				button.expandOrCollapseButton.plus:Hide()
+			end
+		end)
+
+		hooksecurefunc("LFRQueueFrameSpecificListButton_SetDungeon", function(button, dungeonID)
+			local isCollapsed = LFGCollapseList[dungeonID]
+			if isCollapsed then
+				button.expandOrCollapseButton.plus:Show()
+			else
+				button.expandOrCollapseButton.plus:Hide()
+			end
+		end)
 
 		-- Raid Finder
 
@@ -1418,6 +1493,73 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			line:SetPoint("RIGHT", ic, 1, 0)
 			F.CreateBD(line)
 		end
+
+		hooksecurefunc("QuestLog_Update", function()
+			local numEntries = GetNumQuestLogEntries()
+
+			local buttons = QuestLogScrollFrame.buttons
+			local numButtons = #buttons
+			local scrollOffset = HybridScrollFrame_GetOffset(QuestLogScrollFrame)
+			local questLogTitle, questIndex
+			local isHeader, isCollapsed
+
+			for i = 1, numButtons do
+				questLogTitle = buttons[i]
+				questIndex = i + scrollOffset
+
+				if not questLogTitle.reskinned then
+					questLogTitle.reskinned = true
+
+					questLogTitle:SetNormalTexture("")
+					questLogTitle.SetNormalTexture = F.dummy
+					questLogTitle:SetPushedTexture("")
+					questLogTitle:SetHighlightTexture("")
+					questLogTitle.SetHighlightTexture = F.dummy
+
+					questLogTitle.bg = CreateFrame("Frame", nil, questLogTitle)
+					questLogTitle.bg:SetSize(13, 13)
+					questLogTitle.bg:SetPoint("LEFT", 4, 0)
+					questLogTitle.bg:SetFrameLevel(questLogTitle:GetFrameLevel()-1)
+					F.CreateBD(questLogTitle.bg, 0)	
+
+					questLogTitle.tex = questLogTitle:CreateTexture(nil, "BACKGROUND")
+					questLogTitle.tex:SetAllPoints(questLogTitle.bg)
+					questLogTitle.tex:SetTexture(C.media.backdrop)
+					questLogTitle.tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+
+					questLogTitle.minus = questLogTitle:CreateTexture(nil, "OVERLAY")
+					questLogTitle.minus:SetSize(7, 1)
+					questLogTitle.minus:SetPoint("CENTER", questLogTitle.bg)
+					questLogTitle.minus:SetTexture(C.media.backdrop)
+					questLogTitle.minus:SetVertexColor(1, 1, 1)
+
+					questLogTitle.plus = questLogTitle:CreateTexture(nil, "OVERLAY")
+					questLogTitle.plus:SetSize(1, 7)
+					questLogTitle.plus:SetPoint("CENTER", questLogTitle.bg)
+					questLogTitle.plus:SetTexture(C.media.backdrop)
+					questLogTitle.plus:SetVertexColor(1, 1, 1)
+				end
+
+				if questIndex <= numEntries then
+					_, _, _, _, isHeader, isCollapsed = GetQuestLogTitle(questIndex)
+					if isHeader then
+						questLogTitle.bg:Show()
+						questLogTitle.tex:Show()
+						questLogTitle.minus:Show()
+						if isCollapsed then
+							questLogTitle.plus:Show()
+						else
+							questLogTitle.plus:Hide()
+						end
+					else
+						questLogTitle.bg:Hide()
+						questLogTitle.tex:Hide()
+						questLogTitle.minus:Hide()
+						questLogTitle.plus:Hide()
+					end
+				end
+			end
+		end)
 
 		-- PVP Frame
 
@@ -3126,6 +3268,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					if not header.reskinned then
 						header.reskinned = true
 
+						header.flashAnim.Play = F.dummy
+
 						header.description:SetTextColor(1, 1, 1)
 						header.description:SetShadowOffset(1, -1)
 						header.button.title:SetTextColor(1, 1, 1)
@@ -4271,16 +4415,126 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["TradeSkillReagent"..i.."Name"]:SetParent(bd)
 		end
 
-		local reskinned = false
 		hooksecurefunc("TradeSkillFrame_SetSelection", function()
-			if not reskinned == true then
-				local ic = TradeSkillSkillIcon:GetNormalTexture()
-				if ic then
-					ic:SetTexCoord(.08, .92, .08, .92)
-					ic:SetPoint("TOPLEFT", 1, -1)
-					ic:SetPoint("BOTTOMRIGHT", -1, 1)
-					F.CreateBD(TradeSkillSkillIcon)
-					reskinned = true
+			local ic = TradeSkillSkillIcon:GetNormalTexture()
+			if ic then
+				ic:SetTexCoord(.08, .92, .08, .92)
+				ic:SetPoint("TOPLEFT", 1, -1)
+				ic:SetPoint("BOTTOMRIGHT", -1, 1)
+				F.CreateBD(TradeSkillSkillIcon)
+			else
+				TradeSkillSkillIcon:SetBackdrop(nil)
+			end
+		end)
+
+		local all = TradeSkillCollapseAllButton
+		all:SetNormalTexture("")
+		all.SetNormalTexture = F.dummy
+		all:SetHighlightTexture("")
+		all:SetPushedTexture("")
+
+		all.bg = CreateFrame("Frame", nil, all)
+		all.bg:SetSize(13, 13)
+		all.bg:SetPoint("LEFT", 4, 0)
+		all.bg:SetFrameLevel(all:GetFrameLevel()-1)
+		F.CreateBD(all.bg, 0)	
+
+		all.tex = all:CreateTexture(nil, "BACKGROUND")
+		all.tex:SetAllPoints(all.bg)
+		all.tex:SetTexture(C.media.backdrop)
+		all.tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+
+		all.minus = all:CreateTexture(nil, "OVERLAY")
+		all.minus:SetSize(7, 1)
+		all.minus:SetPoint("CENTER", all.bg)
+		all.minus:SetTexture(C.media.backdrop)
+		all.minus:SetVertexColor(1, 1, 1)
+
+		all.plus = all:CreateTexture(nil, "OVERLAY")
+		all.plus:SetSize(1, 7)
+		all.plus:SetPoint("CENTER", all.bg)
+		all.plus:SetTexture(C.media.backdrop)
+		all.plus:SetVertexColor(1, 1, 1)
+
+		hooksecurefunc("TradeSkillFrame_Update", function()
+			local numTradeSkills = GetNumTradeSkills()
+			local skillOffset = FauxScrollFrame_GetOffset(TradeSkillListScrollFrame)
+			local skillIndex, skillButton
+			local buttonHighlight
+			local diplayedSkills = TRADE_SKILLS_DISPLAYED
+			local hasFilterBar = TradeSkillFilterBar:IsShown()
+			if  hasFilterBar then
+				diplayedSkills = TRADE_SKILLS_DISPLAYED - 1
+			end
+			local buttonIndex = 0
+
+			for i = 1, diplayedSkills do
+				skillIndex = i + skillOffset
+				_, skillType, _, isExpanded = GetTradeSkillInfo(skillIndex)
+				if hasFilterBar then
+					buttonIndex = i + 1
+				else
+					buttonIndex = i
+				end
+
+				skillButton = _G["TradeSkillSkill"..buttonIndex]
+
+				if not skillButton.reskinned then
+					skillButton.reskinned = true
+
+					skillButton:SetNormalTexture("")
+					skillButton.SetNormalTexture = F.dummy
+					skillButton:SetPushedTexture("")
+					buttonHighlight = _G["TradeSkillSkill"..buttonIndex.."Highlight"]
+					buttonHighlight:SetTexture("")
+					buttonHighlight.SetTexture = F.dummy
+
+					skillButton.bg = CreateFrame("Frame", nil, skillButton)
+					skillButton.bg:SetSize(13, 13)
+					skillButton.bg:SetPoint("LEFT", 4, 0)
+					skillButton.bg:SetFrameLevel(skillButton:GetFrameLevel()-1)
+					F.CreateBD(skillButton.bg, 0)	
+
+					skillButton.tex = skillButton:CreateTexture(nil, "BACKGROUND")
+					skillButton.tex:SetAllPoints(skillButton.bg)
+					skillButton.tex:SetTexture(C.media.backdrop)
+					skillButton.tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+
+					skillButton.minus = skillButton:CreateTexture(nil, "OVERLAY")
+					skillButton.minus:SetSize(7, 1)
+					skillButton.minus:SetPoint("CENTER", skillButton.bg)
+					skillButton.minus:SetTexture(C.media.backdrop)
+					skillButton.minus:SetVertexColor(1, 1, 1)
+
+					skillButton.plus = skillButton:CreateTexture(nil, "OVERLAY")
+					skillButton.plus:SetSize(1, 7)
+					skillButton.plus:SetPoint("CENTER", skillButton.bg)
+					skillButton.plus:SetTexture(C.media.backdrop)
+					skillButton.plus:SetVertexColor(1, 1, 1)
+				end
+
+				if skillIndex <= numTradeSkills then
+					if skillType == "header" then
+						skillButton.bg:Show()
+						skillButton.tex:Show()
+						skillButton.minus:Show()
+						if isExpanded then
+							skillButton.plus:Hide()
+						else
+							skillButton.plus:Show()
+						end
+					else
+						skillButton.bg:Hide()
+						skillButton.tex:Hide()
+						skillButton.minus:Hide()
+						skillButton.plus:Hide()	
+					end
+				end
+
+				if TradeSkillCollapseAllButton.collapsed == 1 then
+					TradeSkillCollapseAllButton.plus:Show()
+				else
+					TradeSkillCollapseAllButton.plus:Hide()
 				end
 			end
 		end)
@@ -4519,7 +4773,7 @@ local Delay = CreateFrame("Frame")
 Delay:RegisterEvent("PLAYER_ENTERING_WORLD")
 Delay:SetScript("OnEvent", function()
 	Delay:UnregisterEvent("PLAYER_ENTERING_WORLD")
-
+	
 	if not(IsAddOnLoaded("Butsu") or IsAddOnLoaded("LovelyLoot") or IsAddOnLoaded("XLoot")) then
 		LootFramePortraitOverlay:Hide()
 		select(2, LootFrame:GetRegions()):Hide()
