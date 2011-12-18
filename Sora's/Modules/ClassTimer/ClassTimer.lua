@@ -126,9 +126,18 @@ function Module:OnUpdate(unit)
 		local Key = 0
 		
 		for index = 1, 40 do
-			local name, rank, icon, count, dispelType, duration, expires = UnitAura(unit, index, "PLAYER")
+			local name, rank, icon, count, dispelType, duration, expires, caster = UnitBuff(unit, index)
 			if not name then break end
-			if ((duration < 60 and duration ~= 0) and not BlackList[name]) or WhiteList[name] then
+			if ((duration < 60 and duration ~= 0) and caster == "player" and not BlackList[name]) or WhiteList[name] then
+				Key = Key + 1
+				Module:UpdateAura(PlayerAura, oUF_SoraPlayer, C["PlayerMode"], C["PlayerIconSize"], oUF_SoraPlayer:GetWidth()-20, Key, name, icon, count, duration, expires)
+			end
+		end
+		
+		for index = 1, 40 do
+			local name, rank, icon, count, dispelType, duration, expires, caster = UnitDebuff(unit, index)
+			if not name then break end
+			if WhiteList[name] then
 				Key = Key + 1
 				Module:UpdateAura(PlayerAura, oUF_SoraPlayer, C["PlayerMode"], C["PlayerIconSize"], oUF_SoraPlayer:GetWidth()-20, Key, name, icon, count, duration, expires)
 			end
