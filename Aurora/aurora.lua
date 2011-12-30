@@ -414,10 +414,6 @@ F.SetBD = function(f, x, y, x2, y2)
 	bg:SetFrameLevel(0)
 	F.CreateBD(bg)
 	F.CreateSD(bg)
-
-	f:HookScript("OnShow", function()
-		bg:SetFrameLevel(0)
-	end)
 end
 
 local Skin = CreateFrame("Frame", nil, UIParent)
@@ -1199,7 +1195,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		for i = 1, FRIENDS_TO_DISPLAY do
 			local bu = _G["FriendsFrameFriendsScrollFrameButton"..i]
-			local ic = _G["FriendsFrameFriendsScrollFrameButton"..i.."GameIcon"]
+			local ic = bu.gameIcon
 			local inv = _G["FriendsFrameFriendsScrollFrameButton"..i.."TravelPassButton"]
 
 			bu:SetHighlightTexture(C.media.backdrop)
@@ -1219,14 +1215,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local function UpdateScroll()
 			for i = 1, FRIENDS_TO_DISPLAY do
 				local bu = _G["FriendsFrameFriendsScrollFrameButton"..i]
-				local ic = _G["FriendsFrameFriendsScrollFrameButton"..i.."GameIcon"]
 				if not bu.bg then
 					bu.bg = CreateFrame("Frame", nil, bu)
-					bu.bg:SetPoint("TOPLEFT", ic)
-					bu.bg:SetPoint("BOTTOMRIGHT", ic)
+					bu.bg:SetPoint("TOPLEFT", bu.gameIcon)
+					bu.bg:SetPoint("BOTTOMRIGHT", bu.gameIcon)
 					F.CreateBD(bu.bg, 0)
 				end
-				if ic:IsShown() then
+				if bu.gameIcon:IsShown() then
 					bu.bg:Show()
 				else
 					bu.bg:Hide()
@@ -1234,12 +1229,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		local friendshandler = CreateFrame("Frame")
-		friendshandler:RegisterEvent("FRIENDLIST_UPDATE")
-		friendshandler:RegisterEvent("BN_FRIEND_TOON_ONLINE")
-		friendshandler:RegisterEvent("BN_FRIEND_TOON_OFFLINE")
-		friendshandler:SetScript("OnEvent", UpdateScroll)
+		hooksecurefunc("FriendsFrame_UpdateFriends", UpdateScroll)
 		FriendsFrameFriendsScrollFrame:HookScript("OnVerticalScroll", UpdateScroll)
+
 
 		local whobg = CreateFrame("Frame", nil, WhoFrameEditBoxInset)
 		whobg:SetPoint("TOPLEFT")
@@ -2797,7 +2789,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		hooksecurefunc("AchievementObjectives_DisplayCriteria", function()
-			for i = 1, 45 do
+			for i = 1, 63 do
 				local name = _G["AchievementFrameCriteria"..i.."Name"]
 				if name and select(2, name:GetTextColor()) == 0 then
 					name:SetTextColor(1, 1, 1)
@@ -4773,7 +4765,7 @@ local Delay = CreateFrame("Frame")
 Delay:RegisterEvent("PLAYER_ENTERING_WORLD")
 Delay:SetScript("OnEvent", function()
 	Delay:UnregisterEvent("PLAYER_ENTERING_WORLD")
-	
+
 	if not(IsAddOnLoaded("Butsu") or IsAddOnLoaded("LovelyLoot") or IsAddOnLoaded("XLoot")) then
 		LootFramePortraitOverlay:Hide()
 		select(2, LootFrame:GetRegions()):Hide()
